@@ -1,6 +1,15 @@
 // Weekly and monthly overview. Plain counts from the logs and the caregiver's journal. No AI.
 import { addDays, demoToday, TIME_BAND_ORDER, wallParts } from "../lib/time";
+import { RECORD_ONLY_RESPONSES } from "../lib/schemas";
 import type { JournalEntry, LogRecord, Mood, OverviewResponse } from "../lib/types";
+
+// Did this step help in this event? Uses the step's own result when the note gave one;
+// older records without step results fall back to how the whole event ended.
+function stepHelped(e: LogRecord, tag: string): boolean {
+  const step = e.responses?.find((r) => r.tag === tag);
+  if (step && step.result !== "unknown") return step.result === "helped";
+  return e.outcome === "calmed" && (e.responses === undefined || e.responseTried.length === 1);
+}
 
 function dateOf(iso: string): string | null {
   return wallParts(iso)?.date ?? null;
@@ -26,7 +35,7 @@ export function buildOverview(
   const hasPrevious = earliest !== null && earliest <= prevStart;
 
   const eventDays = new Set(current.map((e) => dateOf(e.occurredAt)));
-  const responses = tally(current.flatMap((e) => e.responseTried));
+  const responses = tally(current.flatMap((e) => e.responseTried.filter((t) => !RECORD_ONLY_RESPONSES.includes(t))));
 
   const entries = journal.filter((j) => {
     const d = dateOf(j.createdAt);
@@ -44,7 +53,7 @@ export function buildOverview(
     whatHelped: responses.slice(0, 5).map((r) => ({
       key: r.key,
       tried: r.count,
-      calmed: current.filter((e) => e.responseTried.includes(r.key) && e.outcome === "calmed").length,
+      calmed: current.filter((e) => e.responseTried.includes(r.key) && stepHelped(e, r.key)).length,
     })),
     journal: {
       entries: entries.length,

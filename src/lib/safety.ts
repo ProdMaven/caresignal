@@ -163,7 +163,10 @@ const RED_FLAGS: [RedFlag, RegExp][] = [
 const ROAD_RISK = /\b(ran|run|running|bolted|darted|walked|wandered) .{0,40}\b(road|street|traffic|highway|cars?)\b/;
 
 const MED_WORD = /\bmedicat|\bmedicine|\bmeds?\b|\bpills?\b|\bsupplement|\bseroquel\b|\blorazepam\b|\bativan\b|\brisperdal\b|\brisperidone\b|\bhaldol\b|\bxanax\b|\bmelatonin\b|\bbenadryl\b|\bcbd\b|\bmedicamento|\bpastilla|दवा/;
-const ADVICE_CUE = /\?|\b(should|shall|can|could|may) (i|we)\b|\bwhat\b|\bwhich\b|\bhow much\b|\bhow many\b|\bincrease\b|\b(up|raise|lower|reduce|change|stop|start|double) (her|his|the|their)\b|\bgive (her|him|mom|mum|dad)\b|\brecommend|\bsuggest|\bneed to\b|\bdebo\b|\bpuedo\b/;
+// A medicine word alone is a report ("we gave her the medicine she takes"). It becomes a scope question only
+// with a real ask: a question mark, "should I", "how much", a request to change a dose, or a request for advice.
+// "which she takes" and "to reduce her pain" are not asks.
+const ADVICE_CUE = /\?|\b(should|shall|can|could|may) (i|we)\b|(^|[.!?]\s*)(what|which)\b|\bwhat (should|can|do|dose|medic)|\bwhich (medic|pill|dose|one should)|\bhow much\b|\bhow many\b|\bincrease (her|his|the|their)\b|\b(up|raise|lower|change|stop|start|double) (her|his|the|their) (dose|dosage|medic\w*|meds?|pills?|\w+ (dose|dosage))\b|\b(up|raise|lower|reduce|double) (her|his|the|their) (seroquel|lorazepam|ativan|risperdal|risperidone|haldol|xanax|melatonin|benadryl)\b|\b(should|can|could) (i|we) give\b|\bgive (her|him|mom|mum|dad) (more|less|extra|another|a higher|a lower)\b|\brecommend|\bsuggest|\bneed to (up|raise|lower|change|increase|give|stop|start)\b|\bdebo\b|\bpuedo\b/;
 
 const SCOPE_MEDICAL = [
   /\balzheimer|\blewy\b|\bparkinson|\bdiagnos|\badhd\b|\bocd\b|\buti\b|\burinary tract\b/,

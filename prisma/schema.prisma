@@ -45,6 +45,7 @@ model Event {
   contextBefore String   @default("[]") // JSON string[]
   environment   String   @default("[]") // JSON string[]
   responseTried String   @default("[]") // JSON string[]
+  responses     String   @default("[]") // JSON { tag, result }[] in the order tried
   outcome       String
   rawNote       String
   confidence    String   @default("{}") // JSON Record<string, number>

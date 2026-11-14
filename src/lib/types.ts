@@ -26,6 +26,10 @@ export type Gender = "girl_or_woman" | "boy_or_man" | "nonbinary" | "prefer_not_
 export type SpectrumLevel = "mild" | "medium" | "severe"; // as the caregiver describes it
 export type CommunicationLevel = "speaks_in_sentences" | "some_words" | "mostly_non_speaking";
 
+// How one thing the caregiver tried turned out, as the caregiver described it.
+export type StepResult = "helped" | "helped_a_little" | "did_not_help" | "unknown";
+export interface ResponseStep { tag: string; result: StepResult }
+
 export interface LogRecord {
   id: string;
   mode: Mode;
@@ -36,12 +40,14 @@ export interface LogRecord {
   loggedAt: string; // ISO
   source: Source;
   eventType: string; // from DATA_MODEL vocabulary for the mode
-  behaviors: string[];
+  behaviors: string[]; // in the order they appeared
   intensity: Intensity;
   durationMin: number | null;
   contextBefore: string[];
   environment: string[];
-  responseTried: string[];
+  responseTried: string[]; // the tags from `responses`, as a flat list
+  // v5: what was tried, in the order it was tried, each with its own result. Optional so older records stay valid.
+  responses?: ResponseStep[];
   outcome: Outcome;
   rawNote: string;
   confidence: Record<string, number>;

@@ -1,11 +1,17 @@
 import { Badge } from "@/components/ui/badge";
-import { caregiverName, eventDot, INTENSITY_LABEL, label, OUTCOME_LABEL } from "@/config/modes";
+import { caregiverName, eventDot, INTENSITY_LABEL, label, OUTCOME_LABEL, STEP_RESULT_LABEL } from "@/config/modes";
 import { formatDay, formatTime, TIME_BAND_LABEL, TIME_BAND_ORDER, wallParts } from "@/lib/time";
 import type { LogRecord, TimeBand } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 function EventRow({ event }: { event: LogRecord }) {
-  const tags = [...event.contextBefore.map((t) => ({ t, kind: "before" })), ...event.responseTried.map((t) => ({ t, kind: "tried" }))];
+  const resultOf = (tag: string) => event.responses?.find((r) => r.tag === tag)?.result ?? "unknown";
+  const tags = [
+    ...event.contextBefore.map((t) => ({ t, kind: "before", note: "" })),
+    ...event.responseTried.map((t) => ({
+      t, kind: "tried", note: resultOf(t) === "unknown" ? "" : ` (${STEP_RESULT_LABEL[resultOf(t)].toLowerCase()})`,
+    })),
+  ];
   return (
     <li className="flex gap-3 py-2.5">
       <span className={cn("mt-1.5 size-3 shrink-0 rounded-full", eventDot(event.eventType))} aria-hidden />
@@ -28,10 +34,11 @@ function EventRow({ event }: { event: LogRecord }) {
                 {label(f)}
               </Badge>
             ))}
-            {tags.map(({ t, kind }) => (
+            {tags.map(({ t, kind, note }) => (
               <Badge key={`${kind}-${t}`} variant={kind === "before" ? "warning" : "success"} className="text-xs">
                 {kind === "before" ? "Before: " : "Tried: "}
                 {label(t).toLowerCase()}
+                {note}
               </Badge>
             ))}
           </div>

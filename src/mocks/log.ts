@@ -83,7 +83,7 @@ const EVENT_KEYWORDS: Record<Mode, [RegExp, string][]> = {
     [/\bmeltdown|\bmelted down\b|\bfell apart\b/, "meltdown"],
     [/\bshut ?down|\bwent quiet\b|\bstopped talking\b|\bwould ?n'?t (talk|respond)\b/, "shutdown"],
     [/\bran (off|away|out)\b|\bbolted\b|\brunning (off|away)\b/, "elopement"],
-    [/\b(hit|hitting|kicked|kicking|bit|biting|pushed|threw|throwing)\b/, "aggression"],
+    [/\b(hit|hitting|kicked|kicking|(?<!a |little )bit|biting|pushed|threw|throwing)\b/, "aggression"],
     [/\b(woke|awake|up) (at|around|all|in the|during the) (night|\d)|\b(could ?n'?t|did ?n'?t) sleep\b|\bup all night\b/, "sleep_trouble"],
     [/\b(would ?n'?t|did ?n'?t|refus\w+ to) eat\b|\bpushed (his|her) (food|plate|dinner)\b/, "food_refusal"],
     [/\bstimm|\bflapping\b|\brocking\b|\bhumming\b/, "stimming_increase"],
@@ -92,7 +92,12 @@ const EVENT_KEYWORDS: Record<Mode, [RegExp, string][]> = {
   ],
 };
 
+// Hurting their own body is never "aggression" and never "biting" or "hitting" (those mean toward someone else).
+const SELF_BITE = /\b(bit|bite|bites|biting|chew\w*) (on )?(her|his|their) (own )?(hand|hands|arm|arms|finger|fingers|wrist|wrists|lip|lips)\b|\b(bit|biting) (him|her|them)sel(f|ves)\b/g;
+const SELF_HIT = /\b(hit|hits|hitting|slap\w*|punch\w*) (her|his|their) (own )?(face|leg|legs|arm|arms|chest|thigh|thighs)\b|\b(hit|hitting) (him|her|them)sel(f|ves)\b/g;
+
 const BEHAVIOR_KEYWORDS: [RegExp, string][] = [
+  [/\bflapp\w*|\bshaking (her|his|their) (hands|arms|legs)\b/, "body_movement"],
   [/\bpac(ing|ed)\b/, "pacing"],
   [/\bcall(ing|ed) out\b/, "calling_out"],
   [/\bcry|\bcried\b|\btears\b/, "crying"],
@@ -105,13 +110,14 @@ const BEHAVIOR_KEYWORDS: [RegExp, string][] = [
   [/\bwithdr[ae]w|\bwent quiet\b|\bhid\b/, "withdrawing"],
   [/\bover and over\b|\bkept (asking|saying|repeating)\b/, "repetitive_speech"],
   [/\bgrabb/, "grabbing"],
-  [/\bbit(ing|e)?\b/, "biting"],
+  [/(?<!a |little )\bbit(ing|e)?\b/, "biting"],
   [/\bran (off|away|out)\b|\bbolted\b/, "running_off"],
   [/\bbang\w* (his|her|their) (own )?head\b|\bhead[- ]?bang|\bhitting (his|her|their) (own )?head\b/, "head_banging"],
 ];
 
 const CONTEXT_KEYWORDS: [RegExp, string][] = [
   [/\b(barely|hardly|only) ate\b|\bskipped (lunch|breakfast|dinner|a meal)\b|\bate (half|little|nothing)\b|\b(did ?n'?t|would ?n'?t) eat\b|\bsmall (lunch|breakfast|dinner)\b/, "skipped_meal"],
+  [/\bwoke (up )?(in|at|around|during)\b|\bwoke up\b/, "woke_from_sleep"],
   [/\bslept (badly|poorly|terribly)\b|\b(bad|rough|poor) (night|sleep)\b|\b(did ?n'?t|could ?n'?t) sleep\b|\bup (half|all) (the )?night\b/, "poor_sleep"],
   [/\bsubstitute\b|\bdifferent (driver|teacher|aide|bus|route)\b|\bchange in routine\b|\broutine (was|changed)\b|\bschedule changed\b|\blate start\b/, "routine_change"],
   [/\bvisit|\bcompany\b|\bguests?\b|\bgrandkids\b/, "visitor"],
@@ -147,6 +153,11 @@ const RESPONSE_KEYWORDS: [RegExp, string][] = [
   [/\bhug\b|\bsqueez|\bweighted\b|\bdeep pressure\b/, "deep_pressure"],
   [/\bbreak\b/, "break_time"],
   [/\bwalk\b/, "walk"],
+  [/\bice\b|\bcold (pack|cloth|compress|towel)\b/, "cold_or_ice"],
+  [/\bmassag|\brubb(ed|ing)\b/, "massage"],
+  [/\b(hold|held|holding|put|pull|pulled|move|moved) (her|his|their) (hand|hands|arm|arms|leg|legs) (still|away|down)\b|\bforcefully\b/, "blocked_behavior"],
+  // Only a report that something WAS given. A question about medicine never adds this.
+  [/\b(gave|given|took|taken|had) .{0,40}\b(medicine|medication|remedy|drops|pills?|tablets?|homeopath\w*)\b/, "remedy_given"],
 ];
 
 function collect(text: string, table: [RegExp, string][]): string[] {
@@ -212,7 +223,11 @@ function genericDraft(req: ParseLogRequest, roster: Person[], redFlags: string[]
   const candidates = matched.length === 1 ? [] : matched.length > 1 ? matched : roster;
   confidence.personId = matched.length === 1 ? 0.95 : 0.4;
 
-  const hit = EVENT_KEYWORDS[req.mode].find(([pattern]) => pattern.test(text));
+  const selfBite = new RegExp(SELF_BITE.source).test(text);
+  const selfHit = new RegExp(SELF_HIT.source).test(text);
+  // Event type is read with self-directed phrases removed, so self-injury is not logged as aggression.
+  const eventText = text.replace(SELF_BITE, " ").replace(SELF_HIT, " ");
+  const hit = EVENT_KEYWORDS[req.mode].find(([pattern]) => pattern.test(eventText));
   const eventType = hit ? hit[1] : req.mode === "dementia" ? "agitation" : "meltdown";
   confidence.eventType = hit ? 0.8 : 0.35;
 
@@ -221,7 +236,12 @@ function genericDraft(req: ParseLogRequest, roster: Person[], redFlags: string[]
   if (/\b(severe|big|huge|worst|really bad|very bad|terrible|extreme|major)\b/.test(text)) {
     intensity = 3;
     confidence.intensity = 0.85;
-  } else if (/\b(mild|a little|a bit|slightly|minor|small|briefly)\b/.test(text)) {
+  } else if (
+    // "calmed down a little bit" describes how it ended, not how strong it was.
+    /\b(mild|a little|a bit|slightly|minor|small|briefly)\b/.test(
+      text.replace(/\b(calm\w*( down)?|settled?( down)?|helped|better|eased|relaxed) (a little bit|a little|a bit|slightly)\b/g, " "),
+    )
+  ) {
     intensity = 1;
     confidence.intensity = 0.8;
   } else if (/\b(moderate|pretty|quite|fairly)\b/.test(text)) {
@@ -251,6 +271,9 @@ function genericDraft(req: ParseLogRequest, roster: Person[], redFlags: string[]
     behaviors = behaviors.filter((b) => b !== "hitting");
     confidence.eventType = Math.min(confidence.eventType, 0.5);
   }
+  if (selfBite) behaviors = [...behaviors.filter((b) => b !== "biting" || /(?<!a |little )\bbit(ing|e)?\b/.test(eventText)), "self_biting"];
+  if (selfHit) behaviors = [...behaviors.filter((b) => b !== "hitting" || /\bhit(ting)?\b/.test(eventText)), "self_hitting"];
+  if ((selfBite || selfHit) && !redFlags.includes("self_injury")) redFlags = [...redFlags, "self_injury"];
 
   const needsReview = ["personId", "eventType", "intensity", "occurredAt"].filter((f) => confidence[f] < 0.7);
 
@@ -268,6 +291,8 @@ function genericDraft(req: ParseLogRequest, roster: Person[], redFlags: string[]
     contextBefore: collect(text, CONTEXT_KEYWORDS),
     environment: collect(text, ENVIRONMENT_KEYWORDS),
     responseTried: collect(text, RESPONSE_KEYWORDS),
+    // Keyword rules cannot tell which step did what, so every result is unknown.
+    responses: collect(text, RESPONSE_KEYWORDS).map((tag) => ({ tag, result: "unknown" as const })),
     outcome,
     rawNote: req.transcript.trim(),
     confidence,

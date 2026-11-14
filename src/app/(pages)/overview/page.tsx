@@ -142,7 +142,7 @@ export default function OverviewPage() {
             <Section title="What you tried">
               <Bars
                 unit="times tried"
-                rows={data.whatHelped.map((h) => ({ name: label(h.key), value: h.tried, detail: `calmed ${h.calmed} of ${h.tried}` }))}
+                rows={data.whatHelped.map((h) => ({ name: label(h.key), value: h.tried, detail: `helped ${h.calmed} of ${h.tried}` }))}
               />
             </Section>
           )}

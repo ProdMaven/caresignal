@@ -2,7 +2,7 @@
 // Order: deterministic safety screen, demo cache, formatter model, code-side validation.
 // The model only proposes field values. Code decides the person, the time, the time band,
 // what needs review, the red flags (union with the screen, never fewer) and every message.
-import type { LogRecord, Mode, ParseLogRequest, ParseLogResponse, Person, TimeBand } from "./types";
+import type { LogRecord, Mode, ParseLogRequest, ParseLogResponse, Person, ResponseStep, StepResult, TimeBand } from "./types";
 import { AiError, callClaude, parseJson, type ClaudeMessage } from "./ai";
 import { cachedDemoResponse, clockFrom, resolveToday } from "./demoCache";
 import {
@@ -11,6 +11,7 @@ import {
   ENVIRONMENT,
   EVENT_TYPES,
   RESPONSE_TRIED,
+  RECORD_ONLY_RESPONSES,
   TIME_ANCHORS,
   firstIssue,
   formatterReplySchema,
@@ -56,11 +57,12 @@ export interface ParseLogOutcome {
   ai: AiUsageSummary | null;
 }
 
-// The UI gives up after 20 s, so the whole model step must finish well inside that.
-// A slow call is not retried (one 9 s wait, then the keyword fallback). A fast failure
-// (rate limit, overloaded, 5xx) gets one quick second try.
-const ATTEMPT_TIMEOUT_MS = 9_000;
-const TOTAL_BUDGET_MS = 14_000;
+// The UI gives up after 30 s, so the whole model step must finish well inside that.
+// Real spoken notes run to 150 words or more and the model needs about 9 s for them, so a 9 s limit
+// sent most real notes to the keyword fallback. A slow call is not retried (one 18 s wait, then the
+// fallback). A fast failure (rate limit, overloaded, 5xx) gets one quick second try.
+const ATTEMPT_TIMEOUT_MS = 18_000;
+const TOTAL_BUDGET_MS = 24_000;
 const REPAIR_MIN_BUDGET_MS = 3_000;
 const QUICK_RETRY_WINDOW_MS = 3_000;
 const RETRYABLE_STATUS = [408, 409, 429, 500, 502, 503, 504, 529];
@@ -219,6 +221,29 @@ function keepVocab(values: string[], vocab: readonly string[]): string[] {
   return vocab.filter((v) => said.has(v)); // vocabulary order, so the same set always looks the same
 }
 
+const SELF_INJURY_BEHAVIORS = ["self_biting", "self_hitting", "head_banging"];
+
+// What was tried, in the order tried, each with its own result. Only vocabulary tags survive.
+// When the model gave a flat list only, a single response inherits the overall outcome; several stay "unknown",
+// because the note did not say which one made the difference.
+function buildResponses(reply: FormatterReply): ResponseStep[] {
+  const allowed: readonly string[] = RESPONSE_TRIED;
+  const seen = new Set<string>();
+  const steps: ResponseStep[] = [];
+  for (const step of reply.responses) {
+    if (!allowed.includes(step.tag) || seen.has(step.tag)) continue;
+    seen.add(step.tag);
+    // A remedy is recorded as given. Its effect is never recorded: that is for the care team.
+    steps.push({ tag: step.tag, result: RECORD_ONLY_RESPONSES.includes(step.tag) ? "unknown" : step.result });
+  }
+  const flat = keepVocab(reply.responseTried, RESPONSE_TRIED).filter((t) => !seen.has(t));
+  const fromOutcome: StepResult =
+    reply.outcome === "calmed" ? "helped" : reply.outcome === "partly_calmed" ? "helped_a_little" : reply.outcome === "escalated" ? "did_not_help" : "unknown";
+  const single = steps.length === 0 && flat.length === 1 && !RECORD_ONLY_RESPONSES.includes(flat[0]);
+  for (const tag of flat) steps.push({ tag, result: single ? fromOutcome : "unknown" });
+  return steps;
+}
+
 function clampIntensity(value: number): 1 | 2 | 3 {
   if (!Number.isFinite(value)) return 2;
   return Math.max(1, Math.min(3, Math.round(value))) as 1 | 2 | 3;
@@ -258,6 +283,8 @@ function buildDraft(
   const intensity = clampIntensity(reply.intensity);
   confidence.intensity = intensity === 2 ? CONFIDENCE_VALUE.medium : CONFIDENCE_VALUE.high;
 
+  const responses = buildResponses(reply);
+
   const draft: Draft = {
     mode: req.mode,
     personId: person.personId,
@@ -271,7 +298,8 @@ function buildDraft(
     durationMin: cleanDuration(reply.durationMin),
     contextBefore: keepVocab(reply.contextBefore, CONTEXT_BEFORE),
     environment: keepVocab(reply.environment, ENVIRONMENT),
-    responseTried: keepVocab(reply.responseTried, RESPONSE_TRIED),
+    responseTried: responses.map((r) => r.tag),
+    responses,
     outcome: reply.outcome,
     rawNote: req.transcript.trim(),
     confidence,
@@ -312,7 +340,10 @@ export function responseFromReply(
     personWishToDie: screen.personWishToDie || reply.safety.personWishToDie,
     redFlags: unionRedFlags(
       screen.redFlags,
-      reply.redFlags.concat(reply.behaviors.includes("head_banging") ? ["head_banging"] : []),
+      reply.redFlags
+        .concat(reply.behaviors.includes("head_banging") ? ["head_banging"] : [])
+        // Hurting their own body is always on the record as self-injury, whatever the model flagged.
+        .concat(reply.behaviors.some((b) => SELF_INJURY_BEHAVIORS.includes(b)) ? ["self_injury"] : []),
     ),
   });
   const safetyMessage = safetyMessageFor(findings);

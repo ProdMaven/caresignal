@@ -7,10 +7,12 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { FIELD_LABEL, INTENSITY_LABEL, label, MODES, OUTCOME_LABEL, VOCAB } from "@/config/modes";
+import {
+  FIELD_LABEL, INTENSITY_LABEL, label, MODES, OUTCOME_LABEL, RECORD_ONLY_RESPONSES, STEP_RESULT_LABEL, STEP_RESULTS, VOCAB,
+} from "@/config/modes";
 import { postJson } from "@/lib/api";
 import { bandForHour, formatDay, setWallTime, TIME_BAND_LABEL, timeInputValue, wallParts } from "@/lib/time";
-import type { Intensity, LogRecord, Mode, Outcome, Person, SaveEventResponse } from "@/lib/types";
+import type { Intensity, LogRecord, Mode, Outcome, Person, ResponseStep, SaveEventResponse, StepResult } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 export type Draft = Omit<LogRecord, "id" | "loggedAt">;
@@ -26,6 +28,71 @@ function Field({ name, review, children }: { name: string; review: boolean; chil
         {review && <Badge variant="warning">Please check</Badge>}
       </div>
       {children}
+    </div>
+  );
+}
+
+// What was tried, in order, each with how it went. A remedy is recorded as given, with no result.
+function ResponsesField({ steps, onChange }: { steps: ResponseStep[]; onChange: (next: ResponseStep[]) => void }) {
+  const remaining = VOCAB.responseTried.filter((o) => !steps.some((s) => s.tag === o));
+  return (
+    <div className="flex flex-col gap-2">
+      {steps.length > 0 && (
+        <ol className="flex flex-col gap-2">
+          {steps.map((step, i) => (
+            <li key={step.tag} className="flex flex-wrap items-center gap-2 rounded-lg border bg-card px-3 py-2">
+              <span className="min-w-0 flex-1 text-sm font-medium">
+                {i + 1}. {label(step.tag)}
+              </span>
+              {RECORD_ONLY_RESPONSES.includes(step.tag) ? (
+                <span className="text-xs text-muted-foreground">Recorded as given</span>
+              ) : (
+                <select
+                  aria-label={`How ${label(step.tag).toLowerCase()} went`}
+                  value={step.result}
+                  onChange={(e) =>
+                    onChange(steps.map((s) => (s.tag === step.tag ? { ...s, result: e.target.value as StepResult } : s)))
+                  }
+                  className="h-10 rounded-lg border border-input bg-card px-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                >
+                  {STEP_RESULTS.map((r) => (
+                    <option key={r} value={r}>
+                      {STEP_RESULT_LABEL[r]}
+                    </option>
+                  ))}
+                </select>
+              )}
+              <button
+                type="button"
+                onClick={() => onChange(steps.filter((s) => s.tag !== step.tag))}
+                aria-label={`Remove ${label(step.tag)}`}
+                className="rounded-full p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground"
+              >
+                <X className="size-4" aria-hidden />
+              </button>
+            </li>
+          ))}
+        </ol>
+      )}
+      {remaining.length > 0 && (
+        <span className="relative inline-flex min-h-10 items-center gap-1 self-start rounded-full border border-dashed px-3 text-sm text-muted-foreground">
+          <Plus className="size-4" aria-hidden />
+          {steps.length === 0 ? "None noted. Add" : "Add"}
+          <select
+            aria-label="Add something you tried"
+            className="absolute inset-0 cursor-pointer opacity-0"
+            value=""
+            onChange={(e) => e.target.value && onChange([...steps, { tag: e.target.value, result: "unknown" }])}
+          >
+            <option value="">Add</option>
+            {remaining.map((o) => (
+              <option key={o} value={o}>
+                {label(o)}
+              </option>
+            ))}
+          </select>
+        </span>
+      )}
     </div>
   );
 }
@@ -237,7 +304,10 @@ export function ConfirmCard({
           <ChipField values={record.contextBefore} options={VOCAB.contextBefore} addLabel="Add" onChange={(v) => update("contextBefore", { contextBefore: v })} />
         </Field>
         <Field name="responseTried" review={needs("responseTried")}>
-          <ChipField values={record.responseTried} options={VOCAB.responseTried} addLabel="Add" onChange={(v) => update("responseTried", { responseTried: v })} />
+          <ResponsesField
+            steps={record.responses ?? record.responseTried.map((tag) => ({ tag, result: "unknown" as const }))}
+            onChange={(steps) => update("responseTried", { responses: steps, responseTried: steps.map((s) => s.tag) })}
+          />
         </Field>
 
         <div className="grid grid-cols-2 gap-2">
