@@ -113,7 +113,7 @@ export default function CheckInPage() {
             rows={4}
           />
         </div>
-        <LanguagePicker disabled={speech.listening || busy} />
+        <LanguagePicker disabled={busy} />
         {speech.error ? (
           <p role="status" className="text-sm text-amber-900">{speech.error}</p>
         ) : !speech.supported ? (

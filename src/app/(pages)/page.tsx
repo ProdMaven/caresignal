@@ -133,7 +133,7 @@ function LogScreen({ ctx }: { ctx: PersonContext }) {
             />
           </div>
         </div>
-        <LanguagePicker disabled={speech.listening || parsing} />
+        <LanguagePicker disabled={parsing} />
         <p className="text-sm text-muted-foreground">
           Speak or type in your own language. The log entry is filled in for you in English so everyone caring for{" "}
           {person?.displayName ?? "them"} can read it.

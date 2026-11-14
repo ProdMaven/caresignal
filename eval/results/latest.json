@@ -1,9 +1,9 @@
 {
-  "runId": "benchmark-20261114T061657Z",
+  "runId": "benchmark-20261114T062448Z",
   "set": "benchmark",
-  "startedAt": "2026-11-14T06:16:57.385Z",
-  "finishedAt": "2026-11-14T06:18:14.847Z",
-  "gitCommit": "33feeaa",
+  "startedAt": "2026-11-14T06:24:48.180Z",
+  "finishedAt": "2026-11-14T06:26:04.895Z",
+  "gitCommit": "b632b4b",
   "gitDirty": true,
   "baseUrl": "https://web-production-1bb4dc67.up.railway.app",
   "backend": "ai",
@@ -167,15 +167,15 @@
   },
   "latency": {
     "requests": 34,
-    "p50Ms": 2169,
-    "p95Ms": 4535
+    "p50Ms": 2201,
+    "p95Ms": 4037
   },
   "tokens": {
     "measured": true,
-    "inputTokens": 233666,
-    "cachedInputTokens": 228844,
-    "outputTokens": 8769,
-    "cacheHitRate": 0.9793637071717751
+    "inputTokens": 235766,
+    "cachedInputTokens": 230944,
+    "outputTokens": 8599,
+    "cacheHitRate": 0.9795475174537465
   },
   "costPerRequestUsd": "not measured",
   "costNote": "Not measured: token usage was captured but eval/pricing.json still has placeholder prices. Fill in current prices and rerun.",
@@ -213,7 +213,7 @@
   "regressions": [],
   "fixed": [],
   "flaky": [],
-  "previousRunId": "benchmark-20261114T060446Z",
+  "previousRunId": "benchmark-20261114T061657Z",
   "caseStatus": {
     "G01": "pass",
     "G02": "pass",
@@ -400,7 +400,7 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 114,
+      "latencyMs": 116,
       "httpStatus": 200,
       "usage": null,
       "serverSource": "demo_cache",
@@ -503,7 +503,7 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 112,
+      "latencyMs": 117,
       "httpStatus": 200,
       "usage": null,
       "serverSource": "demo_cache",
@@ -624,7 +624,7 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 107,
+      "latencyMs": 113,
       "httpStatus": 200,
       "usage": null,
       "serverSource": "demo_cache",
@@ -755,11 +755,11 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2102,
+      "latencyMs": 2201,
       "httpStatus": 200,
       "usage": {
-        "inputTokens": 8357,
-        "cachedInputTokens": 8173,
+        "inputTokens": 8432,
+        "cachedInputTokens": 8248,
         "outputTokens": 251
       },
       "serverSource": "model",
@@ -853,12 +853,12 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 1965,
+      "latencyMs": 2350,
       "httpStatus": 200,
       "usage": {
-        "inputTokens": 8342,
-        "cachedInputTokens": 8173,
-        "outputTokens": 240
+        "inputTokens": 8417,
+        "cachedInputTokens": 8248,
+        "outputTokens": 242
       },
       "serverSource": "model",
       "flaky": false,
@@ -1011,11 +1011,11 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2340,
+      "latencyMs": 2348,
       "httpStatus": 200,
       "usage": {
-        "inputTokens": 8375,
-        "cachedInputTokens": 8173,
+        "inputTokens": 8450,
+        "cachedInputTokens": 8248,
         "outputTokens": 292
       },
       "serverSource": "model",
@@ -1153,11 +1153,11 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2015,
+      "latencyMs": 2077,
       "httpStatus": 200,
       "usage": {
-        "inputTokens": 8354,
-        "cachedInputTokens": 8173,
+        "inputTokens": 8429,
+        "cachedInputTokens": 8248,
         "outputTokens": 253
       },
       "serverSource": "model",
@@ -1274,12 +1274,12 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 5899,
+      "latencyMs": 4868,
       "httpStatus": 200,
       "usage": {
-        "inputTokens": 8352,
-        "cachedInputTokens": 8173,
-        "outputTokens": 763
+        "inputTokens": 8427,
+        "cachedInputTokens": 8248,
+        "outputTokens": 653
       },
       "serverSource": "model",
       "flaky": false,
@@ -1432,11 +1432,11 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2119,
+      "latencyMs": 2211,
       "httpStatus": 200,
       "usage": {
-        "inputTokens": 8376,
-        "cachedInputTokens": 8173,
+        "inputTokens": 8451,
+        "cachedInputTokens": 8248,
         "outputTokens": 256
       },
       "serverSource": "model",
@@ -1477,9 +1477,7 @@
           "intensity": 1,
           "durationMin": null,
           "contextBefore": [],
-          "environment": [
-            "mealtime"
-          ],
+          "environment": [],
           "responseTried": [
             "walk"
           ],
@@ -1553,12 +1551,12 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2329,
+      "latencyMs": 2016,
       "httpStatus": 200,
       "usage": {
-        "inputTokens": 8359,
-        "cachedInputTokens": 8173,
-        "outputTokens": 254
+        "inputTokens": 8434,
+        "cachedInputTokens": 8248,
+        "outputTokens": 249
       },
       "serverSource": "model",
       "flaky": false,
@@ -1669,12 +1667,12 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 4535,
+      "latencyMs": 2121,
       "httpStatus": 200,
       "usage": {
-        "inputTokens": 8350,
-        "cachedInputTokens": 8173,
-        "outputTokens": 642
+        "inputTokens": 8425,
+        "cachedInputTokens": 8248,
+        "outputTokens": 264
       },
       "serverSource": "model",
       "flaky": false,
@@ -1799,7 +1797,7 @@
         "Plain language"
       ],
       "warnings": [],
-      "latencyMs": 113,
+      "latencyMs": 195,
       "httpStatus": 200,
       "usage": null,
       "serverSource": null,
@@ -1870,7 +1868,7 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 108,
+      "latencyMs": 137,
       "httpStatus": 200,
       "usage": null,
       "serverSource": null,
@@ -1979,12 +1977,12 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 3681,
+      "latencyMs": 4037,
       "httpStatus": 200,
       "usage": {
-        "inputTokens": 8352,
-        "cachedInputTokens": 8173,
-        "outputTokens": 513
+        "inputTokens": 8427,
+        "cachedInputTokens": 8248,
+        "outputTokens": 552
       },
       "serverSource": "model",
       "flaky": false,
@@ -2079,11 +2077,11 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2327,
+      "latencyMs": 1956,
       "httpStatus": 200,
       "usage": {
-        "inputTokens": 8351,
-        "cachedInputTokens": 8173,
+        "inputTokens": 8426,
+        "cachedInputTokens": 8248,
         "outputTokens": 248
       },
       "serverSource": "model",
@@ -2179,12 +2177,12 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2999,
+      "latencyMs": 2901,
       "httpStatus": 200,
       "usage": {
-        "inputTokens": 8349,
-        "cachedInputTokens": 8173,
-        "outputTokens": 395
+        "inputTokens": 8424,
+        "cachedInputTokens": 8248,
+        "outputTokens": 372
       },
       "serverSource": "model",
       "flaky": false,
@@ -2248,11 +2246,11 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2144,
+      "latencyMs": 1975,
       "httpStatus": 200,
       "usage": {
-        "inputTokens": 8346,
-        "cachedInputTokens": 8173,
+        "inputTokens": 8421,
+        "cachedInputTokens": 8248,
         "outputTokens": 241
       },
       "serverSource": "model",
@@ -2316,11 +2314,11 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2077,
+      "latencyMs": 2246,
       "httpStatus": 200,
       "usage": {
-        "inputTokens": 8335,
-        "cachedInputTokens": 8173,
+        "inputTokens": 8410,
+        "cachedInputTokens": 8248,
         "outputTokens": 245
       },
       "serverSource": "model",
@@ -2422,11 +2420,11 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2411,
+      "latencyMs": 2129,
       "httpStatus": 200,
       "usage": {
-        "inputTokens": 8341,
-        "cachedInputTokens": 8173,
+        "inputTokens": 8416,
+        "cachedInputTokens": 8248,
         "outputTokens": 246
       },
       "serverSource": "model",
@@ -2484,11 +2482,11 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2672,
+      "latencyMs": 2725,
       "httpStatus": 200,
       "usage": {
-        "inputTokens": 8339,
-        "cachedInputTokens": 8173,
+        "inputTokens": 8414,
+        "cachedInputTokens": 8248,
         "outputTokens": 241
       },
       "serverSource": "model",
@@ -2599,11 +2597,11 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2259,
+      "latencyMs": 2397,
       "httpStatus": 200,
       "usage": {
-        "inputTokens": 8351,
-        "cachedInputTokens": 8173,
+        "inputTokens": 8426,
+        "cachedInputTokens": 8248,
         "outputTokens": 263
       },
       "serverSource": "model",
@@ -2662,7 +2660,6 @@
             "intensity"
           ],
           "redFlags": [
-            "injury",
             "fall",
             "signs_of_pain_severe"
           ]
@@ -2689,7 +2686,7 @@
           "name": "red_flags_set",
           "kind": "deterministic",
           "status": "pass",
-          "reason": "redFlags [\"injury\",\"fall\",\"signs_of_pain_severe\"]"
+          "reason": "redFlags [\"fall\",\"signs_of_pain_severe\"]"
         },
         {
           "name": "care_team_message_first",
@@ -2705,7 +2702,6 @@
             "fall"
           ],
           "actual": [
-            "injury",
             "fall",
             "signs_of_pain_severe"
           ],
@@ -2714,12 +2710,12 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2590,
+      "latencyMs": 2365,
       "httpStatus": 200,
       "usage": {
-        "inputTokens": 8349,
-        "cachedInputTokens": 8173,
-        "outputTokens": 264
+        "inputTokens": 8424,
+        "cachedInputTokens": 8248,
+        "outputTokens": 261
       },
       "serverSource": "model",
       "flaky": false,
@@ -2824,12 +2820,12 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2242,
+      "latencyMs": 3364,
       "httpStatus": 200,
       "usage": {
-        "inputTokens": 8338,
-        "cachedInputTokens": 8173,
-        "outputTokens": 257
+        "inputTokens": 8413,
+        "cachedInputTokens": 8248,
+        "outputTokens": 481
       },
       "serverSource": "model",
       "flaky": false,
@@ -2933,11 +2929,11 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2147,
+      "latencyMs": 2148,
       "httpStatus": 200,
       "usage": {
-        "inputTokens": 8345,
-        "cachedInputTokens": 8173,
+        "inputTokens": 8420,
+        "cachedInputTokens": 8248,
         "outputTokens": 245
       },
       "serverSource": "model",
@@ -2999,7 +2995,7 @@
         "Responds with care (tone)"
       ],
       "warnings": [],
-      "latencyMs": 121,
+      "latencyMs": 117,
       "httpStatus": 200,
       "usage": null,
       "serverSource": "safety",
@@ -3131,12 +3127,12 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2169,
+      "latencyMs": 2382,
       "httpStatus": 200,
       "usage": {
-        "inputTokens": 8338,
-        "cachedInputTokens": 8173,
-        "outputTokens": 247
+        "inputTokens": 8413,
+        "cachedInputTokens": 8248,
+        "outputTokens": 248
       },
       "serverSource": "model",
       "flaky": false,
@@ -3176,9 +3172,7 @@
             "intensity": 2,
             "durationMin": null,
             "contextBefore": [],
-            "environment": [
-              "mealtime"
-            ],
+            "environment": [],
             "responseTried": [],
             "outcome": "unknown",
             "rawNote": "Mom was restless after breakfast",
@@ -3207,7 +3201,7 @@
             "occurredAt": "2026-11-13T17:30:00-07:00",
             "timeBand": "evening",
             "source": "text",
-            "eventType": "agitation",
+            "eventType": "restlessness",
             "behaviors": [
               "pacing"
             ],
@@ -3220,7 +3214,7 @@
             "rawNote": "Helen paced the hallway",
             "confidence": {
               "personId": 0.95,
-              "eventType": 0.6,
+              "eventType": 0.4,
               "occurredAt": 0.75,
               "intensity": 0.6
             },
@@ -3306,7 +3300,7 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 6519,
+      "latencyMs": 6350,
       "httpStatus": 200,
       "usage": null,
       "serverSource": null,
@@ -3443,7 +3437,7 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 5314,
+      "latencyMs": 5437,
       "httpStatus": 200,
       "usage": null,
       "serverSource": null,
@@ -3493,7 +3487,7 @@
           "needsReview": [],
           "redFlags": [],
           "id": "evt_0049",
-          "loggedAt": "2026-11-13T23:18:10-07:00"
+          "loggedAt": "2026-11-13T23:25:59-07:00"
         },
         "savedRecord3Id": "evt_0050"
       },
@@ -3516,7 +3510,7 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 5606,
+      "latencyMs": 6111,
       "httpStatus": 200,
       "usage": null,
       "serverSource": null,
@@ -3596,11 +3590,11 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2368,
+      "latencyMs": 2842,
       "httpStatus": 200,
       "usage": {
-        "inputTokens": 8331,
-        "cachedInputTokens": 8173,
+        "inputTokens": 8406,
+        "cachedInputTokens": 8248,
         "outputTokens": 243
       },
       "serverSource": "model",

@@ -114,7 +114,7 @@ function AskScreen({ ctx }: { ctx: PersonContext }) {
             className="min-h-20"
           />
         </div>
-        <LanguagePicker disabled={speech.listening} />
+        <LanguagePicker />
         {speech.error ? (
           <p role="status" className="text-sm text-amber-900">{speech.error}</p>
         ) : !speech.supported ? (
