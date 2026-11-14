@@ -47,6 +47,7 @@ export async function seed(client?: PrismaClient): Promise<SeedResult> {
           contextBefore: JSON.stringify(e.contextBefore),
           environment: JSON.stringify(e.environment),
           responseTried: JSON.stringify(e.responseTried),
+          responses: JSON.stringify(e.responses ?? []),
           confidence: JSON.stringify(e.confidence),
           needsReview: JSON.stringify(e.needsReview),
           redFlags: JSON.stringify(e.redFlags),

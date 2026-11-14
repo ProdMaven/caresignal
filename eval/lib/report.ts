@@ -181,7 +181,7 @@ export function writeReport(root: string, set: SetName, history: RunSummary[], r
       "## Headline (for the submission form)",
       `- Headline eval score: ${rate(run.totals)} of cases pass, latest run, on the ${run.backendLabel}${run.backend === "mock" || run.backend === "rules" ? ". Do not submit this as the model score" : ""}`,
       `- Golden field accuracy: ${golden ? `${pct(golden.accuracy)} (${golden.correct}/${golden.total} expected fields)` : "n/a"}`,
-      `- Examples: ${run.totals.total} in this run (30 hand-written and hand-reviewed in \`eval/cases.json\`; variants not added yet)`,
+      `- Examples: ${run.totals.total} in this run (30 hand-written and hand-reviewed, plus 14 real-length notes drafted by Claude and pending human review, in \`eval/cases.json\`)`,
       "",
       backendSection(run),
       "",

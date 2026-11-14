@@ -1,5 +1,5 @@
 // Small fetch wrapper for client components. Throws an Error with plain words on failure.
-const TIMEOUT_MS = 20_000;
+const TIMEOUT_MS = 30_000; // long spoken notes can take the formatter up to about 20 s
 
 export async function fetchJson<T>(url: string, init?: RequestInit): Promise<T> {
   const controller = new AbortController();

@@ -22,6 +22,10 @@ export const draftRecordSchema = z.object({
   contextBefore: z.array(z.string()),
   environment: z.array(z.string()),
   responseTried: z.array(z.string()),
+  responses: z
+    .array(z.object({ tag: z.string().min(1), result: z.enum(["helped", "helped_a_little", "did_not_help", "unknown"]) }))
+    .max(20)
+    .optional(),
   outcome: outcomeSchema,
   rawNote: z.string().max(2000),
   confidence: z.record(z.string(), z.number()),
@@ -86,12 +90,13 @@ export const EVENT_TYPES = {
 export const BEHAVIORS = [
   "pacing", "calling_out", "crying", "hitting", "kicking", "throwing", "screaming", "rocking", "covering_ears",
   "withdrawing", "repetitive_speech", "grabbing", "biting", "running_off", "head_banging",
+  "body_movement", "self_biting", "self_hitting",
 ] as const;
 
 export const CONTEXT_BEFORE = [
   "skipped_meal", "poor_sleep", "routine_change", "transition", "visitor", "toileting_need", "pain_signs",
   "medication_time", "bathing", "new_person", "screen_time_ended", "loud_noise", "crowd", "clothing_texture",
-  "waiting", "denied_request",
+  "waiting", "denied_request", "woke_from_sleep",
 ] as const;
 
 export const ENVIRONMENT = [
@@ -101,7 +106,12 @@ export const ENVIRONMENT = [
 export const RESPONSE_TRIED = [
   "offered_snack", "offered_drink", "quiet_space", "reassurance", "redirect_activity", "music", "toileting_assist",
   "pain_check_reported", "sensory_tool", "visual_schedule", "deep_pressure", "break_time", "walk",
+  "cold_or_ice", "massage", "blocked_behavior", "remedy_given",
 ] as const;
+
+export const STEP_RESULTS = ["helped", "helped_a_little", "did_not_help", "unknown"] as const;
+// Recorded as a fact only. Never ranked, suggested, or counted as a strategy.
+export const RECORD_ONLY_RESPONSES: readonly string[] = ["remedy_given"];
 
 // Time words the formatter may report. Code turns them into a clock time (src/lib/formatter.ts).
 export const TIME_ANCHORS = [
@@ -139,6 +149,20 @@ export const formatterReplySchema = z.object({
   contextBefore: looseStrings,
   environment: looseStrings,
   responseTried: looseStrings,
+  // What was tried, in order, each with its result. Bad items are dropped, never fatal.
+  responses: z
+    .array(z.unknown())
+    .catch([])
+    .transform((items) =>
+      items.flatMap((item) => {
+        if (typeof item !== "object" || item === null) return [];
+        const { tag, result } = item as { tag?: unknown; result?: unknown };
+        if (typeof tag !== "string") return [];
+        const ok = typeof result === "string" && (STEP_RESULTS as readonly string[]).includes(result);
+        return [{ tag: tag.trim().toLowerCase(), result: (ok ? result : "unknown") as (typeof STEP_RESULTS)[number] }];
+      }),
+    )
+    .default([]),
   intensity: z.number().catch(2),
   durationMin: z.number().nullable().catch(null),
   outcome: outcomeSchema.catch("unknown"),

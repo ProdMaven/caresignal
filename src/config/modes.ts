@@ -118,11 +118,12 @@ export const VOCAB = {
   behaviors: [
     "pacing", "calling_out", "crying", "hitting", "kicking", "throwing", "screaming", "rocking",
     "covering_ears", "withdrawing", "repetitive_speech", "grabbing", "biting", "running_off", "head_banging",
+    "body_movement", "self_biting", "self_hitting",
   ],
   contextBefore: [
     "skipped_meal", "poor_sleep", "routine_change", "transition", "visitor", "toileting_need", "pain_signs",
     "medication_time", "bathing", "new_person", "screen_time_ended", "loud_noise", "crowd", "clothing_texture",
-    "waiting", "denied_request",
+    "waiting", "denied_request", "woke_from_sleep",
   ],
   environment: [
     "caregiver_handoff", "noisy", "crowded", "bright_lights", "new_place", "outing", "school", "car",
@@ -131,7 +132,7 @@ export const VOCAB = {
   responseTried: [
     "offered_snack", "offered_drink", "quiet_space", "reassurance", "redirect_activity", "music",
     "toileting_assist", "pain_check_reported", "sensory_tool", "visual_schedule", "deep_pressure",
-    "break_time", "walk",
+    "break_time", "walk", "cold_or_ice", "massage", "blocked_behavior", "remedy_given",
   ],
 } as const;
 
@@ -155,6 +156,15 @@ const LABEL_OVERRIDES: Record<string, string> = {
   signs_of_pain_severe: "Signs of severe pain",
   not_eating_days: "Not eating for days",
   sudden_change: "Sudden change",
+  biting: "Biting others",
+  body_movement: "Flapping or moving arms or legs",
+  self_biting: "Biting themselves",
+  self_hitting: "Hitting themselves",
+  woke_from_sleep: "Woke from sleep",
+  cold_or_ice: "Something cold or ice",
+  massage: "Massage or rubbing",
+  blocked_behavior: "Held or blocked the movement",
+  remedy_given: "Gave a remedy or medicine",
 };
 
 // Plain-words label for any vocabulary value or event type.
@@ -214,3 +224,14 @@ export const FIELD_LABEL: Record<string, string> = {
 export const GUARDRAIL_LINE = "Supports caregivers. Does not diagnose.";
 export const STRATEGY_DISCLAIMER = "Based on family logs, not a clinical trial. Discuss with your care team.";
 export const MIN_FAMILIES = 5;
+
+export const STEP_RESULT_LABEL: Record<string, string> = {
+  helped: "Helped",
+  helped_a_little: "Helped a little",
+  did_not_help: "Did not help",
+  unknown: "Not sure",
+};
+
+export const STEP_RESULTS = ["helped", "helped_a_little", "did_not_help", "unknown"] as const;
+// Recorded as a fact only: never ranked, suggested, or counted as something that helped.
+export const RECORD_ONLY_RESPONSES: readonly string[] = ["remedy_given"];
