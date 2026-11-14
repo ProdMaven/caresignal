@@ -47,7 +47,11 @@ export interface ParseLogRequest {
   now: string; // ISO, client clock, used to resolve "around 3"
 }
 export interface ParseLogResponse {
-  draft: Omit<LogRecord, "id" | "loggedAt">;
+  // event: a normal log. caregiver_distress: the speaker is in distress (show care + 988, do not log).
+  // out_of_scope: a question the app does not answer (diagnosis, medication, placement); show message, log any event part only.
+  kind: "event" | "caregiver_distress" | "out_of_scope";
+  message: string | null; // safety or scope message shown before anything else
+  draft: Omit<LogRecord, "id" | "loggedAt"> | null;
   unmatchedPerson: boolean; // true if name not in roster
   candidates: Person[]; // if ambiguous
 }

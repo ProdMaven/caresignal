@@ -37,7 +37,9 @@ Next.js App Router + TypeScript, Tailwind + shadcn/ui, Anthropic SDK server-side
 - "Supports caregivers. Does not diagnose." on every insight screen.
 - Suggestions are "possible things to check", never causes or diagnoses.
 - No medication, restraint, or clinician-supervised strategies anywhere.
-- Red flags (self-injury, sudden major change, signs of pain or illness, injury) always produce "Please contact your doctor or care team" before anything else.
+- Red flags (self-injury, sudden major change, signs of pain or illness, injury) always produce "Please contact your doctor or care team" before anything else. Possible emergencies (stroke signs, serious fall) say to call 911 now.
+- If the caregiver themselves sounds in distress ("I can't do this anymore"), respond with care and share the 988 Suicide and Crisis Lifeline. Do not log it as a patient event.
+- Benchmark: docs/EVALS.md and evals/cases.json. Out of scope and crisis cases must pass at 100%.
 - Community statistics show only when 5 or more families contributed, with the family count visible.
 - Scores carry: "Based on family logs, not a clinical trial."
 - Autism mode language: "autistic child" or "child", focus on needs and triggers, never on compliance or "fixing behavior".

@@ -40,7 +40,7 @@ Every route returns a mock from `src/mocks/` when `USE_MOCKS=true`, so lanes nev
 
 ## Lane 2: AI features
 - [ ] T-L2-1 `src/lib/ai.ts` callClaude with caching, timeout, retry, usage logging (45m) -> M1
-- [ ] T-L2-2 Formatter prompt + /api/log with zod validation, roster matching, time resolution (90m) -> M2
+- [ ] T-L2-2 Formatter prompt + /api/log with zod validation, roster matching, time resolution, red flags, and kind (event / caregiver_distress / out_of_scope) per docs/EVALS.md (90m) -> M2
 - [ ] T-L2-3 Demo cache for D1, D2, A1 phrases (30m) -> M2
 - [ ] T-L2-4 Pattern summary prompt (numbers in, one line out) (45m) -> M2
 - [ ] T-L2-5 /api/ask: retrieve person events + patterns, grounded answer, red-flag rule first (90m) -> M3
@@ -53,12 +53,13 @@ Every route returns a mock from `src/mocks/` when `USE_MOCKS=true`, so lanes nev
 - [ ] T-L3-4 patterns.ts per DATA_MODEL rule + /api/patterns (75m) -> M2
 - [ ] T-L3-5 scoring.ts per SCORING + /api/strategies (60m) -> M3
 - [ ] T-L3-6 people/events routes (45m) -> M2
-- [ ] T-L3-7 evals/cases.json: 10 voice phrases with expected fields, 5 Ask questions incl. 1 red flag (45m) -> M3
+- [x] T-L3-7 evals/cases.json: 30-case starter benchmark written by PM (see docs/EVALS.md)
 
 ## Lane 4: PM, pitch, validation
 - [ ] T-L4-1 Repo, Railway project, invites, ANTHROPIC_API_KEY in Railway (30m)
 - [ ] T-L4-2 3 to 5 interviews at the event, quotes in docs/research/ (ongoing)
-- [ ] T-L4-3 Run eval-agent at M3, qa-agent at M3 and M4
+- [ ] T-L4-3 Run eval-agent at M2 and M3 (runner evals/run.ts, report per type), qa-agent at M3 and M4
+- [ ] T-L4-6 Grow benchmark toward 100: Claude-drafted variants, human-checked, plus every real failure as a regression case
 - [ ] T-L4-4 pitch-agent: PITCH.md, ARCHITECTURE.md, deck
 - [ ] T-L4-5 Backup demo video at M4, 3 timed rehearsals on demo morning
 
