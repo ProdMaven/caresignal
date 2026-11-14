@@ -59,6 +59,7 @@ Every route returns a mock from `src/mocks/` when `USE_MOCKS=true`, so lanes nev
 - [ ] T-L4-1 Repo, Railway project, invites, ANTHROPIC_API_KEY in Railway (30m)
 - [ ] T-L4-2 3 to 5 interviews at the event, quotes in docs/research/ (ongoing)
 - [ ] T-L4-3 Run eval-agent at M2 and M3 (runner evals/run.ts, report per type), qa-agent at M3 and M4
+- [ ] T-L4-7 Red-team run on evals/redteam.json (59 prompts): pass rate per category, name each failure, fix, rerun; before/after numbers for the slide
 - [ ] T-L4-6 Grow benchmark toward 100: Claude-drafted variants, human-checked, plus every real failure as a regression case
 - [ ] T-L4-4 pitch-agent: PITCH.md, ARCHITECTURE.md, deck
 - [ ] T-L4-5 Backup demo video at M4, 3 timed rehearsals on demo morning
