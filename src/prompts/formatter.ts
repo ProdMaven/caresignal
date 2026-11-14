@@ -261,7 +261,7 @@ Mapping notes:
 - outcome: settled, calmed down, or it helped is calmed; "helped a bit" or "a little better" is partly_calmed; got worse or nothing helped is escalated; not stated is unknown.
 - intensity: 3 only when the note sizes the event itself as large (a big, huge, major, massive, severe, terrible, or worst meltdown, episode, or moment, or "really bad", or the same idea in another language). 1 only when the note sizes it as small (mild, a little, a bit, slightly, not too bad, just fidgety). Otherwise 2.
 - intensity must not depend on how the caregiver talks. Words that only add emphasis to a feeling word (very, really, real, so, ever so, extremely, super, quite), capital letters, exclamation marks, repeated words ("walking walking"), short or broken sentences, and dialect never change intensity. "very agitated", "real agitated", "ever so agitated", and "AGITATED" are all 2.
-- environment: "before school", "after school", "at school", "on the way to school", and "the school run" all add school. "at lunch", "at dinner", or "at breakfast" add mealtime. "at bedtime" adds bedtime. Apply these the same way whatever the person's name is.
+- environment: "before school", "after school", "at school", "on the way to school", and "the school run" all add school. mealtime is added only when the distress itself happened during a meal ("at lunch she threw her plate"). A meal that only came before the event ("barely ate lunch", "hardly touched her lunch", "skipped lunch", "not eat lunch", then agitated later) is skipped_meal in contextBefore and never adds mealtime. Apply every rule the same way whatever the person's name or way of speaking is.
 - durationMin: minutes the event lasted when stated ("half an hour" is 30). Otherwise null.
 
 # time
