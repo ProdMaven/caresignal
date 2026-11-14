@@ -2,10 +2,21 @@
 
 Read this first, then CLAUDE.md, then the docs it lists. Everything below is the state at handoff.
 
-## Where we are
-- Planning is done; no app code exists yet. `main` has docs, contracts, the agent kit, a 30-case benchmark, and a 59-prompt red-team set.
-- No teammate branches or commits yet. Lane 1 has not scaffolded.
+## Where we are (updated Sat Nov 14)
+- Walking skeleton is built on branch `claude/caresignal-buildathon-setup-6ss2v0`: all 5 screens, every contract route on mocks (`USE_MOCKS=true`), text box next to the mic, "Reset demo data", seed on startup, invitation-only entry, caregiver intake profile.
+- Railway project `caresignal`, service `web`, deploys from that branch (switch to `main` after merge). URL: https://web-production-1bb4dc67.up.railway.app. Judge invite code: `GTRANSFORMER-JUDGE`.
+- Research report: `docs/research/autism_patterns_by_age_gender.md` (figures from abstracts and summaries, not full texts).
+- Not done: real AI (`/api/log`, `/api/ask`), real data routes (non-mock branches return 501), eval runner, interviews, pitch. `ANTHROPIC_API_KEY` is not set in Railway.
 - Deadline: Sunday Nov 15, 12 PM (see docs/DELIVERABLES.md). Judging rubric and gates: docs/JUDGING.md.
+
+## Open issues found during the scaffold and research (PM to decide)
+- Score 81 for the snack strategy cannot come from the SCORING formula (27 families, 74% improved, 42% drop tops out near 74 after shrinkage). Mocks hardcode 81 and 84. Change the formula or the demo number before Lane 3 computes real scores.
+- Saving D1 in the demo moves Helen's pattern from 6 of 8 to 7 of 9. If the script should read "6 of 8" after the save, seed 5 of 7.
+- Emergency message starts "Call 911 now." and names the care team second; CLAUDE.md says red flags lead with the care team line. Confirm the order for emergencies.
+- "Held 6 weeks" in the demo script is not in `StrategyCard`; the card shows the share still holding after 4 weeks.
+- Research: weighted blanket is seeded as Promising but the one randomized trial found no sleep benefit; visual schedules fit transition and routine-change triggers better than poor sleep; `medication_time` is still a context tag.
+- The invite gate returns 401 to scripts without the cookie; the eval runner must send the `x-invite-code` header.
+- Mock people added through intake live in memory and are cleared by "Reset demo data" or a redeploy.
 
 ## Decisions made
 - Product: CareSignal, one engine for two communities (dementia, autism). Users are anyone who lives with or cares for the person (parents, adult children, spouses, siblings, home aides).
