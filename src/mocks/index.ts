@@ -82,3 +82,12 @@ export function mockCreatePerson(req: CreatePersonRequest): CreatePersonResponse
 export { feedbackFor, recordFeedback, strategyExists } from "./store";
 
 export { addJournalEntry, listJournal } from "./store";
+
+import { buildOverview } from "./overview";
+import { listJournal as journalFor } from "./store";
+import type { OverviewResponse } from "../lib/types";
+
+// GET /api/overview
+export function mockOverview(personId: string, loggedBy: string, days: 7 | 30): OverviewResponse {
+  return buildOverview(personId, days, allEvents(), journalFor(loggedBy));
+}

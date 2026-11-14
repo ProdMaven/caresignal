@@ -26,6 +26,9 @@ export default function PersonPage() {
       </div>
       <GuardrailBanner />
       <PersonPicker ctx={ctx} label="Showing" />
+      <Button asChild variant="outline" size="sm" className="self-start">
+        <Link href="/overview">Weekly and monthly overview</Link>
+      </Button>
 
       <section aria-labelledby="patterns-heading" className="flex flex-col gap-3">
         <h2 id="patterns-heading" className="text-xl font-semibold">

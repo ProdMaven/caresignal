@@ -193,3 +193,17 @@ export interface JournalResponse {
 }
 // GET /api/journal?loggedBy=
 export interface JournalListResponse { entries: JournalEntry[] } // newest first
+
+// GET /api/overview?personId=&loggedBy=&days=7|30  (weekly or monthly overview; counts only, computed in code)
+export interface OverviewCount { key: string; count: number }
+export interface OverviewResponse {
+  personId: string;
+  days: 7 | 30;
+  hardMoments: number; // logged events in the period
+  previousHardMoments: number | null; // same-length period before; null when the logs do not go back that far
+  daysWithNone: number; // days in the period with no logged event
+  byTimeBand: { timeBand: TimeBand; count: number }[]; // all five bands, in day order
+  topContexts: OverviewCount[]; // contextBefore tags, most frequent first
+  whatHelped: { key: string; tried: number; calmed: number }[]; // responseTried tags and how often the outcome was calmed
+  journal: { entries: number; moods: { mood: Mood; count: number }[] }; // the caregiver's own journal in the period
+}

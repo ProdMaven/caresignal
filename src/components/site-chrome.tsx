@@ -70,7 +70,8 @@ export function BottomNav() {
       <ul className="mx-auto flex w-full max-w-xl">
         {NAV.map(({ href, label, icon: Icon }) => {
           const active =
-            href === "/" ? pathname === "/" : pathname.startsWith(href) || (href === "/checkin" && pathname.startsWith("/journal"));
+            href === "/" ? pathname === "/" : pathname.startsWith(href) || (href === "/checkin" && pathname.startsWith("/journal")) ||
+            (href === "/person" && pathname.startsWith("/overview"));
           return (
             <li key={href} className="flex-1">
               <Link
