@@ -3,6 +3,7 @@
 import { useCallback, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Send } from "lucide-react";
+import { LanguagePicker } from "@/components/language-picker";
 import { MicButton } from "@/components/mic-button";
 import { strategiesHref } from "@/components/pattern-card";
 import { PersonPicker, usePersonContext, type PersonContext } from "@/components/person-picker";
@@ -113,6 +114,7 @@ function AskScreen({ ctx }: { ctx: PersonContext }) {
             className="min-h-20"
           />
         </div>
+        <LanguagePicker disabled={speech.listening} />
         {speech.error ? (
           <p role="status" className="text-sm text-amber-900">{speech.error}</p>
         ) : !speech.supported ? (

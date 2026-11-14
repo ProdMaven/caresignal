@@ -5,6 +5,7 @@ import Link from "next/link";
 import { CircleCheck, Send } from "lucide-react";
 import { ConfirmCard } from "@/components/confirm-card";
 import { IntakeForm } from "@/components/intake-form";
+import { LanguagePicker } from "@/components/language-picker";
 import { MatchAfterSave } from "@/components/match-after-save";
 import { MicButton } from "@/components/mic-button";
 import { PersonPicker, usePersonContext, type PersonContext } from "@/components/person-picker";
@@ -132,6 +133,11 @@ function LogScreen({ ctx }: { ctx: PersonContext }) {
             />
           </div>
         </div>
+        <LanguagePicker disabled={speech.listening || parsing} />
+        <p className="text-sm text-muted-foreground">
+          Speak or type in your own language. The log entry is filled in for you in English so everyone caring for{" "}
+          {person?.displayName ?? "them"} can read it.
+        </p>
         {speech.error ? (
           <p role="status" className="text-sm text-amber-900">{speech.error}</p>
         ) : !speech.supported ? (

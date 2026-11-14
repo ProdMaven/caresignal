@@ -4,6 +4,7 @@
 import { useCallback, useState } from "react";
 import Link from "next/link";
 import { HeartHandshake, Lock, Send } from "lucide-react";
+import { LanguagePicker } from "@/components/language-picker";
 import { MicButton } from "@/components/mic-button";
 import { SafetyMessage } from "@/components/safety-message";
 import { CardSkeleton, ErrorState } from "@/components/states";
@@ -110,6 +111,7 @@ export default function CheckInPage() {
             rows={4}
           />
         </div>
+        <LanguagePicker disabled={speech.listening || busy} />
         {speech.error ? (
           <p role="status" className="text-sm text-amber-900">{speech.error}</p>
         ) : !speech.supported ? (

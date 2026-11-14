@@ -3,6 +3,7 @@
 // Mode and selected person, kept in localStorage so they survive reloads and
 // follow the caregiver across screens.
 import { useCallback, useSyncExternalStore } from "react";
+import { DEFAULT_SPEECH_LANGUAGE, isSpeechLanguage, SPEECH_LANGUAGE_KEY } from "@/config/languages";
 import { DEFAULT_MODE, MODES } from "@/config/modes";
 import type { Mode, Person } from "@/lib/types";
 
@@ -69,4 +70,18 @@ export function useCaregiver(mode: Mode): [string, (id: string) => void] {
   const id = caregivers.find((c) => c.id === stored)?.id ?? caregivers[0].id;
   const setCaregiver = useCallback((next: string) => write(key, next), [key]);
   return [id, setCaregiver];
+}
+
+// The language the caregiver speaks into the mic. Shared by every screen with a mic.
+export function useSpeechLanguage(): [string, (code: string) => void] {
+  const stored = useStored(SPEECH_LANGUAGE_KEY);
+  const code = isSpeechLanguage(stored) ? stored : DEFAULT_SPEECH_LANGUAGE;
+  const setCode = useCallback((next: string) => write(SPEECH_LANGUAGE_KEY, next), []);
+  return [code, setCode];
+}
+
+// Read at the moment the mic starts, so a change applies to the next phrase.
+export function currentSpeechLanguage(): string {
+  const stored = read(SPEECH_LANGUAGE_KEY) ?? memory.get(SPEECH_LANGUAGE_KEY) ?? null;
+  return isSpeechLanguage(stored) ? stored : DEFAULT_SPEECH_LANGUAGE;
 }

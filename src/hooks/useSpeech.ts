@@ -2,6 +2,7 @@
 
 // Web Speech API hook: live interim text, final text, and a graceful fallback
 // when the browser has no speech recognition or the mic is blocked. Owner: Lane 1.
+import { currentSpeechLanguage } from "@/hooks/useAppState";
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 
 interface SpeechAlternative {
@@ -79,7 +80,7 @@ export function useSpeech(onFinal: (text: string) => void): UseSpeech {
     }
     recognitionRef.current?.abort();
     const recognition = new Ctor();
-    recognition.lang = "en-US";
+    recognition.lang = currentSpeechLanguage();
     recognition.continuous = false; // stops by itself after a pause
     recognition.interimResults = true;
     recognition.onresult = (event) => {
@@ -96,6 +97,8 @@ export function useSpeech(onFinal: (text: string) => void): UseSpeech {
         setError("The microphone is blocked. Please type your note instead.");
       } else if (event.error === "no-speech") {
         setError("I did not hear anything. Tap the mic and try again, or type your note.");
+      } else if (event.error === "language-not-supported") {
+        setError("This browser cannot listen in that language. Please pick another language or type your note.");
       } else if (event.error !== "aborted") {
         setError("Voice did not work this time. Please type your note instead.");
       }
