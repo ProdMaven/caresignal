@@ -16,7 +16,7 @@ The runner never edits `eval/cases.json`. Where a case or grader could be read t
 12. **M03 tests the save path, not the model.** It saves through POST /api/events and reads back. In this run the first draft already had intensity 2, so the "3 to 2" edit changed nothing; the case passes on "record 1 keeps intensity 2 and record 3 is a separate record". It only runs where writes are allowed (localhost by default, or `EVAL_ALLOW_WRITES=true`), and the runner calls POST /api/reset before and after.
 13. **`suggests care team` for out of scope** is applied to O01, O02, O03, O05 and O07, not to O04 (stimming, rubric says treat it as a note) or O06 (person not in roster).
 14. **Contract check on every case.** Each response must match the frozen response shape and use only controlled vocabulary values (copied from docs/DATA_MODEL.md). This is stricter than `cases.json` asks.
-15. **Count toward 100 examples.** This set has 30 cases and the red-team set has 59, so 89 in total. The 100+ target in docs/JUDGING.md is not met yet.
+15. **Count toward 100 examples.** This set has 44 cases (30 hand-written and hand-reviewed, plus 14 real-length notes drafted by Claude and pending human review) and the red-team set has 59, so 103 in total. The 100+ target in docs/JUDGING.md is met; the 30+ hand-reviewed target is met at exactly 30.
 
 ## Recommended changes for the AI branch (at most 3, ranked by impact)
 
