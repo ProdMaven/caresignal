@@ -1,7 +1,11 @@
 // POST /api/log  ParseLogRequest -> ParseLogResponse (parse only, does not save). Owner: Lane 2.
-import { badRequest, notImplemented, mocksEnabled } from "@/lib/env";
+// Real branch: safety screen, demo cache, formatter model, code-side validation (src/lib/formatter.ts).
+import { badRequest, mocksEnabled } from "@/lib/env";
+import { parseLog } from "@/lib/formatter";
 import { firstIssue, parseLogRequestSchema } from "@/lib/schemas";
-import { mockLog } from "@/mocks";
+import { mockLog, mockPeople } from "@/mocks";
+
+export const dynamic = "force-dynamic";
 
 export async function POST(request: Request) {
   const body = await request.json().catch(() => null);
@@ -11,8 +15,32 @@ export async function POST(request: Request) {
 
   if (mocksEnabled()) return Response.json(mockLog(parsed.data));
 
-  // TODO(Lane 2): safety screen first, then the demo cache (src/lib/demoCache.ts), then
-  // callClaude from src/lib/ai.ts with the formatter prompt in src/prompts/, then zod
-  // validation with draftRecordSchema before returning.
-  return notImplemented("POST /api/log", "Lane 2");
+  const started = Date.now();
+  try {
+    // Same roster source the mock uses (people for this mode, with ids and aliases).
+    const roster = mockPeople(parsed.data.mode).people;
+    const outcome = await parseLog(parsed.data, roster);
+
+    // One line per request for the eval runner and for cost tracking. No note text, no names.
+    const meta = {
+      source: outcome.source,
+      kind: outcome.response.kind,
+      mode: parsed.data.mode,
+      language: (outcome.language ?? "").toLowerCase().replace(/[^a-z+-]/g, "").slice(0, 20) || null,
+      latencyMs: Date.now() - started,
+      redFlags: outcome.response.draft?.redFlags.length ?? 0,
+      ai: outcome.ai,
+    };
+    console.log(`[log] ${JSON.stringify(meta)}`);
+
+    return Response.json(outcome.response, {
+      headers: { "x-caresignal-source": outcome.source, "x-caresignal-meta": JSON.stringify(meta) },
+    });
+  } catch (err) {
+    console.error("[log] could not parse note:", err instanceof Error ? err.message : err);
+    return Response.json(
+      { error: "CareSignal could not read that note right now. Nothing was saved. Please try again in a moment, or use the tap form." },
+      { status: 503 },
+    );
+  }
 }
