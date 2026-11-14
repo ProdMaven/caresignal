@@ -1,0 +1,247 @@
+[
+  {
+    "runId": "benchmark-20261114T051617Z",
+    "set": "benchmark",
+    "startedAt": "2026-11-14T05:16:17.274Z",
+    "finishedAt": "2026-11-14T05:16:17.604Z",
+    "gitCommit": "5100c04",
+    "gitDirty": true,
+    "baseUrl": "http://localhost:3333",
+    "backend": "mock",
+    "backendLabel": "MOCK baseline (keyword rules, not AI)",
+    "backendDetection": "fingerprint: /api/log returned the keyword mock's fixed confidence values for a probe note",
+    "serverMockMode": true,
+    "judge": {
+      "requested": false,
+      "available": false,
+      "model": null
+    },
+    "writesAllowed": true,
+    "casesFile": "eval/cases.json",
+    "casesSha256": "d18ecb7bac22736c8a150bfeaf941acf2cffab50f44a50fa4124b8295d064897",
+    "totals": {
+      "total": 30,
+      "pass": 15,
+      "fail": 14,
+      "notGraded": 1,
+      "error": 0,
+      "passRate": 0.5
+    },
+    "byGroup": {
+      "golden": {
+        "total": 13,
+        "pass": 4,
+        "fail": 8,
+        "notGraded": 1,
+        "error": 0,
+        "passRate": 0.3076923076923077
+      },
+      "out_of_scope": {
+        "total": 7,
+        "pass": 4,
+        "fail": 3,
+        "notGraded": 0,
+        "error": 0,
+        "passRate": 0.5714285714285714
+      },
+      "crisis": {
+        "total": 6,
+        "pass": 4,
+        "fail": 2,
+        "notGraded": 0,
+        "error": 0,
+        "passRate": 0.6666666666666666
+      },
+      "multi_log": {
+        "total": 3,
+        "pass": 2,
+        "fail": 1,
+        "notGraded": 0,
+        "error": 0,
+        "passRate": 0.6666666666666666
+      },
+      "regression": {
+        "total": 1,
+        "pass": 1,
+        "fail": 0,
+        "notGraded": 0,
+        "error": 0,
+        "passRate": 1
+      }
+    },
+    "fieldAccuracy": {
+      "overall": {
+        "correct": 53,
+        "total": 70,
+        "accuracy": 0.7571428571428571
+      },
+      "byGroup": {
+        "golden": {
+          "correct": 43,
+          "total": 54,
+          "accuracy": 0.7962962962962963
+        },
+        "out_of_scope": {
+          "correct": 1,
+          "total": 3,
+          "accuracy": 0.3333333333333333
+        },
+        "crisis": {
+          "correct": 3,
+          "total": 5,
+          "accuracy": 0.6
+        },
+        "multi_log": {
+          "correct": 5,
+          "total": 7,
+          "accuracy": 0.7142857142857143
+        },
+        "regression": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1
+        }
+      },
+      "byField": {
+        "behaviors": {
+          "correct": 2,
+          "total": 2,
+          "accuracy": 1
+        },
+        "contextBefore": {
+          "correct": 5,
+          "total": 9,
+          "accuracy": 0.5555555555555556
+        },
+        "durationMin": {
+          "correct": 3,
+          "total": 3,
+          "accuracy": 1
+        },
+        "eventType": {
+          "correct": 8,
+          "total": 9,
+          "accuracy": 0.8888888888888888
+        },
+        "intensity": {
+          "correct": 3,
+          "total": 3,
+          "accuracy": 1
+        },
+        "outcome": {
+          "correct": 3,
+          "total": 4,
+          "accuracy": 0.75
+        },
+        "personId": {
+          "correct": 12,
+          "total": 17,
+          "accuracy": 0.7058823529411765
+        },
+        "redFlags": {
+          "correct": 3,
+          "total": 6,
+          "accuracy": 0.5
+        },
+        "responseTried": {
+          "correct": 4,
+          "total": 5,
+          "accuracy": 0.8
+        },
+        "timeBand": {
+          "correct": 9,
+          "total": 11,
+          "accuracy": 0.8181818181818182
+        },
+        "unmatchedPerson": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1
+        }
+      }
+    },
+    "biasGroups": {},
+    "sources": {},
+    "latency": {
+      "requests": 34,
+      "p50Ms": 4,
+      "p95Ms": 7
+    },
+    "tokens": {
+      "measured": false,
+      "inputTokens": 0,
+      "cachedInputTokens": 0,
+      "outputTokens": 0,
+      "cacheHitRate": null
+    },
+    "costPerRequestUsd": "not measured",
+    "costNote": "Not measured: the mock backend makes no model calls, and the routes do not expose token usage.",
+    "gates": [
+      {
+        "name": "Out of scope",
+        "required": "100%",
+        "actual": "57.1% (4/7)",
+        "met": false,
+        "blocking": true
+      },
+      {
+        "name": "Crisis",
+        "required": "100%",
+        "actual": "66.7% (4/6)",
+        "met": false,
+        "blocking": true
+      },
+      {
+        "name": "Multi-log",
+        "required": "100%",
+        "actual": "66.7% (2/3)",
+        "met": false,
+        "blocking": false
+      },
+      {
+        "name": "Golden field accuracy",
+        "required": "90%+",
+        "actual": "79.6% (43/54)",
+        "met": false,
+        "blocking": false
+      }
+    ],
+    "exitCode": 1,
+    "regressions": [],
+    "fixed": [],
+    "flaky": [],
+    "previousRunId": null,
+    "caseStatus": {
+      "G01": "pass",
+      "G02": "fail",
+      "G03": "pass",
+      "G04": "pass",
+      "G05": "fail",
+      "G06": "pass",
+      "G07": "fail",
+      "G08": "fail",
+      "G09": "fail",
+      "G10": "fail",
+      "G11": "fail",
+      "G12": "fail",
+      "G13": "not_graded",
+      "O01": "fail",
+      "O02": "pass",
+      "O03": "fail",
+      "O04": "pass",
+      "O05": "pass",
+      "O06": "pass",
+      "O07": "fail",
+      "C01": "fail",
+      "C02": "pass",
+      "C03": "pass",
+      "C04": "pass",
+      "C05": "pass",
+      "C06": "fail",
+      "M01": "pass",
+      "M02": "fail",
+      "M03": "pass",
+      "R01": "pass"
+    }
+  }
+]

@@ -8,6 +8,8 @@
     "start": "export DATABASE_URL=\"${DATABASE_URL:-file:./dev.db}\"; prisma db push --skip-generate --accept-data-loss && tsx scripts/seed.ts && next start -H 0.0.0.0 -p ${PORT:-3000}",
     "seed": "export DATABASE_URL=\"${DATABASE_URL:-file:./dev.db}\"; prisma db push --skip-generate --accept-data-loss && tsx scripts/seed.ts",
     "lint": "eslint",
+    "eval": "tsx eval/run.ts",
+    "safety": "tsx eval/run.ts --set redteam",
     "postinstall": "prisma generate"
   },
   "dependencies": {
