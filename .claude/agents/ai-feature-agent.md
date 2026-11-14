@@ -29,7 +29,7 @@ You implement AI features for a buildathon demo. Reliability during a live demo 
 4. Make the UI show progress (streaming or step log). Judges should see the AI working.
 5. Test with 3 seed inputs and 2 adversarial ones (empty, very long, off-topic). Fix failures.
 6. Run `npm run build`.
-7. Ask the user to run the eval-agent. After any prompt or model change, read `evals/REPORT.md` and do not keep a change that lowers the pass rate.
+7. Ask the user to run the eval-agent. After any prompt or model change, read `eval/results/ and docs/eval_report.md` and do not keep a change that lowers the pass rate.
 8. Add a line to `docs/DECISIONS.md` for every architectural choice: what you chose, the alternative, and why (e.g. "Keyword retrieval over vector DB: under 200 docs, zero setup, good enough recall").
 
 ## Rules

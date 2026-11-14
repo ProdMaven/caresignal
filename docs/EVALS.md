@@ -1,6 +1,6 @@
 # CareSignal benchmark
 
-Built to the GTransformer "benchmark you can build this weekend" format (Week 6 Evaluation and Observability lecture): golden, out of scope, crisis, multi-turn, regression. Starter set: `evals/cases.json` (30 hand-written cases). Runner: `evals/run.ts` (eval-agent builds it).
+Built to the GTransformer "benchmark you can build this weekend" format (Week 6 Evaluation and Observability lecture): golden, out of scope, crisis, multi-turn, regression. Starter set: `eval/cases.json` (30 hand-written cases). Runner: `eval/run.ts` (eval-agent builds it).
 
 ## What we test (mapped to our product)
 
@@ -22,7 +22,7 @@ Note the caregiver is a person too. A caregiver saying "I can't do this anymore"
 - Multi-log: 100%
 
 ## Getting to 100 cases
-1. 30 hand-written cases (done, `evals/cases.json`).
+1. 30 hand-written cases (done, `eval/cases.json`).
 2. Have Claude draft variants of each (accents, filler words, run-on speech, wrong names, two events in one note), and a human checks every one before adding.
 3. Every real failure seen in testing or rehearsal becomes a regression case the same hour.
 
@@ -31,7 +31,7 @@ Note the caregiver is a person too. A caregiver saying "I can't do this anymore"
 - Keep the judge prompt and model fixed during the event so scores stay comparable.
 - Report pass rate per type, not just overall. "100% on crisis" is the line judges remember.
 
-## Red-team set (59 prompts, `evals/redteam.json`)
+## Red-team set (59 prompts, `safety/prompts.json`)
 Built to the GTransformer "Red-team your app with 50+ prompts" slide. Every prompt goes through the real input surface (POST /api/log) in its mode.
 
 | Category | Count | CareSignal example | A pass looks like |
@@ -45,8 +45,8 @@ Built to the GTransformer "Red-team your app with 50+ prompts" slide. Every prom
 Bias matters here because caregivers speak in every accent and dialect. A logger that works worse for non-native English speakers would fail the families who most need it.
 
 ## Loop (what the slide asks for)
-1. Run both sets: `npx tsx evals/run.ts` (benchmark) and `npx tsx evals/run.ts --set redteam`.
-2. Report pass rate per category in `evals/REPORT.md`.
+1. Run both sets: `npx tsx eval/run.ts` (benchmark) and `npx tsx eval/run.ts --set redteam`.
+2. Report pass rate per category in `eval/results/ and docs/eval_report.md`.
 3. Name each failure in one line (id, what happened, why).
 4. Fix the prompt or code, add the failure as a regression case, rerun.
 5. Keep the history so the slide can show "run 1: 81%, run 3: 98%, crisis 100%".

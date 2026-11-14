@@ -4,6 +4,17 @@ Voice-first logging for families caring for someone who cannot say what they nee
 
 GTransformer "AI for Global Good" buildathon, Nov 13 to 15, 2026. Synthetic data only.
 
+**Live app:** URL coming (Railway)
+**Demo video:** coming (`docs/`)
+**Headline eval score:** see `docs/eval_report.md` | **Safety pass rate:** see `docs/safety_report.md`
+
+| Deliverable | Location |
+|---|---|
+| Problem | `docs/problem.md` |
+| Pitch (5 slides) | `docs/pitch.pdf` |
+| Evaluation | `eval/` (cases, script), `eval/results/`, `docs/eval_report.md` |
+| Safety | `safety/prompts.json`, `safety/results/`, `docs/safety_report.md`, `docs/DATA_HANDLING.md` |
+
 ## Team setup (10 minutes)
 1. Accept the GitHub invite, then: `git clone https://github.com/ProdMaven/caresignal && cd caresignal`
 2. Create your lane branch: `git checkout -b lane1-frontend` (or `lane2-ai`, `lane3-data`)
@@ -20,7 +31,7 @@ GTransformer "AI for Global Good" buildathon, Nov 13 to 15, 2026. Synthetic data
 > Read CLAUDE.md, docs/PRD.md, docs/TASKS.md, docs/DATA_MODEL.md and docs/contracts/types.ts. I own Lane 2. Pull main after Lane 1 has scaffolded. Use ai-feature-agent to build my Lane 2 tasks in order: callClaude helper with prompt caching, the formatter for /api/log with zod validation against the controlled vocabulary, the demo cache for phrases D1, D2, A1, the pattern summary prompt, and /api/ask with the red-flag rule first. Only edit my lane's folders. Log every architecture choice in docs/DECISIONS.md via the PM.
 
 **Lane 3, Data, patterns, scoring**
-> Read CLAUDE.md, docs/PRD.md, docs/TASKS.md, docs/DATA_MODEL.md, docs/SCORING.md and docs/contracts/types.ts. I own Lane 3. Pull main after Lane 1 has scaffolded. Build my Lane 3 tasks in order: Prisma schema, seed script with the planted patterns and background trials that hit the SCORING seed targets, patterns.ts using the exact rule in DATA_MODEL, scoring.ts using the exact formula in SCORING, and the people, events, patterns and strategies routes. Then write evals/cases.json. Print the seeded pattern counts and strategy scores so the PM can check them against the demo script.
+> Read CLAUDE.md, docs/PRD.md, docs/TASKS.md, docs/DATA_MODEL.md, docs/SCORING.md and docs/contracts/types.ts. I own Lane 3. Pull main after Lane 1 has scaffolded. Build my Lane 3 tasks in order: Prisma schema, seed script with the planted patterns and background trials that hit the SCORING seed targets, patterns.ts using the exact rule in DATA_MODEL, scoring.ts using the exact formula in SCORING, and the people, events, patterns and strategies routes. Then write eval/cases.json. Print the seeded pattern counts and strategy scores so the PM can check them against the demo script.
 
 **Lane 4, PM**
 > Read CLAUDE.md and all of docs/. I am the PM. At each milestone run qa-agent and eval-agent and summarize blockers. At M4 run pitch-agent to produce docs/PITCH.md and docs/ARCHITECTURE.md.
@@ -39,3 +50,4 @@ GTransformer "AI for Global Good" buildathon, Nov 13 to 15, 2026. Synthetic data
 - `docs/SCORING.md`: Winning Pattern score and tiers
 - `docs/DECISIONS.md`: architecture decisions
 - `docs/research/`: interview notes and quotes
+- `docs/DELIVERABLES.md`: what ships by Sunday 12 PM and who owns it

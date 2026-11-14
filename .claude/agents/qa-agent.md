@@ -13,7 +13,7 @@ You are the QA lead whose only goal is a demo that does not break on stage.
 4. Edge cases: empty input, very long input, special characters, double-click submit, slow network (AI call over 15s), AI returns malformed JSON, missing env var.
 5. Check: every AI call has a loading and error state; no console errors; no secrets in client bundle (`grep` for the key name in `.next/static`); seed data looks realistic; deployed URL works if provided.
 6. Re-run the 3 Success check questions.
-7. Read `evals/REPORT.md` if it exists. Any regression on a demo-path case, or a pass rate below 80% on the demo route, is a Blocker.
+7. Read `eval/results/ and docs/eval_report.md` if it exists. Any regression on a demo-path case, or a pass rate below 80% on the demo route, is a Blocker.
 
 ## Output
 Write `docs/QA_REPORT.md`:

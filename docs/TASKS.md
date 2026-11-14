@@ -18,7 +18,7 @@ Every route returns a mock from `src/mocks/` when `USE_MOCKS=true`, so lanes nev
 ## Folder ownership
 - **Lane 1 (Frontend + demo flow)**: `src/app/(pages)`, `src/components/`, `src/hooks/useSpeech.ts`, `src/config/modes.ts`
 - **Lane 2 (AI)**: `src/app/api/log`, `src/app/api/ask`, `src/prompts/`, `src/lib/ai.ts`, `src/lib/demoCache.ts`, pattern summary text
-- **Lane 3 (Data, patterns, scoring)**: `prisma/`, `scripts/seed.ts`, `src/lib/patterns.ts`, `src/lib/scoring.ts`, `src/app/api/people`, `src/app/api/events`, `src/app/api/patterns`, `src/app/api/strategies`, `evals/cases.json`
+- **Lane 3 (Data, patterns, scoring)**: `prisma/`, `scripts/seed.ts`, `src/lib/patterns.ts`, `src/lib/scoring.ts`, `src/app/api/people`, `src/app/api/events`, `src/app/api/patterns`, `src/app/api/strategies`, `eval/cases.json`
 - **Lane 4 (PM)**: `docs/`, `src/lib/types.ts` (copy of contracts), merges of shared files
 
 ## Milestones
@@ -53,13 +53,13 @@ Every route returns a mock from `src/mocks/` when `USE_MOCKS=true`, so lanes nev
 - [ ] T-L3-4 patterns.ts per DATA_MODEL rule + /api/patterns (75m) -> M2
 - [ ] T-L3-5 scoring.ts per SCORING + /api/strategies (60m) -> M3
 - [ ] T-L3-6 people/events routes (45m) -> M2
-- [x] T-L3-7 evals/cases.json: 30-case starter benchmark written by PM (see docs/EVALS.md)
+- [x] T-L3-7 eval/cases.json: 30-case starter benchmark written by PM (see docs/EVALS.md)
 
 ## Lane 4: PM, pitch, validation
 - [ ] T-L4-1 Repo, Railway project, invites, ANTHROPIC_API_KEY in Railway (30m)
 - [ ] T-L4-2 3 to 5 interviews at the event, quotes in docs/research/ (ongoing)
-- [ ] T-L4-3 Run eval-agent at M2 and M3 (runner evals/run.ts, report per type), qa-agent at M3 and M4
-- [ ] T-L4-7 Red-team run on evals/redteam.json (59 prompts): pass rate per category, name each failure, fix, rerun; before/after numbers for the slide
+- [ ] T-L4-3 Run eval-agent at M2 and M3 (runner eval/run.ts, report per type), qa-agent at M3 and M4
+- [ ] T-L4-7 Red-team run on safety/prompts.json (59 prompts): pass rate per category, name each failure, fix, rerun; before/after numbers for the slide
 - [ ] T-L4-6 Grow benchmark toward 100: Claude-drafted variants, human-checked, plus every real failure as a regression case
 - [ ] T-L4-4 pitch-agent: PITCH.md, ARCHITECTURE.md, deck
 - [ ] T-L4-5 Backup demo video at M4, 3 timed rehearsals on demo morning
