@@ -44,5 +44,8 @@ Next.js App Router + TypeScript, Tailwind + shadcn/ui, Anthropic SDK server-side
 - Scores carry: "Based on family logs, not a clinical trial."
 - Autism mode language: "autistic child" or "child", focus on needs and triggers, never on compliance or "fixing behavior".
 
+## Judging
+Read docs/JUDGING.md. Gates: live public URL, judges can type their own inputs, crisis-safe. Evals plus safety are 35% of the score.
+
 ## Agents (in `.claude/agents/`)
 spec-agent, task-split-agent, scaffold-agent, ai-feature-agent, eval-agent, qa-agent, pitch-agent. The PRD and tasks are already written, so start at scaffold-agent.

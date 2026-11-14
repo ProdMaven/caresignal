@@ -69,6 +69,12 @@ Cached demo phrases:
 - D2: "Rosa here, Helen only ate half her lunch today, she seemed tired."
 - A1: "Arjun had a big meltdown before school, he slept badly and we had a substitute driver today."
 
+## 9b. Judging gates (see docs/JUDGING.md)
+- Public URL on Railway, no local setup.
+- Judges must be able to type their own note (text box next to the mic) and get a live AI result, not only the cached phrases. Their entries visibly update pattern counts. Include a "Reset demo data" button.
+- Crisis-safe on any input.
+- Pitch uses a pre-recorded app video.
+
 ## 10. Success check
 - Can a judge watch a spoken sentence become a correct structured record in under 5 seconds?
 - Does every pattern and answer show evidence counts that match the seeded data?
