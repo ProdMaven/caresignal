@@ -6,6 +6,7 @@ CareSignal: voice-first logging for anyone who lives with or cares for someone w
 Buildathon: GTransformer "AI for Global Good", Nov 13 to 15. Demo is on day 3. A working narrow demo beats an ambitious broken one.
 
 ## Read before any task
+0. `docs/HANDOFF.md` (current state, open decisions, next actions)
 1. `docs/PRD.md` (scope, demo script, out of scope)
 2. `docs/TASKS.md` (API contracts, lanes, folder ownership, checkpoints)
 3. `docs/DATA_MODEL.md` (record schema, controlled vocabulary, tables)
