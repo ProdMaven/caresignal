@@ -82,8 +82,8 @@ export default function AboutPage() {
         </CardHeader>
         <CardContent>
           <p>
-            Patterns and scores are counted by plain code from log entries. AI is used to format notes and to explain
-            results in everyday words. It does not invent patterns or numbers.
+            Patterns and scores are counted by plain code from log entries. AI is used to turn notes into log entries and to
+            write the short reply on the check-in screen. It does not find patterns or produce any number.
           </p>
           <p>Strategy scores are based on family logs, not a clinical trial. Discuss them with your care team.</p>
           <p>

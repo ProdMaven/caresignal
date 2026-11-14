@@ -9,7 +9,7 @@
 - No diagnoses, medications, or clinical records are created by the app.
 
 ## What leaves the app
-- Each note's text is sent to the Anthropic API to be formatted into fields, and pattern numbers are sent to write a one-line summary. No other third parties receive data.
+- Each note's text is sent to the Anthropic API to be formatted into fields. Text typed into the caregiver check-in is sent to the same API to write a short listening reply; it is not stored. Pattern lines, Ask answers and overview numbers are computed in code and are not sent anywhere. No other third parties receive data.
 - No data is sold, shared, or used for advertising.
 
 ## Community statistics ("what worked for others")
