@@ -1,7 +1,7 @@
 # CareSignal project rules (every Claude session reads this first)
 
 ## What we are building
-CareSignal: voice-first logging for caregivers of people who cannot say what they need (dementia residents, autistic children). AI turns spoken notes into structured records, statistics find the patterns behind distress, caregivers ask questions answered from their own logs, and strategies are ranked by what actually worked for other families ("Winning Patterns").
+CareSignal: voice-first logging for family caregivers of people who cannot say what they need (a parent living with dementia, an autistic child). AI turns spoken notes into structured records, statistics find the patterns behind distress, caregivers ask questions answered from their own logs, and strategies are ranked by what actually worked for other families ("Winning Patterns").
 
 Buildathon: GTransformer "AI for Global Good", Nov 13 to 15. Demo is on day 3. A working narrow demo beats an ambitious broken one.
 
@@ -27,7 +27,7 @@ Next.js App Router + TypeScript, Tailwind + shadcn/ui, Anthropic SDK server-side
 - Prompts live in `src/prompts/`, ordered stable to volatile, with prompt caching on. No per-request data in system prompts.
 - AI output is validated with zod against the shared types before it is saved or shown.
 - Statistics find patterns and compute scores. Claude only formats notes and explains results. Claude never invents a pattern, a number, a diagnosis, a cause, or a medication.
-- Synthetic data only. No real names, residents, or children.
+- Synthetic data only. No real names, people, or children.
 - No secrets in client code or git. `ANTHROPIC_API_KEY` lives in `.env` locally and in Railway variables.
 - Every architectural choice gets one line in `docs/DECISIONS.md`: choice, alternative, why.
 - No prompt change is kept if it lowers the eval pass rate.

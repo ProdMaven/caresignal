@@ -1,6 +1,6 @@
 # CareSignal
 
-Voice-first logging for caregivers of people who cannot say what they need. AI turns a spoken sentence into a structured record, statistics find the patterns behind distress, and strategies are ranked by what actually worked for others. Supports caregivers. Does not diagnose.
+Voice-first logging for families caring for someone who cannot say what they need: a parent living with dementia or an autistic child. AI turns a spoken sentence into a structured record, statistics find the patterns behind distress, and strategies are ranked by what actually worked for others. Supports caregivers. Does not diagnose.
 
 GTransformer "AI for Global Good" buildathon, Nov 13 to 15, 2026. Synthetic data only.
 
