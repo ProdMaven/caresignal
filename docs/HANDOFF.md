@@ -2,15 +2,15 @@
 
 Read this first, then CLAUDE.md, then the docs it lists. Everything below is the state at handoff.
 
-## Where we are (updated Sat Nov 14, afternoon)
+## Where we are (updated Sat Nov 14, after PR 2 merged)
 - **Live app (real AI):** https://web-production-1bb4dc67.up.railway.app. Railway project `caresignal`, service `web`, deploys from `main`. Invite codes: `GTRANSFORMER-JUDGE` (judges, in the README) and `CARE-TRIAL` (caregivers trying it).
 - **Staging:** https://staging-production-8dc505db.up.railway.app, service `staging`, deploys from `claude/caresignal-buildathon-setup-6ss2v0`, invite code `STAGING-EVAL`, shares the API key by reference. Test prompt changes here first, never on the live app.
 - **Merged to `main` (PR 1):** invitation-only entry, Care Profile intake, voice or typed log in either mode with a mic language picker, confirm card, match plus warm line plus next step after Save, timeline, Ask, Winning Patterns with "Did this help?", caregiver check-in, journal, weekly and monthly overview, eval and safety runner.
-- **Open, not merged (PR 2, https://github.com/ProdMaven/caresignal/pull/2):** handling of real-length spoken notes. Time limit 9 to 18 seconds, a reported remedy is no longer treated as a medication question, per-step results on what was tried (contracts v5), new categories (body movement, self-biting, self-hitting, woke from sleep, cold or ice, massage, blocked behavior, remedy given), 14 long benchmark cases. Until it merges, the live app still sends most long notes to the keyword fallback.
+- **Merged to `main` and live (PR 2):** handling of real-length spoken notes. Time limit 9 to 18 seconds, a reported remedy is no longer treated as a medication question, per-step results on what was tried (contracts v5), new categories (body movement, self-biting, self-hitting, woke from sleep, cold or ice, massage, blocked behavior, remedy given), 14 long benchmark cases.
 - **What is real and what is not:** only note logging (`/api/log`) uses the model. Ask, pattern summaries and check-in replies are templates. Data routes use an in-memory store, so data resets on every deploy, on Reset demo data, and on every eval run against that server. Community numbers are synthetic.
 
 ## Numbers (real model)
-| | Live `main` | PR 2 on staging |
+| | Before PR 2 | Live `main` now (rerun after the merge) |
 |---|---|---|
 | Benchmark | 25 of 30 (83.3%) | 39 of 44 (88.6%) |
 | Original 30 cases passing | 25 | 25 |
@@ -38,7 +38,7 @@ Read this first, then CLAUDE.md, then the docs it lists. Everything below is the
 - Caregiver distress ("I can't do this anymore") gets care plus 988, never a log entry. `ParseLogResponse` has `kind` and `message` for this.
 
 ## Open decisions (PM)
-1. **Merge PR 2.** It is tested on staging and ready. Merging restarts the live app and clears its demo data.
+1. **Eval results on `main`.** The post-merge live runs (39 of 44, 59 of 59) are committed on branch `claude/caresignal-buildathon-setup-6ss2v0` only; `main` still shows the staging runs with the same numbers. A small pull request brings them over.
 2. **Four failing benchmark cases.** G07 and G09 name nobody while the autism roster has two children (the app asks instead of guessing); G12's summary includes a caregiver's count; M02 has no earlier context in the request. Fix the cases or the product. G13 cannot be graded as written.
 3. **Recurring self-injury wording.** Every self-injury note shows "Please contact your doctor or care team". Proposal: keep it and add "Is this new or worse than usual?" so a known pattern reads differently. Touches a non-negotiable rule.
 4. **Mentor feedback, items 1 to 19 on the running list.** All still Open. Leaning: adopt "nail logging first" for the pitch; decline voice analysis, tone analysis and video; keep caregiver matching on the roadmap.
@@ -52,7 +52,7 @@ Read this first, then CLAUDE.md, then the docs it lists. Everything below is the
 
 ## Next actions, in order
 1. **Interviews (biggest gap, 20% of the score).** Zero quotes so far. Use the `CARE-TRIAL` code; ask "What is the hardest part of figuring out what they need?"; record role only in `docs/problem.md` and `docs/research/`.
-2. **Merge PR 2**, then rerun both eval sets against the live URL to record the numbers on `main`.
+2. **Remove or keep the `staging` service** in Railway (useful for testing prompt changes; costs a little to run).
 3. **Phone testing.** Voice and the language picker are untested on real devices. A teammate reported problems; a fix is live but unconfirmed. Open in Chrome or Safari, not inside a chat app.
 4. **Human review of the 14 new cases** so hand-reviewed passes 30, then add cases for check-in, journal and feedback.
 5. **Pitch.** Lead with one sentence about logging ("one spoken sentence becomes a signal a family can act on"). Start the demo at the mic, not at the invite screen. Use one name for the profile of the person being cared for (Care Profile). Roadmap slide: caregiver matching, wearables.
