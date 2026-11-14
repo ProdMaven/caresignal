@@ -37,3 +37,21 @@ Source: a buildathon mentor (not a caregiver), plus points raised by the team in
 | A | The PM said "age of the caretaker" and "caregiver's profile" when describing the profile of the person being cared for | If the PM mixes these up, judges and users will too. The screen says "Add the person you care for"; the pitch needs one fixed term (Care Profile) | Fix the wording in the pitch script |
 | B | The demo opened with invitation only and profile creation before any logging | It took about 90 seconds to reach the product's main moment. For a 3-minute pitch, start at the mic | Reorder the demo |
 | C | The mentor said the team could "use" a support organization's database | We have no access to any outside data; all community numbers are synthetic | Do not claim it |
+
+## Session 3: a real parent's spoken note, run through the live app (Sat Nov 14)
+
+Source: a parent of an autistic child, speaking a night-time episode as they naturally would (about 150 words). The note itself is not stored here, and the name was replaced with a synthetic one before testing. This is the first real-length input the app has seen; every benchmark note is one short sentence.
+
+| # | Finding | Evidence | Lean | Status |
+|---|---|---|---|---|
+| 20 | Real notes are about 8 times longer than our test notes and the model call takes about 9 seconds, which is our timeout | 3 live attempts: 2 fell back to keyword rules, 1 was answered by the model at 9.0 seconds | Fix first: raise the time limit and add long notes to the benchmark | Open |
+| 21 | When it falls back, the entry is wrong in ways that matter | Fallback read hand-biting as "aggression" at "mild"; the model read it as sleep trouble with pain signs, self-injury flagged | Fix with 20 | Open |
+| 22 | A parent who mentions giving a remedy gets the "cannot give advice about medication" message, as if they had asked for advice | Returned kind out_of_scope with the scope message on all 3 attempts | Separate "reported giving something" from "asked what to give". Record it as given, never rank or suggest it | Open |
+| 23 | A real episode is a sequence: it builds, several things are tried, each has its own result. Our record is flat: one list of behaviors, one list of things tried, one outcome | Leg movement, then hand-biting, then crying; pressure did not help, holding the hand away did not help, cold helped a little, settled after 30 minutes | Add ordered steps: what was tried and what happened after each | Open |
+| 24 | Credit goes to everything tried, including what did not work | Outcome "calmed" is attached to reassurance, pressure and cold alike | Per-step result (helped, helped a little, did not help) so strategy statistics are honest | Open |
+| 25 | The parent's own belief about what worked is recorded nowhere, and must not become the app's claim | The parent credited the remedy; cold and the passing of 30 minutes happened too | Keep the parent's words in the raw note; the app shows counts only | Open |
+| 26 | Recurring self-injury gets the same "contact your care team" alert every time | Self-injury flag raised (correct) for what sounds like a familiar episode | Keep the alert. Add "Is this new or worse than usual?" so the wording can differ for known patterns, with care team sign-off | Open |
+| 27 | Vocabulary gaps | No tags for leg or body movement, self-directed biting (only "biting"), cold or ice, massage, night waking as context, remedy given, physically blocking a behavior | Add tags; split biting self from biting others | Open |
+| 28 | Physically holding a hand away is a natural parent reaction and has no tag | Dropped from the entry entirely | Record as "blocked the behavior" so its results are counted; never suggest it | Open |
+| 29 | The speaker introduced themselves and their relationship in the note | "I am [name], the father of [name]" was ignored; the entry used whoever was picked in the selector | Use it to set who is logging, or to offer to create a Care Profile | Open |
+| 30 | Pain was mentioned only in passing, as the purpose of the remedy | Model added pain signs and a severe-pain flag; fallback added neither | Good catch by the model; ask one follow-up: "Where does it seem to hurt?" | Open |
