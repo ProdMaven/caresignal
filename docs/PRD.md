@@ -9,7 +9,7 @@ Pitch line: "Distress is communication. We help caregivers decode it, and every 
 - **Dementia mode.** Neha, 48, cares for her mother Helen (synthetic, 79, dementia) at home with help from her brother on weekends and a part-time home aide on weekday mornings. Helen gets agitated most afternoons. Each caregiver sees a piece of the day and nobody sees the whole picture.
 - **Autism mode.** Priya, parent of Arjun (synthetic, age 7, autistic). Mornings before school often end in meltdowns. She keeps scattered notes on her phone and cannot see a pattern or explain it clearly to his therapist.
 
-Both are family members, not professionals: tired, time-poor, logging from a phone in the moment. Lead the demo with ONE mode (team decides) and show the other with a mode switch to prove it is one engine.
+Users are anyone who lives with or cares for the person day to day: parents, adult children, spouses, siblings, and home aides. They are mostly not professionals: tired, time-poor, logging from a phone in the moment. Several people can log for the same person. Lead the demo with ONE mode (team decides) and show the other with a mode switch to prove it is one engine.
 
 ## 3. Evidence
 NO EVIDENCE YET from interviews. PM collects 3 to 5 quotes at the event from people with elder care or autism-parent experience into `docs/research/`. Background: care literature treats agitation in dementia as communication of unmet needs, frequently pain (Alzheimer's Association training materials).

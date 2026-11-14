@@ -1,7 +1,7 @@
 # CareSignal project rules (every Claude session reads this first)
 
 ## What we are building
-CareSignal: voice-first logging for family caregivers of people who cannot say what they need (a parent living with dementia, an autistic child). AI turns spoken notes into structured records, statistics find the patterns behind distress, caregivers ask questions answered from their own logs, and strategies are ranked by what actually worked for other families ("Winning Patterns").
+CareSignal: voice-first logging for anyone who lives with or cares for someone who cannot say what they need (parents, family members, home caregivers), such as a person living with dementia or an autistic child. AI turns spoken notes into structured records, statistics find the patterns behind distress, caregivers ask questions answered from their own logs, and strategies are ranked by what actually worked for other families ("Winning Patterns").
 
 Buildathon: GTransformer "AI for Global Good", Nov 13 to 15. Demo is on day 3. A working narrow demo beats an ambitious broken one.
 
