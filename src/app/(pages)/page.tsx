@@ -4,6 +4,7 @@ import { useCallback, useState } from "react";
 import Link from "next/link";
 import { CircleCheck, Send } from "lucide-react";
 import { ConfirmCard } from "@/components/confirm-card";
+import { IntakeForm } from "@/components/intake-form";
 import { MicButton } from "@/components/mic-button";
 import { PersonPicker, usePersonContext, type PersonContext } from "@/components/person-picker";
 import { ResetDemo } from "@/components/reset-demo";
@@ -80,6 +81,13 @@ function LogScreen({ ctx }: { ctx: PersonContext }) {
       </div>
 
       <PersonPicker ctx={ctx} />
+      <IntakeForm
+        mode={mode}
+        onCreated={(created) => {
+          ctx.setPerson(created.id);
+          ctx.reload();
+        }}
+      />
 
       <label className="flex flex-col gap-1.5 text-sm font-semibold text-muted-foreground">
         Who is logging?

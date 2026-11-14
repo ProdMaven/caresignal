@@ -33,6 +33,7 @@ export function ModeSwitch() {
 }
 
 export function TopBar() {
+  const gated = usePathname() === "/invite";
   return (
     <header className="sticky top-0 z-40 border-b bg-background/95 backdrop-blur">
       <div className="mx-auto flex w-full max-w-xl flex-wrap items-center justify-between gap-x-3 gap-y-2 px-4 py-2.5">
@@ -40,7 +41,7 @@ export function TopBar() {
           <HeartHandshake className="size-6 text-primary" aria-hidden />
           CareSignal
         </Link>
-        <ModeSwitch />
+        {!gated && <ModeSwitch />}
       </div>
     </header>
   );
@@ -56,6 +57,7 @@ const NAV = [
 
 export function BottomNav() {
   const pathname = usePathname();
+  if (pathname === "/invite") return null;
   return (
     <nav aria-label="Main" className="fixed inset-x-0 bottom-0 z-40 border-t bg-card pb-[env(safe-area-inset-bottom)]">
       <ul className="mx-auto flex w-full max-w-xl">

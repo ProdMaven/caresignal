@@ -7,13 +7,17 @@ import { buildSeedEvents, PEOPLE } from "./data";
 interface MockStore {
   events: LogRecord[];
   nextId: number;
+  people: Person[];
+  nextPersonId: number;
 }
+
+const MAX_ADDED_PEOPLE = 20; // keeps a public demo from filling up
 
 const globalForStore = globalThis as unknown as { __caresignalMockStore?: MockStore };
 
 function freshStore(): MockStore {
   const events = buildSeedEvents();
-  return { events, nextId: events.length + 1 };
+  return { events, nextId: events.length + 1, people: [...PEOPLE], nextPersonId: 1 };
 }
 
 function store(): MockStore {
@@ -22,11 +26,11 @@ function store(): MockStore {
 }
 
 export function listPeople(mode?: Mode): Person[] {
-  return PEOPLE.filter((p) => !mode || p.mode === mode);
+  return store().people.filter((p) => !mode || p.mode === mode);
 }
 
 export function findPerson(id: string): Person | undefined {
-  return PEOPLE.find((p) => p.id === id);
+  return store().people.find((p) => p.id === id);
 }
 
 export function allEvents(): LogRecord[] {
@@ -47,4 +51,13 @@ export function addEvent(draft: Omit<LogRecord, "id" | "loggedAt">): LogRecord {
 export function resetStore(): number {
   globalForStore.__caresignalMockStore = freshStore();
   return globalForStore.__caresignalMockStore.events.length;
+}
+
+// Intake: add a person the caregiver described. Returns null when the demo is full.
+export function addPerson(input: Omit<Person, "id" | "isFeatured">): Person | null {
+  const s = store();
+  if (s.people.length - PEOPLE.length >= MAX_ADDED_PEOPLE) return null;
+  const person: Person = { ...input, id: `p_new_${s.nextPersonId++}`, isFeatured: false };
+  s.people.push(person);
+  return person;
 }

@@ -44,6 +44,28 @@ export const askRequestSchema = z.object({
   question: z.string().trim().min(1, "Please ask a question first.").max(1000),
 });
 
+export const inviteRequestSchema = z.object({ code: z.string().trim().min(1, "Please enter your invite code.").max(64) });
+
+export const ageBandSchema = z.enum(["2_5", "6_11", "12_17", "adult"]);
+export const genderSchema = z.enum(["girl_or_woman", "boy_or_man", "nonbinary", "prefer_not_to_say"]);
+export const spectrumLevelSchema = z.enum(["mild", "medium", "severe"]);
+export const communicationLevelSchema = z.enum(["speaks_in_sentences", "some_words", "mostly_non_speaking"]);
+
+export const createPersonRequestSchema = z
+  .object({
+    mode: modeSchema,
+    displayName: z.string().trim().min(1, "Please add a first name or nickname.").max(40),
+    aliases: z.array(z.string().trim().min(1).max(40)).max(6),
+    ageBand: ageBandSchema,
+    gender: genderSchema.optional(),
+    spectrumLevel: spectrumLevelSchema.optional(),
+    communicationLevel: communicationLevelSchema,
+  })
+  .refine((v) => v.mode !== "autism" || v.spectrumLevel !== undefined, {
+    message: "Please choose a spectrum level.",
+    path: ["spectrumLevel"],
+  });
+
 export function firstIssue(error: z.ZodError): string {
   const issue = error.issues[0];
   if (!issue) return "Invalid request.";

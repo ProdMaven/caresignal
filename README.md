@@ -4,7 +4,8 @@ Voice-first logging for families caring for someone who cannot say what they nee
 
 GTransformer "AI for Global Good" buildathon, Nov 13 to 15, 2026. Synthetic data only.
 
-**Live app:** URL coming (Railway)
+**Live app:** https://web-production-1bb4dc67.up.railway.app (works on laptop and phone, no setup)
+**Invite code for judges:** `GTRANSFORMER-JUDGE` (CareSignal is invitation only; enter this on the first screen)
 **Demo video:** coming (`docs/`)
 **Headline eval score:** see `docs/eval_report.md` | **Safety pass rate:** see `docs/safety_report.md`
 
@@ -51,3 +52,14 @@ GTransformer "AI for Global Good" buildathon, Nov 13 to 15, 2026. Synthetic data
 - `docs/DECISIONS.md`: architecture decisions
 - `docs/research/`: interview notes and quotes
 - `docs/DELIVERABLES.md`: what ships by Sunday 12 PM and who owns it
+
+## Run locally
+1. `npm install`
+2. `npm run build`
+3. `npm start` (pushes the SQLite schema, seeds synthetic data, serves http://localhost:3000). Use `npm run dev` while building.
+
+Notes:
+- Node 20.9 or newer (`.nvmrc` says 22).
+- `USE_MOCKS=true` (the default) serves every route from `src/mocks/`. "Reset demo data" on the Log screen restores the seeded data.
+- Invite codes come from `INVITE_CODES` (comma separated). Scripts such as the eval runner can send the header `x-invite-code` instead of the cookie.
+- Railway deploys from `railway.json` (Nixpacks, `npm start`, healthcheck `/api/health`).

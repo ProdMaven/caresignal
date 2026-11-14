@@ -1,7 +1,7 @@
-// GET /api/people?mode=  -> PeopleResponse. Owner: Lane 3.
+// GET /api/people?mode=  -> PeopleResponse. POST /api/people  CreatePersonRequest -> CreatePersonResponse. Owner: Lane 3.
 import { badRequest, notImplemented, mocksEnabled } from "@/lib/env";
-import { modeSchema } from "@/lib/schemas";
-import { mockPeople } from "@/mocks";
+import { createPersonRequestSchema, firstIssue, modeSchema } from "@/lib/schemas";
+import { mockCreatePerson, mockPeople } from "@/mocks";
 
 export const dynamic = "force-dynamic";
 
@@ -14,4 +14,20 @@ export async function GET(request: Request) {
 
   // TODO(Lane 3): read Person rows through prisma (src/lib/db.ts).
   return notImplemented("GET /api/people", "Lane 3");
+}
+
+export async function POST(request: Request) {
+  const body = await request.json().catch(() => null);
+  if (body === null || typeof body !== "object") return badRequest("Request body must be a JSON object.");
+  const parsed = createPersonRequestSchema.safeParse(body);
+  if (!parsed.success) return badRequest(firstIssue(parsed.error));
+
+  if (mocksEnabled()) {
+    const created = mockCreatePerson(parsed.data);
+    if (!created) return badRequest("This demo already has the most profiles it allows. Use Reset demo data to start over.");
+    return Response.json(created, { status: 201 });
+  }
+
+  // TODO(Lane 3): insert the Person row through prisma and return it.
+  return notImplemented("POST /api/people", "Lane 3");
 }

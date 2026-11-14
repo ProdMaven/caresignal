@@ -2,12 +2,12 @@
 // Route handlers call these when USE_MOCKS is on (see src/lib/env.ts).
 import type {
   AskRequest, AskResponse, EventsResponse, Mode, ParseLogRequest, ParseLogResponse, PatternsResponse,
-  PeopleResponse, ResetResponse, SaveEventRequest, SaveEventResponse, StrategiesResponse,
+  PeopleResponse, ResetResponse, CreatePersonRequest, CreatePersonResponse, SaveEventRequest, SaveEventResponse, StrategiesResponse,
 } from "../lib/types";
 import { mockAsk as buildAsk } from "./ask";
 import { mockLog as buildLog } from "./log";
 import { eventsInWindow, mockPatterns as buildPatterns } from "./patterns";
-import { addEvent, allEvents, findPerson, listPeople, resetStore } from "./store";
+import { addEvent, addPerson, allEvents, findPerson, listPeople, resetStore } from "./store";
 import { mockStrategies as buildStrategies } from "./strategies";
 
 export { findPerson } from "./store";
@@ -54,4 +54,27 @@ export function mockStrategies(mode: Mode, patternKey: string | null): Strategie
 // POST /api/reset
 export function mockReset(): ResetResponse {
   return { ok: true, eventCount: resetStore() };
+}
+
+const AGE_LABEL: Record<CreatePersonRequest["ageBand"], string> = {
+  "2_5": "Age 2 to 5",
+  "6_11": "Age 6 to 11",
+  "12_17": "Age 12 to 17",
+  adult: "Adult",
+};
+
+// POST /api/people (intake). Returns null when the demo already holds the most added people it allows.
+export function mockCreatePerson(req: CreatePersonRequest): CreatePersonResponse | null {
+  const aliases = Array.from(new Set([req.displayName, ...req.aliases].map((a) => a.trim()).filter(Boolean)));
+  const person = addPerson({
+    mode: req.mode,
+    displayName: req.displayName.trim(),
+    aliases,
+    ageBandOrSetting: AGE_LABEL[req.ageBand],
+    ageBand: req.ageBand,
+    gender: req.gender,
+    spectrumLevel: req.mode === "autism" ? req.spectrumLevel : undefined,
+    communicationLevel: req.communicationLevel,
+  });
+  return person ? { person } : null;
 }
