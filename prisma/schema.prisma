@@ -19,6 +19,11 @@ model Person {
   aliases          String  @default("[]") // JSON string[]
   ageBandOrSetting String
   isFeatured       Boolean @default(false)
+  // Intake profile (contracts v3). Caregiver-reported, never a diagnosis. All optional.
+  ageBand            String? // "2_5" | "6_11" | "12_17" | "adult"
+  gender             String? // display and bias audits only, never branches logic
+  spectrumLevel      String? // autism mode only: "mild" | "medium" | "severe"
+  communicationLevel String? // "speaks_in_sentences" | "some_words" | "mostly_non_speaking"
   events           Event[]
   patterns         Pattern[]
 }
