@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+/* Calm, warm palette. Large type and high contrast for tired eyes on a phone. */
+:root {
+  --radius: 0.875rem;
+  --background: #f7f5f0;
+  --foreground: #1f2a2e;
+  --card: #ffffff;
+  --card-foreground: #1f2a2e;
+  --primary: #0f766e;
+  --primary-foreground: #ffffff;
+  --secondary: #ece8df;
+  --secondary-foreground: #1f2a2e;
+  --muted: #efece5;
+  --muted-foreground: #55615f;
+  --accent: #e3f1ee;
+  --accent-foreground: #134e4a;
+  --destructive: #b91c1c;
+  --border: #ddd8cc;
+  --input: #c9c3b5;
+  --ring: #0f766e;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+html {
+  font-size: 17px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  line-height: 1.5;
+}
+
+* {
+  border-color: var(--border);
+}
+
+@keyframes mic-pulse {
+  0% { box-shadow: 0 0 0 0 rgb(190 18 60 / 0.45); }
+  100% { box-shadow: 0 0 0 18px rgb(190 18 60 / 0); }
+}
+.mic-listening {
+  animation: mic-pulse 1.4s ease-out infinite;
+}

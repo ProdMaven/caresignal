@@ -9,3 +9,16 @@ build/
 .DS_Store
 npm-debug.log*
 .vercel
+
+# added by the scaffold
+/coverage
+*.pem
+*.tsbuildinfo
+next-env.d.ts
+yarn-debug.log*
+yarn-error.log*
+.env*.local
+prisma/*.db
+prisma/*.db-journal
+# written by `next dev`; kept out of git (it contains an em-dash, which docs rules forbid)
+AGENTS.md
