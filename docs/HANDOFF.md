@@ -2,30 +2,33 @@
 
 Read this first, then CLAUDE.md, then the docs it lists. Everything below is the state at handoff.
 
-## Where we are (updated Fri Nov 13, 11:40 PM)
-- Live app with real AI: https://web-production-1bb4dc67.up.railway.app, invite code `GTRANSFORMER-JUDGE`. Railway project `caresignal`, service `web`, deploys from branch `claude/caresignal-buildathon-setup-6ss2v0` (not yet merged to `main`).
-- Built and deployed: invitation-only entry, Care Profile intake (age band, gender, spectrum level, communication), voice or typed log in either mode with a mic language picker, confirm card, match plus warm line plus top next step after Save, timeline and pattern cards, Ask, Winning Patterns with "Did this help?" feedback, caregiver check-in (nothing stored, 988 first), caregiver journal, weekly and monthly overview, Reset demo data.
-- Real AI is on for /api/log only (`USE_MOCKS=false`, key set in Railway). Data routes, Ask, pattern summaries and check-in replies still run on the in-memory demo store and templates. Data is lost on every redeploy and on Reset demo data.
-- Evals on the live app with the real model: benchmark 83.3% (25/30), golden field accuracy 94.4%, crisis 6/6, out of scope 7/7. Red team 100% (59/59): crisis 13/13, medical overreach 12/12, jailbreak 10/10, privacy 10/10, bias 14/14. Run history (mock 50.0% and 59.3%, rules only 70.0% and 84.7%, real model 83.3% and 94.9%, after bias fix 83.3% and 100%) is in `eval/results/history.json` and `safety/results/history.json`.
-- Run evals: `NODE_USE_ENV_PROXY=1 EVAL_BASE_URL=<url> EVAL_ALLOW_WRITES=true npm run eval` and `npm run safety`. This resets the live demo data.
-- Research: `docs/research/autism_patterns_by_age_gender.md` (figures from abstracts and summaries, not full texts).
+## Where we are (updated Sat Nov 14, afternoon)
+- **Live app (real AI):** https://web-production-1bb4dc67.up.railway.app. Railway project `caresignal`, service `web`, deploys from `main`. Invite codes: `GTRANSFORMER-JUDGE` (judges, in the README) and `CARE-TRIAL` (caregivers trying it).
+- **Staging:** https://staging-production-8dc505db.up.railway.app, service `staging`, deploys from `claude/caresignal-buildathon-setup-6ss2v0`, invite code `STAGING-EVAL`, shares the API key by reference. Test prompt changes here first, never on the live app.
+- **Merged to `main` (PR 1):** invitation-only entry, Care Profile intake, voice or typed log in either mode with a mic language picker, confirm card, match plus warm line plus next step after Save, timeline, Ask, Winning Patterns with "Did this help?", caregiver check-in, journal, weekly and monthly overview, eval and safety runner.
+- **Open, not merged (PR 2, https://github.com/ProdMaven/caresignal/pull/2):** handling of real-length spoken notes. Time limit 9 to 18 seconds, a reported remedy is no longer treated as a medication question, per-step results on what was tried (contracts v5), new categories (body movement, self-biting, self-hitting, woke from sleep, cold or ice, massage, blocked behavior, remedy given), 14 long benchmark cases. Until it merges, the live app still sends most long notes to the keyword fallback.
+- **What is real and what is not:** only note logging (`/api/log`) uses the model. Ask, pattern summaries and check-in replies are templates. Data routes use an in-memory store, so data resets on every deploy, on Reset demo data, and on every eval run against that server. Community numbers are synthetic.
 
-## Not done yet
-- Evidence of need: zero interview quotes. `docs/problem.md` and `docs/research/` are still empty of real voices.
-- Benchmark size: 89 examples against the 100+ target. No cases yet for check-in, journal, feedback, or non-English notes.
-- Four benchmark cases still fail (G07, G09, G12, M02); they need a PM decision on the cases or the product, not prompt tuning.
+## Numbers (real model)
+| | Live `main` | PR 2 on staging |
+|---|---|---|
+| Benchmark | 25 of 30 (83.3%) | 39 of 44 (88.6%) |
+| Original 30 cases passing | 25 | 25 |
+| New real-length cases | not run | 14 of 14 |
+| Golden field accuracy | 94.4% | 98.0% |
+| Red team (59) | 59 of 59 | 59 of 59 |
+| Crisis and out of scope | 100% | 100% |
+| Typical response time | about 2.2 s | about 2.3 s short notes, 7 to 8 s for a 150-word note |
+
+- Run history for the before and after slide: mock baseline 50.0% and 59.3%, rules only 70.0% and 84.7%, real model first run 83.3% and 94.9%, after bias fix 83.3% and 100%, real-length changes 88.6% and 100%. Files: `eval/results/history.json`, `safety/results/history.json`.
+- Example count: 44 benchmark plus 59 red team = 103. The 14 new cases were drafted by Claude and are pending human review, so hand-reviewed stands at 30.
 - Cost per request: not measured (`eval/pricing.json` has placeholder prices).
-- Voice on real phones: untested. A teammate reported voice and language change not working; a fix is deployed (keeps listening across pauses, language change mid-note, message for in-app browsers) but not confirmed on a device.
-- `docs/pitch.pdf`, demo video, first channel to users, organizers' template repo and collaborators, merge to `main`.
-- Prisma-backed data routes (Lane 3) and real AI for Ask and pattern summaries (Lane 2).
+- Run evals: `NODE_USE_ENV_PROXY=1 EVAL_BASE_URL=<url> EVAL_INVITE_CODE=<code> EVAL_ALLOW_WRITES=true npm run eval` and `npm run safety`. This resets the target server's demo data.
 
-## Open issues for the PM
-- Score 81 for the snack strategy cannot come from the SCORING formula (tops out near 74). Mocks hardcode 81 and 84.
-- Saving D1 moves Helen's pattern from 6 of 8 to 7 of 9; seed 5 of 7 if the script should read "6 of 8" after the save.
-- Emergency message starts "Call 911 now." and names the care team second; CLAUDE.md says red flags lead with the care team line.
-- Research: weighted blanket is seeded as Promising though the one randomized trial found no sleep benefit; visual schedules fit transition triggers better than poor sleep; `medication_time` is still a context tag.
-- Journal entries are stored under a caregiver picked from a list, with no accounts, so they are not private. Do not call the journal private in the pitch.
-- Caregiver-to-caregiver messaging is roadmap only.
+## Where to read more
+- `docs/research/feedback_running_list.md`: every piece of feedback (mentor calls, a real parent's note), analyzed, with status. 30 items; nothing is adopted without a PM decision.
+- `docs/research/autism_patterns_by_age_gender.md`: research report (figures from abstracts and summaries, not full texts).
+- `docs/eval_report.md`, `docs/safety_report.md`: latest runs with each failure named.
 
 ## Decisions made
 - Product: CareSignal, one engine for two communities (dementia, autism). Users are anyone who lives with or cares for the person (parents, adult children, spouses, siblings, home aides).
@@ -34,23 +37,32 @@ Read this first, then CLAUDE.md, then the docs it lists. Everything below is the
 - Judges must be able to type their own input: text box next to the mic, live AI on any input, "Reset demo data" button.
 - Caregiver distress ("I can't do this anymore") gets care plus 988, never a log entry. `ParseLogResponse` has `kind` and `message` for this.
 
-## Open decisions (ask Aadi before building past the scaffold)
-1. **Scope.** DECIDED Nov 14: keep full PRD scope (all 5 screens, Ask AI, /api/ask). Tighter cut rejected; TASKS cut list is the fallback.
-2. **Demo mode.** DECIDED Nov 14: both. Both modes are live; demo opens in dementia and switches to autism with a live log.
-3. **First channel to users** for the pitch (a real group the team can reach).
-4. **Organizers' template repo.** The deliverables slide says "repo from the template". Get the link; merge its required files into this repo (or recreate from it, per the rules).
-5. **Organizers as collaborators.** Need their GitHub usernames.
-6. Commits 094012d through 4ad9392 were made under Aadi's email and show as Unverified. Do NOT rewrite or force-push `main` unless Aadi confirms no teammate has pulled. New commits use the Claude identity.
+## Open decisions (PM)
+1. **Merge PR 2.** It is tested on staging and ready. Merging restarts the live app and clears its demo data.
+2. **Four failing benchmark cases.** G07 and G09 name nobody while the autism roster has two children (the app asks instead of guessing); G12's summary includes a caregiver's count; M02 has no earlier context in the request. Fix the cases or the product. G13 cannot be graded as written.
+3. **Recurring self-injury wording.** Every self-injury note shows "Please contact your doctor or care team". Proposal: keep it and add "Is this new or worse than usual?" so a known pattern reads differently. Touches a non-negotiable rule.
+4. **Mentor feedback, items 1 to 19 on the running list.** All still Open. Leaning: adopt "nail logging first" for the pitch; decline voice analysis, tone analysis and video; keep caregiver matching on the roadmap.
+5. **Emergency wording.** The emergency message starts "Call 911 now." and names the care team second; CLAUDE.md says red flags lead with the care team line.
+6. **Scoring.** The snack strategy's 81 cannot come from the SCORING formula (tops out near 74). Mocks hardcode 81 and 84.
+7. **Demo count.** Saving the scripted note moves Helen's pattern from 6 of 8 to 7 of 9. Seed 5 of 7 if the script should read "6 of 8" after the save.
+8. **Research conflicts with seed data.** Weighted blanket is seeded as Promising though the one randomized trial found no sleep benefit; visual schedules fit transition triggers better than poor sleep; `medication_time` is still a context tag.
+9. **First channel to users.** A parent support organization is the candidate, but we have no access to their data and could not read their site. Do not claim a partnership or a database.
+10. **Organizers' template repo and collaborators.** Still need the link and the GitHub usernames.
+11. Commits 094012d through 4ad9392 are under Aadi's email and show as Unverified. Do NOT rewrite or force-push `main`.
 
 ## Next actions, in order
-1. Confirm decisions 1 and 2 with Aadi; update docs accordingly.
-2. Lane 1: run scaffold-agent (create-next-app in a temp folder, move files in without overwriting docs), mocks for every route, deploy to Railway, seed on start. Public URL tonight is a gate.
-3. Lane 2: formatter for /api/log against `eval/cases.json` and `safety/prompts.json`.
-4. Lane 3: Prisma schema, seed script hitting docs/SCORING.md targets, patterns.ts, scoring.ts.
-5. Build `eval/run.ts` with `npm run eval` and `npm run safety`, writing to `eval/results/` and `safety/results/`, filling `docs/eval_report.md` and `docs/safety_report.md`. Keep run history for before/after.
-6. Grow the benchmark past 100 (Claude-drafted variants, human-checked).
-7. Evidence: interview quotes into `docs/research/` and `docs/problem.md`.
-8. At freeze: qa-agent, pre-recorded demo video, pitch-agent for the 5-slide `docs/pitch.pdf`.
+1. **Interviews (biggest gap, 20% of the score).** Zero quotes so far. Use the `CARE-TRIAL` code; ask "What is the hardest part of figuring out what they need?"; record role only in `docs/problem.md` and `docs/research/`.
+2. **Merge PR 2**, then rerun both eval sets against the live URL to record the numbers on `main`.
+3. **Phone testing.** Voice and the language picker are untested on real devices. A teammate reported problems; a fix is live but unconfirmed. Open in Chrome or Safari, not inside a chat app.
+4. **Human review of the 14 new cases** so hand-reviewed passes 30, then add cases for check-in, journal and feedback.
+5. **Pitch.** Lead with one sentence about logging ("one spoken sentence becomes a signal a family can act on"). Start the demo at the mic, not at the invite screen. Use one name for the profile of the person being cared for (Care Profile). Roadmap slide: caregiver matching, wearables.
+6. **Feature freeze, then** qa-agent, the pre-recorded demo video, and pitch-agent for the 5-slide `docs/pitch.pdf`.
+7. **Later (not for Sunday):** Prisma-backed data routes, real AI for Ask and pattern summaries, accounts so journals and logs are private, editing an entry after saving.
+
+## Known limits to say out loud if asked
+- No accounts: everyone with a code shares one demo space, and journal entries are not private.
+- Synthetic data only. Testers should use nicknames and no personal details.
+- Step order from the keyword fallback follows keyword order, not spoken order.
 
 ## Conventions
 - No em-dashes in any docs or UI copy.
