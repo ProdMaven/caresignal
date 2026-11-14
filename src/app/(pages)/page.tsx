@@ -5,6 +5,7 @@ import Link from "next/link";
 import { CircleCheck, Send } from "lucide-react";
 import { ConfirmCard } from "@/components/confirm-card";
 import { IntakeForm } from "@/components/intake-form";
+import { MatchAfterSave } from "@/components/match-after-save";
 import { MicButton } from "@/components/mic-button";
 import { PersonPicker, usePersonContext, type PersonContext } from "@/components/person-picker";
 import { ResetDemo } from "@/components/reset-demo";
@@ -183,6 +184,9 @@ function LogScreen({ ctx }: { ctx: PersonContext }) {
         {result && !result.response.draft && result.response.kind !== "caregiver_distress" && (
           <p className="text-sm text-muted-foreground">Nothing was added to the log from this note.</p>
         )}
+        {saved && saved.redFlags.length > 0 && (
+          <SafetyMessage message="Please contact your doctor or care team about this before trying anything else." />
+        )}
         {saved && (
           <div role="status" className="flex flex-col gap-3 rounded-xl border-2 border-emerald-300 bg-emerald-50 p-4 text-emerald-950">
             <p className="flex items-center gap-2 text-lg font-semibold">
@@ -197,6 +201,7 @@ function LogScreen({ ctx }: { ctx: PersonContext }) {
             </Button>
           </div>
         )}
+        {saved && <MatchAfterSave key={saved.id} saved={saved} person={savedPerson ?? null} />}
       </div>
 
       <TapLogger mode={mode} person={person} loggedBy={loggedBy} onSaved={(record) => { setSaved(record); setResult(null); }} />
