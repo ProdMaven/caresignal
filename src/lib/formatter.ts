@@ -253,7 +253,10 @@ function buildDraft(
     saidTime && reply.confidence.time === "low" ? Math.min(time.confidence, 0.5) : time.confidence;
   const hour = wallParts(time.occurredAt)?.hour ?? now.hour;
 
-  confidence.intensity = CONFIDENCE_VALUE[reply.confidence.intensity];
+  // Set in code so it cannot vary with how the note was worded: 2 is the default when the note did not
+  // size the event, so it is always offered for review; 1 or 3 means the note said so.
+  const intensity = clampIntensity(reply.intensity);
+  confidence.intensity = intensity === 2 ? CONFIDENCE_VALUE.medium : CONFIDENCE_VALUE.high;
 
   const draft: Draft = {
     mode: req.mode,
@@ -264,7 +267,7 @@ function buildDraft(
     source: "text", // the UI sets voice or text when it saves
     eventType,
     behaviors: keepVocab(reply.behaviors, BEHAVIORS),
-    intensity: clampIntensity(reply.intensity),
+    intensity,
     durationMin: cleanDuration(reply.durationMin),
     contextBefore: keepVocab(reply.contextBefore, CONTEXT_BEFORE),
     environment: keepVocab(reply.environment, ENVIRONMENT),
