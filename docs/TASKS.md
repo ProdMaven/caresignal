@@ -16,6 +16,7 @@ Types: `docs/contracts/types.ts`. v2 changes by the PM: added POST /api/reset (`
 | /api/people | POST | CreatePersonRequest | CreatePersonResponse | Lane 3 |
 | /api/invite | POST | InviteRequest | InviteResponse | Lane 1 |
 | /api/checkin | POST | CheckInRequest | CheckInResponse | Lane 2 |
+| /api/feedback | POST | FeedbackRequest | FeedbackResponse | Lane 3 |
 
 Every route returns a mock from `src/mocks/` when `USE_MOCKS=true`, so lanes never block each other.
 

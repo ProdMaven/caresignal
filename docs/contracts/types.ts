@@ -125,6 +125,7 @@ export interface StrategyCard {
   avgDropPct: number; // 0..1, negative if worse
   durabilityPct: number; // 0..1
   researchBacked: boolean;
+  feedback?: StrategyFeedback; // "Did this help?" answers, shown next to the score, never part of it
 }
 // GET /api/strategies?mode=&patternKey=
 export interface StrategiesResponse { strategies: StrategyCard[]; disclaimer: string }
@@ -158,3 +159,14 @@ export interface CheckInResponse {
   message: string;
   saved: false; // always false: check-ins are not stored
 }
+
+// "Did this help?" feedback on a suggested next step. One answer per caregiver per strategy.
+// Counts are shown only when 5 or more caregivers answered, and never change the score.
+export interface StrategyFeedback {
+  helped: number;
+  notHelped: number;
+  yourAnswer: boolean | null; // this caregiver's own answer, if any
+}
+// POST /api/feedback
+export interface FeedbackRequest { strategyId: string; helped: boolean }
+export interface FeedbackResponse { strategyId: string; feedback: StrategyFeedback }

@@ -47,8 +47,8 @@ export function mockAsk(req: AskRequest): AskResponse | null {
 }
 
 // GET /api/strategies?mode=&patternKey=
-export function mockStrategies(mode: Mode, patternKey: string | null): StrategiesResponse {
-  return buildStrategies(mode, patternKey);
+export function mockStrategies(mode: Mode, patternKey: string | null, voterId: string | null = null): StrategiesResponse {
+  return buildStrategies(mode, patternKey, voterId);
 }
 
 // POST /api/reset
@@ -78,3 +78,5 @@ export function mockCreatePerson(req: CreatePersonRequest): CreatePersonResponse
   });
   return person ? { person } : null;
 }
+
+export { feedbackFor, recordFeedback, strategyExists } from "./store";

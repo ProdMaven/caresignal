@@ -1,3 +1,4 @@
+import { StrategyFeedbackRow } from "@/components/strategy-feedback";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { MIN_FAMILIES, STRATEGY_DISCLAIMER } from "@/config/modes";
@@ -71,6 +72,7 @@ export function StrategyCardView({ strategy, rank }: { strategy: StrategyCard; r
             </p>
           </div>
         )}
+        <StrategyFeedbackRow key={`${strategy.id}:${strategy.feedback?.helped ?? 0}:${strategy.feedback?.notHelped ?? 0}`} strategyId={strategy.id} initial={strategy.feedback} />
         <p className="text-xs text-muted-foreground">{STRATEGY_DISCLAIMER}</p>
       </CardContent>
     </Card>
