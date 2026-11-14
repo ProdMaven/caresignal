@@ -40,7 +40,7 @@ export interface LogRecord {
   loggedAt: string; // ISO
   source: Source;
   eventType: string; // from DATA_MODEL vocabulary for the mode
-  behaviors: string[]; // in the order they appeared
+  behaviors: string[];
   intensity: Intensity;
   durationMin: number | null;
   contextBefore: string[];

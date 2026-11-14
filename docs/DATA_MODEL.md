@@ -37,7 +37,7 @@ The formatter may only output these values. Anything else stays in `rawNote` onl
 - dementia: agitation, calling_out, wandering, refused_care, refused_food, restlessness, crying, sleep_disturbance
 - autism: meltdown, shutdown, stimming_increase, sleep_trouble, food_refusal, transition_distress, aggression, elopement
 
-**behaviors** (shared): pacing, calling_out, crying, hitting, kicking, throwing, screaming, rocking, covering_ears, withdrawing, repetitive_speech, grabbing, biting, running_off, head_banging, body_movement, self_biting, self_hitting. Listed in the order they appeared. biting, hitting and kicking mean toward another person or a thing; self_biting and self_hitting are toward their own body and always set the self_injury red flag
+**behaviors** (shared): pacing, calling_out, crying, hitting, kicking, throwing, screaming, rocking, covering_ears, withdrawing, repetitive_speech, grabbing, biting, running_off, head_banging, body_movement, self_biting, self_hitting. biting, hitting and kicking mean toward another person or a thing; self_biting and self_hitting are toward their own body and always set the self_injury red flag
 
 **contextBefore** (shared): skipped_meal, poor_sleep, routine_change, transition, visitor, toileting_need, pain_signs, medication_time, bathing, new_person, screen_time_ended, loud_noise, crowd, clothing_texture, waiting, denied_request, woke_from_sleep
 

@@ -288,7 +288,7 @@ eventType, autism mode: ${list(EVENT_TYPES.autism)}
 Pick the one eventType for the given mode that best matches the main thing that happened. Use null if hasEvent is false or nothing fits.
 - A note that only reports a small or skipped meal is refused_food (dementia) or food_refusal (autism), with skipped_meal in contextBefore and mealtime in environment.
 - Distress that started while leaving a place or switching activity is transition_distress with contextBefore transition (autism mode).
-- Mild fidgeting or being unsettled is restlessness. Agitated, upset with pacing or shouting is agitation.
+- Mild fidgeting or being unsettled is restlessness. Agitated, upset with pacing or shouting is agitation. Upset where the only thing described is crying or tears (no pacing, shouting, or calling out) is crying.
 
 behaviors (both modes): ${list(BEHAVIORS)}
 contextBefore (both modes): ${list(CONTEXT_BEFORE)}
@@ -306,7 +306,7 @@ Mapping notes:
 - intensity must not depend on how the caregiver talks. Words that only add emphasis to a feeling word (very, really, real, so, ever so, extremely, super, quite), capital letters, exclamation marks, repeated words ("walking walking"), short or broken sentences, and dialect never change intensity. "very agitated", "real agitated", "ever so agitated", and "AGITATED" are all 2.
 - environment: "before school", "after school", "at school", "on the way to school", and "the school run" all add school. mealtime is added only when the distress itself happened during a meal ("at lunch she threw her plate"). A meal that only came before the event ("barely ate lunch", "hardly touched her lunch", "skipped lunch", "not eat lunch", then agitated later) is skipped_meal in contextBefore and never adds mealtime. Apply every rule the same way whatever the person's name or way of speaking is.
 - durationMin: minutes the event lasted when stated ("half an hour" is 30). Otherwise null.
-- behaviors go in the order they appeared in the note. Flapping, shaking, or kicking arms or legs with no target is body_movement. Biting, scratching, or pinching their own body is self_biting; hitting or slapping their own body is self_hitting (both also add self_injury to redFlags). biting, hitting, and kicking alone mean toward another person or a thing.
+- Flapping, shaking, or kicking arms or legs with no target is body_movement. Biting, scratching, or pinching their own body is self_biting; hitting or slapping their own body is self_hitting (both also add self_injury to redFlags). biting, hitting, and kicking alone mean toward another person or a thing.
 - contextBefore: woke up from sleep before it started is woke_from_sleep.
 - responseTried and responses: ice, a cold pack, or a cold cloth is cold_or_ice; rubbing, massaging, or pressing a body part is massage (a firm hug or squeeze of the whole body is deep_pressure); holding a hand, arm, or leg still or moving it away to stop a movement is blocked_behavior; any medicine, remedy, drops, or supplement that was given is remedy_given (never its name).
 
