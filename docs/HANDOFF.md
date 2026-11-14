@@ -15,8 +15,8 @@ Read this first, then CLAUDE.md, then the docs it lists. Everything below is the
 - Caregiver distress ("I can't do this anymore") gets care plus 988, never a log entry. `ParseLogResponse` has `kind` and `message` for this.
 
 ## Open decisions (ask Aadi before building past the scaffold)
-1. **Scope.** Recommended tighter cut: three features only (voice/text log, pattern card with things to check, what worked for others). Cut Ask AI, live second mode, timeline, About page. If approved, update PRD sections 5, 8, 9, TASKS lanes, and contracts (drop /api/ask).
-2. **Demo mode.** Dementia or autism. Pick the one the team can interview real people about at the event.
+1. **Scope.** DECIDED Nov 14: keep full PRD scope (all 5 screens, Ask AI, /api/ask). Tighter cut rejected; TASKS cut list is the fallback.
+2. **Demo mode.** DECIDED Nov 14: both. Both modes are live; demo opens in dementia and switches to autism with a live log.
 3. **First channel to users** for the pitch (a real group the team can reach).
 4. **Organizers' template repo.** The deliverables slide says "repo from the template". Get the link; merge its required files into this repo (or recreate from it, per the rules).
 5. **Organizers as collaborators.** Need their GitHub usernames.

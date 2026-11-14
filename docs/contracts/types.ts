@@ -5,7 +5,7 @@ export type Mode = "dementia" | "autism";
 export type TimeBand = "early_morning" | "morning" | "afternoon" | "evening" | "night";
 export type Intensity = 1 | 2 | 3;
 export type Outcome = "calmed" | "partly_calmed" | "escalated" | "unknown";
-export type Source = "voice" | "tap";
+export type Source = "voice" | "tap" | "text"; // text: typed into the box next to the mic
 
 export interface Person {
   id: string;
@@ -118,3 +118,6 @@ export interface StrategyCard {
 }
 // GET /api/strategies?mode=&patternKey=
 export interface StrategiesResponse { strategies: StrategyCard[]; disclaimer: string }
+
+// POST /api/reset  (restore seeded demo data; "Reset demo data" button)
+export interface ResetResponse { ok: boolean; eventCount: number }

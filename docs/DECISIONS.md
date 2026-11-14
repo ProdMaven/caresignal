@@ -8,3 +8,5 @@
 - SQLite via Prisma: rejected hosted Postgres for the demo. Zero setup; swap later.
 - Synthetic data only: rejected any real data. Health and children's data carry privacy law obligations we will not take on this weekend.
 - Primary users are family caregivers at home (adult children of a parent with dementia, parents of autistic children): rejected nursing home aides as the lead user. Families are the team's chosen user, log on their own phones, and multiple family members plus a home aide create the same "nobody sees the whole day" problem.
+- Full PRD scope with both modes live (PM, Nov 14): rejected the 3-feature cut and a single lead mode. The team wants Ask AI and the "one engine, two communities" story shown live; the cut list in TASKS is the fallback if behind.
+- Reset demo data via POST /api/reset that re-runs the seed: rejected a manual redeploy. Judges type their own notes, so the demo needs a one-tap way back to the seeded state.
