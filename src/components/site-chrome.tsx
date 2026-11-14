@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { HeartHandshake, Info, MessageCircleQuestion, Mic, Trophy, UserRound } from "lucide-react";
+import { Heart, HeartHandshake, Info, MessageCircleQuestion, Mic, Trophy, UserRound } from "lucide-react";
 import { MODE_LIST, MODES } from "@/config/modes";
 import { useMode } from "@/hooks/useAppState";
 import { cn } from "@/lib/utils";
@@ -41,7 +41,14 @@ export function TopBar() {
           <HeartHandshake className="size-6 text-primary" aria-hidden />
           CareSignal
         </Link>
-        {!gated && <ModeSwitch />}
+        {!gated && (
+          <div className="flex items-center gap-2">
+            <ModeSwitch />
+            <Link href="/about" aria-label="About CareSignal" className="rounded-full p-2 text-muted-foreground hover:text-foreground">
+              <Info className="size-5" aria-hidden />
+            </Link>
+          </div>
+        )}
       </div>
     </header>
   );
@@ -52,7 +59,7 @@ const NAV = [
   { href: "/person", label: "Timeline", icon: UserRound },
   { href: "/ask", label: "Ask", icon: MessageCircleQuestion },
   { href: "/patterns", label: "What worked", icon: Trophy },
-  { href: "/about", label: "About", icon: Info },
+  { href: "/checkin", label: "You", icon: Heart },
 ];
 
 export function BottomNav() {

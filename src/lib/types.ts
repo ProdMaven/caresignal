@@ -147,3 +147,14 @@ export interface CreatePersonResponse { person: Person }
 // POST /api/invite  (invitation-only entry; sets an httpOnly cookie when the code is valid)
 export interface InviteRequest { code: string }
 export interface InviteResponse { ok: boolean; message: string | null }
+
+// POST /api/checkin  (caregiver check-in: warm listening only. Never saved, never added to anyone's log.)
+export type Mood = "okay" | "tired" | "overwhelmed" | "sad" | "worried" | "hopeful";
+export interface CheckInRequest { text: string; mood?: Mood }
+export interface CheckInResponse {
+  // listening: a warm reply, no advice. crisis: the caregiver may be in danger, show 988 first.
+  // care_team: the note describes a red flag or emergency about the person they care for.
+  kind: "listening" | "crisis" | "care_team";
+  message: string;
+  saved: false; // always false: check-ins are not stored
+}
