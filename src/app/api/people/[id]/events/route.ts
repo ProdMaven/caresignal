@@ -1,5 +1,5 @@
 // GET /api/people/[id]/events?days=21  -> EventsResponse. Owner: Lane 3.
-import { badRequest, notFound, notImplemented, mocksEnabled } from "@/lib/env";
+import { badRequest, notFound, notImplemented, dataMocksEnabled } from "@/lib/env";
 import { findPerson, mockEvents } from "@/mocks";
 
 export const dynamic = "force-dynamic";
@@ -10,7 +10,7 @@ export async function GET(request: Request, context: { params: Promise<{ id: str
   const days = Number(rawDays);
   if (!Number.isInteger(days) || days < 1 || days > 90) return badRequest("days must be a whole number from 1 to 90.");
 
-  if (mocksEnabled()) {
+  if (dataMocksEnabled()) {
     if (!findPerson(id)) return notFound(`No person with id ${id}.`);
     return Response.json(mockEvents(id, days));
   }

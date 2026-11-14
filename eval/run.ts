@@ -33,6 +33,7 @@ const DEFAULT_NOW = "2026-11-13T17:30:00-07:00"; // from the notes in eval/cases
 const LOGGED_BY = "cg_neha";
 const FEATURED: Record<Mode, string> = { dementia: "p_helen", autism: "p_arjun" };
 const MOCK_LABEL = "MOCK baseline (keyword rules, not AI)";
+const RULES_LABEL = "RULES ONLY (real route with its safety screen and keyword fallback, no model reachable, not AI)";
 // M02's rubric allows "flag needsReview" instead of resolving from context.
 const NEEDS_REVIEW_ALTERNATIVE = new Set(["M02"]);
 
@@ -518,11 +519,14 @@ async function detectBackend(r: Runner): Promise<Pick<RunSummary, "backend" | "b
   const probe = await r.client.call("POST", "/api/log", { mode: "dementia", transcript: "zzqx eval backend probe", loggedBy: LOGGED_BY, now: DEFAULT_NOW });
   const confidence = ((probe.body as Raw | null)?.draft as Raw | null | undefined)?.confidence as Raw | undefined;
   const fingerprint = probe.ok && confidence?.eventType === 0.35 && confidence?.personId === 0.4;
-  const serverMockMode: boolean | "unknown" = fingerprint ? true : probe.ok ? false : "unknown";
+  const serverMockMode: boolean | "unknown" = probe.source === "fallback" ? false : fingerprint ? true : probe.ok ? false : "unknown";
   const header = probe.source ? ` (x-caresignal-source: ${probe.source})` : "";
   const declared = process.env.EVAL_BACKEND?.toLowerCase();
-  let backend = fingerprint ? "mock" : probe.status === 501 ? "not_implemented" : probe.ok ? "ai" : "unknown";
-  let detection = fingerprint
+  const rulesOnly = probe.ok && probe.source === "fallback";
+  let backend = rulesOnly ? "rules" : fingerprint ? "mock" : probe.status === 501 ? "not_implemented" : probe.ok ? "ai" : "unknown";
+  let detection = rulesOnly
+    ? "probe: the real /api/log branch answered from its keyword fallback (x-caresignal-source: fallback), so no model was reachable"
+    : fingerprint
     ? "fingerprint: /api/log returned the keyword mock's fixed confidence values for a probe note"
     : probe.status === 501
       ? "probe: /api/log returned 501 (USE_MOCKS=false and no real implementation)"
@@ -534,7 +538,7 @@ async function detectBackend(r: Runner): Promise<Pick<RunSummary, "backend" | "b
     else detection += `. EVAL_BACKEND=${declared} agrees`;
     backend = declared;
   }
-  const label = backend === "mock" ? MOCK_LABEL : backend === "ai" ? "AI backend (real /api/log)" : backend === "not_implemented" ? "No backend (routes return 501)" : "Unknown backend";
+  const label = backend === "rules" ? RULES_LABEL : backend === "mock" ? MOCK_LABEL : backend === "ai" ? "AI backend (real /api/log)" : backend === "not_implemented" ? "No backend (routes return 501)" : "Unknown backend";
   return { backend, backendLabel: label, backendDetection: detection, serverMockMode };
 }
 
@@ -650,7 +654,7 @@ async function main(): Promise<void> {
   const [pIn, pCached, pOut] = [price("input_usd_per_million_tokens"), price("cached_input_usd_per_million_tokens"), price("output_usd_per_million_tokens")];
   let costPerRequestUsd: number | "not measured" = "not measured";
   let costNote = "Not measured: the routes do not expose token usage in their responses, so no cost is reported.";
-  if (backend.backend === "mock") costNote = "Not measured: the mock backend makes no model calls, and the routes do not expose token usage.";
+  if (backend.backend === "mock" || backend.backend === "rules") costNote = "Not measured: no model calls were made in this run.";
   if (withUsage.length > 0 && (pIn === null || pCached === null || pOut === null)) {
     costNote = "Not measured: token usage was captured but eval/pricing.json still has placeholder prices. Fill in current prices and rerun.";
   } else if (withUsage.length > 0 && pIn !== null && pCached !== null && pOut !== null) {

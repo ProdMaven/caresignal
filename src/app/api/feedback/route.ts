@@ -3,7 +3,7 @@
 // Counts are shown next to the score and never change it.
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { badRequest, notFound, notImplemented, mocksEnabled } from "@/lib/env";
+import { badRequest, notFound, notImplemented, dataMocksEnabled } from "@/lib/env";
 import type { FeedbackResponse } from "@/lib/types";
 import { readVoterId, VOTER_COOKIE } from "@/lib/voter";
 import { recordFeedback, strategyExists } from "@/mocks";
@@ -15,7 +15,7 @@ export async function POST(request: Request) {
   const parsed = requestSchema.safeParse(body);
   if (!parsed.success) return badRequest("strategyId and helped (true or false) are required.");
 
-  if (!mocksEnabled()) {
+  if (!dataMocksEnabled()) {
     // TODO(Lane 3): store the answer through prisma (unique on strategyId + voterId).
     return notImplemented("POST /api/feedback", "Lane 3");
   }

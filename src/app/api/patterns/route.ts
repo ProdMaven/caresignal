@@ -1,5 +1,5 @@
 // GET /api/patterns?personId=  -> PatternsResponse. Owner: Lane 3 (numbers) + Lane 2 (summary text).
-import { badRequest, notFound, notImplemented, mocksEnabled } from "@/lib/env";
+import { badRequest, notFound, notImplemented, dataMocksEnabled } from "@/lib/env";
 import { findPerson, mockPatterns } from "@/mocks";
 
 export const dynamic = "force-dynamic";
@@ -8,7 +8,7 @@ export async function GET(request: Request) {
   const personId = new URL(request.url).searchParams.get("personId");
   if (!personId) return badRequest("personId is required.");
 
-  if (mocksEnabled()) {
+  if (dataMocksEnabled()) {
     if (!findPerson(personId)) return notFound(`No person with id ${personId}.`);
     return Response.json(mockPatterns(personId));
   }

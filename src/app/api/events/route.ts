@@ -1,5 +1,5 @@
 // POST /api/events  SaveEventRequest -> SaveEventResponse. Owner: Lane 3.
-import { badRequest, notFound, notImplemented, mocksEnabled } from "@/lib/env";
+import { badRequest, notFound, notImplemented, dataMocksEnabled } from "@/lib/env";
 import { firstIssue, saveEventRequestSchema } from "@/lib/schemas";
 import { findPerson, mockSaveEvent } from "@/mocks";
 
@@ -9,7 +9,7 @@ export async function POST(request: Request) {
   const parsed = saveEventRequestSchema.safeParse(body);
   if (!parsed.success) return badRequest(firstIssue(parsed.error));
 
-  if (mocksEnabled()) {
+  if (dataMocksEnabled()) {
     if (!findPerson(parsed.data.record.personId)) return notFound(`No person with id ${parsed.data.record.personId}.`);
     return Response.json(mockSaveEvent(parsed.data), { status: 201 });
   }

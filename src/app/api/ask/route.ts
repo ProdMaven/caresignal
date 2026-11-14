@@ -1,5 +1,5 @@
 // POST /api/ask  AskRequest -> AskResponse. Owner: Lane 2.
-import { badRequest, notFound, notImplemented, mocksEnabled } from "@/lib/env";
+import { badRequest, notFound, notImplemented, dataMocksEnabled } from "@/lib/env";
 import { askRequestSchema, firstIssue } from "@/lib/schemas";
 import { mockAsk } from "@/mocks";
 
@@ -9,7 +9,7 @@ export async function POST(request: Request) {
   const parsed = askRequestSchema.safeParse(body);
   if (!parsed.success) return badRequest(firstIssue(parsed.error));
 
-  if (mocksEnabled()) {
+  if (dataMocksEnabled()) {
     const response = mockAsk(parsed.data);
     if (!response) return notFound(`No person with id ${parsed.data.personId}.`);
     return Response.json(response);

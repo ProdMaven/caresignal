@@ -1,5 +1,5 @@
 // GET /api/people?mode=  -> PeopleResponse. POST /api/people  CreatePersonRequest -> CreatePersonResponse. Owner: Lane 3.
-import { badRequest, notImplemented, mocksEnabled } from "@/lib/env";
+import { badRequest, notImplemented, dataMocksEnabled } from "@/lib/env";
 import { createPersonRequestSchema, firstIssue, modeSchema } from "@/lib/schemas";
 import { mockCreatePerson, mockPeople } from "@/mocks";
 
@@ -10,7 +10,7 @@ export async function GET(request: Request) {
   const mode = raw ? modeSchema.safeParse(raw) : null;
   if (mode && !mode.success) return badRequest('mode must be "dementia" or "autism".');
 
-  if (mocksEnabled()) return Response.json(mockPeople(mode?.data));
+  if (dataMocksEnabled()) return Response.json(mockPeople(mode?.data));
 
   // TODO(Lane 3): read Person rows through prisma (src/lib/db.ts).
   return notImplemented("GET /api/people", "Lane 3");
@@ -22,7 +22,7 @@ export async function POST(request: Request) {
   const parsed = createPersonRequestSchema.safeParse(body);
   if (!parsed.success) return badRequest(firstIssue(parsed.error));
 
-  if (mocksEnabled()) {
+  if (dataMocksEnabled()) {
     const created = mockCreatePerson(parsed.data);
     if (!created) return badRequest("This demo already has the most profiles it allows. Use Reset demo data to start over.");
     return Response.json(created, { status: 201 });
