@@ -5,7 +5,7 @@ export type Mode = "dementia" | "autism";
 export type TimeBand = "early_morning" | "morning" | "afternoon" | "evening" | "night";
 export type Intensity = 1 | 2 | 3;
 export type Outcome = "calmed" | "partly_calmed" | "escalated" | "unknown";
-export type Source = "voice" | "tap";
+export type Source = "voice" | "tap" | "text"; // text: typed into the box next to the mic
 
 export interface Person {
   id: string;
@@ -14,7 +14,17 @@ export interface Person {
   aliases: string[];
   ageBandOrSetting: string;
   isFeatured: boolean;
+  // Intake profile (v3). Caregiver-reported, never a diagnosis. All optional so seeded people stay valid.
+  ageBand?: AgeBand;
+  gender?: Gender; // optional at intake; used for bias audits and display only, never to branch logic
+  spectrumLevel?: SpectrumLevel; // autism mode only
+  communicationLevel?: CommunicationLevel;
 }
+
+export type AgeBand = "2_5" | "6_11" | "12_17" | "adult";
+export type Gender = "girl_or_woman" | "boy_or_man" | "nonbinary" | "prefer_not_to_say";
+export type SpectrumLevel = "mild" | "medium" | "severe"; // as the caregiver describes it
+export type CommunicationLevel = "speaks_in_sentences" | "some_words" | "mostly_non_speaking";
 
 export interface LogRecord {
   id: string;
@@ -115,6 +125,85 @@ export interface StrategyCard {
   avgDropPct: number; // 0..1, negative if worse
   durabilityPct: number; // 0..1
   researchBacked: boolean;
+  feedback?: StrategyFeedback; // "Did this help?" answers, shown next to the score, never part of it
 }
 // GET /api/strategies?mode=&patternKey=
 export interface StrategiesResponse { strategies: StrategyCard[]; disclaimer: string }
+
+// POST /api/reset  (restore seeded demo data; "Reset demo data" button)
+export interface ResetResponse { ok: boolean; eventCount: number }
+
+// POST /api/people  (caregiver intake: create a profile for the person they care for)
+export interface CreatePersonRequest {
+  mode: Mode;
+  displayName: string; // first name or nickname only
+  aliases: string[]; // for example "my son", "Mom"
+  ageBand: AgeBand;
+  gender?: Gender;
+  spectrumLevel?: SpectrumLevel; // required in autism mode
+  communicationLevel: CommunicationLevel;
+}
+export interface CreatePersonResponse { person: Person }
+
+// POST /api/invite  (invitation-only entry; sets an httpOnly cookie when the code is valid)
+export interface InviteRequest { code: string }
+export interface InviteResponse { ok: boolean; message: string | null }
+
+// POST /api/checkin  (caregiver check-in: warm listening only. Never saved, never added to anyone's log.)
+export type Mood = "okay" | "tired" | "overwhelmed" | "sad" | "worried" | "hopeful";
+export interface CheckInRequest { text: string; mood?: Mood }
+export interface CheckInResponse {
+  // listening: a warm reply, no advice. crisis: the caregiver may be in danger, show 988 first.
+  // care_team: the note describes a red flag or emergency about the person they care for.
+  kind: "listening" | "crisis" | "care_team";
+  message: string;
+  saved: false; // always false: check-ins are not stored
+}
+
+// "Did this help?" feedback on a suggested next step. One answer per caregiver per strategy.
+// Counts are shown only when 5 or more caregivers answered, and never change the score.
+export interface StrategyFeedback {
+  helped: number;
+  notHelped: number;
+  yourAnswer: boolean | null; // this caregiver's own answer, if any
+}
+// POST /api/feedback
+export interface FeedbackRequest { strategyId: string; helped: boolean }
+export interface FeedbackResponse { strategyId: string; feedback: StrategyFeedback }
+
+// Caregiver journal: the caregiver's own dated notes about their experience (voice or typed).
+// Kept under the caregiver's name. Never added to the log of the person they care for.
+export interface JournalEntry {
+  id: string;
+  loggedBy: string; // caregiver id
+  mode: Mode;
+  createdAt: string; // ISO
+  text: string;
+  mood: Mood | null;
+  source: "voice" | "text";
+}
+// POST /api/journal
+export interface JournalRequest { loggedBy: string; mode: Mode; text: string; mood?: Mood; source: "voice" | "text"; now: string }
+export interface JournalResponse {
+  entry: JournalEntry;
+  // Safety message shown before anything else: 988 for caregiver distress, care team or 911 for a red flag
+  // about the person they care for. null when nothing was triggered.
+  kind: "saved" | "crisis" | "care_team";
+  message: string | null;
+}
+// GET /api/journal?loggedBy=
+export interface JournalListResponse { entries: JournalEntry[] } // newest first
+
+// GET /api/overview?personId=&loggedBy=&days=7|30  (weekly or monthly overview; counts only, computed in code)
+export interface OverviewCount { key: string; count: number }
+export interface OverviewResponse {
+  personId: string;
+  days: 7 | 30;
+  hardMoments: number; // logged events in the period
+  previousHardMoments: number | null; // same-length period before; null when the logs do not go back that far
+  daysWithNone: number; // days in the period with no logged event
+  byTimeBand: { timeBand: TimeBand; count: number }[]; // all five bands, in day order
+  topContexts: OverviewCount[]; // contextBefore tags, most frequent first
+  whatHelped: { key: string; tried: number; calmed: number }[]; // responseTried tags and how often the outcome was calmed
+  journal: { entries: number; moods: { mood: Mood; count: number }[] }; // the caregiver's own journal in the period
+}

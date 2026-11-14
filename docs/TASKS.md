@@ -1,7 +1,7 @@
 # Tasks, lanes, and contracts
 
-## Contracts (frozen)
-Types: `docs/contracts/types.ts`.
+## Contracts (frozen, v3 Nov 14)
+Types: `docs/contracts/types.ts`. v2 changes by the PM: added POST /api/reset (`ResetResponse`) and `Source` value `"text"` for typed notes. Scope decision: full PRD scope, both modes live, /api/ask stays. v3 changes by the PM: intake profile fields on `Person` (ageBand, gender, spectrumLevel, communicationLevel), POST /api/people (`CreatePersonRequest`), and POST /api/invite for invitation-only entry.
 
 | Route | Method | Request | Response | Owner |
 |---|---|---|---|---|
@@ -12,13 +12,21 @@ Types: `docs/contracts/types.ts`.
 | /api/patterns?personId= | GET | | PatternsResponse | Lane 3 (numbers) + Lane 2 (summary text) |
 | /api/ask | POST | AskRequest | AskResponse | Lane 2 |
 | /api/strategies?mode=&patternKey= | GET | | StrategiesResponse | Lane 3 |
+| /api/reset | POST | | ResetResponse | Lane 3 |
+| /api/people | POST | CreatePersonRequest | CreatePersonResponse | Lane 3 |
+| /api/invite | POST | InviteRequest | InviteResponse | Lane 1 |
+| /api/checkin | POST | CheckInRequest | CheckInResponse | Lane 2 |
+| /api/feedback | POST | FeedbackRequest | FeedbackResponse | Lane 3 |
+| /api/journal | POST | JournalRequest | JournalResponse | Lane 3 |
+| /api/journal?loggedBy= | GET | | JournalListResponse | Lane 3 |
+| /api/overview?personId=&loggedBy=&days= | GET | | OverviewResponse | Lane 3 |
 
 Every route returns a mock from `src/mocks/` when `USE_MOCKS=true`, so lanes never block each other.
 
 ## Folder ownership
 - **Lane 1 (Frontend + demo flow)**: `src/app/(pages)`, `src/components/`, `src/hooks/useSpeech.ts`, `src/config/modes.ts`
 - **Lane 2 (AI)**: `src/app/api/log`, `src/app/api/ask`, `src/prompts/`, `src/lib/ai.ts`, `src/lib/demoCache.ts`, pattern summary text
-- **Lane 3 (Data, patterns, scoring)**: `prisma/`, `scripts/seed.ts`, `src/lib/patterns.ts`, `src/lib/scoring.ts`, `src/app/api/people`, `src/app/api/events`, `src/app/api/patterns`, `src/app/api/strategies`, `eval/cases.json`
+- **Lane 3 (Data, patterns, scoring)**: `prisma/`, `scripts/seed.ts`, `src/lib/patterns.ts`, `src/lib/scoring.ts`, `src/app/api/people`, `src/app/api/events`, `src/app/api/reset`, `src/app/api/patterns`, `src/app/api/strategies`, `eval/cases.json`
 - **Lane 4 (PM)**: `docs/`, `src/lib/types.ts` (copy of contracts), merges of shared files
 
 ## Milestones
@@ -30,12 +38,14 @@ Every route returns a mock from `src/mocks/` when `USE_MOCKS=true`, so lanes nev
 ## Lane 1: Frontend and demo flow
 - [ ] T-L1-1 Scaffold app (scaffold-agent), copy types, mocks, deploy (60m) -> M1
 - [ ] T-L1-2 Mode switch + modes config (labels, event types, colors) (45m) -> M1
-- [ ] T-L1-3 Home/Log screen: person picker, mic button, tap-logger fallback (60m) -> M1
+- [ ] T-L1-3 Home/Log screen: person picker, mic button, text box next to the mic, tap-logger fallback, "Reset demo data" button (60m) -> M1
 - [ ] T-L1-4 useSpeech hook (Web Speech API, interim text, stop on silence) (60m) -> M2
 - [ ] T-L1-5 Confirm card: fields, low-confidence highlight, edit, Save (60m) -> M2
 - [ ] T-L1-6 Person view: timeline by day and time band, pattern cards (75m) -> M2
 - [ ] T-L1-7 Ask screen: input + mic, answer, evidence, red-flag banner (60m) -> M3
 - [ ] T-L1-8 Winning Patterns screen: ranked cards, tier badges, disclaimer (60m) -> M3
+- [ ] T-L1-10 Invite gate: code entry screen, POST /api/invite, cookie check in middleware; codes from env `INVITE_CODES`; judge code in README and the submission form (45m) -> M2
+- [ ] T-L1-11 Intake profile form (age band, gender optional, spectrum level mild/medium/severe in autism mode, communication level), POST /api/people (60m) -> M2
 - [ ] T-L1-9 Guardrail banner + About page + polish on demo path only (45m) -> M4
 
 ## Lane 2: AI features
@@ -53,6 +63,7 @@ Every route returns a mock from `src/mocks/` when `USE_MOCKS=true`, so lanes nev
 - [ ] T-L3-4 patterns.ts per DATA_MODEL rule + /api/patterns (75m) -> M2
 - [ ] T-L3-5 scoring.ts per SCORING + /api/strategies (60m) -> M3
 - [ ] T-L3-6 people/events routes (45m) -> M2
+- [ ] T-L3-8 /api/reset: restore seeded data (re-run seed), used by the "Reset demo data" button (30m) -> M2
 - [x] T-L3-7 eval/cases.json: 30-case starter benchmark written by PM (see docs/EVALS.md)
 
 ## Lane 4: PM, pitch, validation
@@ -67,6 +78,6 @@ Every route returns a mock from `src/mocks/` when `USE_MOCKS=true`, so lanes nev
 ## Cut list (drop in this order if behind)
 1. Tap-logger polish (keep bare form)
 2. About page
-3. Autism mode Ask (keep pattern + strategies only)
+3. Autism mode Ask (keep live log, pattern + strategies; PM decision is both modes live, so cut this only with PM sign-off)
 4. Timeline grouping (plain list)
 5. Live voice (use cached transcripts with a "speak" button that plays the cached flow)

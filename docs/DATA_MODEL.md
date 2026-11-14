@@ -52,7 +52,7 @@ The formatter may only output these values. Anything else stays in `rawNote` onl
 **redFlags** (set by formatter or Ask, never ignored): self_injury, head_banging, injury, fall, sudden_change, signs_of_illness, signs_of_pain_severe, not_eating_days
 
 ## Tables (Prisma, SQLite)
-- **Person**: id, mode, displayName, aliases (JSON array, for "Mom", "Helen"), ageBand or careSetting, isFeatured (bool, demo people)
+- **Person**: id, mode, displayName, aliases (JSON array, for "Mom", "Helen"), ageBand or careSetting, isFeatured (bool, demo people), plus intake fields: ageBand (2_5, 6_11, 12_17, adult), gender (optional), spectrumLevel (mild, medium, severe; autism mode), communicationLevel (speaks_in_sentences, some_words, mostly_non_speaking)
 - **Event**: all record fields; list fields stored as JSON strings for the demo (fine for SQLite counts in code)
 - **Pattern**: id, personId, mode, eventType, timeBand, contextTag, matchCount, totalCount, windowDays, confidence (low/medium/high), evidenceEventIds (JSON), summary (Claude one-liner, cached)
 - **Strategy**: id, mode, name, description, patternKey (eventType + contextTag, e.g. "agitation|skipped_meal"), researchBacked (bool), safetyApproved (bool)

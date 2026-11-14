@@ -1,0 +1,113 @@
+// CareSignal schema, per docs/DATA_MODEL.md. SQLite for the demo.
+// List fields are stored as JSON strings (SQLite has no array type).
+// Owner: Lane 3.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  // package.json scripts and src/lib/db.ts fall back to file:./dev.db when unset.
+  url      = env("DATABASE_URL")
+}
+
+model Person {
+  id               String  @id
+  mode             String // "dementia" | "autism"
+  displayName      String
+  aliases          String  @default("[]") // JSON string[]
+  ageBandOrSetting String
+  isFeatured       Boolean @default(false)
+  // Intake profile (contracts v3). Caregiver-reported, never a diagnosis. All optional.
+  ageBand            String? // "2_5" | "6_11" | "12_17" | "adult"
+  gender             String? // display and bias audits only, never branches logic
+  spectrumLevel      String? // autism mode only: "mild" | "medium" | "severe"
+  communicationLevel String? // "speaks_in_sentences" | "some_words" | "mostly_non_speaking"
+  events           Event[]
+  patterns         Pattern[]
+}
+
+model Event {
+  id            String   @id
+  mode          String
+  personId      String
+  person        Person   @relation(fields: [personId], references: [id], onDelete: Cascade)
+  loggedBy      String
+  occurredAt    String // ISO with offset, kept as text so wall-clock time survives
+  timeBand      String
+  loggedAt      String // ISO
+  source        String // "voice" | "tap" | "text"
+  eventType     String
+  behaviors     String   @default("[]") // JSON string[]
+  intensity     Int
+  durationMin   Int?
+  contextBefore String   @default("[]") // JSON string[]
+  environment   String   @default("[]") // JSON string[]
+  responseTried String   @default("[]") // JSON string[]
+  outcome       String
+  rawNote       String
+  confidence    String   @default("{}") // JSON Record<string, number>
+  needsReview   String   @default("[]") // JSON string[]
+  redFlags      String   @default("[]") // JSON string[]
+
+  @@index([personId, occurredAt])
+}
+
+model Pattern {
+  id               String  @id
+  personId         String
+  person           Person  @relation(fields: [personId], references: [id], onDelete: Cascade)
+  mode             String
+  eventType        String
+  timeBand         String
+  contextTag       String
+  matchCount       Int
+  totalCount       Int
+  windowDays       Int
+  confidence       String // "low" | "medium" | "high"
+  crossShift       Boolean @default(false)
+  evidenceEventIds String  @default("[]") // JSON string[]
+  summary          String
+}
+
+model Strategy {
+  id             String          @id
+  mode           String
+  name           String
+  description    String
+  patternKey     String // eventType|contextTag, e.g. "agitation|skipped_meal"
+  researchBacked Boolean         @default(false)
+  safetyApproved Boolean         @default(false)
+  trials         StrategyTrial[]
+  score          StrategyScore?
+
+  @@index([mode, patternKey])
+}
+
+model StrategyTrial {
+  id                   String   @id
+  strategyId           String
+  strategy             Strategy @relation(fields: [strategyId], references: [id], onDelete: Cascade)
+  personId             String // background family, not a Person row
+  triedAt              String // ISO
+  eventsBefore14d      Int
+  eventsAfter14d       Int
+  sustained4w          Boolean
+  loggingStable        Boolean
+  concurrentStrategies Int      @default(0)
+}
+
+model StrategyScore {
+  strategyId     String   @id
+  strategy       Strategy @relation(fields: [strategyId], references: [id], onDelete: Cascade)
+  patternKey     String
+  families       Float
+  pctImproved    Float
+  avgDropPct     Float
+  durabilityPct  Float
+  score          Float
+  tier           String
+  notRecommended Boolean  @default(false)
+  computedAt     String // ISO
+}
