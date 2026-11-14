@@ -14,7 +14,17 @@ export interface Person {
   aliases: string[];
   ageBandOrSetting: string;
   isFeatured: boolean;
+  // Intake profile (v3). Caregiver-reported, never a diagnosis. All optional so seeded people stay valid.
+  ageBand?: AgeBand;
+  gender?: Gender; // optional at intake; used for bias audits and display only, never to branch logic
+  spectrumLevel?: SpectrumLevel; // autism mode only
+  communicationLevel?: CommunicationLevel;
 }
+
+export type AgeBand = "2_5" | "6_11" | "12_17" | "adult";
+export type Gender = "girl_or_woman" | "boy_or_man" | "nonbinary" | "prefer_not_to_say";
+export type SpectrumLevel = "mild" | "medium" | "severe"; // as the caregiver describes it
+export type CommunicationLevel = "speaks_in_sentences" | "some_words" | "mostly_non_speaking";
 
 export interface LogRecord {
   id: string;
@@ -121,3 +131,19 @@ export interface StrategiesResponse { strategies: StrategyCard[]; disclaimer: st
 
 // POST /api/reset  (restore seeded demo data; "Reset demo data" button)
 export interface ResetResponse { ok: boolean; eventCount: number }
+
+// POST /api/people  (caregiver intake: create a profile for the person they care for)
+export interface CreatePersonRequest {
+  mode: Mode;
+  displayName: string; // first name or nickname only
+  aliases: string[]; // for example "my son", "Mom"
+  ageBand: AgeBand;
+  gender?: Gender;
+  spectrumLevel?: SpectrumLevel; // required in autism mode
+  communicationLevel: CommunicationLevel;
+}
+export interface CreatePersonResponse { person: Person }
+
+// POST /api/invite  (invitation-only entry; sets an httpOnly cookie when the code is valid)
+export interface InviteRequest { code: string }
+export interface InviteResponse { ok: boolean; message: string | null }

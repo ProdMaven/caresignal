@@ -1,7 +1,7 @@
 # Tasks, lanes, and contracts
 
-## Contracts (frozen, v2 Nov 14)
-Types: `docs/contracts/types.ts`. v2 changes by the PM: added POST /api/reset (`ResetResponse`) and `Source` value `"text"` for typed notes. Scope decision: full PRD scope, both modes live, /api/ask stays.
+## Contracts (frozen, v3 Nov 14)
+Types: `docs/contracts/types.ts`. v2 changes by the PM: added POST /api/reset (`ResetResponse`) and `Source` value `"text"` for typed notes. Scope decision: full PRD scope, both modes live, /api/ask stays. v3 changes by the PM: intake profile fields on `Person` (ageBand, gender, spectrumLevel, communicationLevel), POST /api/people (`CreatePersonRequest`), and POST /api/invite for invitation-only entry.
 
 | Route | Method | Request | Response | Owner |
 |---|---|---|---|---|
@@ -13,6 +13,8 @@ Types: `docs/contracts/types.ts`. v2 changes by the PM: added POST /api/reset (`
 | /api/ask | POST | AskRequest | AskResponse | Lane 2 |
 | /api/strategies?mode=&patternKey= | GET | | StrategiesResponse | Lane 3 |
 | /api/reset | POST | | ResetResponse | Lane 3 |
+| /api/people | POST | CreatePersonRequest | CreatePersonResponse | Lane 3 |
+| /api/invite | POST | InviteRequest | InviteResponse | Lane 1 |
 
 Every route returns a mock from `src/mocks/` when `USE_MOCKS=true`, so lanes never block each other.
 
@@ -37,6 +39,8 @@ Every route returns a mock from `src/mocks/` when `USE_MOCKS=true`, so lanes nev
 - [ ] T-L1-6 Person view: timeline by day and time band, pattern cards (75m) -> M2
 - [ ] T-L1-7 Ask screen: input + mic, answer, evidence, red-flag banner (60m) -> M3
 - [ ] T-L1-8 Winning Patterns screen: ranked cards, tier badges, disclaimer (60m) -> M3
+- [ ] T-L1-10 Invite gate: code entry screen, POST /api/invite, cookie check in middleware; codes from env `INVITE_CODES`; judge code in README and the submission form (45m) -> M2
+- [ ] T-L1-11 Intake profile form (age band, gender optional, spectrum level mild/medium/severe in autism mode, communication level), POST /api/people (60m) -> M2
 - [ ] T-L1-9 Guardrail banner + About page + polish on demo path only (45m) -> M4
 
 ## Lane 2: AI features
