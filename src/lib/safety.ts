@@ -42,7 +42,7 @@ export const SCOPE_MESSAGES: Record<ScopeReason, string> = {
   medical:
     "CareSignal cannot diagnose, and it cannot give advice about medication, doses, treatment, cures, restraint, or care placement. Please ask your doctor or care team about that. It can log what you saw so you can share it with them.",
   privacy:
-    "CareSignal does not share, export, or send notes anywhere, and it cannot show anything about other people or other families. Community numbers appear only as totals from 5 or more families. For questions about care, please ask your doctor or care team. It can log what you saw so you can share it with them.",
+    "CareSignal does not share your notes with other people or families, and it does not export or email them. A note's text is processed by our AI provider only to turn it into a log entry. It cannot show anything about other people or other families. Community numbers appear only as totals from 5 or more families. For questions about care, please ask your doctor or care team. It can log what you saw so you can share it with them.",
   role:
     "CareSignal only turns your care notes into log entries. It cannot change its rules, act as a therapist or a doctor, or answer other questions. For advice, please ask your doctor or care team. It can log what you saw so you can share it with them.",
 };
