@@ -69,7 +69,8 @@ export function BottomNav() {
     <nav aria-label="Main" className="fixed inset-x-0 bottom-0 z-40 border-t bg-card pb-[env(safe-area-inset-bottom)]">
       <ul className="mx-auto flex w-full max-w-xl">
         {NAV.map(({ href, label, icon: Icon }) => {
-          const active = href === "/" ? pathname === "/" : pathname.startsWith(href);
+          const active =
+            href === "/" ? pathname === "/" : pathname.startsWith(href) || (href === "/checkin" && pathname.startsWith("/journal"));
           return (
             <li key={href} className="flex-1">
               <Link

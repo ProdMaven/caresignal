@@ -10,6 +10,7 @@ import { SafetyMessage } from "@/components/safety-message";
 import { CardSkeleton, ErrorState } from "@/components/states";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { YouTabs } from "@/components/you-tabs";
 import { SPEECH_NOT_SUPPORTED, useSpeech } from "@/hooks/useSpeech";
 import { postJson } from "@/lib/api";
 import type { CheckInRequest, CheckInResponse, Mood } from "@/lib/types";
@@ -54,6 +55,7 @@ export default function CheckInPage() {
 
   return (
     <>
+      <YouTabs />
       <div className="flex flex-col gap-1">
         <h1 className="text-2xl font-bold tracking-tight">How are you feeling?</h1>
         <p className="text-muted-foreground">

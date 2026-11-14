@@ -170,3 +170,26 @@ export interface StrategyFeedback {
 // POST /api/feedback
 export interface FeedbackRequest { strategyId: string; helped: boolean }
 export interface FeedbackResponse { strategyId: string; feedback: StrategyFeedback }
+
+// Caregiver journal: the caregiver's own dated notes about their experience (voice or typed).
+// Kept under the caregiver's name. Never added to the log of the person they care for.
+export interface JournalEntry {
+  id: string;
+  loggedBy: string; // caregiver id
+  mode: Mode;
+  createdAt: string; // ISO
+  text: string;
+  mood: Mood | null;
+  source: "voice" | "text";
+}
+// POST /api/journal
+export interface JournalRequest { loggedBy: string; mode: Mode; text: string; mood?: Mood; source: "voice" | "text"; now: string }
+export interface JournalResponse {
+  entry: JournalEntry;
+  // Safety message shown before anything else: 988 for caregiver distress, care team or 911 for a red flag
+  // about the person they care for. null when nothing was triggered.
+  kind: "saved" | "crisis" | "care_team";
+  message: string | null;
+}
+// GET /api/journal?loggedBy=
+export interface JournalListResponse { entries: JournalEntry[] } // newest first

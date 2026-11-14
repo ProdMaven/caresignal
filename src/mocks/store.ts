@@ -1,7 +1,7 @@
 // In-memory store for mock mode. Lives on globalThis so every route handler
 // (each may be bundled separately) shares one copy for the life of the server.
-import type { LogRecord, Mode, Person, StrategyFeedback } from "../lib/types";
-import { nowIso } from "../lib/time";
+import type { JournalEntry, LogRecord, Mode, Mood, Person, StrategyFeedback } from "../lib/types";
+import { addDays, demoToday, isoAt, nowIso } from "../lib/time";
 import { buildSeedEvents, PEOPLE, STRATEGIES } from "./data";
 
 interface MockStore {
@@ -11,7 +11,11 @@ interface MockStore {
   nextPersonId: number;
   // strategyId -> voterId -> helped. One answer per caregiver per strategy.
   votes: Map<string, Map<string, boolean>>;
+  journal: JournalEntry[];
+  nextJournalId: number;
 }
+
+const MAX_JOURNAL_ENTRIES = 300; // keeps a public demo from filling up
 
 const MAX_ADDED_PEOPLE = 20; // keeps a public demo from filling up
 
@@ -19,7 +23,7 @@ const globalForStore = globalThis as unknown as { __caresignalMockStore?: MockSt
 
 function freshStore(): MockStore {
   const events = buildSeedEvents();
-  return { events, nextId: events.length + 1, people: [...PEOPLE], nextPersonId: 1, votes: new Map() };
+  return { events, nextId: events.length + 1, people: [...PEOPLE], nextPersonId: 1, votes: new Map(), journal: seedJournal(), nextJournalId: 100 };
 }
 
 function store(): MockStore {
@@ -93,4 +97,42 @@ export function recordFeedback(strategyId: string, voterId: string, helped: bool
   votes.set(voterId, helped);
   s.votes.set(strategyId, votes);
   return feedbackFor(strategyId, voterId);
+}
+
+// Synthetic journal entries so the journal and the overview are not empty in the demo.
+function seedJournal(): JournalEntry[] {
+  const today = demoToday();
+  const rows: [string, Mode, number, number, number, Mood | null, string][] = [
+    ["cg_neha", "dementia", -12, 21, 10, "tired", "Long day. Mom asked for Dad four times this afternoon and I ran out of ways to answer. I sat in the car for ten minutes before coming back in."],
+    ["cg_neha", "dementia", -9, 20, 40, "worried", "Rosa said lunch was small again. I keep wondering if I am missing something obvious."],
+    ["cg_neha", "dementia", -6, 22, 5, "sad", "She did not know my name tonight. She still held my hand though."],
+    ["cg_neha", "dementia", -4, 19, 30, "hopeful", "We tried the snack before three. Quiet afternoon, and we listened to her old records together."],
+    ["cg_neha", "dementia", -2, 21, 15, "tired", "Ravi could not come this weekend, so it was just me. I am running on very little sleep."],
+    ["cg_neha", "dementia", -1, 20, 0, "okay", "An ordinary day. I will take ordinary."],
+    ["cg_priya", "autism", -11, 9, 20, "overwhelmed", "Another hard morning before school. I was late for work again and felt every look in the car line."],
+    ["cg_priya", "autism", -8, 21, 0, "worried", "He was up three times last night. I can tell tomorrow will be heavy before it starts."],
+    ["cg_priya", "autism", -5, 20, 30, "hopeful", "The picture schedule on the fridge helped today. He checked it himself and smiled at the bus picture."],
+    ["cg_priya", "autism", -3, 9, 45, "tired", "Substitute driver again. I wish someone would warn us. He held it together until we got home."],
+    ["cg_priya", "autism", -1, 21, 30, "okay", "Good bedtime. He told me about every planet twice and I loved it."],
+  ];
+  return rows.map(([loggedBy, mode, dayOffset, hour, minute, mood, text], i) => ({
+    id: `jr_${String(i + 1).padStart(3, "0")}`,
+    loggedBy, mode, mood, text, source: "text" as const,
+    createdAt: isoAt(addDays(today, dayOffset), hour, minute),
+  }));
+}
+
+export function listJournal(loggedBy: string): JournalEntry[] {
+  return store()
+    .journal.filter((e) => e.loggedBy === loggedBy)
+    .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
+}
+
+// Returns null when the demo already holds the most entries it allows.
+export function addJournalEntry(input: Omit<JournalEntry, "id">): JournalEntry | null {
+  const s = store();
+  if (s.journal.length >= MAX_JOURNAL_ENTRIES) return null;
+  const entry: JournalEntry = { ...input, id: `jr_${s.nextJournalId++}` };
+  s.journal.push(entry);
+  return entry;
 }

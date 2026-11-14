@@ -80,3 +80,5 @@ export function mockCreatePerson(req: CreatePersonRequest): CreatePersonResponse
 }
 
 export { feedbackFor, recordFeedback, strategyExists } from "./store";
+
+export { addJournalEntry, listJournal } from "./store";
