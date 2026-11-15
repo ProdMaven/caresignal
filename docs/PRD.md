@@ -25,7 +25,7 @@ Family caregiver speaks -> AI formats a structured record -> pattern finder upda
 6. Answer includes ranked strategies with tier badges and family evidence.
 
 ## 5. Screens (5)
-1. **Home / Log**: mode switch, person picker, big mic button with a text box next to it (judges can type their own note), small tap-logger form fallback, confirm card, "Reset demo data" button.
+1. **Home / Log**: mode switch, person picker, big mic button with a text box next to it (judges can type their own note), small tap-logger form fallback, confirm card. (The "Reset demo data" button was removed Nov 14 by the PM.)
 2. **Person view**: header with person, timeline grouped by day and time band, 2 to 3 pattern cards (finding, evidence count, "possible things to check", link to matching strategies).
 3. **Ask**: question box with mic, answer with evidence lines and linked entries, red-flag banner when triggered.
 4. **Winning Patterns**: strategies for a selected pattern, ranked by score, tier badge, families, % improved, average drop, durability, disclaimer.
@@ -87,7 +87,7 @@ Cached demo phrases:
 
 ## 9b. Judging gates (see docs/JUDGING.md)
 - Public URL on Railway, no local setup.
-- Judges must be able to type their own note (text box next to the mic) and get a live AI result, not only the cached phrases, in either mode. Their entries visibly update pattern counts. Include a "Reset demo data" button (POST /api/reset restores the seeded data).
+- Judges must be able to type their own note (text box next to the mic) and get a live AI result, not only the cached phrases, in either mode. Their entries visibly update pattern counts. (The "Reset demo data" button was removed Nov 14 by the PM; added entries are kept.)
 - Crisis-safe on any input.
 - Pitch uses a pre-recorded app video.
 

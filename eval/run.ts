@@ -583,7 +583,10 @@ async function main(): Promise<void> {
   }
   const backend = await detectBackend(r);
   // A clean seeded store makes the run reproducible. Only done where writes are allowed.
-  if (writesAllowed) await r.client.call("POST", "/api/reset");
+  if (writesAllowed) {
+    const reset = await r.client.call("POST", "/api/reset");
+    if (reset.status === 403) console.log("Note: this server refuses resets (ALLOW_RESET is not set), so the run uses whatever data is already there. Use the staging copy for a clean run.");
+  }
   await r.loadRoster();
 
   console.log(`Unspoken ${options.set} run against ${options.baseUrl}`);

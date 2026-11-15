@@ -20,7 +20,7 @@ Read this first, then CLAUDE.md, then the docs it lists. Everything below is the
 - **Staging:** https://staging-production-8dc505db.up.railway.app, service `staging`, deploys from `claude/caresignal-buildathon-setup-6ss2v0`, invite code `STAGING-EVAL`, shares the API key by reference. Test prompt changes here first, never on the live app.
 - **Merged to `main` (PR 1):** invitation-only entry, Care Profile intake, voice or typed log in either mode with a mic language picker, confirm card, match plus warm line plus next step after Save, timeline, Ask, Winning Patterns with "Did this help?", caregiver check-in, journal, weekly and monthly overview, eval and safety runner.
 - **Merged to `main` and live (PR 2):** handling of real-length spoken notes. Time limit 9 to 18 seconds, a reported remedy is no longer treated as a medication question, per-step results on what was tried (contracts v5), new categories (body movement, self-biting, self-hitting, woke from sleep, cold or ice, massage, blocked behavior, remedy given), 14 long benchmark cases.
-- **What is real and what is not:** the model does one thing: it turns notes into fields (`/api/log`). Ask answers, pattern summaries and overview numbers are computed text. Data routes use an in-memory store. On `main` today it resets on every deploy; on the build branch it is saved to Postgres and survives deploys. "Reset demo data" and every eval run against a server still wipe what was added there. Community numbers are synthetic.
+- **What is real and what is not:** the model does one thing: it turns notes into fields (`/api/log`). Ask answers, pattern summaries and overview numbers are computed text. Data routes use an in-memory store. On `main` today it resets on every deploy; on the build branch it is saved to Postgres and survives deploys. There is no reset button; only an eval run on staging clears what was added there. Community numbers are synthetic.
 
 ## Numbers (real model)
 | | Before PR 2 | Live `main` now (rerun after the merge) |
@@ -50,7 +50,7 @@ Read this first, then CLAUDE.md, then the docs it lists. Everything below is the
 - Product: Unspoken (working name; renamed from CareSignal on Nov 14, see `docs/BRAND.md`), one engine for two communities (dementia, autism). Users are anyone who lives with or cares for the person (parents, adult children, spouses, siblings, home aides).
 - Statistics find patterns and compute scores; Claude only formats notes and explains numbers.
 - Synthetic data only. Organizer-required folder layout: `eval/`, `safety/`, `docs/problem.md`, `docs/eval_report.md`, `docs/safety_report.md`, `docs/pitch.pdf`.
-- Judges must be able to type their own input: text box next to the mic, live AI on any input, "Reset demo data" button.
+- Judges must be able to type their own input: text box next to the mic, live AI on any input. (The reset button was removed Nov 14.)
 - Caregiver distress ("I can't do this anymore") gets care plus 988, never a log entry. `ParseLogResponse` has `kind` and `message` for this.
 
 ## Open decisions (PM)
@@ -67,8 +67,8 @@ Read this first, then CLAUDE.md, then the docs it lists. Everything below is the
 11. Commits 094012d through 4ad9392 are under Aadi's email and show as Unverified. Do NOT rewrite or force-push `main`.
 
 ## Warnings once data is saved
-- **Do not run evals against the live URL any more.** The runner calls "Reset demo data" before and after, which now permanently deletes what real testers added. Run evals on staging.
-- **The "Reset demo data" button is public.** Anyone with an invite code can wipe everyone's saved data. Decide whether to hide it behind a judge-only code before more caregivers try the app.
+- **Run evals on staging, not the live URL.** On staging the runner resets the data before and after. On the live app the reset is refused, so a run there would leave its test people and entries behind in real data.
+- **The "Reset demo data" button was removed (PM, Nov 14).** Nobody can wipe data from the app. `POST /api/reset` still exists for the eval runner but only works where `ALLOW_RESET=true`, which is set on staging only. To clear test entries from the live app, someone has to do it in the database.
 - **No accounts:** saved data is shared by everyone with a code. Keep asking testers for nicknames and no personal details.
 
 ## Next actions, in order

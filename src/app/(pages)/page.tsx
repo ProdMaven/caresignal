@@ -9,7 +9,6 @@ import { LanguagePicker } from "@/components/language-picker";
 import { MatchAfterSave } from "@/components/match-after-save";
 import { MicButton } from "@/components/mic-button";
 import { PersonPicker, usePersonContext, type PersonContext } from "@/components/person-picker";
-import { ResetDemo } from "@/components/reset-demo";
 import { SafetyMessage } from "@/components/safety-message";
 import { CardSkeleton, ErrorState } from "@/components/states";
 import { TapLogger } from "@/components/tap-logger";
@@ -217,14 +216,6 @@ function LogScreen({ ctx }: { ctx: PersonContext }) {
       </div>
 
       <TapLogger mode={mode} person={person} loggedBy={loggedBy} onSaved={(record) => { setSaved(record); setResult(null); }} />
-
-      <ResetDemo
-        onReset={() => {
-          clearAll();
-          setSaved(null);
-          ctx.reload();
-        }}
-      />
     </>
   );
 }

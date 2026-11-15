@@ -170,7 +170,7 @@ One sentence per box:
 | Validation | Rejects anything outside the schema and the fixed vocabulary. |
 | Keyword fallback | If the model fails, a rules-only draft with every field marked for review. |
 | Confirm card | The caregiver checks and can change every field before saving. |
-| Demo store | Synthetic entries held in memory. It resets on deploy and on Reset demo data. |
+| Demo store | Synthetic demo entries plus what people add, held in memory and saved to Postgres so it survives a deploy. |
 | Pattern counter | Plain code that counts what came before hard moments. |
 | Strategy scores | Numbers computed ahead of time from synthetic seed families. |
 | Eval loop | 103 examples run with one command against the live route, with history kept. |
@@ -261,7 +261,7 @@ Notes on the steps:
 
 1. Record on the live app in Chrome, in a phone-width window (390 px wide). Hide bookmarks and other tabs.
 2. Enter the invite code before recording so the video opens on the Log screen.
-3. Reset first: scroll to the bottom of the Log screen, tap `Reset demo data`, then `Reset demo data` again in the dialog. Wait for "Demo data restored".
+3. Start clean: record on the staging copy, or on a freshly added Care Profile, so earlier test entries do not change the counts on screen. There is no reset button any more.
 4. Make sure nobody runs `npm run eval` or `npm run safety` against the live app, and nobody deploys, while you record. Both reset the data.
 5. No real names on screen. Only Helen, Neha, Rosa, Arjun, Priya, Maya. Check the browser profile icon, autofill, and the clipboard.
 6. Allow the mic in the browser before recording. Use a quiet room or a headset.

@@ -64,6 +64,6 @@ GTransformer "AI for Global Good" buildathon, Nov 13 to 15, 2026. Synthetic data
 
 Notes:
 - Node 20.9 or newer (`.nvmrc` says 22).
-- `USE_MOCKS=true` (the default) serves every route from `src/mocks/`. "Reset demo data" on the Log screen restores the seeded data.
+- `USE_MOCKS=true` (the default) serves every route from `src/mocks/`. There is no reset button. `POST /api/reset` restores the seeded data only on a server with `ALLOW_RESET=true` (staging).
 - Invite codes come from `INVITE_CODES` (comma separated). Scripts such as the eval runner can send the header `x-invite-code` instead of the cookie.
 - Railway deploys from `railway.json` (Nixpacks, `npm start`, healthcheck `/api/health`).

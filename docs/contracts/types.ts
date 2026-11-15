@@ -143,7 +143,7 @@ export interface StrategyCard {
 // GET /api/strategies?mode=&patternKey=
 export interface StrategiesResponse { strategies: StrategyCard[]; disclaimer: string }
 
-// POST /api/reset  (restore seeded demo data; "Reset demo data" button)
+// POST /api/reset  (restore seeded demo data; test servers only, there is no button)
 export interface ResetResponse { ok: boolean; eventCount: number }
 
 // POST /api/people  (caregiver intake: create a profile for the person they care for)

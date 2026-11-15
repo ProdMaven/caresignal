@@ -24,7 +24,7 @@ export async function POST(request: Request) {
 
   if (dataMocksEnabled()) {
     const created = mockCreatePerson(parsed.data);
-    if (!created) return badRequest("This demo already has the most profiles it allows. Use Reset demo data to start over.");
+    if (!created) return badRequest("This demo already has the most profiles it allows.");
     return Response.json(created, { status: 201 });
   }
 

@@ -2,7 +2,7 @@
 
 ## In this demo
 - All people, families, and logs are synthetic. No real patient, child, or caregiver data was collected or used.
-- Judges' and testers' typed or spoken inputs are saved in the app's own Postgres database on Railway so they survive a redeploy. "Reset demo data" wipes everything that was added and restores the synthetic demo data.
+- Judges' and testers' typed or spoken inputs are saved in the app's own Postgres database on Railway so they survive a redeploy. There is no reset button; added data stays until it is removed by the team.
 - There are no accounts: everyone with an invite code shares one space and can see what others added. Testers are asked to use nicknames and no personal details.
 
 ## What Unspoken stores

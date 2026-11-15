@@ -30,3 +30,4 @@
 - "You" tab replaced by an Account page (PM, Nov 14): caregiver settings in one place, with check-in and journal linked from it instead of removed. Rejected building real accounts with passwords this weekend; sign out clears the invite on the device.
 - Removed the caregiver check-in and journal (PM, Nov 14): rejected keeping them one tap away. They are not needed for the core use case, and removing them leaves the model with exactly one job. Caregiver distress in a note is still handled on the Log screen.
 - No real login for now (PM, Nov 14): the Account page holds settings only.
+- Removed the "Reset demo data" button for everyone, judges included (PM, Nov 14): rejected hiding it behind the judge code. With saved data, one tap erased every tester's entries. The reset route stays for the eval runner but is refused unless the server sets `ALLOW_RESET=true` (staging only).
