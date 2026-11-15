@@ -1,6 +1,6 @@
 # Tasks, lanes, and contracts
 
-## Contracts (frozen, v5 Nov 14)
+## Contracts (frozen, v10 Nov 15)
 Types: `docs/contracts/types.ts`. v2 changes by the PM: added POST /api/reset (`ResetResponse`) and `Source` value `"text"` for typed notes. Scope decision: full PRD scope, both modes live, /api/ask stays. v3 changes by the PM: intake profile fields on `Person` (ageBand, gender, spectrumLevel, communicationLevel), POST /api/people (`CreatePersonRequest`), and POST /api/invite for invitation-only entry.
 
 | Route | Method | Request | Response | Owner |
@@ -13,13 +13,14 @@ Types: `docs/contracts/types.ts`. v2 changes by the PM: added POST /api/reset (`
 | /api/ask | POST | AskRequest | AskResponse | Lane 2 |
 | /api/strategies?mode=&patternKey= | GET | | StrategiesResponse | Lane 3 |
 | /api/reset | POST | | ResetResponse | Lane 3 |
+| /api/summary | POST | SummaryRequest | SummaryResponse | Lane 2 |
+| /api/features | GET | | FeaturesResponse | Lane 2 |
+| /api/people/[id] | PATCH | UpdatePersonRequest | UpdatePersonResponse | Lane 3 |
+| /api/history/format | POST | FormatHistoryRequest | FormatHistoryResponse | Lane 2 |
 | /api/people | POST | CreatePersonRequest | CreatePersonResponse | Lane 3 |
 | /api/invite | POST | InviteRequest | InviteResponse | Lane 1 |
-| /api/checkin | POST | CheckInRequest | CheckInResponse | Lane 2 |
 | /api/feedback | POST | FeedbackRequest | FeedbackResponse | Lane 3 |
-| /api/journal | POST | JournalRequest | JournalResponse | Lane 3 |
-| /api/journal?loggedBy= | GET | | JournalListResponse | Lane 3 |
-| /api/overview?personId=&loggedBy=&days= | GET | | OverviewResponse | Lane 3 |
+| /api/overview?personId=&days= | GET | | OverviewResponse | Lane 3 |
 
 Every route returns a mock from `src/mocks/` when `USE_MOCKS=true`, so lanes never block each other.
 

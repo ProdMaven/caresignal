@@ -5,8 +5,10 @@ import { PatternCardView } from "@/components/pattern-card";
 import { PersonPicker, usePersonContext } from "@/components/person-picker";
 import { CardSkeleton, EmptyState, ErrorState, GuardrailBanner } from "@/components/states";
 import { Timeline } from "@/components/timeline";
+import { VisitSummary } from "@/components/visit-summary";
 import { Button } from "@/components/ui/button";
 import { useApi } from "@/hooks/useApi";
+import { useFeatures } from "@/hooks/useFeatures";
 import type { EventsResponse, PatternsResponse } from "@/lib/types";
 
 const DAYS = 21;
@@ -17,6 +19,7 @@ export default function PersonPage() {
   const patterns = useApi<PatternsResponse>(person ? `/api/patterns?personId=${person.id}` : null);
   const events = useApi<EventsResponse>(person ? `/api/people/${person.id}/events?days=${DAYS}` : null);
   const waitingForPerson = ctx.loading || (!person && !ctx.error);
+  const features = useFeatures();
 
   return (
     <>
@@ -29,6 +32,7 @@ export default function PersonPage() {
       <Button asChild variant="outline" size="sm" className="self-start">
         <Link href="/overview">Weekly and monthly overview</Link>
       </Button>
+      {features.summary && person && <VisitSummary key={person.id} person={person} />}
 
       <section aria-labelledby="patterns-heading" className="flex flex-col gap-3">
         <h2 id="patterns-heading" className="text-xl font-semibold">

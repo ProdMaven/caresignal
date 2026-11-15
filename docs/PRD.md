@@ -1,7 +1,7 @@
-# CareSignal PRD (buildathon scope)
+# Unspoken PRD (buildathon scope)
 
 ## 1. One-liner
-For caregivers of people who cannot say what they need, CareSignal turns a spoken sentence into a structured log, finds the patterns behind distress, and recommends strategies ranked by what actually worked for others. It supports caregivers and never diagnoses.
+For caregivers of people who cannot always say what they need, Unspoken (working name, formerly CareSignal) turns a spoken sentence into a structured log, finds the patterns behind distress, and recommends strategies ranked by what actually worked for others. It supports caregivers and never diagnoses.
 
 Pitch line: "Distress is communication. We help caregivers decode it, and every family's experience makes the next family's answer better."
 
@@ -25,7 +25,7 @@ Family caregiver speaks -> AI formats a structured record -> pattern finder upda
 6. Answer includes ranked strategies with tier badges and family evidence.
 
 ## 5. Screens (5)
-1. **Home / Log**: mode switch, person picker, big mic button with a text box next to it (judges can type their own note), small tap-logger form fallback, confirm card, "Reset demo data" button.
+1. **Home / Log**: mode switch, person picker, big mic button with a text box next to it (judges can type their own note), small tap-logger form fallback, confirm card. (The "Reset demo data" button was removed Nov 14 by the PM.)
 2. **Person view**: header with person, timeline grouped by day and time band, 2 to 3 pattern cards (finding, evidence count, "possible things to check", link to matching strategies).
 3. **Ask**: question box with mic, answer with evidence lines and linked entries, red-flag banner when triggered.
 4. **Winning Patterns**: strategies for a selected pattern, ranked by score, tier badge, families, % improved, average drop, durability, disclaimer.
@@ -40,12 +40,12 @@ Family caregiver speaks -> AI formats a structured record -> pattern finder upda
 2. Create a Care Profile for the person you care for: mode, age band, gender (optional), spectrum level, communication, usual sleep.
 3. Home: pick a Care Profile, speak in your language or type, submit.
 4. After Save: the matching pattern, a warm line, and the top next step, on the same screen.
-5. Caregiver check-in: "How are you feeling?" Warm listening only. Never logged to the person's record. Crisis words always show the 988 Suicide and Crisis Lifeline.
+5. (Removed Nov 14 by the PM: caregiver check-in screen. A caregiver who sounds in distress in a note still gets a caring message and the 988 Suicide and Crisis Lifeline, and nothing is logged.)
 6. Feedback on every suggestion: "Did this help?" The count shows next to the score and never changes the score.
-7. Caregiver journal: a private dated note (voice or typed), plus a weekly and monthly overview.
+7. History for each Care Profile: milestones since the first signs or the diagnosis, spoken or typed and turned into a dated list, when adding a person and when editing one from Account. Weekly and monthly overview of the logs. (Caregiver journal removed Nov 14 by the PM.) Account page: who is logging, mic language, Care Profiles, sign out on this device. No passwords for now.
 8. Roadmap only, not built: messaging between matched caregivers (needs moderation first).
 
-Build order: step 4 above, then real AI on /api/log and the eval runner, then check-in, feedback, language picker, journal, and the overview last. Every new input surface gets red-team cases.
+Build order: step 4 above, then real AI on /api/log and the eval runner, then feedback, language picker, and the overview. Every new input surface gets red-team cases.
 
 ## 6. Why AI
 Free speech from a tired family caregiver is messy ("she was really worked up around 3, wouldn't eat"). AI turns it into consistent, countable fields in seconds, which makes pattern finding across caregivers, days, and families possible at all. AI also explains statistics in caregiver language and answers natural questions. The statistics themselves are plain code, so the system cannot hallucinate a pattern.
@@ -87,7 +87,7 @@ Cached demo phrases:
 
 ## 9b. Judging gates (see docs/JUDGING.md)
 - Public URL on Railway, no local setup.
-- Judges must be able to type their own note (text box next to the mic) and get a live AI result, not only the cached phrases, in either mode. Their entries visibly update pattern counts. Include a "Reset demo data" button (POST /api/reset restores the seeded data).
+- Judges must be able to type their own note (text box next to the mic) and get a live AI result, not only the cached phrases, in either mode. Their entries visibly update pattern counts. (The "Reset demo data" button was removed Nov 14 by the PM; added entries are kept.)
 - Crisis-safe on any input.
 - Pitch uses a pre-recorded app video.
 

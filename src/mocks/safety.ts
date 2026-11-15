@@ -3,7 +3,7 @@
 // formatter, but a deterministic rule like this should stay as the first gate.
 
 export const RED_FLAG_MESSAGE =
-  "Please contact your doctor or care team. What you described can be a sign that something needs medical attention, and they are the right people to check. CareSignal supports caregivers and does not diagnose.";
+  "Please contact your doctor or care team. What you described can be a sign that something needs medical attention, and they are the right people to check. Unspoken supports caregivers and does not diagnose.";
 
 export const EMERGENCY_MESSAGE =
   "Call 911 now. What you described can be a sign of an emergency, such as a stroke or a serious injury. Do not wait to see if it passes. Please contact your doctor or care team once emergency help is on the way.";
@@ -15,7 +15,7 @@ export const DISTRESS_MESSAGE =
   "That sounds really heavy, and it makes sense to feel worn down. Caring for someone every day is hard, and you matter too. If you feel you cannot go on or are thinking about harming yourself, please call or text 988, the 988 Suicide and Crisis Lifeline, right now. It is free and open 24 hours a day. If you are in immediate danger, call 911. Nothing from this note was saved to the log.";
 
 export const OUT_OF_SCOPE_MESSAGE =
-  "CareSignal cannot diagnose or give advice about medication, doses, treatment, or care placement. Please ask your doctor or care team about that. It can log what you saw so you can share it with them.";
+  "Unspoken cannot diagnose or give advice about medication, doses, treatment, or care placement. Please ask your doctor or care team about that. It can log what you saw so you can share it with them.";
 
 export interface SafetyScreen {
   caregiverDistress: boolean;

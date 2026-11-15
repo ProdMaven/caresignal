@@ -21,7 +21,7 @@ const TITLE: Record<Tone, string> = {
   care: "You matter too",
   emergency: "This may be an emergency",
   red_flag: "Please check with your care team",
-  scope: "Outside what CareSignal can do",
+  scope: "Outside what Unspoken can do",
 };
 
 // Safety or scope message. Always rendered before anything else in a result.
@@ -34,7 +34,7 @@ export function SafetyMessage({ message, kind }: { message: string; kind?: strin
         <Icon className="mt-0.5 size-6 shrink-0" aria-hidden />
         <div className="flex flex-col gap-1">
           <p className="text-lg font-bold leading-snug">{TITLE[tone]}</p>
-          <p>{message}</p>
+          <p className="whitespace-pre-line">{message}</p>
         </div>
       </div>
       {tone === "care" && (

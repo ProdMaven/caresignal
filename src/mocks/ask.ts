@@ -45,7 +45,7 @@ export function mockAsk(req: AskRequest, person: Person, allEvents: LogRecord[])
       redFlag: true,
       redFlagMessage: safety.message,
       answer:
-        `This is something for your doctor or care team to look at, so CareSignal will not guess at a reason. ` +
+        `This is something for your doctor or care team to look at, so Unspoken will not guess at a reason. ` +
         `You can share ${person.displayName}'s log with them to show what happened and when.`,
       evidence: [
         flagged.length > 0

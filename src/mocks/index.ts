@@ -75,19 +75,25 @@ export function mockCreatePerson(req: CreatePersonRequest): CreatePersonResponse
     gender: req.gender,
     spectrumLevel: req.mode === "autism" ? req.spectrumLevel : undefined,
     communicationLevel: req.communicationLevel,
-  });
+  }, req.caregivers ?? [], req.history);
   return person ? { person } : null;
 }
 
 export { feedbackFor, recordFeedback, strategyExists } from "./store";
 
-export { addJournalEntry, listJournal } from "./store";
 
 import { buildOverview } from "./overview";
-import { listJournal as journalFor } from "./store";
 import type { OverviewResponse } from "../lib/types";
 
 // GET /api/overview
-export function mockOverview(personId: string, loggedBy: string, days: 7 | 30): OverviewResponse {
-  return buildOverview(personId, days, allEvents(), journalFor(loggedBy));
+export function mockOverview(personId: string, days: 7 | 30): OverviewResponse {
+  return buildOverview(personId, days, allEvents());
+}
+
+import { updatePerson } from "./store";
+import type { Person as PersonType, UpdatePersonRequest } from "../lib/types";
+
+// PATCH /api/people/[id]
+export function mockUpdatePerson(id: string, patch: UpdatePersonRequest): PersonType | null {
+  return updatePerson(id, patch);
 }

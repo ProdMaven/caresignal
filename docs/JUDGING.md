@@ -6,7 +6,7 @@ Each criterion scored 1 to 5, then weighted. Ties go to the higher Safety score.
 | Gate | Requirement | Our plan | Owner | Status |
 |---|---|---|---|---|
 | Live on the web | Public URL, no local setup | Railway deploy from main, seed runs on start, URL on every slide | Lane 1 | Not started |
-| Truly interactive | Judges try it with their own inputs | Text box AND mic on the log screen (mic may be blocked on judge laptops). Live AI on any input, not only cached phrases. Judge entries update the pattern counts visibly. "Reset demo data" button | Lane 1 + 2 | Not started |
+| Truly interactive | Judges try it with their own inputs | Text box AND mic on the log screen (mic may be blocked on judge laptops). Live AI on any input, not only cached phrases. Judge entries update the pattern counts visibly. Judge entries are saved; there is no reset button (removed Nov 14) | Lane 1 + 2 | Not started |
 | Crisis-safe | Spots a crisis, points to real help | Red flags, 911 for emergencies, 988 for caregiver distress, care team message first. Tested by safety/prompts.json crisis set at 100% | Lane 2 | Cases written |
 
 ## Scored criteria

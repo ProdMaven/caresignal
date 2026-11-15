@@ -1,7 +1,7 @@
 {
-  "_note": "PLACEHOLDERS. Fill in the current USD prices per million tokens for the model the app calls, then rerun. While any value is null the runner reports cost as not measured.",
-  "model": null,
-  "input_usd_per_million_tokens": null,
-  "cached_input_usd_per_million_tokens": null,
-  "output_usd_per_million_tokens": null
+  "_note": "Public list prices in USD per million tokens for the model the note formatter calls. Source: https://platform.claude.com/docs/en/about-claude/pricing, read on 2026-11-15. Row read: Claude Sonnet 5.5, base input $2, cache hits and refreshes $0.10, 5-minute cache writes $2.50, output $10. The runner prices note-formatting requests only (the ones that report token usage) and does not add the cache-write surcharge, which applies to the first request after the cache expires. The Ask router uses Claude Haiku 5.5 (base input $0.10, cache hits $0.01, output $0.50 for prompts up to 100,000 tokens, same page and date); its cost is not in the per-request figure.",
+  "model": "claude-sonnet-5-5",
+  "input_usd_per_million_tokens": 2,
+  "cached_input_usd_per_million_tokens": 0.1,
+  "output_usd_per_million_tokens": 10
 }

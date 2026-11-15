@@ -26,6 +26,8 @@ function pickPattern(patterns: PatternCard[], saved: LogRecord): PatternCard | n
     sameType.find((p) => saved.contextBefore.includes(p.contextTag) && p.timeBand === saved.timeBand) ??
     sameType.find((p) => saved.contextBefore.includes(p.contextTag)) ??
     sameType.find((p) => p.timeBand === saved.timeBand) ??
+    // A different kind of moment with the same thing before it still belongs to that pattern's story.
+    patterns.find((p) => saved.contextBefore.includes(p.contextTag)) ??
     null
   );
 }

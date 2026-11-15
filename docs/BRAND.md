@@ -46,7 +46,7 @@ Some people can't always say when they're in pain, hungry, or overwhelmed. It co
 ## Why the name works
 - It names the problem, not the technology. The need is unspoken; the app is how it gets heard.
 - It covers both communities without naming a condition.
-- It also covers the caregiver, whose own exhaustion often goes unspoken (check-in, 988).
+- It also covers the caregiver, whose own exhaustion often goes unspoken (a caregiver who sounds in distress gets a caring message and 988).
 
 ## Wording rules
 - The need is unspoken, not the person. Many autistic people communicate richly without speech. Say "can't always say what they need". Never "can't communicate", "nonverbal" as a label for everyone, or "has no voice".

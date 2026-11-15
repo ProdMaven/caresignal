@@ -3,6 +3,9 @@
 import { badRequest, mocksEnabled } from "@/lib/env";
 import { parseLog } from "@/lib/formatter";
 import { firstIssue, parseLogRequestSchema } from "@/lib/schemas";
+import { applyFollowUp } from "@/lib/followUp";
+import { applyNoteLanguage } from "@/lib/noteLanguage";
+import { applySelectedPerson } from "@/lib/selectedPerson";
 import { mockLog, mockPeople } from "@/mocks";
 
 export const dynamic = "force-dynamic";
@@ -13,7 +16,10 @@ export async function POST(request: Request) {
   const parsed = parseLogRequestSchema.safeParse(body);
   if (!parsed.success) return badRequest(firstIssue(parsed.error));
 
-  if (mocksEnabled()) return Response.json(mockLog(parsed.data));
+  if (mocksEnabled()) {
+    const mocked = applySelectedPerson(mockLog(parsed.data), mockPeople(parsed.data.mode).people, parsed.data.personId);
+    return Response.json(applyFollowUp(parsed.data, applyNoteLanguage(mocked, parsed.data.transcript, null), null), { headers: { "x-caresignal-source": "mock" } });
+  }
 
   const started = Date.now();
   try {
@@ -33,13 +39,14 @@ export async function POST(request: Request) {
     };
     console.log(`[log] ${JSON.stringify(meta)}`);
 
-    return Response.json(outcome.response, {
+    const picked = applySelectedPerson(outcome.response, roster, parsed.data.personId);
+    return Response.json(applyNoteLanguage(picked, parsed.data.transcript, outcome.language), {
       headers: { "x-caresignal-source": outcome.source, "x-caresignal-meta": JSON.stringify(meta) },
     });
   } catch (err) {
     console.error("[log] could not parse note:", err instanceof Error ? err.message : err);
     return Response.json(
-      { error: "CareSignal could not read that note right now. Nothing was saved. Please try again in a moment, or use the tap form." },
+      { error: "Unspoken could not read that note right now. Nothing was saved. Please try again in a moment, or use the tap form." },
       { status: 503 },
     );
   }

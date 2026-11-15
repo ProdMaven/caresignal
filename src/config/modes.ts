@@ -23,7 +23,7 @@ export interface ModeConfig {
   askPlaceholder: string;
   eventTypes: EventTypeConfig[];
   caregivers: Caregiver[];
-  logExamples: { label: string; text: string }[];
+  logExamples: { label: string; text: string; personId?: string }[]; // personId: the demo person the note is about
   askExamples: string[];
   // color classes
   accentBg: string;
@@ -59,11 +59,23 @@ export const MODES: Record<Mode, ModeConfig> = {
     logExamples: [
       {
         label: "Afternoon agitation",
+        personId: "p_helen",
         text: "Mom was agitated around 3, pacing and calling out for Dad. She barely ate lunch. A snack and some music helped, she settled after 20 minutes.",
       },
       {
         label: "Small lunch",
+        personId: "p_helen",
         text: "Rosa here, Helen only ate half her lunch today, she seemed tired.",
+      },
+      {
+        label: "Bath time",
+        personId: "p_helen",
+        text: "Mom would not get in the shower this morning. She said it was too cold and pushed my hand away. We did a warm towel wash instead and she settled.",
+      },
+      {
+        label: "After visitors",
+        personId: "p_helen",
+        text: "Mom's sister and her family visited all afternoon. Mom was restless after dinner, pacing and could not settle. Low lights and her music helped.",
       },
     ],
     askExamples: ["Why is Mom so upset every afternoon?", "What happens after busy visit days?"],
@@ -98,7 +110,18 @@ export const MODES: Record<Mode, ModeConfig> = {
     logExamples: [
       {
         label: "Hard morning",
+        personId: "p_arjun",
         text: "Arjun had a big meltdown before school, he slept badly and we had a substitute driver today.",
+      },
+      {
+        label: "Screen time ended",
+        personId: "p_arjun",
+        text: "Arjun screamed and cried when I turned the tablet off for dinner tonight. I gave him some space in his room and he calmed down after 15 minutes.",
+      },
+      {
+        label: "Loud place",
+        personId: "p_maya",
+        text: "Maya went quiet and covered her ears after the school assembly this afternoon, it was really loud. Her headphones and a quiet corner helped.",
       },
     ],
     askExamples: ["Why are mornings so hard for Arjun?", "What do his hard mornings have in common?"],
@@ -190,7 +213,21 @@ export function eventDot(value: string): string {
   return "bg-stone-400";
 }
 
+// Caregivers of people added through intake. Kept on globalThis so server routes (bundled separately) and
+// client screens each share one copy.
+const registry = (() => {
+  const g = globalThis as unknown as { __caresignalCaregivers?: Map<string, string> };
+  g.__caresignalCaregivers ??= new Map<string, string>();
+  return g.__caresignalCaregivers;
+})();
+
+export function registerCaregivers(list: { id: string; name: string }[] | undefined): void {
+  list?.forEach((c) => registry.set(c.id, c.name));
+}
+
 export function caregiverName(id: string): string {
+  const added = registry.get(id);
+  if (added) return added;
   for (const m of MODE_LIST) {
     const found = MODES[m].caregivers.find((c) => c.id === id);
     if (found) return found.name;

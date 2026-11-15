@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Unspoken pitch</title>
+<style>
+  @page { size: 13.333in 7.5in; margin: 0; }
+  :root { --ink:#1f2a2a; --muted:#5b6b69; --teal:#0f766e; --teal-soft:#e6f4f1; --paper:#f7f5f0; --card:#ffffff; --line:#ddd8cc; --warn:#fff3c4; --warn-line:#e0b400; --amber:#fdf1dc; --amber-line:#d99a2b; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; font-family: "Helvetica Neue", Arial, "Liberation Sans", sans-serif; color: var(--ink); }
+  .slide { width: 13.333in; height: 7.5in; background: var(--paper); padding: 0.55in 0.7in 0.75in; position: relative; page-break-after: always; overflow: hidden; display: flex; flex-direction: column; }
+  .slide:last-child { page-break-after: auto; }
+  .kicker { font-size: 13pt; font-weight: 700; color: var(--teal); letter-spacing: 0.06em; text-transform: uppercase; margin: 0 0 6pt; }
+  h1 { font-size: 36pt; line-height: 1.1; margin: 0 0 16pt; letter-spacing: -0.01em; }
+  p, li { font-size: 17pt; line-height: 1.35; margin: 0; }
+  ul { margin: 0; padding-left: 20pt; display: flex; flex-direction: column; gap: 9pt; }
+  .footer { position: absolute; left: 0.7in; right: 0.7in; bottom: 0.3in; display: flex; justify-content: space-between; font-size: 10.5pt; color: var(--muted); border-top: 1px solid var(--line); padding-top: 6pt; }
+  .footer b { color: var(--ink); }
+  .fill { background: var(--warn); border: 1.5px dashed var(--warn-line); border-radius: 6pt; padding: 2pt 7pt; font-weight: 600; }
+  .row { display: flex; gap: 0.4in; flex: 1; min-height: 0; }
+  .col { flex: 1; display: flex; flex-direction: column; gap: 12pt; min-width: 0; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12pt; padding: 14pt 16pt; }
+  .big { font-size: 46pt; font-weight: 800; line-height: 1; color: var(--teal); }
+  .cap { font-size: 12.5pt; color: var(--muted); margin-top: 4pt; line-height: 1.3; }
+  .quote { font-size: 16pt; line-height: 1.35; }
+  .small { font-size: 11.5pt; color: var(--muted); line-height: 1.35; }
+  .phones { display: flex; gap: 0.28in; justify-content: center; align-items: flex-start; flex: 1; min-height: 0; }
+  .phone { display: flex; flex-direction: column; align-items: center; gap: 6pt; }
+  .phone img { height: 4.4in; border: 5pt solid #1f2a2a; border-radius: 22pt; display: block; }
+  .phone span { font-size: 12.5pt; font-weight: 600; text-align: center; max-width: 2.5in; line-height: 1.25; }
+  .flow { display: flex; align-items: stretch; gap: 8pt; }
+  .box { flex: 1; background: var(--card); border: 1.5px solid var(--line); border-radius: 10pt; padding: 10pt 11pt; font-size: 12.5pt; line-height: 1.3; }
+  .box b { display: block; font-size: 13.5pt; margin-bottom: 3pt; }
+  .box.model { border-color: var(--teal); background: var(--teal-soft); }
+  .box.code { border-color: #7a8a88; }
+  .arrow { align-self: center; font-size: 18pt; color: var(--muted); }
+  .strip { background: var(--amber); border: 1.5px solid var(--amber-line); border-radius: 10pt; padding: 9pt 13pt; font-size: 13.5pt; line-height: 1.35; }
+  table { border-collapse: collapse; width: 100%; font-size: 13pt; }
+  th, td { text-align: left; padding: 6pt 9pt; border-bottom: 1px solid var(--line); }
+  th { font-size: 11pt; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }
+  td.num { font-variant-numeric: tabular-nums; font-weight: 700; white-space: nowrap; }
+  tr.last td { background: var(--teal-soft); }
+  .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 10pt; }
+  .tile { background: var(--card); border: 1px solid var(--line); border-radius: 10pt; padding: 10pt 12pt; }
+  .tile .n { font-size: 26pt; font-weight: 800; color: var(--teal); line-height: 1; }
+  .tile .c { font-size: 11.5pt; color: var(--muted); margin-top: 3pt; line-height: 1.25; }
+  ol.fails { margin: 0; padding-left: 18pt; display: flex; flex-direction: column; gap: 6pt; }
+  ol.fails li { font-size: 12.5pt; line-height: 1.3; }
+  .tag { display: inline-block; font-size: 10.5pt; font-weight: 700; padding: 1pt 7pt; border-radius: 99pt; background: var(--teal-soft); color: var(--teal); margin-right: 5pt; text-transform: uppercase; letter-spacing: 0.03em; }
+  .tag.plan { background: var(--amber); color: #8a5a00; }
+</style>
+</head>
+<body>
+
+<!-- 1. Problem -->
+<section class="slide">
+  <p class="kicker">Unspoken (working name) · GTransformer AI for Global Good · <span class="fill">TEAM NAMES</span></p>
+  <h1>Unspoken. Every need, finally heard.</h1>
+  <div class="row">
+    <div class="col" style="flex:1.25">
+      <p style="font-size:20pt"><b>Distress is communication.</b> People who can't always say what they need. Families who each see one piece.</p>
+      <div class="card">
+        <p class="quote"><span class="fill">QUOTE 1: "their words" (role, for example parent of an autistic child)</span></p>
+      </div>
+      <div class="card">
+        <p class="quote"><span class="fill">QUOTE 2 (optional): "their words" (role). Delete this box if it does not arrive.</span></p>
+      </div>
+      <p class="small">Who we built for: a family caregiver who shares the care of one person with a sibling and a home aide. Each of them sees one piece of the day.</p>
+    </div>
+    <div class="col">
+      <div class="card"><div class="big">63 million</div><div class="cap">family caregivers in the U.S., up 45% since 2015<br>AARP and National Alliance for Caregiving, 2025</div></div>
+      <div class="card"><div class="big">13 million</div><div class="cap">nearly this many unpaid caregivers of people living with Alzheimer's or another dementia<br>Alzheimer's Association, Facts and Figures</div></div>
+      <div class="card"><div class="big">1 in 31</div><div class="cap">eight-year-olds identified with autism<br>CDC ADDM Network, 2025</div></div>
+    </div>
+  </div>
+  <div class="footer"><span>Try it: <b>web-production-1bb4dc67.up.railway.app</b> · invite code <b>GTRANSFORMER-JUDGE</b></span><span>Supports caregivers. Does not diagnose. · 1 of 5</span></div>
+</section>
+
+<!-- 2. Demo -->
+<section class="slide">
+  <p class="kicker">Demo</p>
+  <h1>One record of each hard moment</h1>
+  <div class="phones">
+    <div class="phone"><img src="shot1.png" alt="Log screen with a spoken note"><span>1. Say or type one sentence</span></div>
+    <div class="phone"><img src="shot2.png" alt="Confirm card with editable fields"><span>2. Check it. Change any field, then save</span></div>
+    <div class="phone"><img src="shot3.png" alt="Matching pattern after saving"><span>3. The pattern in this person's own logs</span></div>
+    <div class="col" style="flex:0 0 3.1in; justify-content:center">
+      <div class="card"><p style="font-size:14pt"><b>Demo video (68 seconds)</b></p><p class="small" style="margin-top:5pt"><span class="fill">VIDEO LINK OR FILE</span></p></div>
+      <div class="strip">All names and all community numbers shown in the app are <b>demo data (synthetic)</b>, not results.</div>
+      <p class="small">Anyone who cares for the person says what happened, in their own words and language. One record: what led up to it, what was tried step by step, and what helped.</p>
+    </div>
+  </div>
+  <div class="footer"><span>Try it: <b>web-production-1bb4dc67.up.railway.app</b> · invite code <b>GTRANSFORMER-JUDGE</b></span><span>Supports caregivers. Does not diagnose. · 2 of 5</span></div>
+</section>
+
+<!-- 3. How it works and why it is safe -->
+<section class="slide">
+  <p class="kicker">How it works and why it is safe</p>
+  <h1>Code counts the patterns. The model reads and writes.</h1>
+  <div class="col" style="gap:13pt">
+    <div class="flow">
+      <div class="box"><b>Caregiver note</b>Voice or typed, any language</div><div class="arrow">→</div>
+      <div class="box code"><b>Safety screen</b>Fixed rules, before any model call. Chooses the safety wording</div><div class="arrow">→</div>
+      <div class="box model"><b>Model: note to fields</b>Fixed vocabulary, checked in code. If it is slow or down, a keyword fallback marks every field for review</div><div class="arrow">→</div>
+      <div class="box"><b>Confirm card</b>The caregiver checks, edits, and saves</div><div class="arrow">→</div>
+      <div class="box code"><b>Plain statistics</b>Count the patterns and what was tried. No model, so nothing can be invented</div>
+    </div>
+    <div class="strip">
+      <b>Red flag</b> (self-injury, injury, signs of pain or illness, sudden change): "Please contact your doctor or care team" comes first.<br>
+      <b>Possible emergency:</b> call 911. <b>Caregiver in distress:</b> the 988 Suicide and Crisis Lifeline, and nothing is logged.
+    </div>
+    <div style="display:flex; gap:0.3in">
+      <div class="card" style="flex:1; padding:9pt 13pt"><p style="font-size:13pt"><b>Supports caregivers. Does not diagnose.</b></p><p class="small" style="margin-top:2pt">Possible things to check, never causes. No medication or restraint is ever suggested.</p></div>
+      <div class="card" style="flex:1; padding:9pt 13pt"><p style="font-size:13pt"><b>Where the model helps</b></p><p class="small" style="margin-top:2pt">Note to fields, in any language. A visit summary from counted facts, checked in code. One follow-up question. Reading an Ask question.</p></div>
+      <div class="card" style="flex:1; padding:9pt 13pt"><p style="font-size:13pt"><b>Data handling</b></p><p class="small" style="margin-top:2pt">Synthetic data only. Audio is never stored. Community numbers need 5 or more families, count shown.</p></div>
+    </div>
+  </div>
+  <div class="footer"><span>Try it: <b>web-production-1bb4dc67.up.railway.app</b> · invite code <b>GTRANSFORMER-JUDGE</b></span><span>Supports caregivers. Does not diagnose. · 3 of 5</span></div>
+</section>
+
+<!-- 4. Proof -->
+<section class="slide">
+  <p class="kicker">Proof</p>
+  <h1>We measured it, broke it, and fixed it</h1>
+  <div class="row">
+    <div class="col" style="flex:1.05; gap:9pt">
+      <table style="font-size:11.5pt">
+        <tr><th>Step</th><th>Benchmark</th><th>Red team</th></tr>
+        <tr><td>Keyword rules, no model</td><td class="num">50.0% (15 of 30)</td><td class="num">59.3% (35 of 59)</td></tr>
+        <tr><td>Safety screen and fallback</td><td class="num">70.0% (21 of 30)</td><td class="num">84.7% (50 of 59)</td></tr>
+        <tr><td>First real-model run</td><td class="num">83.3% (25 of 30)</td><td class="num">94.9% (56 of 59)</td></tr>
+        <tr><td>After the bias fix</td><td class="num">83.3% (25 of 30)</td><td class="num">100% (59 of 59)</td></tr>
+        <tr><td>After real-length notes</td><td class="num">88.6% (39 of 44)</td><td class="num">100% (59 of 59)</td></tr>
+        <tr class="last"><td>With four AI features on</td><td class="num">95.4% (103 of 108)</td><td class="num">100% (90 of 90)</td></tr>
+      </table>
+      <p class="small">198 examples, one command, every run kept. All checks are deterministic. The last step added 64 new-feature cases, all passing; the original 44 still pass 39. 89 examples are hand-reviewed; 109 are drafted and pending review. Cost per note: $0.005 (measured tokens, public list prices, Nov 15).</p>
+      <p class="small"><b style="color:var(--ink)">Still failing:</b> 4 of 108. Two notes name nobody while two children are on the roster, so the app asks. One summary line has a second count. One follow-up note has no earlier context. One case cannot be graded as written.</p>
+    </div>
+    <div class="col" style="gap:10pt">
+      <div class="tiles">
+        <div class="tile"><div class="n">90 of 90</div><div class="c">red-team prompts pass: crisis 16, medical overreach 12, jailbreak 10, privacy 10, bias 18, new features 24</div></div>
+        <div class="tile"><div class="n">100%</div><div class="c">crisis and out-of-scope cases on the benchmark</div></div>
+        <div class="tile"><div class="n">98.0%</div><div class="c">field accuracy on the golden cases</div></div>
+        <div class="tile"><div class="n">2.4 s</div><div class="c">typical short note; 7 to 8 s for a 150-word spoken note</div></div>
+      </div>
+      <div class="card" style="padding:10pt 14pt">
+        <p style="font-size:13pt; font-weight:700; margin-bottom:5pt">Found, fixed, and now regression tests</p>
+        <ol class="fails">
+          <li>Dialect and limited-English notes got a different intensity for the same event.</li>
+          <li>A parent on our team spoke a real 150-word note. It hit our 9 second limit, and the fallback logged a child biting their own hand as aggression.</li>
+          <li>A parent reporting a remedy they gave was answered as if they had asked for medication advice.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  <div class="footer"><span>Try it: <b>web-production-1bb4dc67.up.railway.app</b> · invite code <b>GTRANSFORMER-JUDGE</b></span><span>Supports caregivers. Does not diagnose. · 4 of 5</span></div>
+</section>
+
+<!-- 5. Who first and what is next -->
+<section class="slide">
+  <p class="kicker">Who we reach first and what is next</p>
+  <h1>First families, then the next ones</h1>
+  <div class="row">
+    <div class="col" style="flex:1.2">
+      <div class="card"><p><span class="tag">First users</span></p><p style="margin-top:6pt">Families who share the care of one person: a parent living with dementia, or an autistic child.</p></div>
+      <div class="card"><p><span class="tag plan">Plan, not a partnership</span></p><p style="margin-top:6pt">Parent-run support groups we plan to approach, starting with <span class="fill">FIRST CHANNEL</span>. Group leaders hand out invite codes, which is also how we keep spam out.</p></div>
+      <p style="font-size:22pt; font-weight:700; margin-top:auto">The pattern speaks for the person who couldn't.</p>
+    </div>
+    <div class="col">
+      <div class="card"><p><span class="tag">Next</span></p>
+        <ul style="margin-top:8pt">
+          <li>Accounts, so entries are private</li>
+          <li>Interviews with real caregivers</li>
+          <li>Saved data that survives a restart</li>
+        </ul>
+      </div>
+      <div class="card"><p><span class="tag plan">Roadmap</span></p>
+        <ul style="margin-top:8pt">
+          <li>Caregiver-to-caregiver matching, once moderation exists</li>
+          <li>Wearables for sleep</li>
+        </ul>
+      </div>
+      <p class="small">What is honest today: no accounts yet, so testers use nicknames; community numbers are synthetic; the model turns notes into fields, nothing else.</p>
+    </div>
+  </div>
+  <div class="footer"><span>The app is live. Type your own note: <b>web-production-1bb4dc67.up.railway.app</b> · invite code <b>GTRANSFORMER-JUDGE</b></span><span>Supports caregivers. Does not diagnose. · 5 of 5</span></div>
+</section>
+
+</body>
+</html>

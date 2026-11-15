@@ -31,6 +31,7 @@ export const draftRecordSchema = z.object({
   confidence: z.record(z.string(), z.number()),
   needsReview: z.array(z.string()),
   redFlags: z.array(z.string()),
+  noteLanguage: z.string().max(12).optional(),
 });
 
 export const parseLogRequestSchema = z.object({
@@ -38,6 +39,9 @@ export const parseLogRequestSchema = z.object({
   transcript: z.string().trim().min(1, "Please say or type a note first.").max(2000),
   loggedBy: z.string().min(1),
   now: z.string().min(1),
+  personId: z.string().min(1).max(60).optional(),
+  speechLang: z.string().max(20).optional(),
+  followUpAnswered: z.boolean().optional(),
 });
 
 export const saveEventRequestSchema = z.object({ record: draftRecordSchema });
@@ -64,6 +68,11 @@ export const createPersonRequestSchema = z
     gender: genderSchema.optional(),
     spectrumLevel: spectrumLevelSchema.optional(),
     communicationLevel: communicationLevelSchema,
+    caregivers: z
+      .array(z.object({ name: z.string().trim().min(1).max(40), role: z.string().trim().min(1).max(40) }))
+      .max(6)
+      .optional(),
+    history: z.array(z.lazy(() => milestoneInputSchema)).max(40).optional(),
   })
   .refine((v) => v.mode !== "autism" || v.spectrumLevel !== undefined, {
     message: "Please choose a spectrum level.",
@@ -191,3 +200,60 @@ export type FormatterReply = z.infer<typeof formatterReplySchema>;
 
 // A parsed draft may have an empty personId (nobody on the roster was named); a saved record may not.
 export const parsedDraftSchema = draftRecordSchema.extend({ personId: z.string() });
+
+// ---------------------------------------------------------------------------
+// History milestones (contracts v9).
+// ---------------------------------------------------------------------------
+export const MILESTONE_CATEGORIES = ["diagnosis", "change", "support", "health", "setting", "other"] as const;
+
+export const milestoneInputSchema = z.object({
+  id: z.string().max(40).optional(),
+  when: z.string().trim().max(60),
+  year: z.number().int().min(1900).max(2100).nullable(),
+  month: z.number().int().min(1).max(12).nullable(),
+  category: z.enum(MILESTONE_CATEGORIES),
+  text: z.string().trim().min(1).max(300),
+});
+
+export const formatHistoryRequestSchema = z.object({
+  mode: modeSchema,
+  text: z.string().trim().min(1, "Please say or type their story first.").max(4000),
+  now: z.string().min(1).max(40),
+});
+
+export const updatePersonRequestSchema = z.object({
+  displayName: z.string().trim().min(1).max(40).optional(),
+  aliases: z.array(z.string().trim().min(1).max(40)).max(6).optional(),
+  ageBand: ageBandSchema.optional(),
+  gender: genderSchema.nullable().optional(),
+  spectrumLevel: spectrumLevelSchema.optional(),
+  communicationLevel: communicationLevelSchema.optional(),
+  caregivers: z
+    .array(z.object({ id: z.string().max(40).optional(), name: z.string().trim().min(1).max(40), role: z.string().trim().min(1).max(40) }))
+    .min(1)
+    .max(6)
+    .optional(),
+  history: z.array(milestoneInputSchema).max(40).optional(),
+});
+
+// What the history model returns. Bad items are dropped, never fatal.
+export const historyReplySchema = z.object({
+  kind: z.enum(["milestones", "caregiver_distress", "out_of_scope"]).catch("milestones"),
+  milestones: z
+    .array(z.unknown())
+    .catch([])
+    .transform((items) =>
+      items.flatMap((item) => {
+        const parsed = z
+          .object({
+            when: z.string().max(60).catch(""),
+            year: z.number().int().nullable().catch(null),
+            month: z.number().int().nullable().catch(null),
+            category: z.enum(MILESTONE_CATEGORIES).catch("other"),
+            text: z.string().min(1).max(400),
+          })
+          .safeParse(item);
+        return parsed.success ? [parsed.data] : [];
+      }),
+    ),
+});

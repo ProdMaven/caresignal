@@ -1,8 +1,12 @@
-# CareSignal pitch pack
+# Unspoken pitch pack
+
+Unspoken (working name). Every need, finally heard. Formerly CareSignal; the repository, URLs and invite codes keep the old name. Brand source: `docs/BRAND.md`.
 
 GTransformer "AI for Global Good". Due Sunday Nov 15, 12 PM. Format: 3 minutes with a pre-recorded app video, then 2 minutes of Q&A.
 
 Live app: https://web-production-1bb4dc67.up.railway.app (judge invite code `GTRANSFORMER-JUDGE`)
+
+**Updated Nov 15, early morning.** The numbers and the four AI features below are from the build branch on staging, with all four feature flags on. They describe the live app only after the build branch is merged and the flags are set on the `web` service (steps in `docs/HANDOFF.md`). If the merge does not happen, use the Nov 14 numbers: 103 examples, 39 of 44, 59 of 59, and say the model does two things.
 
 Anything in [SQUARE BRACKETS] is a slot the PM must fill. Anything marked NEED DATA has no source in the repo and must not be estimated.
 
@@ -10,11 +14,28 @@ Anything in [SQUARE BRACKETS] is a slot the PM must fill. Anything marked NEED D
 
 ## 1. The one sentence and the 3-minute script
 
-### The one sentence
+### The name, the tagline, and the one sentence
 
-**Distress is communication. One spoken sentence becomes a signal a family can act on.**
+- **Name on the title slide:** Unspoken (working name)
+- **Tagline:** Unspoken. Every need, finally heard.
+- **What it is, in one sentence:** Unspoken is one shared record of each hard moment, built from the voices of everyone who cares for a person who can't always say what they need, so families and care teams can see what led up to it and what actually helped.
+- **Closing line:** "The pattern speaks for the person who couldn't."
 
-One use case, said once at the start and once at the end: logging. Everything else in the app supports that sentence or stays on the roadmap.
+Positioning (from `docs/BRAND.md`): the differentiator is the shared episode record across caregivers: what led up to it, what was tried step by step, and what helped. Voice is the way in, not the claim. One use case is shown: a caregiver logs a hard moment and the record connects it to what others saw.
+
+### The story (60 seconds, from docs/BRAND.md)
+
+Use this whole when you have a minute, for example an introduction, a written summary, or the opening of a longer talk. It is about 170 words, so it does not fit the 27 second slot for slide 1; the slide 1 script below is cut from it.
+
+> When someone can't tell you what's wrong, they tell you another way. A child bites his hand at 2 AM. A mother paces and calls out every afternoon. We call it "behavior." It's communication, and the message goes unspoken.
+>
+> The people around them each hold a piece of the answer. The home aide saw the small lunch. Dad was there for the bad night. The teacher noticed the loud assembly. But those pieces live in different heads, different phones, and a notebook nobody can find. So the same hard moment repeats, and everyone guesses.
+>
+> Unspoken brings those pieces together. Anyone who cares for the person says what happened, in their own words and their own language. We turn it into one clear record: what led up to it, what was tried, step by step, and what actually helped. Over time, the pattern speaks for the person who couldn't.
+>
+> We don't diagnose. We don't replace doctors or therapists. We help the people who love someone finally hear them.
+
+Short version: Some people can't always say when they're in pain, hungry, or overwhelmed. It comes out as distress, and the people around them each see only a piece. Unspoken joins those pieces into one record, so families can see what's really going on and what helps.
 
 ### How the time maps to the rubric
 
@@ -26,22 +47,22 @@ One use case, said once at the start and once at the end: logging. Everything el
 | 2:05 to 2:38 | 4. Proof | Evaluation rigor | 25% |
 | 2:38 to 3:00 | 5. Who first and what is next | Pitch (credible first channel) | 25%, scored across the whole talk |
 
-### Script (442 spoken words, about 147 words a minute)
+### Script (460 spoken words, about 153 words a minute)
 
-Count is for the version with no quote, with [FIRST CHANNEL] counted as two words. Rehearse with a timer. If you run long, cut the lines marked (cut first).
+Count is for the version with no quote, with [FIRST CHANNEL] counted as two words. Rehearse with a timer. This is brisk: the opening from the brand story added about 20 words. If you run long, cut the lines marked (cut first), then the second sentence of slide 1's middle paragraph.
 
-**Slide 1. 0:00 to 0:27 (69 words)**
+**Slide 1. 0:00 to 0:27 (75 words)**
 
-> Distress is communication. When a person living with dementia, or an autistic child, is hungry, tired, or in pain, they often cannot say so. It comes out as agitation or a meltdown. Sixty-three million Americans are family caregivers.
+> When someone can't tell you what's wrong, they tell you another way. A child bites his hand at 2 AM. A mother paces and calls out every afternoon. We call it behavior. It's communication, and the message goes unspoken.
 >
-> The aide sees a small lunch at noon. The daughter sees the agitation at three. Nobody connects them.
+> The people around them each hold a piece. The home aide saw the small lunch. Dad was there for the bad night. Those pieces live in different heads and different phones.
 >
-> With CareSignal, one spoken sentence becomes a signal a family can act on.
+> Unspoken brings those pieces together.
 
 How the quote slots work:
 
-- **No quote arrives:** read it as written. The middle paragraph is a picture of the problem, not a real person. Do not present it as one.
-- **One quote arrives:** replace the middle paragraph (18 words) with: "A [ROLE] told us: [QUOTE 1: role, words]." Keep the quote to 20 words or fewer.
+- **No quote arrives:** read it as written. The examples are a picture of the problem, not real people. Do not present them as real.
+- **One quote arrives:** replace the middle paragraph with: "A [ROLE] told us: [QUOTE 1: role, words]." Keep the quote to 20 words or fewer.
 - **Two quotes arrive:** [QUOTE 2: role, words] goes on slide 1 as text only. Do not read it aloud. There is no time.
 
 **Slide 2. 0:27 to 1:35 (157 words, spoken live over the muted video)**
@@ -56,23 +77,23 @@ How the quote slots work:
 >
 > One switch, and the same engine supports the parent of an autistic child. Needs and triggers, nothing else.
 
-**Slide 3. 1:35 to 2:05 (75 words)**
+**Slide 3. 1:35 to 2:05 (83 words)**
 
 > In the log, the model has one job. It turns words into fields. Plain code counts the patterns, so the model cannot invent a pattern. A fixed safety screen runs before any model call. Red flags lead to your doctor or care team. Emergencies say call 911. A caregiver in distress gets the 988 Suicide and Crisis Lifeline. It never suggests medication or restraint. Supports caregivers. Does not diagnose. If the model fails, the safety message still shows. (cut first: the last sentence)
 
 **Slide 4. 2:05 to 2:38 (84 words)**
 
-> How do we know? One hundred three test examples, one command. A keyword baseline passed 50 percent. Today the real model passes 39 of 44. Crisis and out of scope are at 100 percent. Our red team is 59 of 59.
+> How do we know? One hundred ninety-eight test examples, one command. A keyword baseline passed 50 percent. Today the real model passes 103 of 108. Crisis and out of scope are at 100 percent. Our red team is 90 of 90.
 >
 > We got there by failing. Dialect notes got a different intensity. Fixed. A parent on our team spoke a real note, 150 words. It timed out, and the fallback logged a child biting their own hand as aggression. Fixed, and now a test.
 
-**Slide 5. 2:38 to 3:00 (57 words)**
+**Slide 5. 2:38 to 3:00 (61 words)**
 
 > Who first? Families who share the care of one person. We plan to approach parent-run support groups, starting with [FIRST CHANNEL]. Next, accounts, so entries are private. Then caregiver matching and wearables, on the roadmap. (cut first: this sentence)
 >
 > The app is live. Type your own note.
 >
-> Distress is communication. One spoken sentence becomes a signal a family can act on.
+> We help the people who love someone finally hear them. The pattern speaks for the person who couldn't.
 
 If [FIRST CHANNEL] is not filled by recording time, stop the sentence at "parent-run support groups." Never name a group you have not contacted.
 
@@ -84,9 +105,10 @@ Put the live URL and the invite code in the footer of every slide.
 
 ### Slide 1. Problem
 
-- **Title:** Distress is communication
+- **Title:** Unspoken (working name). Every need, finally heard.
+- **Subtitle:** Distress is communication
 - **On the slide (4 bullets at most):**
-  - "People who cannot say what they need. Families who cannot see the pattern."
+  - "People who can't always say what they need. Families who each see one piece."
   - [QUOTE 1: role, words]
   - [QUOTE 2: role, words] (delete the bullet if it does not arrive)
   - Named user: a family caregiver sharing care with a sibling and a home aide
@@ -96,14 +118,14 @@ Put the live URL and the invite code in the footer of every slide.
 
 ### Slide 2. Demo
 
-- **Title:** One spoken sentence becomes a signal
+- **Title:** One record of each hard moment
 - **On the slide:** one visual only, the 68-second video ([VIDEO LINK OR FILE]), full height, phone width. Caption burned into the video during the strategy card: "Demo data (synthetic)".
 - **Exact numbers shown:** none on the slide. The video shows Helen's pattern count and the strategy card numbers. All of them are seed data.
 - **Speaker note:** Narrate live over the muted video using the slide 2 script. Say "Care Profile" if you name the person picker. Never say "caregiver profile". Do not read the score or the percentages on the strategy card aloud.
 
 ### Slide 3. How it works and why it is safe
 
-- **Title:** Statistics find the pattern. The model only fills in the fields.
+- **Title:** Code counts the patterns. The model reads and writes.
 - **On the slide:** one visual, the diagram below, plus a strip of three lines under it:
   - Red flag: "Please contact your doctor or care team" comes first
   - Possible emergency: call 911. Caregiver distress: 988 Suicide and Crisis Lifeline, and nothing is logged
@@ -133,7 +155,7 @@ flowchart TD
   ST --> SC[Strategy scores: computed ahead from seed data]
   PC --> OUT[Match panel and Timeline]
   SC --> OUT
-  EVAL[Eval loop: 44 benchmark cases and 59 red team prompts] -->|npm run eval, npm run safety| API
+  EVAL[Eval loop: 108 benchmark cases and 90 red team prompts] -->|npm run eval, npm run safety| API
   EVAL --> REP[eval and safety reports, run history]
 ```
 
@@ -150,10 +172,11 @@ One sentence per box:
 | Validation | Rejects anything outside the schema and the fixed vocabulary. |
 | Keyword fallback | If the model fails, a rules-only draft with every field marked for review. |
 | Confirm card | The caregiver checks and can change every field before saving. |
-| Demo store | Synthetic entries held in memory. It resets on deploy and on Reset demo data. |
+| Demo store | Synthetic demo entries plus what people add, held in memory and saved to Postgres so it survives a deploy. |
 | Pattern counter | Plain code that counts what came before hard moments. |
 | Strategy scores | Numbers computed ahead of time from synthetic seed families. |
-| Eval loop | 103 examples run with one command against the live route, with history kept. |
+| Eval loop | 198 examples run with one command against the real routes on staging, with history kept. |
+| AI features (Nov 15, each behind a flag) | Safety wording in the note's language (Spanish, Hindi, Mandarin). A visit summary written from counts that code computed, checked against them. One follow-up question for the missing piece. Ask reads the question with a small model and code answers from the logs. |
 
 Why table (from `docs/DECISIONS.md`):
 
@@ -184,20 +207,22 @@ Run history (from `eval/results/history.json`, `safety/results/history.json`, `d
 | First real-model run | 83.3% (25 of 30) | 94.9% (56 of 59) |
 | After the bias fix | 83.3% (25 of 30) | 100% (59 of 59) |
 | After real-length note handling | 88.6% (39 of 44) | 100% (59 of 59) |
+| With the four AI features on (Nov 15, staging) | 95.4% (103 of 108) | 100% (90 of 90) |
 
 - **Exact numbers shown:**
-  - 103 examples: 44 benchmark and 59 red team. 30 hand-written and hand-reviewed.
-  - Benchmark 39 of 44 (88.6%). Field accuracy on the golden cases 98.0%.
-  - Crisis 100%. Out of scope 100%.
-  - Red team 59 of 59: crisis 13 of 13, medical overreach 12 of 12, jailbreak 10 of 10, privacy 10 of 10, bias 14 of 14.
-  - Typical response about 2.2 seconds for a short note (median 2206 ms), 7 to 8 seconds for a 150-word spoken note. 95th percentile 5590 ms on the benchmark.
+  - 198 examples: 108 benchmark and 90 red team. 89 are hand-written and hand-reviewed (30 benchmark, 59 red team). 109 were drafted by Claude tonight and are pending human review (78 benchmark, 31 red team). No non-English example has been reviewed by a native speaker.
+  - Benchmark 103 of 108 (95.4%). The original 44 cases still pass 39. All 64 new cases pass: multilingual 24 of 24, visit summary 10 of 10, follow-up question 10 of 10, Ask 20 of 20.
+  - Field accuracy on the golden cases 98.0%. On the multilingual cases 100% (88 of 88 fields).
+  - Crisis 100% (17 of 17 with the new crisis cases). Out of scope 100% (12 of 12).
+  - Red team 90 of 90: crisis 16, medical overreach 12, jailbreak 10, privacy 10, bias 18, summary 8, Ask 12, follow-up 4.
+  - Typical response about 2.4 seconds for a short note (median 2433 ms on the original cases), 7 to 8 seconds for a 150-word spoken note. Ask about 1 second. A visit summary about 12 seconds (median); 2 of 10 ran past the 27 second limit and the code-written summary was shown instead.
   - Prompt cache hit rate 98.0% of input tokens.
-  - Cost per request: NEED DATA (`eval/pricing.json` still has placeholder prices).
+  - Cost per note: $0.005 (computed: $0.004988 per note-formatting request over 76 requests, public list prices for Claude Sonnet 5.5 read on Nov 15, 2026; source and date in `eval/pricing.json`). The Ask, follow-up and summary calls are not in this figure.
 - **Named failures, found and fixed, now regression cases:**
   1. Dialect and limited-English notes got a different intensity for the same event (bias).
   2. A real 150-word spoken note from a parent on our team hit the 9-second limit and fell back to keyword rules, which logged a child biting their own hand as aggression.
   3. A parent reporting a remedy they gave was treated as asking for medication advice.
-- **Speaker note:** Be exact about the last step. The benchmark grew from 30 to 44 cases. The original 30 still pass 25. All 14 new real-length cases pass. So the move from 83.3% to 88.6% comes from handling long notes, not from fixing the older failures. Say so if asked. Four cases still fail and one cannot be graded as written.
+- **Speaker note:** Be exact about the last step. The benchmark grew from 30 to 44 cases. The original 30 still pass 25. All 14 new real-length cases pass. So the move from 83.3% to 88.6% comes from handling long notes, not from fixing the older failures. The same is true of the last row: the move to 95.4% comes from 64 new cases for new features, all drafted the same night they were built and not yet reviewed by a person. The older failures are not fixed. Say so if asked. Four cases still fail and one cannot be graded as written.
 
 ### Slide 5. Who we reach first and what is next
 
@@ -208,7 +233,7 @@ Run history (from `eval/results/history.json`, `safety/results/history.json`, `d
   - Next: accounts so entries are private, real caregiver interviews, saved data that survives a restart
   - Roadmap: caregiver-to-caregiver matching (needs moderation first), wearables
 - **Exact numbers shown:** none.
-- **Speaker note:** End on the one sentence and the live URL. Invite the judges to type their own note.
+- **Speaker note:** End on the closing line, "The pattern speaks for the person who couldn't.", and the live URL. Invite the judges to type their own note.
 
 ---
 
@@ -241,7 +266,7 @@ Notes on the steps:
 
 1. Record on the live app in Chrome, in a phone-width window (390 px wide). Hide bookmarks and other tabs.
 2. Enter the invite code before recording so the video opens on the Log screen.
-3. Reset first: scroll to the bottom of the Log screen, tap `Reset demo data`, then `Reset demo data` again in the dialog. Wait for "Demo data restored".
+3. Start clean: record on the staging copy, or on a freshly added Care Profile, so earlier test entries do not change the counts on screen. There is no reset button any more.
 4. Make sure nobody runs `npm run eval` or `npm run safety` against the live app, and nobody deploys, while you record. Both reset the data.
 5. No real names on screen. Only Helen, Neha, Rosa, Arjun, Priya, Maya. Check the browser profile icon, autofill, and the clipboard.
 6. Allow the mic in the browser before recording. Use a quiet room or a headset.
@@ -276,11 +301,11 @@ Use this if time is cut or the main file will not play.
 
 Two or three short sentences each. If you do not know, say "we have not measured that yet".
 
-1. **Why AI?** A tired caregiver will not fill in a form, but they will say one sentence. The model turns that messy sentence into consistent fields, in any wording or language, which a form or keyword rules cannot do. Our keyword baseline passed 50.0% of the benchmark. The model passes 88.6%.
+1. **Why AI?** A tired caregiver will not fill in a form, but they will say one sentence. The model turns that messy sentence into consistent fields, in any wording or language, which a form or keyword rules cannot do. Our keyword baseline passed 50.0% of the benchmark. On those same 44 cases the model passes 88.6%, and 95.4% on the full set of 108.
 
-2. **How do you know it works?** We run 103 examples with one command against the live route and keep every run. The benchmark is at 39 of 44, with 98.0% field accuracy on the golden cases. All checks are deterministic. We have not yet run the model-graded tone checks.
+2. **How do you know it works?** We run 198 examples with one command against the real routes and keep every run. The benchmark is at 103 of 108, with 98.0% field accuracy on the golden cases. 89 examples are hand-reviewed; the other 109 were drafted with the features and are waiting for review. All checks are deterministic. We have not yet run the model-graded tone checks.
 
-3. **How do you know it is safe?** A fixed safety screen runs before any model call, and the model can add red flags but never remove them. Crisis and out of scope cases must pass at 100% or the run fails, and our red team is 59 of 59. The app never suggests medication or restraint, and it says "possible things to check", never causes.
+3. **How do you know it is safe?** A fixed safety screen runs before any model call, and the model can add red flags but never remove them. Crisis and out of scope cases must pass at 100% or the run fails, and our red team is 90 of 90. The safety screen also reads Spanish, Hindi and Mandarin, and shows the safety line in the note's language under the English one. Those word lists have not been checked by native speakers yet. The app never suggests medication or restraint, and it says "possible things to check", never causes.
 
 4. **What happens when the model is wrong or down?** Wrong: the caregiver sees every field on the confirm card, unsure fields are marked "Please check", and nothing saves until they tap Save to log. Down: a keyword fallback returns a draft with every field marked for review, and the safety message still shows. After saving, an entry cannot be edited yet.
 
@@ -296,7 +321,7 @@ Two or three short sentences each. If you do not know, say "we have not measured
 
 10. **Who is the first user and how do you reach them?** A family caregiver who shares the care of one person with a sibling, partner, or aide. Our first channel is parent-run support groups we plan to approach, starting with [FIRST CHANNEL]. We have no partnership and no outside data yet.
 
-11. **What is the business model, and what does it cost per user?** We do not have a validated model. Our working guess is that families use it free and a care program or support organization pays, and that is untested. Cost per request: NEED DATA. We captured token usage but have not priced it.
+11. **What is the business model, and what does it cost per user?** We do not have a validated model. Our working guess is that families use it free and a care program or support organization pays, and that is untested. Cost: about half a cent per note ($0.005, from measured token usage and public list prices on Nov 15). That covers turning a note into fields only; the summary, Ask and follow-up calls are not priced yet.
 
 12. **Why this model, and why not RAG or a vector database?** We used one Claude model (claude-sonnet-5-5, confirmed on the live app) and did not compare models this weekend. The benchmark lets us test a smaller one later. We do not need retrieval: the fixed vocabulary fits in the prompt, and patterns come from counting structured fields, which is exact and can be audited.
 
@@ -308,7 +333,9 @@ Two or three short sentences each. If you do not know, say "we have not measured
 
 Extra lines to have ready:
 
-- **"Does the Ask screen use AI?"** No. Ask answers and pattern summary lines are computed text built from the counts. The model does two things in this build: it turns notes into fields, and it writes the short listening reply when a caregiver types into the check-in screen. That reply is checked for advice and replaced by a fixed message if it drifts, and crisis wording is always fixed, never model-written.
+- **"Does the Ask screen use AI?"** Partly. A small model reads the question and picks one of a fixed set of things it can be asking (when does it happen, what comes before, what helped, and so on). Code then answers from that person's own logs, with the counts and the linked entries. The model never writes the answer. If the model is down, a keyword router picks instead.
+- **"Where exactly is the model used?"** Five places, each with one narrow job: a note into fields, a history into milestones, counted facts into a visit summary that code checks, the wording of one follow-up question, and a label for an Ask question. Patterns, counts, scores and every safety message come from code.
+- **"What if the summary gets a number wrong?"** It cannot be shown. Code checks every number in the summary against the facts it computed, every quote against the log, and rejects any condition, medicine or cause wording. One retry, then a summary written by code.
 - **"The snack card says research-backed with a score of 81. Where is that from?"** It is demo data. The score, the family counts, and the badge are seeded so the screen has something to show. They are not findings.
 - **"Why two communities?"** The need is the same and the engine is the same. For the pitch we show one use case, logging, and one short beat of the second mode.
 
@@ -319,17 +346,22 @@ Extra lines to have ready:
 1. Do not invent or paraphrase a quote, a name, or a testimonial. Do not quote Neha, Priya, or any persona as a user. Do not quote the mentor as a user.
 2. Do not present any community number as a result: not "27 families", not "74% improved", not the score. Say "demo data".
 3. Do not say "AI answers your questions", "AI finds the pattern", or "AI explains". Say "the model turns the note into fields" and "plain statistics find the pattern".
-4. Do not say "private journal" or "your data is private". There are no accounts yet.
+4. Do not say "your data is private". There are no accounts or passwords yet; everyone with an invite code shares one space.
 5. Do not claim a partnership with, data from, or access to any support organization or care program. It is "a plan".
 6. Do not say "diagnose", "cause", "detects pain", "predicts", or "clinically proven". Say "possible things to check".
 7. Do not say "fixing behavior", "compliance", "stop the meltdowns", "kids with autism", or "dementia patient". Say "autistic child" or "child", "needs and triggers", "a person living with dementia".
 8. Do not say "caregiver profile" for the person being cared for. The one term is "Care Profile".
 9. Do not describe caregiver messaging, wearables, or voice or video analysis as built. They are roadmap, and voice and video analysis are not planned for now.
-10. Do not say "first voice-first caregiver app" or "nothing like this exists". We have not done a full review.
-11. Do not estimate cost per request or any number marked NEED DATA.
+10. Do not say "first voice-first caregiver app", "first voice logging app", or "nothing like this exists". Guiding Growth already offers voice logging for autism parents. Lead with the shared record across caregivers; voice is the way in, not the claim.
+11. Do not estimate any number marked NEED DATA. Cost per note is measured ($0.005); do not extend it to "cost per user" or "cost per month".
 12. Do not say the app "never mentions medication". A parent can report a remedy they gave and it is recorded. Say "it never suggests or ranks medication".
 13. Do not say fine-tuning was done. It is a later step.
 14. Do not show the invite screen or profile setup in the video.
+15. The need is unspoken, not the person. Say "can't always say what they need". Never "can't communicate", "nonverbal" as a label for everyone, or "has no voice". Many autistic people communicate richly without speech.
+16. Never "we speak for them". Say "we help the people around them understand".
+17. Do not say "CareSignal". The product is "Unspoken (working name)" on first mention, then "Unspoken". If asked about the old name: it was changed because CareSignal is an existing healthcare company.
+18. Do not say the dementia flow "is DICE" or "is clinically tested". Say it follows the DICE approach (Describe, Investigate, Create, Evaluate), which was tested in the WeCareAdvisor trial. Our app has not been tested in a trial.
+19. Do not present community rankings ("what helped other families") as working today. They are the long-term vision and run on synthetic data.
 
 ---
 
@@ -344,7 +376,7 @@ Extra lines to have ready:
 | [TEAM NAMES] | Deck slide 1 | Names as they should appear on the title area |
 | [VIDEO LINK OR FILE] | Deck slide 2, fallback plan | Where the 68-second cut and the 30-second cut live in the repo |
 | [INTERVIEWS] | Q&A 14 | How many caregivers were interviewed and their roles, or the honest "none yet" |
-| Cost per request (NEED DATA) | Deck slide 4, Q&A 11 | Real prices in `eval/pricing.json` and one rerun, or leave it as "not measured" |
+| Cost per note (filled Nov 15: $0.005) | Deck slide 4, Q&A 11 | Done. Source and date are in `eval/pricing.json`. Cost per user or per month is still NEED DATA. |
 
 Decisions the PM should make before recording:
 

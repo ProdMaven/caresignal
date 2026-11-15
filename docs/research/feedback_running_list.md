@@ -1,5 +1,7 @@
 # Feedback running list
 
+CareSignal was renamed Unspoken on Nov 14.
+
 Every point raised about CareSignal, kept in one place so nothing is adopted or dropped by default. Each row is analyzed first; the PM sets the status. Sources are recorded by role only.
 
 Status values: Open (not decided), Adopt, Adapt (take the idea in a changed form), Roadmap, Decline.

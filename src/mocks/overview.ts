@@ -1,7 +1,7 @@
-// Weekly and monthly overview. Plain counts from the logs and the caregiver's journal. No AI.
+// Weekly and monthly overview. Plain counts from the logs. No AI.
 import { addDays, demoToday, TIME_BAND_ORDER, wallParts } from "../lib/time";
 import { RECORD_ONLY_RESPONSES } from "../lib/schemas";
-import type { JournalEntry, LogRecord, Mood, OverviewResponse } from "../lib/types";
+import type { LogRecord, OverviewResponse } from "../lib/types";
 
 // Did this step help in this event? Uses the step's own result when the note gave one;
 // older records without step results fall back to how the whole event ended.
@@ -22,7 +22,7 @@ function tally(values: string[]): { key: string; count: number }[] {
 }
 
 export function buildOverview(
-  personId: string, days: 7 | 30, events: LogRecord[], journal: JournalEntry[], today: string = demoToday(),
+  personId: string, days: 7 | 30, events: LogRecord[], today: string = demoToday(),
 ): OverviewResponse {
   const start = addDays(today, -(days - 1));
   const prevStart = addDays(start, -days);
@@ -37,11 +37,6 @@ export function buildOverview(
   const eventDays = new Set(current.map((e) => dateOf(e.occurredAt)));
   const responses = tally(current.flatMap((e) => e.responseTried.filter((t) => !RECORD_ONLY_RESPONSES.includes(t))));
 
-  const entries = journal.filter((j) => {
-    const d = dateOf(j.createdAt);
-    return d !== null && d >= start && d <= today;
-  });
-
   return {
     personId,
     days,
@@ -55,9 +50,5 @@ export function buildOverview(
       tried: r.count,
       calmed: current.filter((e) => e.responseTried.includes(r.key) && stepHelped(e, r.key)).length,
     })),
-    journal: {
-      entries: entries.length,
-      moods: tally(entries.flatMap((j) => (j.mood ? [j.mood] : []))).map((m) => ({ mood: m.key as Mood, count: m.count })),
-    },
   };
 }

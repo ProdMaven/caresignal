@@ -152,6 +152,7 @@ export function ConfirmCard({
   people,
   fallbackPerson,
   unmatchedPerson,
+  candidates = [],
   source,
   onSaved,
   onDiscard,
@@ -161,6 +162,8 @@ export function ConfirmCard({
   people: Person[];
   fallbackPerson: Person | null;
   unmatchedPerson: boolean;
+  // [person the note names, person picked on screen] when they differ. Empty otherwise.
+  candidates?: Person[];
   source: LogRecord["source"];
   onSaved: (record: LogRecord) => void;
   onDiscard: () => void;
@@ -222,6 +225,28 @@ export function ConfirmCard({
                 {label(f)}
               </Badge>
             ))}
+          </div>
+        )}
+
+        {candidates.length === 2 && needs("personId") && (
+          <div role="group" aria-label="Who is this note about?" className="flex flex-col gap-2 rounded-lg border-2 border-amber-300 bg-amber-50 p-3 text-amber-950">
+            <p className="font-semibold">
+              This sounds like it is about {candidates[0].displayName}, but you picked {candidates[1].displayName}.
+            </p>
+            <p className="text-sm">Whose log should it go to?</p>
+            <div className="flex flex-wrap gap-2">
+              {candidates.map((c) => (
+                <Button
+                  key={c.id}
+                  type="button"
+                  variant={record.personId === c.id ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => update("personId", { personId: c.id })}
+                >
+                  {c.displayName}&apos;s log
+                </Button>
+              ))}
+            </div>
           </div>
         )}
 

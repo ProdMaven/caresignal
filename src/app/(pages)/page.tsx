@@ -4,19 +4,19 @@ import { useCallback, useState } from "react";
 import Link from "next/link";
 import { CircleCheck, Send } from "lucide-react";
 import { ConfirmCard } from "@/components/confirm-card";
+import { FollowUpQuestion } from "@/components/follow-up";
 import { IntakeForm } from "@/components/intake-form";
 import { LanguagePicker } from "@/components/language-picker";
 import { MatchAfterSave } from "@/components/match-after-save";
 import { MicButton } from "@/components/mic-button";
 import { PersonPicker, usePersonContext, type PersonContext } from "@/components/person-picker";
-import { ResetDemo } from "@/components/reset-demo";
 import { SafetyMessage } from "@/components/safety-message";
 import { CardSkeleton, ErrorState } from "@/components/states";
 import { TapLogger } from "@/components/tap-logger";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { label, MODES } from "@/config/modes";
-import { useCaregiver } from "@/hooks/useAppState";
+import { useCaregiver, useSpeechLanguage } from "@/hooks/useAppState";
 import { SPEECH_NOT_SUPPORTED, useSpeech } from "@/hooks/useSpeech";
 import { postJson } from "@/lib/api";
 import { formatTime, localIso } from "@/lib/time";
@@ -31,13 +31,15 @@ export default function HomePage() {
 function LogScreen({ ctx }: { ctx: PersonContext }) {
   const { mode, person, people } = ctx;
   const config = MODES[mode];
-  const [loggedBy, setLoggedBy] = useCaregiver(mode);
+  const [loggedBy, setLoggedBy, caregivers] = useCaregiver(mode, person);
+  const [speechLang] = useSpeechLanguage();
 
   const [text, setText] = useState("");
   const [usedVoice, setUsedVoice] = useState(false);
   const [parsing, setParsing] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [result, setResult] = useState<{ response: ParseLogResponse; source: LogRecord["source"]; id: number } | null>(null);
+  const [result, setResult] = useState<{ response: ParseLogResponse; source: LogRecord["source"]; id: number; transcript: string } | null>(null);
+  const [skippedFollowUp, setSkippedFollowUp] = useState(false);
   const [saved, setSaved] = useState<LogRecord | null>(null);
 
   const onFinal = useCallback((phrase: string) => {
@@ -47,7 +49,7 @@ function LogScreen({ ctx }: { ctx: PersonContext }) {
   }, []);
   const speech = useSpeech(onFinal);
 
-  async function submit(note: string = text) {
+  async function submit(note: string = text, followUpAnswered = false, voice = usedVoice) {
     const transcript = note.trim();
     if (!transcript || parsing) return;
     if (speech.listening) speech.stop();
@@ -55,10 +57,14 @@ function LogScreen({ ctx }: { ctx: PersonContext }) {
     setError(null);
     setResult(null);
     setSaved(null);
-    const body: ParseLogRequest = { mode, transcript, loggedBy, now: localIso() };
+    setSkippedFollowUp(false);
+    const body: ParseLogRequest = {
+      mode, transcript, loggedBy, now: localIso(), personId: person?.id, speechLang: voice ? speechLang : undefined,
+      ...(followUpAnswered ? { followUpAnswered: true } : {}),
+    };
     try {
       const response = await postJson<ParseLogResponse>("/api/log", body);
-      setResult({ response, source: usedVoice ? "voice" : "text", id: Date.now() });
+      setResult({ response, source: voice ? "voice" : "text", id: Date.now(), transcript });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Could not read that note. Please try again.");
     } finally {
@@ -73,13 +79,16 @@ function LogScreen({ ctx }: { ctx: PersonContext }) {
     setError(null);
   }
 
+  // Example notes are written about one demo person, so they only show while that person is picked.
+  const examples = config.logExamples.filter((ex) => !ex.personId || ex.personId === person?.id);
+
   const savedPerson = saved ? people?.find((p) => p.id === saved.personId) : null;
 
   return (
     <>
       <div className="flex flex-col gap-1">
         <h1 className="text-2xl font-bold tracking-tight">What happened?</h1>
-        <p className="text-muted-foreground">{config.logPrompt} CareSignal turns it into a log entry you can check.</p>
+        <p className="text-muted-foreground">{config.logPrompt} Unspoken turns it into a log entry you can check.</p>
       </div>
 
       <PersonPicker ctx={ctx} />
@@ -98,7 +107,7 @@ function LogScreen({ ctx }: { ctx: PersonContext }) {
           onChange={(e) => setLoggedBy(e.target.value)}
           className="h-12 rounded-lg border border-input bg-card px-3 text-base font-normal text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
-          {config.caregivers.map((c) => (
+          {caregivers.map((c) => (
             <option key={c.id} value={c.id}>
               {c.name} ({c.role})
             </option>
@@ -147,23 +156,25 @@ function LogScreen({ ctx }: { ctx: PersonContext }) {
           <Send className="size-5" aria-hidden />
           {parsing ? "Reading your note..." : "Turn into a log entry"}
         </Button>
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="text-sm text-muted-foreground">Try an example:</span>
-          {config.logExamples.map((ex) => (
-            <button
-              key={ex.label}
-              type="button"
-              disabled={parsing}
-              onClick={() => {
-                setText(ex.text);
-                setUsedVoice(false);
-              }}
-              className="rounded-full border bg-muted px-3 py-1.5 text-sm font-medium hover:bg-secondary"
-            >
-              {ex.label}
-            </button>
-          ))}
-        </div>
+        {examples.length > 0 && (
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="text-sm text-muted-foreground">Try an example:</span>
+            {examples.map((ex) => (
+              <button
+                key={ex.label}
+                type="button"
+                disabled={parsing}
+                onClick={() => {
+                  setText(ex.text);
+                  setUsedVoice(false);
+                }}
+                className="rounded-full border bg-muted px-3 py-1.5 text-sm font-medium hover:bg-secondary"
+              >
+                {ex.label}
+              </button>
+            ))}
+          </div>
+        )}
       </form>
 
       {/* Result area. A safety or scope message always renders before anything else. */}
@@ -171,6 +182,21 @@ function LogScreen({ ctx }: { ctx: PersonContext }) {
         {parsing && <CardSkeleton lines={5} />}
         {error && <ErrorState message={error} onRetry={() => void submit()} />}
         {result?.response.message && <SafetyMessage message={result.response.message} kind={result.response.kind} />}
+        {result?.response.followUp && result.response.draft && !skippedFollowUp && (
+          <FollowUpQuestion
+            key={`q${result.id}`}
+            question={result.response.followUp.question}
+            busy={parsing}
+            onSkip={() => setSkippedFollowUp(true)}
+            onAnswer={(answer, voice) => {
+              // The answer joins the note, and the note is read again so the entry shows the filled field.
+              const note = `${result.transcript}\nFollow-up answer (to "${result.response.followUp?.question ?? ""}"): ${answer}`;
+              setText(note);
+              if (voice) setUsedVoice(true);
+              void submit(note, true, voice || usedVoice);
+            }}
+          />
+        )}
         {result?.response.draft && result.response.kind !== "caregiver_distress" && people && (
           <ConfirmCard
             key={result.id}
@@ -179,6 +205,7 @@ function LogScreen({ ctx }: { ctx: PersonContext }) {
             people={people}
             fallbackPerson={person}
             unmatchedPerson={result.response.unmatchedPerson}
+            candidates={result.response.candidates}
             source={result.source}
             onDiscard={clearAll}
             onSaved={(record) => {
@@ -211,14 +238,6 @@ function LogScreen({ ctx }: { ctx: PersonContext }) {
       </div>
 
       <TapLogger mode={mode} person={person} loggedBy={loggedBy} onSaved={(record) => { setSaved(record); setResult(null); }} />
-
-      <ResetDemo
-        onReset={() => {
-          clearAll();
-          setSaved(null);
-          ctx.reload();
-        }}
-      />
     </>
   );
 }

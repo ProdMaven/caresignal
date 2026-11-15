@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Heart, HeartHandshake, Info, MessageCircleQuestion, Mic, Trophy, UserRound } from "lucide-react";
+import { HeartHandshake, UserCog, Info, MessageCircleQuestion, Mic, Trophy, UserRound } from "lucide-react";
 import { MODE_LIST, MODES } from "@/config/modes";
 import { useMode } from "@/hooks/useAppState";
 import { cn } from "@/lib/utils";
@@ -39,12 +39,14 @@ export function TopBar() {
       <div className="mx-auto flex w-full max-w-xl flex-wrap items-center justify-between gap-x-3 gap-y-2 px-4 py-2.5">
         <Link href="/" className="flex items-center gap-2 text-lg font-bold tracking-tight">
           <HeartHandshake className="size-6 text-primary" aria-hidden />
-          CareSignal
+          Unspoken
         </Link>
+        {/* The tagline shows where there is room: the invite screen has no mode switch beside the wordmark. */}
+        {gated && <span className="text-sm text-muted-foreground">Every need, finally heard.</span>}
         {!gated && (
           <div className="flex items-center gap-2">
             <ModeSwitch />
-            <Link href="/about" aria-label="About CareSignal" className="rounded-full p-2 text-muted-foreground hover:text-foreground">
+            <Link href="/about" aria-label="About Unspoken" className="rounded-full p-2 text-muted-foreground hover:text-foreground">
               <Info className="size-5" aria-hidden />
             </Link>
           </div>
@@ -59,7 +61,7 @@ const NAV = [
   { href: "/person", label: "Timeline", icon: UserRound },
   { href: "/ask", label: "Ask", icon: MessageCircleQuestion },
   { href: "/patterns", label: "What worked", icon: Trophy },
-  { href: "/checkin", label: "You", icon: Heart },
+  { href: "/account", label: "Account", icon: UserCog },
 ];
 
 export function BottomNav() {
@@ -70,8 +72,7 @@ export function BottomNav() {
       <ul className="mx-auto flex w-full max-w-xl">
         {NAV.map(({ href, label, icon: Icon }) => {
           const active =
-            href === "/" ? pathname === "/" : pathname.startsWith(href) || (href === "/checkin" && pathname.startsWith("/journal")) ||
-            (href === "/person" && pathname.startsWith("/overview"));
+            href === "/" ? pathname === "/" : pathname.startsWith(href) ||             (href === "/person" && pathname.startsWith("/overview"));
           return (
             <li key={href} className="flex-1">
               <Link

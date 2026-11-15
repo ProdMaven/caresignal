@@ -5,6 +5,9 @@
 // Rules started from src/mocks/safety.ts and were widened for the cases in
 // eval/cases.json and safety/prompts.json. Relative imports only (tsx scripts load this).
 
+import { features } from "./features";
+import { screenOtherLanguages } from "./safetyMultilingual";
+
 export const RED_FLAG_VOCAB = [
   "self_injury",
   "head_banging",
@@ -22,7 +25,7 @@ export type RedFlag = (typeof RED_FLAG_VOCAB)[number];
 export const DEFAULT_SAFETY_FLAG: RedFlag = "sudden_change";
 
 export const RED_FLAG_MESSAGE =
-  "Please contact your doctor or care team. What you described can be a sign that something needs medical attention, and they are the right people to check. CareSignal supports caregivers and does not diagnose.";
+  "Please contact your doctor or care team. What you described can be a sign that something needs medical attention, and they are the right people to check. Unspoken supports caregivers and does not diagnose.";
 
 export const EMERGENCY_MESSAGE =
   "Call 911 now. What you described can be a sign of an emergency, such as a stroke, a serious injury, or a person who may be in danger. Do not wait to see if it passes. Please contact your doctor or care team once emergency help is on the way.";
@@ -40,11 +43,11 @@ export type ScopeReason = "medical" | "privacy" | "role";
 
 export const SCOPE_MESSAGES: Record<ScopeReason, string> = {
   medical:
-    "CareSignal cannot diagnose, and it cannot give advice about medication, doses, treatment, cures, restraint, or care placement. Please ask your doctor or care team about that. It can log what you saw so you can share it with them.",
+    "Unspoken cannot diagnose, and it cannot give advice about medication, doses, treatment, cures, restraint, or care placement. Please ask your doctor or care team about that. It can log what you saw so you can share it with them.",
   privacy:
-    "CareSignal does not share your notes with other people or families, and it does not export or email them. A note's text is processed by our AI provider only to turn it into a log entry. It cannot show anything about other people or other families. Community numbers appear only as totals from 5 or more families. For questions about care, please ask your doctor or care team. It can log what you saw so you can share it with them.",
+    "Unspoken does not share your notes with other people or families, and it does not export or email them. A note's text is processed by our AI provider only to turn it into a log entry. It cannot show anything about other people or other families. Community numbers appear only as totals from 5 or more families. For questions about care, please ask your doctor or care team. It can log what you saw so you can share it with them.",
   role:
-    "CareSignal only turns your care notes into log entries. It cannot change its rules, act as a therapist or a doctor, or answer other questions. For advice, please ask your doctor or care team. It can log what you saw so you can share it with them.",
+    "Unspoken only turns your care notes into log entries. It cannot change its rules, act as a therapist or a doctor, or answer other questions. For advice, please ask your doctor or care team. It can log what you saw so you can share it with them.",
 };
 
 export interface SafetyFindings {
@@ -250,15 +253,18 @@ export function finalizeFindings(f: SafetyFindings): SafetyFindings {
 
 export function screenSafety(rawText: string): SafetyScreen {
   const text = normalize(rawText);
-  const caregiverDistress = any(DISTRESS, text);
-  const personWishToDie = !caregiverDistress && any(PERSON_WISH_TO_DIE, text);
+  // Spanish, Hindi and Mandarin phrases, when the feature is on. They only ever add findings.
+  const other = features.multilingualSafety() ? screenOtherLanguages(rawText) : null;
+  const personSaid = any(PERSON_WISH_TO_DIE, text) || Boolean(other?.personWishToDie);
+  const caregiverDistress = any(DISTRESS, text) || Boolean(other?.caregiverDistress && !other.personWishToDie);
+  const personWishToDie = !caregiverDistress && personSaid;
 
-  const flags: string[] = [];
+  const flags: string[] = [...(other?.redFlags ?? [])];
   for (const [flag, pattern] of RED_FLAGS) if (pattern.test(text)) flags.push(flag);
   if (/\bhit (her|his|their) head\b/.test(text)) flags.push("injury");
   if (ROAD_RISK.test(text)) flags.push(DEFAULT_SAFETY_FLAG);
 
-  const emergency = any(EMERGENCY, text) || (flags.includes("fall") && CANNOT_GET_UP.test(text));
+  const emergency = any(EMERGENCY, text) || Boolean(other?.emergency) || (flags.includes("fall") && CANNOT_GET_UP.test(text));
   const possibleAbuse =
     ABUSE.slice(1).some((p) => p.test(text)) || (ABUSE[0].test(text) && ABUSE_ACTOR.test(text));
 
@@ -266,7 +272,7 @@ export function screenSafety(rawText: string): SafetyScreen {
   return {
     ...findings,
     caregiverDistress,
-    scope: scopeOf(text),
+    scope: scopeOf(text) ?? (other?.scopeMedical ? "medical" : null),
     message: caregiverDistress ? DISTRESS_MESSAGE : safetyMessageFor(findings),
   };
 }

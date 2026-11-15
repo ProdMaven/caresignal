@@ -3,6 +3,8 @@
 // The model only proposes field values. Code decides the person, the time, the time band,
 // what needs review, the red flags (union with the screen, never fewer) and every message.
 import type { LogRecord, Mode, ParseLogRequest, ParseLogResponse, Person, ResponseStep, StepResult, TimeBand } from "./types";
+import { applyFollowUp, chooseFollowUpField, phraseFollowUp } from "./followUp";
+import { features } from "./features";
 import { AiError, callClaude, parseJson, type ClaudeMessage } from "./ai";
 import { cachedDemoResponse, clockFrom, resolveToday } from "./demoCache";
 import {
@@ -162,12 +164,26 @@ function escapeRegExp(text: string): string {
   return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
+// Family words in the other supported languages, mapped to the English alias a roster already uses.
+// Only read when the multilingual feature is on, so a note in Hindi or Chinese that says "Mom"
+// is matched as surely as the same note in English.
+const FAMILY_WORDS: [RegExp, string[]][] = [
+  [/माँ|मां|मम्मी|अम्मा|妈妈|媽媽|母亲|母親|(?<![\p{L}])(maa|mummy|amma|mam[aá]|madre)(?![\p{L}])/iu, ["mom", "mum", "mother", "mama"]],
+  [/पापा|पिताजी|पिता|爸爸|父亲|父親|(?<![\p{L}])(papa|pitaji|pap[aá]|padre)(?![\p{L}])/iu, ["dad", "father", "papa"]],
+  [/दादी|नानी|奶奶|外婆|姥姥|(?<![\p{L}])(dadi|nani|abuela)(?![\p{L}])/iu, ["grandma", "grandmother", "nana"]],
+  [/दादा|नाना|爷爷|爺爺|外公|(?<![\p{L}])(dada|nana ji|abuelo)(?![\p{L}])/iu, ["grandpa", "grandfather"]],
+];
+
 export function matchRoster(transcript: string, roster: Person[]): Person[] {
   const text = normalize(transcript);
+  const familyAliases = features.multilingualSafety()
+    ? FAMILY_WORDS.filter(([word]) => word.test(transcript)).flatMap(([, aliases]) => aliases)
+    : [];
   return roster.filter((p) =>
     Array.from(new Set([p.displayName, ...p.aliases])).some((alias) => {
       const a = normalize(alias);
       if (a.length < 2) return false; // one-letter nicknames would match ordinary words
+      if (familyAliases.includes(a)) return true;
       return new RegExp(`(?<![\\p{L}\\p{N}])${escapeRegExp(a)}(?![\\p{L}\\p{N}])`, "u").test(text);
     }),
   );
@@ -425,6 +441,8 @@ async function askFormatter(req: ParseLogRequest, roster: Person[], usage: AiUsa
     loggedBy: req.loggedBy,
     now: req.now,
     transcript: req.transcript,
+    // A hint only, and only when the multilingual feature is on, so the prompt input is unchanged otherwise.
+    speechLang: features.multilingualSafety() ? req.speechLang : undefined,
   });
   const track = (r: Awaited<ReturnType<typeof callClaude>>) => {
     usage.calls += 1;
@@ -505,7 +523,12 @@ export async function parseLog(req: ParseLogRequest, roster: Person[]): Promise<
   };
   try {
     const reply = await askFormatter(req, roster, usage);
-    return { response: responseFromReply(req, roster, screen, reply), source: "model", language: reply.language, ai: usage };
+    const parsed = responseFromReply(req, roster, screen, reply);
+    // The question, if any, is worded by a separate short call so the formatter itself is unchanged.
+    const field = features.followUp() ? chooseFollowUpField(req, parsed) : null;
+    const question = field ? await phraseFollowUp(req.transcript, field) : null;
+    const response = applyFollowUp(req, parsed, field && question ? { field, question } : null);
+    return { response, source: "model", language: reply.language, ai: usage };
   } catch (err) {
     usage.error = err instanceof AiError ? err.code : "unexpected";
     if (!(err instanceof AiError)) console.error("[log] formatter step failed:", err instanceof Error ? err.message : err);
@@ -513,7 +536,7 @@ export async function parseLog(req: ParseLogRequest, roster: Person[]): Promise<
 
   // 4. Model unavailable or unusable: keyword fallback, everything marked for review.
   try {
-    return { response: fallbackResponse(req, roster, screen), source: "fallback", language: null, ai: usage };
+    return { response: applyFollowUp(req, fallbackResponse(req, roster, screen), null), source: "fallback", language: null, ai: usage };
   } catch (err) {
     console.error("[log] fallback failed:", err instanceof Error ? err.message : err);
     // Safety messages are returned no matter what else failed.

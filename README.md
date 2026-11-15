@@ -1,11 +1,15 @@
-# CareSignal
+# Unspoken
 
-Voice-first logging for families caring for someone who cannot say what they need: a parent living with dementia or an autistic child. AI turns a spoken sentence into a structured record, statistics find the patterns behind distress, and strategies are ranked by what actually worked for others. Supports caregivers. Does not diagnose.
+**Unspoken (working name). Every need, finally heard.**
+
+Formerly CareSignal. The repository and URLs keep the old name.
+
+One shared record of each hard moment, built from the voices of everyone who cares for a person who cannot always say what they need: a parent living with dementia or an autistic child. AI turns a spoken sentence into a structured record, statistics find the patterns behind distress, and strategies are ranked by what actually worked for others. Supports caregivers. Does not diagnose.
 
 GTransformer "AI for Global Good" buildathon, Nov 13 to 15, 2026. Synthetic data only.
 
 **Live app:** https://web-production-1bb4dc67.up.railway.app (works on laptop and phone, no setup)
-**Invite code for judges:** `GTRANSFORMER-JUDGE` (CareSignal is invitation only; enter this on the first screen)
+**Invite code for judges:** `GTRANSFORMER-JUDGE` (Unspoken is invitation only; enter this on the first screen)
 **Demo video:** coming (`docs/`)
 **Headline eval score:** see `docs/eval_report.md` | **Safety pass rate:** see `docs/safety_report.md`
 
@@ -60,6 +64,6 @@ GTransformer "AI for Global Good" buildathon, Nov 13 to 15, 2026. Synthetic data
 
 Notes:
 - Node 20.9 or newer (`.nvmrc` says 22).
-- `USE_MOCKS=true` (the default) serves every route from `src/mocks/`. "Reset demo data" on the Log screen restores the seeded data.
+- `USE_MOCKS=true` (the default) serves every route from `src/mocks/`. There is no reset button. `POST /api/reset` restores the seeded data only on a server with `ALLOW_RESET=true` (staging).
 - Invite codes come from `INVITE_CODES` (comma separated). Scripts such as the eval runner can send the header `x-invite-code` instead of the cookie.
 - Railway deploys from `railway.json` (Nixpacks, `npm start`, healthcheck `/api/health`).

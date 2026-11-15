@@ -2,11 +2,18 @@
 // The reports are regenerated on every full run. Hand-written analysis goes in
 // eval/failure_notes.json (why and fix per failing case) and eval/notes/<set>.md
 // (grading notes and recommendations); both are merged in here.
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import type { CaseResult, GroupSummary, RunFile, RunSummary, SetName } from "./types";
 
-type FailureNotes = Record<string, Record<string, Record<string, { why?: string; fix?: string }>>>;
+type Note = { why?: string; fix?: string };
+type Outside = { id: string; what: string; why: string; fix: string };
+// Keyed by set, then backend, then case id. `fixed` holds the why and fix for cases that failed in an
+// earlier recorded run and pass now. `outside` holds failures found outside a recorded run.
+type FailureNotes = Record<string, Record<string, Record<string, Note>>> & {
+  fixed?: Record<string, Record<string, Note>>;
+  outside?: Record<string, Outside[]>;
+};
 
 // Built from code points so this file itself holds no long dash character.
 const LONG_DASHES = new RegExp(`[${String.fromCharCode(0x2014)}${String.fromCharCode(0x2013)}]`, "g");
@@ -28,8 +35,8 @@ function table(header: string[], rows: string[][]): string {
   return [`| ${header.join(" | ")} |`, `|${header.map(() => "---").join("|")}|`, ...rows.map((r) => `| ${r.join(" | ")} |`)].join("\n");
 }
 
-const BENCH_GROUPS: [string, string][] = [["golden", "Golden"], ["out_of_scope", "Out of scope"], ["crisis", "Crisis"], ["multi_log", "Multi-log"], ["regression", "Regression"]];
-const RED_GROUPS: [string, string][] = [["crisis", "Crisis"], ["medical_overreach", "Medical overreach"], ["jailbreak", "Jailbreak"], ["privacy", "Privacy"], ["bias", "Bias"]];
+const BENCH_GROUPS: [string, string][] = [["golden", "Golden"], ["out_of_scope", "Out of scope"], ["crisis", "Crisis"], ["multi_log", "Multi-log"], ["regression", "Regression"], ["multilingual", "Multilingual"], ["summary_visit", "Visit summary"], ["follow_up", "Follow-up"], ["ask_intent", "Ask intent"]];
+const RED_GROUPS: [string, string][] = [["crisis", "Crisis"], ["medical_overreach", "Medical overreach"], ["jailbreak", "Jailbreak"], ["privacy", "Privacy"], ["bias", "Bias"], ["summary", "Summary"], ["follow_up", "Follow-up"], ["ask_medical", "Ask: medical"], ["ask_jailbreak", "Ask: jailbreak"], ["ask_privacy", "Ask: privacy"], ["ask_crisis", "Ask: crisis"]];
 
 function whatHappened(c: CaseResult): string {
   return cell(c.reason, 420);
@@ -51,6 +58,62 @@ function failureRows(run: RunFile, notes: FailureNotes, withFixedIn: boolean): s
     if (withFixedIn) row.push("Not fixed yet");
     return row;
   });
+}
+
+// Every case that failed in an earlier recorded run and passes in the latest one, with the run that fixed it.
+function fixedSection(root: string, set: SetName, run: RunFile, notes: FailureNotes): string {
+  const dir = path.join(root, set === "benchmark" ? "eval/results" : "safety/results");
+  const prefix = set === "benchmark" ? "benchmark-" : "redteam-";
+  const runs: RunFile[] = existsSync(dir)
+    ? readdirSync(dir)
+        .filter((f) => f.startsWith(prefix) && f.endsWith(".json"))
+        .map((f) => JSON.parse(readFileSync(path.join(dir, f), "utf8")) as RunFile)
+        .sort((a, b) => a.startedAt.localeCompare(b.startedAt))
+    : [];
+  const statusIn = (r: RunFile, id: string) => r.cases.find((c) => c.id === id);
+  const rows: string[][] = [];
+  for (const c of run.cases) {
+    if (c.status !== "pass") continue;
+    let lastFail = -1;
+    runs.forEach((r, i) => {
+      const s = statusIn(r, c.id)?.status;
+      if (r.runId !== run.runId && (s === "fail" || s === "error")) lastFail = i;
+    });
+    if (lastFail < 0) continue;
+    const fixedAt = runs.findIndex((r, i) => i > lastFail && statusIn(r, c.id)?.status === "pass");
+    if (fixedAt < 0) continue;
+    const failed = runs[lastFail];
+    const note = notes.fixed?.[set]?.[c.id] ?? notes[set]?.[failed.backend]?.[c.id] ?? {};
+    rows.push([
+      c.id,
+      cell(`Run ${lastFail + 1} (${failed.backend}): ${statusIn(failed, c.id)?.reason ?? ""}`, 300),
+      cell(note.why ?? "Not yet analyzed"),
+      cell(note.fix ?? "Not recorded"),
+      `Run ${fixedAt + 1} (${runs[fixedAt].backend})`,
+    ]);
+  }
+  const lines = ["## Failures named and fixed", ""];
+  if (rows.length === 0) lines.push("No case has failed in an earlier recorded run and passed since.", "");
+  else {
+    lines.push(
+      `${rows.length} cases failed in an earlier recorded run and pass in the latest run. "What happened" is the last failure on record. Backends: mock is the keyword mock, rules is the real route with no model reachable, ai is the real model.`,
+      "",
+      table(["Case", "What happened", "Why", "What fixed it", "Fixed in"], rows),
+      "",
+    );
+  }
+  const outside = notes.outside?.[set] ?? [];
+  if (outside.length > 0) {
+    lines.push(
+      "### Found outside a recorded run",
+      "",
+      "Failures found by a real caregiver note, a staging check, or review, not by a recorded run. Each is now covered by the cases named.",
+      "",
+      table(["Covered by", "What happened", "Why", "What fixed it"], outside.map((o) => [cell(o.id), cell(o.what, 420), cell(o.why), cell(o.fix, 420)])),
+      "",
+    );
+  }
+  return lines.join("\n");
 }
 
 function backendSection(run: RunSummary): string {
@@ -181,7 +244,7 @@ export function writeReport(root: string, set: SetName, history: RunSummary[], r
       "## Headline (for the submission form)",
       `- Headline eval score: ${rate(run.totals)} of cases pass, latest run, on the ${run.backendLabel}${run.backend === "mock" || run.backend === "rules" ? ". Do not submit this as the model score" : ""}`,
       `- Golden field accuracy: ${golden ? `${pct(golden.accuracy)} (${golden.correct}/${golden.total} expected fields)` : "n/a"}`,
-      `- Examples: ${run.totals.total} in this run (30 hand-written and hand-reviewed, plus 14 real-length notes drafted by Claude and pending human review, in \`eval/cases.json\`)`,
+      `- Examples: ${run.totals.total} in this run: ${run.cases.filter((c) => c.reviewed !== false).length} hand-written and hand-reviewed, ${run.cases.filter((c) => c.reviewed === false).length} drafted by Claude and pending human review (marked \`reviewed: false\` in \`eval/cases.json\`). No non-English case has been reviewed by a native speaker.`,
       "",
       backendSection(run),
       "",
@@ -217,9 +280,10 @@ export function writeReport(root: string, set: SetName, history: RunSummary[], r
       "## Before and after",
       beforeAfter(history, BENCH_GROUPS),
       regressionSection(run),
-      "## Failures named",
+      "## Failures still open",
       table(["Case", "What happened", "Why", "Fix"], failureRows(run, notes, false)),
       "",
+      fixedSection(root, set, run, notes),
       extras(run),
       notesSection(root, set),
     );
@@ -274,8 +338,12 @@ export function writeReport(root: string, set: SetName, history: RunSummary[], r
       "## Before and after",
       beforeAfter(history, RED_GROUPS),
       regressionSection(run),
-      "## Failures named and fixed",
-      table(["Prompt", "What happened", "Why", "Fix", "Fixed in run"], failureRows(run, notes, true)),
+      "## Failures still open",
+      failureRows(run, notes, false).length
+        ? table(["Prompt", "What happened", "Why", "Fix"], failureRows(run, notes, false))
+        : "None. Every prompt passes in the latest run.",
+      "",
+      fixedSection(root, set, run, notes),
       "",
       extras(run),
       notesSection(root, set),
