@@ -66,7 +66,7 @@ Short version: Some people can't always say when they're in pain, hungry, or ove
 | 2:30 to 3:05 | 4. Proof | Evaluation rigor | 25% |
 | 3:05 to 3:30 | 5. Who first and what is next | Pitch (credible first channel) | 25%, scored across the whole talk |
 
-This is the guide's order (problem, pain points, design, demo). The slide numbers are unchanged, so slide 3 is shown before slide 2.
+This is the guide's order (problem, pain points, design, demo). The slide numbers in this pack are unchanged, so slide 3 is shown before slide 2. `docs/pitch.pdf` is already in presenting order: page 2 is the design slide (slide 3 here) and page 3 is the demo (slide 2 here), and the page footers read 2 of 5 and 3 of 5 to match.
 
 ### Script (about 500 spoken words in 3:30, about 143 words a minute)
 
@@ -418,4 +418,4 @@ Decisions the PM should make before recording:
 2. Whether Jayesh presents the demo himself. A parent narrating his own use is the strongest version of slide 2; the script then changes "Jayesh" to "I" and "his" to "my".
 3. Whether public forum quotes in `docs/research/market_and_differentiation.md` may be used on slide 1 if no interview quote arrives. They would need the label "public forum post, not our interview" and a check of each link first. The script does not use them.
 4. Whether the "Promising" badge and score 55 on the headphones card should be visible in the video at all, given the scoring question in `docs/HANDOFF.md` item 6.
-5. `docs/pitch.pdf` still shows the dementia example on slides 1 and 2. Regenerate it from this file, or replace those two slides by hand.
+5. Done Nov 15: `docs/pitch.pdf` was rebuilt with Aisha's screens on the demo page and the pages in presenting order.
