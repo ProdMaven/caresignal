@@ -4,13 +4,12 @@
 // on this device plus the caregiver picked here.
 import { useState } from "react";
 import Link from "next/link";
-import { BookHeart, HeartHandshake, Info, LogOut, UserRound } from "lucide-react";
+import { Info, LogOut, UserRound } from "lucide-react";
 import { IntakeForm } from "@/components/intake-form";
 import { LanguagePicker } from "@/components/language-picker";
 import { PersonPicker, usePersonContext } from "@/components/person-picker";
 import { CardSkeleton, ErrorState } from "@/components/states";
 import { Button } from "@/components/ui/button";
-import { YouTabs } from "@/components/you-tabs";
 import { useCaregiver } from "@/hooks/useAppState";
 import { fetchJson } from "@/lib/api";
 import type { Person } from "@/lib/types";
@@ -59,7 +58,6 @@ export default function AccountPage() {
 
   return (
     <>
-      <YouTabs />
       <div className="flex flex-col gap-1">
         <h1 className="text-2xl font-bold tracking-tight">Account</h1>
         <p className="text-muted-foreground">Your settings on this device{me ? `, ${me.name}` : ""}.</p>
@@ -86,7 +84,7 @@ export default function AccountPage() {
           </label>
         )}
         <p className="text-xs text-muted-foreground">
-          Your notes and journal are saved under this name. There are no passwords yet, so anyone with an invite code can
+          Your notes are saved under this name. There are no passwords yet, so anyone with an invite code can
           pick a name. Please use nicknames and no personal details.
         </p>
       </Section>
@@ -127,26 +125,6 @@ export default function AccountPage() {
             ctx.reload();
           }}
         />
-      </Section>
-
-      <Section title="For you">
-        <div className="flex flex-wrap gap-2">
-          <Button asChild variant="outline">
-            <Link href="/checkin">
-              <HeartHandshake className="size-5" aria-hidden />
-              How are you feeling?
-            </Link>
-          </Button>
-          <Button asChild variant="outline">
-            <Link href="/journal">
-              <BookHeart className="size-5" aria-hidden />
-              My journal
-            </Link>
-          </Button>
-        </div>
-        <p className="text-xs text-muted-foreground">
-          If you ever feel you cannot go on, call or text 988, the 988 Suicide and Crisis Lifeline. It is free and open 24 hours a day.
-        </p>
       </Section>
 
       <Section title="This device">

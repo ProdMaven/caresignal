@@ -1,21 +1,15 @@
 "use client";
 
-// Weekly and monthly overview: counts from the logs and the caregiver's own journal.
+// Weekly and monthly overview: counts from the logs.
 import { useState } from "react";
 import Link from "next/link";
 import { PersonPicker, usePersonContext } from "@/components/person-picker";
 import { CardSkeleton, EmptyState, ErrorState, GuardrailBanner } from "@/components/states";
-import { Button } from "@/components/ui/button";
-import { caregiverName, label } from "@/config/modes";
+import { label } from "@/config/modes";
 import { useApi } from "@/hooks/useApi";
-import { useCaregiver } from "@/hooks/useAppState";
 import { TIME_BAND_LABEL } from "@/lib/time";
-import type { Mood, OverviewResponse } from "@/lib/types";
+import type { OverviewResponse } from "@/lib/types";
 import { cn } from "@/lib/utils";
-
-const MOOD_LABEL: Record<Mood, string> = {
-  okay: "Okay", tired: "Tired", overwhelmed: "Overwhelmed", sad: "Sad", worried: "Worried", hopeful: "Hopeful",
-};
 
 function Tile({ value, caption, note }: { value: string; caption: string; note?: string }) {
   return (
@@ -64,11 +58,10 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 
 export default function OverviewPage() {
   const ctx = usePersonContext();
-  const { person, mode } = ctx;
-  const [loggedBy] = useCaregiver(mode, person);
+  const { person } = ctx;
   const [days, setDays] = useState<7 | 30>(7);
   const overview = useApi<OverviewResponse>(
-    person ? `/api/overview?personId=${person.id}&loggedBy=${encodeURIComponent(loggedBy)}&days=${days}` : null,
+    person ? `/api/overview?personId=${person.id}&days=${days}` : null,
   );
   const data = overview.data;
   const period = days === 7 ? "the last 7 days" : "the last 30 days";
@@ -149,27 +142,6 @@ export default function OverviewPage() {
         </>
       )}
 
-      {data && (
-        <Section title={`${caregiverName(loggedBy)}'s journal in this period`}>
-          {data.journal.entries === 0 ? (
-            <p className="text-sm text-muted-foreground">No journal entries in this period.</p>
-          ) : (
-            <>
-              <p className="text-sm text-muted-foreground">
-                {data.journal.entries} {data.journal.entries === 1 ? "entry" : "entries"}. Feelings picked:
-              </p>
-              {data.journal.moods.length > 0 ? (
-                <Bars unit="entries" rows={data.journal.moods.map((m) => ({ name: MOOD_LABEL[m.mood], value: m.count }))} />
-              ) : (
-                <p className="text-sm text-muted-foreground">No feelings were picked on these entries.</p>
-              )}
-            </>
-          )}
-          <Button asChild variant="outline" size="sm" className="self-start">
-            <Link href="/journal">Open my journal</Link>
-          </Button>
-        </Section>
-      )}
     </>
   );
 }

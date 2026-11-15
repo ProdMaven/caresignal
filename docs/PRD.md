@@ -40,12 +40,12 @@ Family caregiver speaks -> AI formats a structured record -> pattern finder upda
 2. Create a Care Profile for the person you care for: mode, age band, gender (optional), spectrum level, communication, usual sleep.
 3. Home: pick a Care Profile, speak in your language or type, submit.
 4. After Save: the matching pattern, a warm line, and the top next step, on the same screen.
-5. Caregiver check-in: "How are you feeling?" Warm listening only. Never logged to the person's record. Crisis words always show the 988 Suicide and Crisis Lifeline.
+5. (Removed Nov 14 by the PM: caregiver check-in screen. A caregiver who sounds in distress in a note still gets a caring message and the 988 Suicide and Crisis Lifeline, and nothing is logged.)
 6. Feedback on every suggestion: "Did this help?" The count shows next to the score and never changes the score.
-7. Caregiver journal: a private dated note (voice or typed), plus a weekly and monthly overview.
+7. Weekly and monthly overview of the logs. (Caregiver journal removed Nov 14 by the PM.) Account page: who is logging, mic language, Care Profiles, sign out on this device. No passwords for now.
 8. Roadmap only, not built: messaging between matched caregivers (needs moderation first).
 
-Build order: step 4 above, then real AI on /api/log and the eval runner, then check-in, feedback, language picker, journal, and the overview last. Every new input surface gets red-team cases.
+Build order: step 4 above, then real AI on /api/log and the eval runner, then feedback, language picker, and the overview. Every new input surface gets red-team cases.
 
 ## 6. Why AI
 Free speech from a tired family caregiver is messy ("she was really worked up around 3, wouldn't eat"). AI turns it into consistent, countable fields in seconds, which makes pattern finding across caregivers, days, and families possible at all. AI also explains statistics in caregiver language and answers natural questions. The statistics themselves are plain code, so the system cannot hallucinate a pattern.

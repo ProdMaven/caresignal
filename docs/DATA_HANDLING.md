@@ -6,12 +6,11 @@
 - There are no accounts: everyone with an invite code shares one space and can see what others added. Testers are asked to use nicknames and no personal details.
 
 ## What Unspoken stores
-- Structured log fields and the text transcript of each note, Care Profiles (first name or nickname, age band, optional gender, spectrum level, communication level, and the first names and roles of the people who care for them), caregiver journal entries, and "Did this help?" answers. Audio is never stored; speech is converted to text in the browser.
-- Caregiver check-in text is not stored.
+- Structured log fields and the text transcript of each note, Care Profiles (first name or nickname, age band, optional gender, spectrum level, communication level, and the first names and roles of the people who care for them), and "Did this help?" answers. Audio is never stored; speech is converted to text in the browser.
 - No diagnoses, medications, or clinical records are created by the app.
 
 ## What leaves the app
-- Each note's text is sent to the Anthropic API to be formatted into fields. Text typed into the caregiver check-in is sent to the same API to write a short listening reply; it is not stored. Pattern lines, Ask answers and overview numbers are computed in code and are not sent anywhere. No other third parties receive data.
+- Each note's text is sent to the Anthropic API to be formatted into fields. Pattern lines, Ask answers and overview numbers are computed in code and are not sent anywhere. No other third parties receive data.
 - No data is sold, shared, or used for advertising.
 
 ## Community statistics ("what worked for others")

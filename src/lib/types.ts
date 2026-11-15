@@ -163,17 +163,6 @@ export interface CreatePersonResponse { person: Person }
 export interface InviteRequest { code: string }
 export interface InviteResponse { ok: boolean; message: string | null }
 
-// POST /api/checkin  (caregiver check-in: warm listening only. Never saved, never added to anyone's log.)
-export type Mood = "okay" | "tired" | "overwhelmed" | "sad" | "worried" | "hopeful";
-export interface CheckInRequest { text: string; mood?: Mood }
-export interface CheckInResponse {
-  // listening: a warm reply, no advice. crisis: the caregiver may be in danger, show 988 first.
-  // care_team: the note describes a red flag or emergency about the person they care for.
-  kind: "listening" | "crisis" | "care_team";
-  message: string;
-  saved: false; // always false: check-ins are not stored
-}
-
 // "Did this help?" feedback on a suggested next step. One answer per caregiver per strategy.
 // Counts are shown only when 5 or more caregivers answered, and never change the score.
 export interface StrategyFeedback {
@@ -185,30 +174,7 @@ export interface StrategyFeedback {
 export interface FeedbackRequest { strategyId: string; helped: boolean }
 export interface FeedbackResponse { strategyId: string; feedback: StrategyFeedback }
 
-// Caregiver journal: the caregiver's own dated notes about their experience (voice or typed).
-// Kept under the caregiver's name. Never added to the log of the person they care for.
-export interface JournalEntry {
-  id: string;
-  loggedBy: string; // caregiver id
-  mode: Mode;
-  createdAt: string; // ISO
-  text: string;
-  mood: Mood | null;
-  source: "voice" | "text";
-}
-// POST /api/journal
-export interface JournalRequest { loggedBy: string; mode: Mode; text: string; mood?: Mood; source: "voice" | "text"; now: string }
-export interface JournalResponse {
-  entry: JournalEntry;
-  // Safety message shown before anything else: 988 for caregiver distress, care team or 911 for a red flag
-  // about the person they care for. null when nothing was triggered.
-  kind: "saved" | "crisis" | "care_team";
-  message: string | null;
-}
-// GET /api/journal?loggedBy=
-export interface JournalListResponse { entries: JournalEntry[] } // newest first
-
-// GET /api/overview?personId=&loggedBy=&days=7|30  (weekly or monthly overview; counts only, computed in code)
+// GET /api/overview?personId=&days=7|30  (weekly or monthly overview; counts only, computed in code)
 export interface OverviewCount { key: string; count: number }
 export interface OverviewResponse {
   personId: string;
@@ -219,5 +185,4 @@ export interface OverviewResponse {
   byTimeBand: { timeBand: TimeBand; count: number }[]; // all five bands, in day order
   topContexts: OverviewCount[]; // contextBefore tags, most frequent first
   whatHelped: { key: string; tried: number; calmed: number }[]; // responseTried tags and how often the outcome was calmed
-  journal: { entries: number; moods: { mood: Mood; count: number }[] }; // the caregiver's own journal in the period
 }
