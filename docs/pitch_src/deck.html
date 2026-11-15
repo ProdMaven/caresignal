@@ -57,8 +57,8 @@
   .design .step.nextstep .n { background: #9aa8a6; }
   .design .step.rules { border-color: var(--amber-line); background: var(--amber); }
   .design .step .n { width: 24pt; height: 24pt; border-radius: 50%; background: var(--ink); color: #fff; font-weight: 700; font-size: 12.5pt; display: flex; align-items: center; justify-content: center; }
-  .design .step b { font-size: 18pt; line-height: 1.15; margin-top: 3pt; }
-  .design .step .d { font-size: 12.5pt; line-height: 1.28; margin-bottom: 8pt; }
+  .design .step b { font-size: 20pt; line-height: 1.15; margin-top: 3pt; }
+  .design .step .d { font-size: 13.5pt; line-height: 1.28; margin-bottom: 8pt; }
   .design .who { margin-top: auto; align-self: flex-start; font-size: 10.5pt; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; padding: 2pt 9pt; border-radius: 99pt; white-space: nowrap; }
   .design .who.you { background: #e9e6dd; color: var(--ink); }
   .design .who.model { background: var(--teal); color: #fff; }
@@ -121,10 +121,10 @@
         <span class="d">A parent says or types what happened, in their own words</span>
         <span class="who you">You</span>
       </div><div class="arrow">→</div>
-      <div class="step rules">
+      <div class="step">
         <span class="n">2</span><b>Safety</b>
-        <span class="d">Fixed rules read the note first and pick the safety message</span>
-        <span class="who fixed">Rules, no AI</span>
+        <span class="d">Fixed rules read the note first</span>
+        <span class="who you">Rules, no AI</span>
       </div><div class="arrow">→</div>
       <div class="step ai">
         <span class="n">3</span><b>Structure</b>
@@ -147,16 +147,10 @@
         <span class="who model">Vector index</span>
       </div>
     </div>
-    <div class="safety">
-      <b>What the safety check says, before anything else</b>
-      <div class="lines">
-        <span><i>Red flag</i>"Please contact your doctor or care team"</span>
-        <span><i>Possible emergency</i>Call 911 now</span>
-        <span><i>Caregiver in distress</i>988 Lifeline. Nothing is logged</span>
-      </div>
+    <p class="small" style="font-size:13pt">When a note calls for it, the safety check points to the care team, 911 or the 988 Lifeline before anything else.</p>
     </div>
   </div>
-  <div class="footer"><span>Possible things to check, never causes. No medication or restraint is ever suggested.</span><span>Supports caregivers. Does not diagnose. · 2 of 5</span></div>
+  <div class="footer"><span></span><span>Supports caregivers. Does not diagnose. · 2 of 5</span></div>
 </section>
 
 <!-- 3. Demo (called slide 2 in docs/PITCH.md) -->
