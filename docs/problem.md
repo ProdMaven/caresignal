@@ -18,11 +18,12 @@ The clues exist but are scattered. The home aide sees a small lunch in the morni
 - About 1 in 31 eight-year-old children in the U.S. has been identified with autism (CDC ADDM Network, 2025).
 
 ## Evidence of need (from our users)
-NEED DATA. Interviews at the event with caregivers of a person living with dementia and with autism parents. Quotes go in `docs/research/` and here, with the person's role only (no names).
+One parent so far, on our team, in his own words. The words come from a note he spoke into the app about a hard moment with his daughter the night before, and he agreed to their use. Source and context: `docs/research/caregiver_quotes.md`. This is one family, not an interview study. Interviews with caregivers of a person living with dementia are still NEED DATA.
 
 | Who (role) | What they said | What it tells us |
 |---|---|---|
-| | | |
+| A parent on our team, father of an autistic daughter | "I asked her what is happening... she's pointing to the head and she's not liking it, and she was crying." | She could not say what was wrong. He asked, she pointed, and he had to work out the rest from a gesture. |
+| The same parent | "She has never done something like this ever before." | A sudden change with no record to compare it against: nothing to show what was different that day or what had helped before. |
 
 ## Why AI
 - A caregiver's spoken note is messy ("she was really worked up around 3, barely ate"). AI turns it into consistent, countable fields in seconds, which is what makes pattern finding possible at all for someone with no time to fill in forms.

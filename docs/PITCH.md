@@ -83,8 +83,8 @@ Count is for the version with no quote, with [FIRST CHANNEL] counted as two word
 How the quote slots work:
 
 - **No quote arrives:** read it as written. The girl in the opening is the example the demo then shows (Aisha). The mother who paces is a picture of the problem, not a real person. Do not present her as real.
-- **One quote arrives:** replace the middle paragraph with: "A [ROLE] told us: [QUOTE 1: role, words]." Keep the quote to 20 words or fewer.
-- **Two quotes arrive:** [QUOTE 2: role, words] goes on slide 1 as text only. Do not read it aloud. There is no time.
+- **The quotes arrived (Nov 15).** Both are from one parent on our team, from a note he spoke into the app about the night before, used with his agreement. To read quote 1 aloud, replace the middle paragraph with: "A parent on our team said it this way, about last night: I asked her what is happening. She's pointing to the head, and she was crying." Say it as one parent's words, not as a finding. If Jayesh presents, he says it as "I".
+- **Quote 2** ("She has never done something like this ever before.") is on slide 1 as text only. Do not read it aloud. There is no time.
 
 **Slide 2. 1:00 to 2:30 (about 175 words, spoken live over the muted video, after slide 3)**
 
@@ -134,8 +134,8 @@ Put the live URL and the invite code in the footer of every slide.
 - **Subtitle:** Distress is communication
 - **On the slide (4 bullets at most):**
   - "People who can't always say what they need. Families who each see one piece."
-  - [QUOTE 1: role, words]
-  - [QUOTE 2: role, words] (delete the bullet if it does not arrive)
+  - Quote 1 (filled Nov 15): "I asked her what is happening... she's pointing to the head and she's not liking it, and she was crying." A parent on our team, father of an autistic daughter, in a note he spoke into the app.
+  - Quote 2 (filled Nov 15): "She has never done something like this ever before." The same parent, about the same night.
   - Named user: a parent sharing the care of an autistic child with the other parent and the school
 - **Exact numbers shown:** 63 million family caregivers in the U.S. (AARP and National Alliance for Caregiving, 2025). Nearly 13 million unpaid dementia caregivers (Alzheimer's Association). Both are in `docs/research/market_and_differentiation.md` and `docs/problem.md`. The "1 in 31" autism figure is in `docs/problem.md` only and the research file says it was not rechecked, so leave it off unless the PM verifies it.
 - **Also on the title area:** [TEAM NAMES]
@@ -401,9 +401,9 @@ Extra lines to have ready:
 
 | Slot | Where it is used | What is needed |
 |---|---|---|
-| [QUOTE 1: role, words] | Script slide 1, deck slide 1 | One real caregiver quote, 20 words or fewer, role only, saved in `docs/research/` and `docs/problem.md` first |
-| [ROLE] | Script slide 1 | The role of the person quoted, for example "a daughter caring for her mother" |
-| [QUOTE 2: role, words] | Deck slide 1 only | Optional second quote, from the other community if possible |
+| Quote 1 (filled Nov 15) | Script slide 1, deck slide 1 | "I asked her what is happening... she's pointing to the head and she's not liking it, and she was crying." Source and consent in `docs/research/caregiver_quotes.md`. |
+| Role (filled Nov 15) | Script slide 1 | "a parent on our team" (father of an autistic daughter) |
+| Quote 2 (filled Nov 15) | Deck slide 1 only | "She has never done something like this ever before." The same parent. A quote from a dementia caregiver is still missing. |
 | [FIRST CHANNEL] | Script slide 5, deck slide 5, Q&A 10 and 15 | The name of one parent-run support group the team can actually reach. If none, the script stops at "parent-run support groups." |
 | [TEAM NAMES] | Deck slide 1 | Names as they should appear on the title area |
 | [VIDEO LINK OR FILE] | Deck slide 2, fallback plan | Where the 90-second cut and the 30-second cut live (Team Drive folder; the files are too large for the repo) |
