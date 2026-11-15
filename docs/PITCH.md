@@ -146,7 +146,7 @@ Put the live URL and the invite code in the footer of every slide.
   - Quote 2 (filled Nov 15): "She has never done something like this ever before." The same parent, about the same night.
   - Named user: a parent sharing the care of an autistic child with the other parent and the school
 - **Exact numbers shown:** 63 million family caregivers in the U.S. (AARP and National Alliance for Caregiving, 2025). Nearly 13 million unpaid dementia caregivers (Alzheimer's Association). Both are in `docs/research/market_and_differentiation.md` and `docs/problem.md`. The "1 in 31" autism figure is in `docs/problem.md` only and the research file says it was not rechecked, so leave it off unless the PM verifies it.
-- **Also on the title area:** [TEAM NAMES]
+- **Also on the title area:** Team Unspoken: Jayesh, Prisha, Aadi, Vinod (filled Nov 15)
 - **Speaker note:** Lead with the person, not the app. If no quote exists, do not fill the slot with a persona quote. Neha, Helen, Arjun and Priya are synthetic and must never be quoted as users. Jayesh and Minal are real parents on the team: quote them only with words they actually said and agreed to share, as "a parent on our team". Otherwise leave the bullet out and let the scale number carry it.
 
 ### Slide 2. Demo
@@ -417,7 +417,7 @@ Extra lines to have ready:
 | Role (filled Nov 15) | Script slide 1 | "a parent on our team" (father of an autistic daughter) |
 | Quote 2 (filled Nov 15) | Deck slide 1 only | "She has never done something like this ever before." The same parent. A quote from a dementia caregiver is still missing. |
 | [FIRST CHANNEL] | Script slide 5, deck slide 5, Q&A 10 and 15 | The name of one parent-run support group the team can actually reach. If none, the script stops at "parent-run support groups." |
-| [TEAM NAMES] | Deck slide 1 | Names as they should appear on the title area |
+| Team names (filled Nov 15) | Deck slide 1 | Team Unspoken: Jayesh, Prisha, Aadi, Vinod |
 | [VIDEO LINK OR FILE] | Deck slide 2, fallback plan | Where the 90-second cut and the 30-second cut live (Team Drive folder; the files are too large for the repo) |
 | Consent check | Video, slide 2 | Jayesh confirms, after watching the final cut, that Aisha's first name and the screens shown are fine to present and upload |
 | [INTERVIEWS] | Q&A 14 | How many caregivers were interviewed and their roles, or the honest "none yet" |

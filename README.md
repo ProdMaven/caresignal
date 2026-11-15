@@ -6,7 +6,7 @@ Formerly CareSignal. The repository and URLs keep the old name.
 
 One shared record of each hard moment, built from the voices of everyone who cares for a person who cannot always say what they need: a parent living with dementia or an autistic child. AI turns a spoken sentence into a structured record, statistics find the patterns behind distress, and strategies are ranked by what actually worked for others. Supports caregivers. Does not diagnose.
 
-GTransformer "AI for Global Good" buildathon, Nov 13 to 15, 2026. Synthetic data, with one profile shared by a team member's family with their consent.
+Team Unspoken: Jayesh, Prisha, Aadi, Vinod. GTransformer "AI for Global Good" buildathon, Nov 13 to 15, 2026. Synthetic data, with one profile shared by a team member's family with their consent.
 
 **Live app:** https://web-production-1bb4dc67.up.railway.app (works on laptop and phone, no setup)
 **Invite code for judges:** `GTRANSFORMER-JUDGE` (Unspoken is invitation only; enter this on the first screen)
