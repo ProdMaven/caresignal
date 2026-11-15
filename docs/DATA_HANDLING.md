@@ -1,7 +1,8 @@
 # Data handling note
 
 ## In this demo
-- All people, families, and logs are synthetic. No real patient, child, or caregiver data was collected or used.
+- The people, families, logs, counts and scores are synthetic, with one exception.
+- **The exception (Nov 15):** the demo profile "Aisha" is a team member's daughter. Her parent, who is on the team, asked for her first name, her history milestones and the entries he logged to be used as a live example, and is comfortable with judges and testers seeing them. Her history and those entries are kept in the app's saved data, not in the code repository. Only her first name, age band and her parents' first names are in the repository. The other entries seeded for her profile are examples written for the demo and are not about her. The family can ask for the profile to be removed at any time.
 - Judges' and testers' typed or spoken inputs are saved in the app's own Postgres database on Railway so they survive a redeploy. There is no reset button; added data stays until it is removed by the team.
 - There are no accounts: everyone with an invite code shares one space and can see what others added. Testers are asked to use nicknames and no personal details.
 

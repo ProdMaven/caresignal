@@ -17,6 +17,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { caregiverName, label, MODES } from "@/config/modes";
 import { useApi } from "@/hooks/useApi";
 import { SPEECH_NOT_SUPPORTED, useSpeech } from "@/hooks/useSpeech";
+import { OTHER_EXAMPLES } from "@/config/askExamples";
 import { postJson } from "@/lib/api";
 import { formatDay, formatTime, wallParts } from "@/lib/time";
 import type { AskRequest, AskResponse, EventsResponse, LogRecord, StrategiesResponse } from "@/lib/types";
@@ -151,12 +152,39 @@ function AskScreen({ ctx }: { ctx: PersonContext }) {
           <Card>
             <CardHeader>
               <div className="flex flex-wrap items-center gap-2">
-                <CardTitle>{answer.redFlag ? "From the logs" : "What the logs show"}</CardTitle>
+                <CardTitle>{answer.redFlag ? "From the logs" : answer.intent === "other" ? "I can't answer that one" : "What the logs show"}</CardTitle>
                 {!answer.dataSufficient && <Badge variant="warning">Not enough entries yet</Badge>}
               </div>
             </CardHeader>
             <CardContent>
-              <p className="text-lg leading-relaxed">{answer.answer}</p>
+              {answer.intent === "other" && answer.answer.includes(" For example:") ? (
+                <>
+                  {/* Not an answer: say so plainly and offer questions that can be answered, one tap each. */}
+                  <p className="text-lg leading-relaxed">{answer.answer.split(" For example:")[0]}</p>
+                  <div className="flex flex-col gap-2">
+                    <p className="text-sm font-semibold text-muted-foreground">Try one of these</p>
+                    <div className="flex flex-wrap gap-2">
+                      {OTHER_EXAMPLES.map((q) => (
+                        <button
+                          key={q}
+                          type="button"
+                          disabled={asking}
+                          onClick={() => {
+                            setQuestion(q);
+                            void ask(q);
+                          }}
+                          className="rounded-full border bg-muted px-3 py-1.5 text-left text-sm font-medium hover:bg-secondary"
+                        >
+                          {q}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <p className="text-sm text-muted-foreground">For anything medical, please ask your doctor or care team.</p>
+                </>
+              ) : (
+                <p className="text-lg leading-relaxed">{answer.answer}</p>
+              )}
               {answer.evidence.length > 0 && (
                 <div>
                   <p className="text-sm font-semibold text-muted-foreground">Evidence from the log</p>

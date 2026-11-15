@@ -25,14 +25,31 @@ export const ABOUT_ANSWER =
 
 export const OTHER_LINE =
   "I can answer questions about when it happens, what comes before, what helped, how often, and who saw it.";
-export const OTHER_EXAMPLES = [
-  "When does it usually happen?",
-  "What helped in the last two weeks?",
-  "Who saw it most often?",
-] as const;
+export { OTHER_EXAMPLES } from "../config/askExamples";
+import { OTHER_EXAMPLES } from "../config/askExamples";
 export const OTHER_ANSWER =
   `${OTHER_LINE} For example: ${OTHER_EXAMPLES.map((q) => `"${q}"`).join(" ")} ` +
   `For anything medical, please ask your doctor or care team.`;
+
+// Said when the question is not one the logs can answer. Plain about what happened and what to do next,
+// so the caregiver is not left wondering whether to rephrase or add detail.
+export function otherAnswer(person: Person): string {
+  const name = person.displayName;
+  return (
+    `I could not find an answer to that in ${name}'s logs. I can only tell you what the logs show, and I do not give advice or general information. ` +
+    `I can tell you when it happens, what comes before, what was tried and how it went, how often, and who saw it. ` +
+    `For example: ${OTHER_EXAMPLES.map((q) => `"${q}"`).join(" ")} ` +
+    `For anything medical, please ask your doctor or care team.`
+  );
+}
+
+// A question that asks what to do ("a good solution", "how do I stop", "what should I try").
+// Unspoken never gives advice, so the answer says so first and then shows what was tried in this person's own logs.
+export const ADVICE_QUESTION =
+  /\b(solutions?|what (should|can|do) (i|we) (do|try)|how (do|can|should|to) (i|we)?\s?(stop|prevent|protect|handle|help|deal|calm|manage|reduce|avoid)|how to|advice|recommend\w*|suggest\w*|tips?|ideas? (for|to)|what works|best way|good way|protect)\b/i;
+export function adviceLead(person: Person): string {
+  return `I can't tell you what to do, but I can show you what has been tried for ${person.displayName} and how it went. `;
+}
 
 const COUNT_NOTE = "This is a count from the logs, not a cause or a diagnosis.";
 
@@ -495,6 +512,7 @@ export function answerFor(
   events: LogRecord[],
   patterns: PatternDetail[],
   today: string = demoToday(),
+  question = "",
 ): AskResponse {
   const mine = events.filter((e) => e.personId === person.id);
   const own = patterns.filter((p) => p.personId === person.id);
@@ -503,8 +521,10 @@ export function answerFor(
       return whenDoesItHappen(understanding, person, mine, own, today);
     case "what_comes_before":
       return whatComesBefore(understanding, person, mine, own, today);
-    case "what_helped":
-      return whatHelped(understanding, person, mine, today);
+    case "what_helped": {
+      const helped = whatHelped(understanding, person, mine, today);
+      return ADVICE_QUESTION.test(question) ? { ...helped, answer: adviceLead(person) + helped.answer } : helped;
+    }
     case "how_often":
       return howOften(understanding, person, mine, today);
     case "who_saw_it":
@@ -516,6 +536,6 @@ export function answerFor(
     case "about_the_app":
       return reply("about_the_app", ABOUT_ANSWER, [], true);
     default:
-      return reply("other", OTHER_ANSWER, [], true);
+      return reply("other", otherAnswer(person), [], true);
   }
 }

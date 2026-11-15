@@ -12,6 +12,8 @@ interface MockStore {
   nextPersonId: number;
   // strategyId -> voterId -> helped. One answer per caregiver per strategy.
   votes: Map<string, Map<string, boolean>>;
+  // History a family shared for a demo profile, by person id (saved data only).
+  featuredHistory?: Record<string, Milestone[]>;
 }
 
 // Entries added by caregivers start here, well above any seeded id, so the seed can grow without clashing with saved data.
@@ -185,6 +187,29 @@ export interface StoreSnapshot {
   addedPeople: Person[];
   nextPersonId: number;
   votes: [string, [string, boolean][]][];
+  // History a family shared for a demo profile. Kept in saved data only, never in the seed file.
+  featuredHistory?: Record<string, Milestone[]>;
+}
+
+// An added profile that is folded into a demo profile the first time saved data is loaded after this change:
+// its entries and history move over and the added profile is removed. Matched by name and mode.
+const MERGE_INTO_FEATURED: { name: string; mode: Mode; into: string }[] = [{ name: "Aisha", mode: "autism", into: "p_maya" }];
+
+function mergeIntoFeatured(fresh: MockStore, featuredHistory: Record<string, Milestone[]>): void {
+  for (const rule of MERGE_INTO_FEATURED) {
+    const target = fresh.people.find((p) => p.id === rule.into);
+    const from = fresh.people.filter((p) => !p.isFeatured && p.mode === rule.mode && p.displayName.trim().toLowerCase() === rule.name.toLowerCase());
+    if (!target || from.length === 0) continue;
+    for (const person of from) {
+      // Entries keep who logged them: a caregiver with the same name on the demo profile takes over the id.
+      const caregiverId = new Map((person.caregivers ?? []).map((c) => [c.id, target.caregivers?.find((t) => t.name.toLowerCase() === c.name.trim().toLowerCase())?.id ?? c.id]));
+      registerCaregivers(person.caregivers);
+      fresh.events = fresh.events.map((e) => (e.personId === person.id ? { ...e, personId: target.id, loggedBy: caregiverId.get(e.loggedBy) ?? e.loggedBy } : e));
+      if (person.history?.length && !featuredHistory[target.id]?.length) featuredHistory[target.id] = person.history;
+      fresh.people = fresh.people.filter((p) => p.id !== person.id);
+      console.log(`[store] moved the added profile ${person.id} into the demo profile ${target.id}.`);
+    }
+  }
 }
 
 export function snapshotStore(): StoreSnapshot {
@@ -196,6 +221,7 @@ export function snapshotStore(): StoreSnapshot {
     addedPeople: s.people.filter((p) => !p.isFeatured),
     nextPersonId: s.nextPersonId,
     votes: [...s.votes.entries()].map(([strategyId, votes]) => [strategyId, [...votes.entries()]]),
+    featuredHistory: { ...(s.featuredHistory ?? {}) },
   };
 }
 
@@ -209,8 +235,15 @@ export function restoreStore(raw: unknown): boolean {
   fresh.people.push(...snap.addedPeople);
   fresh.nextPersonId = Math.max(fresh.nextPersonId, Number(snap.nextPersonId) || 0);
   fresh.votes = new Map((snap.votes ?? []).map(([strategyId, votes]) => [strategyId, new Map(votes)]));
+  const featuredHistory: Record<string, Milestone[]> = { ...(snap.featuredHistory ?? {}) };
+  const before = fresh.people.length;
+  mergeIntoFeatured(fresh, featuredHistory);
+  fresh.featuredHistory = featuredHistory;
+  fresh.people = fresh.people.map((p) => (p.isFeatured && featuredHistory[p.id]?.length ? { ...p, history: featuredHistory[p.id] } : p));
   fresh.people.forEach((p) => registerCaregivers(p.caregivers));
   globalForStore.__caresignalMockStore = fresh;
+  // A profile was folded in: save the new shape once the save hook is attached.
+  if (fresh.people.length !== before) setTimeout(changed, 2_000);
   return true;
 }
 

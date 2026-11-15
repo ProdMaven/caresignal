@@ -15,7 +15,7 @@ Team folder name on the Team Drive: `Team_[TEAM #]_Unspoken` (fill in the team n
 | Demo video (about 90 seconds) | [VIDEO LINK OR FILE] |
 
 ## The problem
-When a person living with dementia or an autistic child is in pain, hungry, tired or overwhelmed, they often cannot say so. It comes out as distress, and each person who cares for them sees only a piece of what led up to it. Unspoken joins those pieces into one record so families can see what came before a hard moment and what actually helped. It supports caregivers and does not diagnose. All data in the app is synthetic.
+When a person living with dementia or an autistic child is in pain, hungry, tired or overwhelmed, they often cannot say so. It comes out as distress, and each person who cares for them sees only a piece of what led up to it. Unspoken joins those pieces into one record so families can see what came before a hard moment and what actually helped. It supports caregivers and does not diagnose. The data in the app is synthetic, except one profile (Aisha) that a team member's family shared with their consent as a live example.
 
 ## Try it
 Open the live app on a laptop or a phone, enter the invite code, then tap the mic or type your own note.

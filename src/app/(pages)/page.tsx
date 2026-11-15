@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from "react";
 import Link from "next/link";
-import { CircleCheck, Send } from "lucide-react";
+import { CircleCheck, Flag, Send } from "lucide-react";
 import { ConfirmCard } from "@/components/confirm-card";
 import { FollowUpQuestion } from "@/components/follow-up";
 import { IntakeForm } from "@/components/intake-form";
@@ -41,6 +41,8 @@ function LogScreen({ ctx }: { ctx: PersonContext }) {
   const [result, setResult] = useState<{ response: ParseLogResponse; source: LogRecord["source"]; id: number; transcript: string } | null>(null);
   const [skippedFollowUp, setSkippedFollowUp] = useState(false);
   const [saved, setSaved] = useState<LogRecord | null>(null);
+  // True when the care team message was already shown while this note was being read, so it is not repeated after saving.
+  const [warnedAtRead, setWarnedAtRead] = useState(false);
 
   const onFinal = useCallback((phrase: string) => {
     if (!phrase) return;
@@ -209,6 +211,7 @@ function LogScreen({ ctx }: { ctx: PersonContext }) {
             source={result.source}
             onDiscard={clearAll}
             onSaved={(record) => {
+              setWarnedAtRead(Boolean(result.response.message));
               setSaved(record);
               clearAll();
             }}
@@ -217,7 +220,9 @@ function LogScreen({ ctx }: { ctx: PersonContext }) {
         {result && !result.response.draft && result.response.kind !== "caregiver_distress" && (
           <p className="text-sm text-muted-foreground">Nothing was added to the log from this note.</p>
         )}
-        {saved && saved.redFlags.length > 0 && (
+        {/* Said once per note: the full message shows when the note is read. Only an entry that skipped
+            that step (the tap form) gets it here. */}
+        {saved && saved.redFlags.length > 0 && !warnedAtRead && (
           <SafetyMessage message="Please contact your doctor or care team about this before trying anything else." />
         )}
         {saved && (
@@ -229,6 +234,12 @@ function LogScreen({ ctx }: { ctx: PersonContext }) {
             <p className="text-sm">
               {label(saved.eventType, saved.mode)} at {formatTime(saved.occurredAt)}. Patterns update with every entry.
             </p>
+            {saved.redFlags.length > 0 && (
+              <span className="inline-flex items-center gap-1.5 self-start rounded-full border border-amber-300 bg-amber-50 px-3 py-1 text-sm font-medium text-amber-950">
+                <Flag className="size-4" aria-hidden />
+                Flagged for your care team
+              </span>
+            )}
             <Button asChild variant="outline" className="self-start">
               <Link href="/person">See timeline and patterns</Link>
             </Button>
@@ -237,7 +248,7 @@ function LogScreen({ ctx }: { ctx: PersonContext }) {
         {saved && <MatchAfterSave key={saved.id} saved={saved} person={savedPerson ?? null} />}
       </div>
 
-      <TapLogger mode={mode} person={person} loggedBy={loggedBy} onSaved={(record) => { setSaved(record); setResult(null); }} />
+      <TapLogger mode={mode} person={person} loggedBy={loggedBy} onSaved={(record) => { setWarnedAtRead(false); setSaved(record); setResult(null); }} />
     </>
   );
 }

@@ -38,8 +38,8 @@ export const ASK_ROUTER_SYSTEM = `You are the question router inside Unspoken, a
   Examples: "What time of day does Mom usually get agitated?" / "wen do the meltdowns hapen, weekdays or weekends" / "¿A qué hora suele ponerse inquieta?" / "ye zyada tar kab hota hai?"
 - "what_comes_before": what was logged before the hard moments, what they have in common, what seems to set them off, and "why" questions about a pattern. Code answers with counts of what came before, never with a cause.
   Examples: "What usually comes right before her afternoon agitation?" / "Why are mornings so hard for Arjun?" / "¿Qué pasa antes de que se altere por la tarde?" / "मेल्टडाउन से पहले क्या होता है?"
-- "what_helped": what was tried and how it went, what settled or calmed the person, what did not help.
-  Examples: "What has helped him calm down after a meltdown?" / "wat hepled mom setle in the evenings" / "¿Qué le ayudó a calmarse?" / "kis cheez se madad mili?"
+- "what_helped": what was tried and how it went, what settled or calmed the person, what did not help. Also use this when the caregiver asks what to do about a hard moment or a behavior (a solution, an idea, how to stop, prevent or handle it): code never gives advice, it answers with what was tried in this person's own log and how it went. This does not apply to anything under "medical_out_of_scope" or "crisis", which always win.
+  Examples: "What has helped him calm down after a meltdown?" / "What is a good solution for the hard mornings?" / "How do I stop the evening pacing?" / "wat hepled mom setle in the evenings" / "¿Qué le ayudó a calmarse?" / "kis cheez se madad mili?"
 - "how_often": how many times, how frequently, a count for a period.
   Examples: "How many shutdowns in the last two weeks?" / "how offen does she refuse the shower" / "¿Cuántas veces pasó esta semana?" / "पिछले हफ्ते यह कितनी बार हुआ?"
 - "who_saw_it": which caregiver logged or saw something, or whether different caregivers noticed linked things.

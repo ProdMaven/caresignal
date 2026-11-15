@@ -68,3 +68,44 @@ body {
 .mic-listening {
   animation: mic-pulse 1.4s ease-out infinite;
 }
+
+/* Saving one report as a PDF (src/lib/exportReport.ts): only the copied report prints. */
+#print-root {
+  display: none;
+}
+@media print {
+  body.printing > *:not(#print-root) {
+    display: none !important;
+  }
+  body.printing #print-root {
+    display: block;
+    padding: 0.4in;
+    color: #000;
+    background: #fff;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  body.printing #print-root .print-brand {
+    margin-bottom: 12pt;
+    font-size: 10pt;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  html:has(body.printing),
+  body.printing {
+    background: #fff !important;
+  }
+  body.printing #print-root li,
+  body.printing #print-root h3,
+  body.printing #print-root h4 {
+    break-inside: avoid;
+    break-after: avoid;
+  }
+  body.printing #print-root li {
+    break-after: auto;
+  }
+  body.printing #print-root details > summary {
+    display: none;
+  }
+}
