@@ -5,11 +5,17 @@ Read this first, then CLAUDE.md, then the docs it lists. Everything below is the
 ## Where we are (updated Sat Nov 14, late evening: rename to Unspoken ready to merge)
 - **Name:** the product is now **Unspoken** (working name), formerly CareSignal. Tagline: "Unspoken. Every need, finally heard." See `docs/BRAND.md` and `docs/RENAME.md`. The repository, Railway project and services, both URLs, invite codes, package name, localStorage keys, response headers and internal identifiers keep the old name on purpose.
 - **Rename status:** done on the build branch `claude/caresignal-buildathon-setup-6ss2v0` and deployed to staging. NOT merged: the live app still says CareSignal until the PM gives the go-ahead. Staging evals before and after the rename are identical (benchmark 39 of 44, red team 59 of 59, crisis and out of scope 100%), so the prompt change is kept.
+- **Also on the build branch, not merged (added after the rename):**
+  - Each person has their own caregivers (contracts v6). "Who is logging?" lists the selected person's caregivers, and the Care Profile form asks "Who cares for them?". Reported by a teammate: a new person showed another family's names.
+  - Data now survives deploys and restarts. A Postgres service was added to the Railway project. When `STATE_DATABASE_URL` is set, everything caregivers add (people, log entries, journal, "Did this help?" answers) is saved as one JSON snapshot per app (`STATE_KEY`) after each change and restored at server start. Verified on staging: a test person and journal entry survived a restart. Seeded demo data is rebuilt on each start so its dates stay current.
+  - Both variables are already set on `web` (`STATE_KEY=production`) and `staging` (`STATE_KEY=staging`). The live app starts saving as soon as this branch is merged.
+  - No vector database: nothing in the product needs similarity search. If it is needed later, use pgvector in the same Postgres.
+  - Evals have NOT been rerun since these two changes (PM: evals at the end). Neither change touches a prompt.
 - **Live app (real AI):** https://web-production-1bb4dc67.up.railway.app. Railway project `caresignal`, service `web`, deploys from `main`. Invite codes: `GTRANSFORMER-JUDGE` (judges, in the README) and `CARE-TRIAL` (caregivers trying it).
 - **Staging:** https://staging-production-8dc505db.up.railway.app, service `staging`, deploys from `claude/caresignal-buildathon-setup-6ss2v0`, invite code `STAGING-EVAL`, shares the API key by reference. Test prompt changes here first, never on the live app.
 - **Merged to `main` (PR 1):** invitation-only entry, Care Profile intake, voice or typed log in either mode with a mic language picker, confirm card, match plus warm line plus next step after Save, timeline, Ask, Winning Patterns with "Did this help?", caregiver check-in, journal, weekly and monthly overview, eval and safety runner.
 - **Merged to `main` and live (PR 2):** handling of real-length spoken notes. Time limit 9 to 18 seconds, a reported remedy is no longer treated as a medication question, per-step results on what was tried (contracts v5), new categories (body movement, self-biting, self-hitting, woke from sleep, cold or ice, massage, blocked behavior, remedy given), 14 long benchmark cases.
-- **What is real and what is not:** the model does two things: it turns notes into fields (`/api/log`) and writes the short listening reply when a caregiver types into the check-in (`/api/checkin`, filtered for advice, fixed wording for crisis). Ask answers and pattern summaries are computed text. Data routes use an in-memory store, so data resets on every deploy, on Reset demo data, and on every eval run against that server. Community numbers are synthetic.
+- **What is real and what is not:** the model does two things: it turns notes into fields (`/api/log`) and writes the short listening reply when a caregiver types into the check-in (`/api/checkin`, filtered for advice, fixed wording for crisis). Ask answers and pattern summaries are computed text. Data routes use an in-memory store. On `main` today it resets on every deploy; on the build branch it is saved to Postgres and survives deploys. "Reset demo data" and every eval run against a server still wipe what was added there. Community numbers are synthetic.
 
 ## Numbers (real model)
 | | Before PR 2 | Live `main` now (rerun after the merge) |
@@ -54,6 +60,11 @@ Read this first, then CLAUDE.md, then the docs it lists. Everything below is the
 9. **First channel to users.** A parent support organization is the candidate, but we have no access to their data and could not read their site. Do not claim a partnership or a database.
 10. **Organizers' template repo and collaborators.** Still need the link and the GitHub usernames.
 11. Commits 094012d through 4ad9392 are under Aadi's email and show as Unverified. Do NOT rewrite or force-push `main`.
+
+## Warnings once data is saved
+- **Do not run evals against the live URL any more.** The runner calls "Reset demo data" before and after, which now permanently deletes what real testers added. Run evals on staging.
+- **The "Reset demo data" button is public.** Anyone with an invite code can wipe everyone's saved data. Decide whether to hide it behind a judge-only code before more caregivers try the app.
+- **No accounts:** saved data is shared by everyone with a code. Keep asking testers for nicknames and no personal details.
 
 ## Next actions, in order
 1. **Interviews (biggest gap, 20% of the score).** Zero quotes so far. Use the `CARE-TRIAL` code; ask "What is the hardest part of figuring out what they need?"; record role only in `docs/problem.md` and `docs/research/`.
