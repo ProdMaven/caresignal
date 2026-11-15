@@ -24,7 +24,7 @@ The guide arrived after this pack was written. Everything below section 1 was fi
 | Demo video about 90 seconds, talked over live | 68 seconds | Add up to 22 seconds. Two beats are ready if the feature flags are on for the live app: a note in Spanish that becomes the same English record with the safety line in both languages, and the one follow-up question ("What was happening just before she started pacing?"). If the flags stay off, slow the existing steps instead. |
 | Order: 1 the problem, 2 pain points, 3 your design, 4 demo walkthrough | Problem, demo, how it works, proof, who first | PM decision. Closest match with the least rework: slide 1 covers the problem and the pain points (the scattered pieces), slide 3 is the design, and the demo moves after it. Proof and first channel then close in the last 35 seconds. The slide numbers in `docs/pitch.pdf` are still in the old order. |
 | Judges open the live URL and run the eval script; if either fails, that criterion scores a 1 | Not stated | `README.md` now has the exact commands. The script runs against the live URL with no key, saves nothing there, and exits with an error only if a crisis or out-of-scope case fails. |
-| Submit to the Team Drive in a folder named `Team_#_team_name` | Repo only | The files are collected in `submission/`. Upload that folder's contents and add the video. Team number: [TEAM #]. |
+| Submit to the Team Drive in a folder named `Team_#_team_name` | Repo only | The files are collected in `submission/`. Upload that folder's contents and add the video. Team number: 4, folder `Team_4_Unspoken`. |
 | Scored 1 to 5 per criterion; ties go to the higher Safety score | Not stated | Keep the safety beat in the video. |
 
 Suggested time map for 3:30 (if the PM takes the guide's order): 0:00 to 0:30 problem and pain points (slide 1), 0:30 to 1:00 design and why it is safe (slide 3), 1:00 to 2:30 demo video (90 s), 2:30 to 3:05 proof (slide 4), 3:05 to 3:30 first channel and close (slide 5).
@@ -152,7 +152,7 @@ Put the live URL and the invite code in the footer of every slide.
 ### Slide 2. Demo
 
 - **Title:** One record of each hard moment
-- **On the slide:** one visual only, the 90-second video ([VIDEO LINK OR FILE]), full height. Caption burned into the video during the strategy card: "Demo data (synthetic)". Small line under the video: "Aisha is a team member's daughter, shown with her parent's consent. Entries on screen are demo entries."
+- **On the slide:** one visual only, the 85-second video (`submission/Unspoken_demo_Aisha.mp4`), full height. Caption burned into the video during the strategy card: "Demo data (synthetic)". Small line under the video: "Aisha is a team member's daughter, shown with her parent's consent. Entries on screen are demo entries."
 - **Exact numbers shown:** none on the slide. The video shows Aisha's pattern count and the strategy card numbers. All of them come from demo entries and seed data.
 - **Speaker note:** Narrate live over the muted video using the slide 2 script. Say "Care Profile" if you name the person picker. Never say "caregiver profile". Do not read the count, the score or the percentages aloud; let the screen show them. First names only for the family, and nothing about Aisha beyond what is on screen.
 
@@ -334,7 +334,7 @@ Use this if time is cut or the main file will not play.
 1. Say: "The video is in the repo. Here is the same flow in three pictures." Show three stills placed in the slide 2 notes: the confirm card with the two steps, the match panel, the timeline.
 2. Speak the 30-second cut lines over the stills.
 3. Do not open the live app during the 3.5 minutes. Offer it in Q&A: "It is live right now. The code is GTRANSFORMER-JUDGE."
-4. Backup file: [VIDEO LINK OR FILE]. The 30-second cut uses steps 1 to 4 and step 10 of the main video.
+4. Backup file: `submission/Unspoken_demo_Aisha.mp4`. The 30-second cut uses steps 1 to 4 and step 10 of the main video.
 
 ---
 

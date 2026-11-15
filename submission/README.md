@@ -2,7 +2,7 @@
 
 Team: **Unspoken** (Jayesh, Prisha, Aadi, Vinod).
 
-Team folder name on the Team Drive: `Team_[TEAM #]_Unspoken` (fill in the team number from the Team Names sheet).
+Team folder name on the Team Drive: `Team_4_Unspoken`.
 
 | What | Where |
 |---|---|
