@@ -54,19 +54,20 @@ const EMERGENCY: Needle[] = [
   "no respira", "no puede respirar", "le cuesta respirar", "no despierta", "inconsciente", "se desmayo", "cara caida",
   "la cara torcida", "boca torcida", "se le cae la cara", "habla arrastrada", "arrastra las palabras", "no puede hablar bien",
   "derrame", "convulsion", "se golpeo la cabeza", "golpe en la cabeza", "sangra mucho", "no deja de sangrar",
-  "no la encuentro", "no lo encuentro", "se perdio", "ha desaparecido", "dolor en el pecho", "se esta ahogando", "atragant",
+  "no responde", "no reacciona", "no la encuentro", "no lo encuentro", "se perdio", "ha desaparecido", "dolor en el pecho", "se esta ahogando", "atragant",
   // Hindi, romanized
-  "saans nahi", "sans nahi", "saans lene mein", "behosh", "hosh nahi", "chehra tedha", "muh tedha", "munh tedha", "chehra latak",
+  "jawab nahi de", "jawaab nahi de", "uth nahi rahi", "uth nahi raha", "saans nahi", "sans nahi", "saans lene mein", "behosh", "hosh nahi", "chehra tedha", "muh tedha", "munh tedha", "chehra latak",
   "awaaz ladkhada", "bol nahi pa rahi", "bol nahi pa raha", "daura pad", "sir par chot", "sar par chot", "sir mein chot",
   "bahut khoon", "khoon nahi ruk", "mil nahi rahi", "mil nahi raha", "kho gayi", "kho gaya", "seene mein dard", "chhati mein dard",
   // Hindi, Devanagari
-  "सांस नहीं", "साँस नहीं", "सांस लेने में", "साँस लेने में", "बेहोश", "होश नहीं", "चेहरा टेढ़ा", "मुंह टेढ़ा", "मुँह टेढ़ा", "चेहरा लटक",
+  "जवाब नहीं दे", "उठ नहीं रही", "उठ नहीं रहा", "सांस नहीं", "साँस नहीं", "सांस लेने में", "साँस लेने में", "बेहोश", "होश नहीं", "चेहरा टेढ़ा", "मुंह टेढ़ा", "मुँह टेढ़ा", "चेहरा लटक",
   "आवाज़ लड़खड़ा", "बोल नहीं पा रही", "बोल नहीं पा रहा", "दौरा पड़", "सिर पर चोट", "सिर में चोट", "बहुत खून", "खून नहीं रुक",
   "मिल नहीं रही", "मिल नहीं रहा", "खो गई", "खो गया", "सीने में दर्द", "छाती में दर्द",
   // Mandarin
   "没有呼吸", "沒有呼吸", "不呼吸了", "呼吸困难", "呼吸困難", "喘不过气", "喘不過氣", "昏迷", "昏倒", "晕倒", "暈倒", "叫不醒",
   "嘴歪", "口眼歪斜", "脸歪", "臉歪", "脸下垂", "臉下垂", "说话不清", "說話不清", "口齿不清", "口齒不清", "中风", "中風", "抽搐", "癫痫", "癲癇",
-  "撞到头", "撞到頭", "摔到头", "摔到頭", "流血不止", "大量出血", "找不到她", "找不到他", "走失", "失踪", "失蹤", "胸口痛", "胸痛", "噎住",
+  "撞到头", "撞到頭", "摔到头", "摔到頭", "撞到了头", "撞到了頭", "摔到了头", "摔到了頭", "磕到头", "磕到頭", "磕到了头", "磕到了頭",
+  "没有反应", "沒有反應", "没反应", "沒反應", "不省人事", "失去意识", "失去意識", "流血不止", "大量出血", "找不到她", "找不到他", "走失", "失踪", "失蹤", "胸口痛", "胸痛", "噎住",
 ];
 
 // ---- Red flags: contact your doctor or care team.

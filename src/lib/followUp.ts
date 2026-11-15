@@ -65,6 +65,7 @@ export function questionProblem(question: string, lang: Lang): string | null {
   const q = question.trim();
   if (!q) return "empty";
   if (!/[?？]$/.test(q)) return "does not end with a question mark";
+  if ((q.match(/[?？]/g) ?? []).length > 1) return "more than one question";
   const words = lang === "zh" ? Math.ceil(q.replace(/\s/g, "").length / 2) : wordCount(q);
   if (words > 20) return "longer than 20 words";
   if (/[\n<>{}]/.test(q) || q.length > 160) return "not a plain short question";
