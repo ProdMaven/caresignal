@@ -1,4 +1,6 @@
-# CareSignal pitch pack
+# Unspoken pitch pack
+
+Unspoken (working name). Every need, finally heard. Formerly CareSignal; the repository, URLs and invite codes keep the old name. Brand source: `docs/BRAND.md`.
 
 GTransformer "AI for Global Good". Due Sunday Nov 15, 12 PM. Format: 3 minutes with a pre-recorded app video, then 2 minutes of Q&A.
 
@@ -10,11 +12,28 @@ Anything in [SQUARE BRACKETS] is a slot the PM must fill. Anything marked NEED D
 
 ## 1. The one sentence and the 3-minute script
 
-### The one sentence
+### The name, the tagline, and the one sentence
 
-**Distress is communication. One spoken sentence becomes a signal a family can act on.**
+- **Name on the title slide:** Unspoken (working name)
+- **Tagline:** Unspoken. Every need, finally heard.
+- **What it is, in one sentence:** Unspoken is one shared record of each hard moment, built from the voices of everyone who cares for a person who can't always say what they need, so families and care teams can see what led up to it and what actually helped.
+- **Closing line:** "The pattern speaks for the person who couldn't."
 
-One use case, said once at the start and once at the end: logging. Everything else in the app supports that sentence or stays on the roadmap.
+Positioning (from `docs/BRAND.md`): the differentiator is the shared episode record across caregivers: what led up to it, what was tried step by step, and what helped. Voice is the way in, not the claim. One use case is shown: a caregiver logs a hard moment and the record connects it to what others saw.
+
+### The story (60 seconds, from docs/BRAND.md)
+
+Use this whole when you have a minute, for example an introduction, a written summary, or the opening of a longer talk. It is about 170 words, so it does not fit the 27 second slot for slide 1; the slide 1 script below is cut from it.
+
+> When someone can't tell you what's wrong, they tell you another way. A child bites his hand at 2 AM. A mother paces and calls out every afternoon. We call it "behavior." It's communication, and the message goes unspoken.
+>
+> The people around them each hold a piece of the answer. The home aide saw the small lunch. Dad was there for the bad night. The teacher noticed the loud assembly. But those pieces live in different heads, different phones, and a notebook nobody can find. So the same hard moment repeats, and everyone guesses.
+>
+> Unspoken brings those pieces together. Anyone who cares for the person says what happened, in their own words and their own language. We turn it into one clear record: what led up to it, what was tried, step by step, and what actually helped. Over time, the pattern speaks for the person who couldn't.
+>
+> We don't diagnose. We don't replace doctors or therapists. We help the people who love someone finally hear them.
+
+Short version: Some people can't always say when they're in pain, hungry, or overwhelmed. It comes out as distress, and the people around them each see only a piece. Unspoken joins those pieces into one record, so families can see what's really going on and what helps.
 
 ### How the time maps to the rubric
 
@@ -26,22 +45,22 @@ One use case, said once at the start and once at the end: logging. Everything el
 | 2:05 to 2:38 | 4. Proof | Evaluation rigor | 25% |
 | 2:38 to 3:00 | 5. Who first and what is next | Pitch (credible first channel) | 25%, scored across the whole talk |
 
-### Script (442 spoken words, about 147 words a minute)
+### Script (460 spoken words, about 153 words a minute)
 
-Count is for the version with no quote, with [FIRST CHANNEL] counted as two words. Rehearse with a timer. If you run long, cut the lines marked (cut first).
+Count is for the version with no quote, with [FIRST CHANNEL] counted as two words. Rehearse with a timer. This is brisk: the opening from the brand story added about 20 words. If you run long, cut the lines marked (cut first), then the second sentence of slide 1's middle paragraph.
 
-**Slide 1. 0:00 to 0:27 (69 words)**
+**Slide 1. 0:00 to 0:27 (75 words)**
 
-> Distress is communication. When a person living with dementia, or an autistic child, is hungry, tired, or in pain, they often cannot say so. It comes out as agitation or a meltdown. Sixty-three million Americans are family caregivers.
+> When someone can't tell you what's wrong, they tell you another way. A child bites his hand at 2 AM. A mother paces and calls out every afternoon. We call it behavior. It's communication, and the message goes unspoken.
 >
-> The aide sees a small lunch at noon. The daughter sees the agitation at three. Nobody connects them.
+> The people around them each hold a piece. The home aide saw the small lunch. Dad was there for the bad night. Those pieces live in different heads and different phones.
 >
-> With CareSignal, one spoken sentence becomes a signal a family can act on.
+> Unspoken brings those pieces together.
 
 How the quote slots work:
 
-- **No quote arrives:** read it as written. The middle paragraph is a picture of the problem, not a real person. Do not present it as one.
-- **One quote arrives:** replace the middle paragraph (18 words) with: "A [ROLE] told us: [QUOTE 1: role, words]." Keep the quote to 20 words or fewer.
+- **No quote arrives:** read it as written. The examples are a picture of the problem, not real people. Do not present them as real.
+- **One quote arrives:** replace the middle paragraph with: "A [ROLE] told us: [QUOTE 1: role, words]." Keep the quote to 20 words or fewer.
 - **Two quotes arrive:** [QUOTE 2: role, words] goes on slide 1 as text only. Do not read it aloud. There is no time.
 
 **Slide 2. 0:27 to 1:35 (157 words, spoken live over the muted video)**
@@ -56,7 +75,7 @@ How the quote slots work:
 >
 > One switch, and the same engine supports the parent of an autistic child. Needs and triggers, nothing else.
 
-**Slide 3. 1:35 to 2:05 (75 words)**
+**Slide 3. 1:35 to 2:05 (83 words)**
 
 > In the log, the model has one job. It turns words into fields. Plain code counts the patterns, so the model cannot invent a pattern. A fixed safety screen runs before any model call. Red flags lead to your doctor or care team. Emergencies say call 911. A caregiver in distress gets the 988 Suicide and Crisis Lifeline. It never suggests medication or restraint. Supports caregivers. Does not diagnose. If the model fails, the safety message still shows. (cut first: the last sentence)
 
@@ -66,13 +85,13 @@ How the quote slots work:
 >
 > We got there by failing. Dialect notes got a different intensity. Fixed. A parent on our team spoke a real note, 150 words. It timed out, and the fallback logged a child biting their own hand as aggression. Fixed, and now a test.
 
-**Slide 5. 2:38 to 3:00 (57 words)**
+**Slide 5. 2:38 to 3:00 (61 words)**
 
 > Who first? Families who share the care of one person. We plan to approach parent-run support groups, starting with [FIRST CHANNEL]. Next, accounts, so entries are private. Then caregiver matching and wearables, on the roadmap. (cut first: this sentence)
 >
 > The app is live. Type your own note.
 >
-> Distress is communication. One spoken sentence becomes a signal a family can act on.
+> We help the people who love someone finally hear them. The pattern speaks for the person who couldn't.
 
 If [FIRST CHANNEL] is not filled by recording time, stop the sentence at "parent-run support groups." Never name a group you have not contacted.
 
@@ -84,9 +103,10 @@ Put the live URL and the invite code in the footer of every slide.
 
 ### Slide 1. Problem
 
-- **Title:** Distress is communication
+- **Title:** Unspoken (working name). Every need, finally heard.
+- **Subtitle:** Distress is communication
 - **On the slide (4 bullets at most):**
-  - "People who cannot say what they need. Families who cannot see the pattern."
+  - "People who can't always say what they need. Families who each see one piece."
   - [QUOTE 1: role, words]
   - [QUOTE 2: role, words] (delete the bullet if it does not arrive)
   - Named user: a family caregiver sharing care with a sibling and a home aide
@@ -96,7 +116,7 @@ Put the live URL and the invite code in the footer of every slide.
 
 ### Slide 2. Demo
 
-- **Title:** One spoken sentence becomes a signal
+- **Title:** One record of each hard moment
 - **On the slide:** one visual only, the 68-second video ([VIDEO LINK OR FILE]), full height, phone width. Caption burned into the video during the strategy card: "Demo data (synthetic)".
 - **Exact numbers shown:** none on the slide. The video shows Helen's pattern count and the strategy card numbers. All of them are seed data.
 - **Speaker note:** Narrate live over the muted video using the slide 2 script. Say "Care Profile" if you name the person picker. Never say "caregiver profile". Do not read the score or the percentages on the strategy card aloud.
@@ -208,7 +228,7 @@ Run history (from `eval/results/history.json`, `safety/results/history.json`, `d
   - Next: accounts so entries are private, real caregiver interviews, saved data that survives a restart
   - Roadmap: caregiver-to-caregiver matching (needs moderation first), wearables
 - **Exact numbers shown:** none.
-- **Speaker note:** End on the one sentence and the live URL. Invite the judges to type their own note.
+- **Speaker note:** End on the closing line, "The pattern speaks for the person who couldn't.", and the live URL. Invite the judges to type their own note.
 
 ---
 
@@ -325,11 +345,16 @@ Extra lines to have ready:
 7. Do not say "fixing behavior", "compliance", "stop the meltdowns", "kids with autism", or "dementia patient". Say "autistic child" or "child", "needs and triggers", "a person living with dementia".
 8. Do not say "caregiver profile" for the person being cared for. The one term is "Care Profile".
 9. Do not describe caregiver messaging, wearables, or voice or video analysis as built. They are roadmap, and voice and video analysis are not planned for now.
-10. Do not say "first voice-first caregiver app" or "nothing like this exists". We have not done a full review.
+10. Do not say "first voice-first caregiver app", "first voice logging app", or "nothing like this exists". Guiding Growth already offers voice logging for autism parents. Lead with the shared record across caregivers; voice is the way in, not the claim.
 11. Do not estimate cost per request or any number marked NEED DATA.
 12. Do not say the app "never mentions medication". A parent can report a remedy they gave and it is recorded. Say "it never suggests or ranks medication".
 13. Do not say fine-tuning was done. It is a later step.
 14. Do not show the invite screen or profile setup in the video.
+15. The need is unspoken, not the person. Say "can't always say what they need". Never "can't communicate", "nonverbal" as a label for everyone, or "has no voice". Many autistic people communicate richly without speech.
+16. Never "we speak for them". Say "we help the people around them understand".
+17. Do not say "CareSignal". The product is "Unspoken (working name)" on first mention, then "Unspoken". If asked about the old name: it was changed because CareSignal is an existing healthcare company.
+18. Do not say the dementia flow "is DICE" or "is clinically tested". Say it follows the DICE approach (Describe, Investigate, Create, Evaluate), which was tested in the WeCareAdvisor trial. Our app has not been tested in a trial.
+19. Do not present community rankings ("what helped other families") as working today. They are the long-term vision and run on synthetic data.
 
 ---
 
