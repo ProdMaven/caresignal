@@ -2,11 +2,13 @@
 
 // "Summary for a visit" on the person page (docs/AI_FEATURES.md, Feature 1).
 // Shown only when the server has FEATURE_SUMMARY on. Safety notes always render first.
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Check, ClipboardCopy, FileText } from "lucide-react";
 import { SafetyMessage } from "@/components/safety-message";
 import { CardSkeleton, ErrorState } from "@/components/states";
+import { ReportActions } from "@/components/report-actions";
 import { Button } from "@/components/ui/button";
+import { reportFileName } from "@/lib/exportReport";
 import { caregiverName, GUARDRAIL_LINE, label } from "@/config/modes";
 import { useApi } from "@/hooks/useApi";
 import { postJson } from "@/lib/api";
@@ -153,6 +155,8 @@ export function VisitSummary({ person }: { person: Person }) {
     }
   }
 
+  const reportRef = useRef<HTMLDivElement>(null);
+
   async function copy() {
     if (!result) return;
     setCopied((await copyText(plainText(result))) ? "yes" : "failed");
@@ -222,18 +226,23 @@ export function VisitSummary({ person }: { person: Person }) {
       {status === "error" && error && <ErrorState message={error} onRetry={write} />}
 
       {status === "done" && result && (
-        <div className="flex min-w-0 flex-col gap-4" aria-live="polite">
+        <div ref={reportRef} className="flex min-w-0 flex-col gap-4" aria-live="polite">
           {result.safetyNotes.map((n, i) => (
             <SafetyMessage key={`${i}-${n.eventIds.join("-")}`} message={n.text} />
           ))}
 
           <div className="flex min-w-0 flex-wrap items-center justify-between gap-2">
             <h3 className="min-w-0 break-words text-lg font-bold">{result.title}</h3>
-            <Button variant="outline" size="sm" onClick={copy} className="shrink-0">
+            <Button variant="outline" size="sm" onClick={copy} className="shrink-0 print:hidden">
               {copied === "yes" ? <Check className="size-4" aria-hidden /> : <ClipboardCopy className="size-4" aria-hidden />}
               {copied === "yes" ? "Copied" : "Copy"}
             </Button>
           </div>
+          <ReportActions
+            target={reportRef}
+            fileName={reportFileName(person.displayName, "summary", `${days} days`)}
+            text={() => plainText(result)}
+          />
           {copied === "failed" && (
             <p role="alert" className="text-sm text-red-900">
               Could not copy on this device. Press and hold the text to select it instead.
