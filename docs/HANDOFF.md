@@ -1,91 +1,106 @@
-# Handoff: planning session to Claude Code (Fri Nov 13, 9:20 PM)
+# Handoff (updated Sat Nov 14, night)
 
-Read this first, then CLAUDE.md, then the docs it lists. Everything below is the state at handoff.
+Read this first, then CLAUDE.md, then the docs it lists. Deadline: Sunday Nov 15, 12 PM.
 
-## Where we are (updated Sat Nov 14, late evening: rename to Unspoken ready to merge)
-- **Name:** the product is now **Unspoken** (working name), formerly CareSignal. Tagline: "Unspoken. Every need, finally heard." See `docs/BRAND.md` and `docs/RENAME.md`. The repository, Railway project and services, both URLs, invite codes, package name, localStorage keys, response headers and internal identifiers keep the old name on purpose.
-- **Rename status:** done on the build branch `claude/caresignal-buildathon-setup-6ss2v0` and deployed to staging. NOT merged: the live app still says CareSignal until the PM gives the go-ahead. Staging evals before and after the rename are identical (benchmark 39 of 44, red team 59 of 59, crisis and out of scope 100%), so the prompt change is kept.
-- **Also on the build branch, not merged (added after the rename):**
-  - Each person has their own caregivers (contracts v6). "Who is logging?" lists the selected person's caregivers, and the Care Profile form asks "Who cares for them?". Reported by a teammate: a new person showed another family's names.
-  - Data now survives deploys and restarts. A Postgres service was added to the Railway project. When `STATE_DATABASE_URL` is set, everything caregivers add (people, log entries, "Did this help?" answers) is saved as one JSON snapshot per app (`STATE_KEY`) after each change and restored at server start. Verified on staging: a test person survived a restart, and a tester's own profile survived several deploys. Seeded demo data is rebuilt on each start so its dates stay current.
-  - Both variables are already set on `web` (`STATE_KEY=production`) and `staging` (`STATE_KEY=staging`). The live app starts saving as soon as this branch is merged.
-  - Seven seeded demo patterns instead of four, so the pattern match shows for more notes: Helen (afternoon agitation after a small lunch, morning refused care around bathing, evening restlessness after a visit), Arjun (morning meltdown after poor sleep, after a routine change, evening hard transition after screen time ends), Maya (afternoon shutdown after loud noise). Every pattern now has strategies, and the Log screen has an example chip for each. What each rests on, and how strong the evidence is, is in `docs/research/seeded_patterns_sources.md`. All counts and scores are synthetic.
-  - A saved note now also matches a pattern that shares the same "what came before", even when the kind of moment differs.
-  - The person picked on screen now wins (contracts v7). A note that names nobody goes to the picked person. A note that clearly names someone else on the list (for example "Mom" while another person is picked) keeps the picked person and the confirm card asks whose log it should go to. Before this, such a note was silently saved to the other person's log. Example chips now show only for the demo person they were written about.
-  - The "You" tab is now "Account": who you are logging as, the mic language, the people you care for with their Care Profiles, About, and "Sign out on this device". No real login for now (PM, Nov 14): "account" means the invite on this device plus the caregiver name picked there.
-  - The caregiver check-in and the journal were removed (PM, Nov 14): screens, routes, prompt, stored journal data and types. The model is now used in exactly one place, turning a note into fields. Caregiver distress typed into the Log screen still shows the care message and 988 and logs nothing.
-  - No vector database: nothing in the product needs similarity search. If it is needed later, use pgvector in the same Postgres.
-  - Evals have NOT been rerun since these two changes (PM: evals at the end). Neither change touches a prompt.
-- **Live app (real AI):** https://web-production-1bb4dc67.up.railway.app. Railway project `caresignal`, service `web`, deploys from `main`. Invite codes: `GTRANSFORMER-JUDGE` (judges, in the README) and `CARE-TRIAL` (caregivers trying it).
-- **Staging:** https://staging-production-8dc505db.up.railway.app, service `staging`, deploys from `claude/caresignal-buildathon-setup-6ss2v0`, invite code `STAGING-EVAL`, shares the API key by reference. Test prompt changes here first, never on the live app.
-- **Merged to `main` (PR 1):** invitation-only entry, Care Profile intake, voice or typed log in either mode with a mic language picker, confirm card, match plus warm line plus next step after Save, timeline, Ask, Winning Patterns with "Did this help?", caregiver check-in, journal, weekly and monthly overview, eval and safety runner.
-- **Merged to `main` and live (PR 2):** handling of real-length spoken notes. Time limit 9 to 18 seconds, a reported remedy is no longer treated as a medication question, per-step results on what was tried (contracts v5), new categories (body movement, self-biting, self-hitting, woke from sleep, cold or ice, massage, blocked behavior, remedy given), 14 long benchmark cases.
-- **What is real and what is not:** the model does one thing: it turns notes into fields (`/api/log`). Ask answers, pattern summaries and overview numbers are computed text. Data routes use an in-memory store. On `main` today it resets on every deploy; on the build branch it is saved to Postgres and survives deploys. There is no reset button; only an eval run on staging clears what was added there. Community numbers are synthetic.
+## The one thing to know
+The live app and the build branch have drifted apart on purpose. The PM is testing on staging and will say when to merge.
+
+| | Live app (`main`) | Staging (build branch) |
+|---|---|---|
+| URL | https://web-production-1bb4dc67.up.railway.app | https://staging-production-8dc505db.up.railway.app |
+| Invite codes | `GTRANSFORMER-JUDGE` (judges), `CARE-TRIAL` (caregivers) | `STAGING-EVAL` |
+| Railway service | `web`, deploys from `main` | `staging`, deploys from `claude/caresignal-buildathon-setup-6ss2v0` |
+| Name on screen | CareSignal | Unspoken |
+| Data | In memory, lost on every deploy | Saved in Postgres, survives deploys |
+| Commits | PR 1 to 4 merged | 15 commits ahead of `main`, not merged |
+
+Do not merge to `main` without the PM's go-ahead.
+
+## What is on the build branch and staging, not yet on the live app
+1. **Rename to Unspoken (working name).** Display name only, per `docs/RENAME.md` and `docs/BRAND.md`. Tagline: "Unspoken. Every need, finally heard." The repository, Railway project and services, both URLs, invite codes, package name, localStorage keys, response headers and internal identifiers keep the old name on purpose.
+2. **Each person has their own caregivers.** "Who is logging?" lists the selected person's caregivers. The Care Profile form asks "Who cares for them?".
+3. **The person picked on screen wins.** A note that names nobody goes to the picked person. A note that names someone else on the list keeps the picked person and the confirm card asks whose log it should go to. Example chips show only for the demo person they were written about.
+4. **Saved data.** A Postgres service was added to the Railway project. When `STATE_DATABASE_URL` is set, everything people add (Care Profiles, log entries, "Did this help?" answers) is saved as one JSON snapshot per app (`STATE_KEY`) after each change and restored at server start. Seeded demo data is rebuilt on each start so its dates stay current. Both variables are already set on `web` (`STATE_KEY=production`) and `staging` (`STATE_KEY=staging`), so the live app starts saving as soon as the branch is merged. Verified on staging: a tester's profile survived many deploys.
+5. **Seven seeded demo patterns** (was four), each with strategies and an example chip. Helen: afternoon agitation after a small lunch, morning refused care around bathing, evening restlessness after a visit. Arjun: morning meltdown after poor sleep, after a routine change, evening hard transition after screen time ends. Maya: afternoon shutdown after loud noise. What each rests on is in `docs/research/seeded_patterns_sources.md`. All counts and scores are synthetic.
+6. **Account page replaces the "You" tab.** Who you are logging as, mic language, Care Profiles, About, "Sign out on this device". No passwords and no real login for now.
+7. **Removed by the PM:** the caregiver check-in, the caregiver journal, and the "Reset demo data" button.
+8. **Reset is locked.** `POST /api/reset` only works where `ALLOW_RESET=true`, which is set on staging only. The live app will refuse it.
+
+## What is real and what is not
+- **The model does one thing:** it turns a caregiver's note into fields (`POST /api/log`). That is the only use of `ANTHROPIC_API_KEY`. Speech to text is the browser's own.
+- **Computed in code, no model:** pattern lines, things to check, Ask answers, strategy rankings, the overview.
+- **Fixed wording, chosen by rules before any model call:** care team, 911, 988 and scope messages. The model can add a red flag, never remove one.
+- **Synthetic:** every person, log entry, family count, percentage and score. Never present them as results.
+- **No accounts:** everyone with an invite code shares one space and can see what others added. Ask testers for nicknames and no personal details.
+- **Stopgap storage:** saved data is one JSON snapshot, not real tables. Prisma-backed data routes are still not built.
 
 ## Numbers (real model)
-| | Before PR 2 | Live `main` now (rerun after the merge) |
+Last full runs. The live numbers are from `main`; the staging numbers are from the build branch after the rename.
+
+| | Live `main` | Staging, after the rename |
 |---|---|---|
-| Benchmark | 25 of 30 (83.3%) | 39 of 44 (88.6%) |
-| Original 30 cases passing | 25 | 25 |
-| New real-length cases | not run | 14 of 14 |
-| Golden field accuracy | 94.4% | 98.0% |
-| Red team (59) | 59 of 59 | 59 of 59 |
-| Crisis and out of scope | 100% | 100% |
-| Typical response time | about 2.2 s | about 2.3 s short notes, 7 to 8 s for a 150-word note |
+| Benchmark | 39 of 44 (88.6%) | 39 of 44 (88.6%) |
+| Golden field accuracy | 98.0% | 98.0% |
+| Crisis | 100% (10 of 10) | 100% (10 of 10) |
+| Out of scope | 100% (8 of 8) | 100% (8 of 8) |
+| Red team | 59 of 59 | 59 of 59 |
+| Typical response | about 2.2 s short notes, 7 to 8 s for a 150-word note | same |
 
-- Run history for the before and after slide: mock baseline 50.0% and 59.3%, rules only 70.0% and 84.7%, real model first run 83.3% and 94.9%, after bias fix 83.3% and 100%, real-length changes 88.6% and 100%. Files: `eval/results/history.json`, `safety/results/history.json`.
-- Example count: 44 benchmark plus 59 red team = 103. The 14 new cases were drafted by Claude and are pending human review, so hand-reviewed stands at 30.
+- **Evals have NOT been rerun since the rename check.** Since then: per-person caregivers, the picked-person rule, three new seeded patterns, removal of check-in and journal, removal of the reset button. No prompt changed, but the person handling and the seed did. One full run on staging is needed before merging. It wipes staging data.
+- Run history for the before and after slide: keyword-rule baseline 50.0% and 59.3%; rules only 70.0% and 84.7%; first real-model run 83.3% and 94.9%; after the bias fix 83.3% and 100%; after real-length notes 88.6% and 100%. Files: `eval/results/history.json`, `safety/results/history.json`.
+- Example count: 44 benchmark plus 59 red team = 103. Hand-reviewed: 30. The 14 real-length cases were drafted by Claude and are pending human review.
+- Still failing: G07 and G09 (note names nobody; the roster has two children), G12 (summary includes a second count), M02 (no earlier context in the request). G13 cannot be graded as written.
 - Cost per request: not measured (`eval/pricing.json` has placeholder prices).
-- Run evals: `NODE_USE_ENV_PROXY=1 EVAL_BASE_URL=<url> EVAL_INVITE_CODE=<code> EVAL_ALLOW_WRITES=true npm run eval` and `npm run safety`. This resets the target server's demo data.
+- Run on staging only: `NODE_USE_ENV_PROXY=1 EVAL_BASE_URL=https://staging-production-8dc505db.up.railway.app EVAL_INVITE_CODE=STAGING-EVAL EVAL_ALLOW_WRITES=true npm run eval`, then `npm run safety`.
 
-- Rename check on staging (Nov 14): before 39 of 44 and 59 of 59; after 39 of 44 and 59 of 59. Same four benchmark failures (G07, G09, G12, M02).
-
-## Where to read more
-- `docs/BRAND.md`: name, tagline, story, closing line, wording rules. `docs/PITCH.md` and `docs/pitch.pdf` already use them.
-- `docs/research/feedback_running_list.md`: every piece of feedback (mentor calls, a real parent's note), analyzed, with status. 30 items; nothing is adopted without a PM decision.
-- `docs/research/autism_patterns_by_age_gender.md`: research report (figures from abstracts and summaries, not full texts).
-- `docs/eval_report.md`, `docs/safety_report.md`: latest runs with each failure named.
-
-## Decisions made
-- Product: Unspoken (working name; renamed from CareSignal on Nov 14, see `docs/BRAND.md`), one engine for two communities (dementia, autism). Users are anyone who lives with or cares for the person (parents, adult children, spouses, siblings, home aides).
-- Statistics find patterns and compute scores; Claude only formats notes and explains numbers.
-- Synthetic data only. Organizer-required folder layout: `eval/`, `safety/`, `docs/problem.md`, `docs/eval_report.md`, `docs/safety_report.md`, `docs/pitch.pdf`.
-- Judges must be able to type their own input: text box next to the mic, live AI on any input. (The reset button was removed Nov 14.)
-- Caregiver distress ("I can't do this anymore") gets care plus 988, never a log entry. `ParseLogResponse` has `kind` and `message` for this.
+## Warnings
+- **Run evals on staging, not the live URL.** On staging the runner resets the data before and after. On the live app the reset is refused, so a run there would leave its test people and entries behind in real data.
+- **There is no way to clear data from the app.** The reset button is gone. Test entries on the live app can only be removed in the database.
+- **Merging redeploys the live app once** and clears its current in-memory data. From then on data is kept.
+- **Do not rewrite or force-push `main`.** Commits 094012d through 4ad9392 are under the PM's email and show as Unverified.
 
 ## Open decisions (PM)
-1. **Eval results on `main`.** The post-merge live runs (39 of 44, 59 of 59) are committed on branch `claude/caresignal-buildathon-setup-6ss2v0` only; `main` still shows the staging runs with the same numbers. A small pull request brings them over.
-2. **Four failing benchmark cases.** G07 and G09 name nobody while the autism roster has two children (the app asks instead of guessing); G12's summary includes a caregiver's count; M02 has no earlier context in the request. Fix the cases or the product. G13 cannot be graded as written.
-3. **Recurring self-injury wording.** Every self-injury note shows "Please contact your doctor or care team". Proposal: keep it and add "Is this new or worse than usual?" so a known pattern reads differently. Touches a non-negotiable rule.
-4. **Mentor feedback, items 1 to 19 on the running list.** All still Open. Leaning: adopt "nail logging first" for the pitch; decline voice analysis, tone analysis and video; keep caregiver matching on the roadmap.
+1. **When to merge the build branch.** It needs one eval run on staging first, which wipes staging test data. Say when testing there is finished.
+2. **Four failing benchmark cases** (G07, G09, G12, M02). The picked-person rule now gives the app a person when a note names nobody, but the eval runner does not send one, so G07 and G09 still fail. Decide whether the cases should carry the picked person.
+3. **Recurring self-injury wording.** Every self-injury note shows "Please contact your doctor or care team". Proposal: keep it and add "Is this new or worse than usual?". Touches a non-negotiable rule.
+4. **Mentor feedback**, items 1 to 19 in `docs/research/feedback_running_list.md`. All still Open.
 5. **Emergency wording.** The emergency message starts "Call 911 now." and names the care team second; CLAUDE.md says red flags lead with the care team line.
-6. **Scoring.** The snack strategy's 81 cannot come from the SCORING formula (tops out near 74). Mocks hardcode 81 and 84.
-7. **Demo count.** Saving the scripted note moves Helen's pattern from 6 of 8 to 7 of 9. Seed 5 of 7 if the script should read "6 of 8" after the save.
-8. **Research conflicts with seed data.** Weighted blanket is seeded as Promising though the one randomized trial found no sleep benefit; visual schedules fit transition triggers better than poor sleep; `medication_time` is still a context tag.
-9. **First channel to users.** A parent support organization is the candidate, but we have no access to their data and could not read their site. Do not claim a partnership or a database.
-10. **Organizers' template repo and collaborators.** Still need the link and the GitHub usernames.
-11. Commits 094012d through 4ad9392 are under Aadi's email and show as Unverified. Do NOT rewrite or force-push `main`.
-
-## Warnings once data is saved
-- **Run evals on staging, not the live URL.** On staging the runner resets the data before and after. On the live app the reset is refused, so a run there would leave its test people and entries behind in real data.
-- **The "Reset demo data" button was removed (PM, Nov 14).** Nobody can wipe data from the app. `POST /api/reset` still exists for the eval runner but only works where `ALLOW_RESET=true`, which is set on staging only. To clear test entries from the live app, someone has to do it in the database.
-- **No accounts:** saved data is shared by everyone with a code. Keep asking testers for nicknames and no personal details.
+6. **Older seeded strategies.** The snack and visual-schedule scores (81 and 84) cannot come from the SCORING formula; the weighted blanket is seeded as Promising against the trial evidence. New strategies use the formula.
+7. **Demo count.** Saving the scripted note moves Helen's pattern from 6 of 8 to 7 of 9.
+8. **First channel to users.** A parent support organization is the candidate. We have no access to their data and could not read their site. Do not claim a partnership or a database.
+9. **Organizers' template repo and collaborators.** Still need the link and the GitHub usernames.
+10. **Staging service and Postgres** cost a little to run. Keep both until the deadline.
 
 ## Next actions, in order
 1. **Interviews (biggest gap, 20% of the score).** Zero quotes so far. Use the `CARE-TRIAL` code; ask "What is the hardest part of figuring out what they need?"; record role only in `docs/problem.md` and `docs/research/`.
-2. **Remove or keep the `staging` service** in Railway (useful for testing prompt changes; costs a little to run).
-3. **Phone testing.** Voice and the language picker are untested on real devices. A teammate reported problems; a fix is live but unconfirmed. Open in Chrome or Safari, not inside a chat app.
-4. **Human review of the 14 new cases** so hand-reviewed passes 30, then add cases for check-in, journal and feedback.
-5. **Pitch.** Lead with one sentence about logging ("one spoken sentence becomes a signal a family can act on"). Start the demo at the mic, not at the invite screen. Use one name for the profile of the person being cared for (Care Profile). Roadmap slide: caregiver matching, wearables.
-6. **Feature freeze, then** qa-agent, the pre-recorded demo video, and pitch-agent for the 5-slide `docs/pitch.pdf`.
-7. **Later (not for Sunday):** Prisma-backed data routes, real AI for Ask and pattern summaries, accounts so journals and logs are private, editing an entry after saving.
+2. **Finish testing on staging**, then one eval and safety run there, then merge the build branch to `main` and check the live app once.
+3. **Phone testing.** Voice and the language picker are untested on real devices. Open in Chrome or Safari, not inside a chat app.
+4. **Pitch.** `docs/PITCH.md` and `docs/pitch.pdf` use the Unspoken name, tagline, story and closing line. Still to fill: team names, quotes, video link, first channel, cost per request. The script is 460 words, which is brisk.
+5. **Record the demo video** from the click script in `docs/PITCH.md`. Start at the mic. Record on staging or on a fresh Care Profile so earlier test entries do not change the counts.
+6. **Human review of the 14 new benchmark cases**, then add cases for the picked-person rule.
+7. **Later, not for Sunday:** real tables behind the data routes, accounts with passwords so entries are private, editing an entry after saving, real AI for Ask.
 
-## Known limits to say out loud if asked
-- No accounts: everyone with a code shares one demo space, and journal entries are not private.
-- Synthetic data only. Testers should use nicknames and no personal details.
-- Step order from the keyword fallback follows keyword order, not spoken order.
+## Where to read more
+- `docs/BRAND.md`, `docs/RENAME.md`: name, tagline, story, wording rules, what was and was not renamed.
+- `docs/PITCH.md`, `docs/pitch.pdf`, `docs/pitch_src/`: script, deck, demo click script, Q&A, deck source.
+- `docs/eval_report.md`, `docs/safety_report.md`: latest runs, failures still open, failures named and fixed.
+- `docs/research/seeded_patterns_sources.md`: what each demo pattern and strategy rests on.
+- `docs/research/feedback_running_list.md`: every piece of feedback, analyzed, with status.
+- `docs/research/autism_patterns_by_age_gender.md`, `docs/research/market_and_differentiation.md`: research reports.
+- `docs/DECISIONS.md`: every architectural and product choice, one line each.
+- `docs/DATA_HANDLING.md`: what is stored and what leaves the app.
+
+## Decisions made
+- Product: Unspoken (working name; renamed from CareSignal on Nov 14), one engine for two communities (dementia, autism). Users are anyone who lives with or cares for the person (parents, adult children, spouses, siblings, home aides).
+- Statistics find patterns and compute scores; the model only turns notes into fields.
+- Synthetic data only. Organizer-required folder layout: `eval/`, `safety/`, `docs/problem.md`, `docs/eval_report.md`, `docs/safety_report.md`, `docs/pitch.pdf`.
+- Judges must be able to type their own input: text box next to the mic, live AI on any input.
+- Caregiver distress ("I can't do this anymore") gets care plus 988, never a log entry. `ParseLogResponse` has `kind` and `message` for this.
+- Invitation-only entry by invite code. No passwords for now.
+- Caregiver-to-caregiver messaging, wearables, and voice or video analysis are roadmap only.
 
 ## Conventions
 - No em-dashes in any docs or UI copy.
 - Commit identity: `git config user.email noreply@anthropic.com && git config user.name Claude`.
 - Pull before every task; never edit another lane's folders without the PM.
+- Test prompt changes on staging, never on the live app. Keep a prompt change only if nothing drops and crisis and out of scope stay at 100%.
