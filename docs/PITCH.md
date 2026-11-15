@@ -86,7 +86,9 @@ How the quote slots work:
 - **One quote arrives:** replace the middle paragraph with: "A [ROLE] told us: [QUOTE 1: role, words]." Keep the quote to 20 words or fewer.
 - **Two quotes arrive:** [QUOTE 2: role, words] goes on slide 1 as text only. Do not read it aloud. There is no time.
 
-**Slide 2. 1:00 to 2:30 (about 195 words, spoken live over the muted video, after slide 3)**
+**Slide 2. 1:00 to 2:30 (about 175 words, spoken live over the muted video, after slide 3)**
+
+The demo has no crisis scene (PM, Nov 15). Safety is covered on slide 3, which comes just before the video.
 
 > Here is the product, on Aisha's Care Profile. Aisha is the daughter of Jayesh, on our team, shown with his consent. The earlier entries are demo entries.
 >
@@ -97,8 +99,6 @@ How the quote slots work:
 > Now plain code takes over, not the model. Afternoon shutdowns followed loud noise almost every time in three weeks. The other entries came from Minal, her mother. Possible things to check: too much noise for too long, tiredness, a quiet break sooner. Never a cause. The family numbers below are demo data.
 >
 > On the timeline, two caregivers, one record. One tap writes a summary for the school meeting, and code checks every number in it.
->
-> And when the caregiver writes I can't do this anymore, nothing is logged. He gets the 988 Suicide and Crisis Lifeline.
 >
 > One switch, and the same engine supports a family caring for a person living with dementia. (cut first)
 
@@ -276,10 +276,9 @@ Record muted. The presenter narrates live with the slide 2 script. Everything na
 | 4 | 0:24 to 0:38 | Confirm card | Scroll slowly past What happened (Shutdown), Time (2:30 PM, Afternoon), How strong (Moderate), What you saw (Covering ears, Withdrawing), What came before (Loud noise). Stop on "What you tried": "1. Sensory tool: Helped a little" and "2. Quiet space: Helped". Then How it ended (Calmed), 30 min, and "Your words". | Three amber `Please check` badges. Two steps, each with its own result. | "Shutdown, this afternoon, loud noise came before. Each thing he tried keeps its own result. Unsure fields are marked please check..." |
 | 5 | 0:38 to 0:41 | Confirm card | Tap `Save to log` | Green box "Saved to Aisha's log", "Shutdown at 2:30 PM. Patterns update with every entry." | "He saves." |
 | 6 | 0:41 to 0:58 | Match panel, same screen | Scroll down slowly | The warm line "You noticed what was needed and it helped. That is real care." Then "This fits a pattern in Aisha's logs", "Afternoon shutdown followed loud noise on 6 of 7 occasions in the last 3 weeks.", and "Possible things to check": Too much noise for too long, Tiredness after a busy day, Needing a quiet break sooner. Then "A next step that worked for other families" with the card "Ear defenders or headphones on hand" (Promising) and "Based on family logs, not a clinical trial. Discuss with your care team." | "Now plain code takes over... The family numbers below are demo data." Burn the caption "Demo data (synthetic)" over the strategy card. |
-| 7 | 0:58 to 1:12 | Timeline | Tap `See timeline and patterns` (or `Timeline` in the bottom bar). Scroll "Day by day" far enough to show today's entry "Logged by Jayesh" above entries "Logged by Minal". Scroll back up, tap `Summary for a visit`, choose `For a therapist or school meeting`, then tap `Write the summary`. | "Aisha's timeline", "Patterns in the logs", then the summary. | "On the timeline, two caregivers, one record. One tap writes a summary for the school meeting, and code checks every number in it." |
-| 8 | 1:12 to 1:22 | Log | Tap `Log`. Type "I can't do this anymore" and tap `Turn into a log entry`. | Violet box titled "You matter too" with `Call 988` and `Text 988`, ending "Nothing from this note was saved to the log." | "And when the caregiver writes I can't do this anymore, nothing is logged. He gets the 988 Suicide and Crisis Lifeline." |
-| 9 | 1:22 to 1:27 | Log | In the top bar tap `Dementia care`. Hold on Helen's Log screen. | Same screen, "Who is this about?" shows Helen. | "One switch, and the same engine supports a family caring for a person living with dementia." |
-| 10 | 1:27 to 1:30 | End card | None | Live URL and invite code | Silence. Move to slide 4. |
+| 7 | 0:58 to 1:20 | Timeline | Tap `See timeline and patterns` (or `Timeline` in the bottom bar). Scroll "Day by day" far enough to show today's entry "Logged by Jayesh" above entries "Logged by Minal". Scroll back up, tap `Summary for a visit`, choose `For a therapist or school meeting`, then tap `Write the summary`. | "Aisha's timeline", "Patterns in the logs", then the summary. | "On the timeline, two caregivers, one record. One tap writes a summary for the school meeting, and code checks every number in it." |
+| 8 | 1:20 to 1:27 | Log | Tap `Log`. In the top bar tap `Dementia care`. Hold on Helen's Log screen. | Same screen, "Who is this about?" shows Helen. | "One switch, and the same engine supports a family caring for a person living with dementia." |
+| 9 | 1:27 to 1:30 | End card | None | Live URL and invite code | Silence. Move to slide 4. |
 
 Notes on the steps:
 
@@ -288,8 +287,8 @@ Notes on the steps:
 - **Step 6 count.** The demo entries start at 5 of 6. One saved note makes it 6 of 7, and each further take adds one (7 of 8 next). That is why the narration says "almost every time" and no number. Record on a copy where the count is the one you want on screen.
 - **Step 6 card.** The suggestion is headphones offered before a loud place. It fits the note. Do not read the score (55) or the percentages aloud.
 - **Step 7 summary.** Typical wait is about 12 seconds and it can run longer; trim the wait in editing. Checked for Aisha on Nov 15: it came back within 20 seconds, titled "Aisha: last 30 days", opening "Caregivers logged 11 entries for Aisha in the last 30 days" and quoting Jayesh's note word for word, with `Save as PDF` and `Download`. If it is slow twice, cut the tap and end the step on the timeline with the line "two caregivers, one record."
-- **Step 8 is instant.** It comes from the fixed safety screen with no model call. Use it as written; the scene is the caregiver in distress, not an emergency. No emergency scene is in this video.
-- **Step 9** stops on the Log screen. Do not log anything in dementia mode on camera.
+- **No crisis scene.** The demo does not show the caregiver distress message or any emergency message (PM, Nov 15). Both stay live in the app and are covered on slide 3.
+- **Step 8** stops on the Log screen. Do not log anything in dementia mode on camera.
 - **What not to open on camera:** Aisha's Care Profile history and anything Jayesh saved about her outside the demo entries. The video shows the Log screen, the match panel, the timeline and the summary only.
 
 ### Recording checklist
@@ -316,14 +315,14 @@ Use this if time is cut or the main file will not play.
 | 0:00 to 0:08 | Step 2 safe take (chip `Loud place`), `Turn into a log entry`, the card | "A father's sentence in. A log entry out. Every field can be changed." |
 | 0:08 to 0:12 | `Save to log`, "Saved to Aisha's log" | "Saved." |
 | 0:12 to 0:22 | Match panel: pattern, possible things to check, strategy card with the caption | "It fits a pattern in Aisha's logs, built from what both parents logged. Possible things to check, never a cause. The family numbers are demo data." |
-| 0:22 to 0:30 | Step 8 result ("You matter too") held as a still | "And a caregiver in distress gets the 988 Suicide and Crisis Lifeline. Nothing is logged." |
+| 0:22 to 0:30 | Step 7: the timeline with entries "Logged by Jayesh" and "Logged by Minal" | "Two caregivers, one record. One tap turns it into a summary for the school meeting." |
 
 ### If the video will not play at all
 
-1. Say: "The video is in the repo. Here is the same flow in three pictures." Show three stills placed in the slide 2 notes: the confirm card with the two steps, the match panel, the violet "You matter too" message.
+1. Say: "The video is in the repo. Here is the same flow in three pictures." Show three stills placed in the slide 2 notes: the confirm card with the two steps, the match panel, the timeline.
 2. Speak the 30-second cut lines over the stills.
 3. Do not open the live app during the 3.5 minutes. Offer it in Q&A: "It is live right now. The code is GTRANSFORMER-JUDGE."
-4. Backup file: [VIDEO LINK OR FILE]. The 30-second cut matches 0:08 to 1:22 of the main video with the pauses, the timeline and the summary removed.
+4. Backup file: [VIDEO LINK OR FILE]. The 30-second cut matches 0:08 to 1:20 of the main video with the pauses and the summary removed.
 
 ---
 
