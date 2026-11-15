@@ -418,7 +418,7 @@ Extra lines to have ready:
 | Quote 2 (filled Nov 15) | Deck slide 1 only | "She has never done something like this ever before." The same parent. A quote from a dementia caregiver is still missing. |
 | [FIRST CHANNEL] | Script slide 5, deck slide 5, Q&A 10 and 15 | The name of one parent-run support group the team can actually reach. If none, the script stops at "parent-run support groups." |
 | Team names (filled Nov 15) | Deck slide 1 | Team Unspoken: Jayesh, Prisha, Aadi, Vinod |
-| [VIDEO LINK OR FILE] | Deck slide 2, fallback plan | Where the 90-second cut and the 30-second cut live (Team Drive folder; the files are too large for the repo) |
+| Video file (filled Nov 15) | Deck slide 2, fallback plan | `submission/Unspoken_demo_Aisha.mp4` (85 seconds). The 30-second cut is not made. |
 | Consent check | Video, slide 2 | Jayesh confirms, after watching the final cut, that Aisha's first name and the screens shown are fine to present and upload |
 | [INTERVIEWS] | Q&A 14 | How many caregivers were interviewed and their roles, or the honest "none yet" |
 | Cost per note (filled Nov 15: $0.005) | Deck slide 4, Q&A 11 | Done. Source and date are in `eval/pricing.json`. Cost per user or per month is still NEED DATA. |

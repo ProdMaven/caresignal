@@ -14,7 +14,7 @@ Team folder name on the Team Drive: `Team_[TEAM #]_Unspoken` (fill in the team n
 | Safety report, with the data-handling note | `safety_report.md` |
 | Safety results | `safety_results/latest.json`, `safety_results/history.json` |
 | Slides | `pitch.pdf` |
-| Demo video (about 90 seconds) | [VIDEO LINK OR FILE] |
+| Demo video (85 seconds, autism care example) | `Unspoken_demo_Aisha.mp4` |
 
 ## The problem
 When a person living with dementia or an autistic child is in pain, hungry, tired or overwhelmed, they often cannot say so. It comes out as distress, and each person who cares for them sees only a piece of what led up to it. Unspoken joins those pieces into one record so families can see what came before a hard moment and what actually helped. It supports caregivers and does not diagnose. The data in the app is synthetic, except one profile (Aisha) that a team member's family shared with their consent as a live example.
