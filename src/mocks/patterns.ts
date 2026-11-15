@@ -27,7 +27,11 @@ const CONTEXT_PHRASE: Record<string, string> = {
   toileting_need: "needing the toilet",
   loud_noise: "loud noise",
   screen_time_ended: "screen time ending",
+  bathing: "bath or shower time",
 };
+
+// Most contexts come before the moment. Bathing happens at the same time, so the line says so.
+const SUMMARY_LINK: Record<string, string> = { bathing: "happened around" };
 
 const CROSS_PHRASE: Record<string, string> = {
   skipped_meal: "the small or skipped meal",
@@ -40,6 +44,9 @@ const THINGS_TO_CHECK: Record<string, string[]> = {
   poor_sleep: ["Tiredness", "A rushed or changed morning", "Hunger before leaving the house"],
   visitor: ["Tiredness after a busy day", "Too much noise or activity", "Need for quiet time"],
   routine_change: ["Not knowing what comes next", "Need for more warning before a change", "Tiredness"],
+  bathing: ["Feeling cold or exposed", "Pain when moving or being touched", "Fear of the water or of falling"],
+  screen_time_ended: ["Not enough warning before it ends", "Tiredness or hunger at that time of day", "Not knowing what comes next"],
+  loud_noise: ["Too much noise for too long", "Tiredness after a busy day", "Needing a quiet break sooner"],
 };
 const DEFAULT_THINGS = ["Hunger or thirst", "Tiredness", "Pain or discomfort"];
 
@@ -110,7 +117,7 @@ export function computePatterns(personId: string, allEvents: LogRecord[], today:
       for (const m of matches) loggedByCounts[m.loggedBy] = (loggedByCounts[m.loggedBy] ?? 0) + 1;
 
       let summary =
-        `${TIME_BAND_LABEL[timeBand]} ${label(eventType).toLowerCase()} followed ${contextPhrase(tag)} ` +
+        `${TIME_BAND_LABEL[timeBand]} ${label(eventType).toLowerCase()} ${SUMMARY_LINK[tag] ?? "followed"} ${contextPhrase(tag)} ` +
         `on ${matches.length} of ${group.length} occasions in the last 3 weeks.`;
       if (crossCount > 0) {
         summary += ` ${joinNames(crossNames)} logged ${CROSS_PHRASE[tag] ?? contextPhrase(tag)} earlier on ${crossCount} of those days.`;

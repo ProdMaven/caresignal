@@ -16,6 +16,9 @@ interface MockStore {
   nextJournalId: number;
 }
 
+// Entries added by caregivers start here, well above any seeded id, so the seed can grow without clashing with saved data.
+const FIRST_ADDED_EVENT_ID = 1001;
+
 const MAX_JOURNAL_ENTRIES = 300; // keeps a public demo from filling up
 
 const MAX_ADDED_PEOPLE = 20; // keeps a public demo from filling up
@@ -32,7 +35,7 @@ function changed(): void {
 
 function freshStore(): MockStore {
   const events = buildSeedEvents();
-  return { events, nextId: events.length + 1, people: [...PEOPLE], nextPersonId: 1, votes: new Map(), journal: seedJournal(), nextJournalId: 100 };
+  return { events, nextId: FIRST_ADDED_EVENT_ID, people: [...PEOPLE], nextPersonId: 1, votes: new Map(), journal: seedJournal(), nextJournalId: 100 };
 }
 
 function store(): MockStore {
@@ -181,10 +184,9 @@ export interface StoreSnapshot {
 
 export function snapshotStore(): StoreSnapshot {
   const s = store();
-  const seedEventCount = buildSeedEvents().length;
   return {
     version: 1,
-    addedEvents: s.events.filter((e) => Number(e.id.replace("evt_", "")) > seedEventCount),
+    addedEvents: s.events.filter((e) => Number(e.id.replace("evt_", "")) >= FIRST_ADDED_EVENT_ID),
     nextId: s.nextId,
     addedPeople: s.people.filter((p) => !p.isFeatured),
     nextPersonId: s.nextPersonId,
@@ -199,7 +201,7 @@ export function restoreStore(raw: unknown): boolean {
   const snap = raw as Partial<StoreSnapshot> | null;
   if (!snap || snap.version !== 1 || !Array.isArray(snap.addedEvents) || !Array.isArray(snap.addedPeople)) return false;
   const fresh = freshStore();
-  fresh.events.push(...snap.addedEvents);
+  fresh.events.push(...snap.addedEvents.filter((e) => Number(e.id.replace("evt_", "")) >= FIRST_ADDED_EVENT_ID));
   fresh.nextId = Math.max(fresh.nextId, Number(snap.nextId) || 0);
   fresh.people.push(...snap.addedPeople);
   fresh.nextPersonId = Math.max(fresh.nextPersonId, Number(snap.nextPersonId) || 0);

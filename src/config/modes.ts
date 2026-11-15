@@ -65,6 +65,14 @@ export const MODES: Record<Mode, ModeConfig> = {
         label: "Small lunch",
         text: "Rosa here, Helen only ate half her lunch today, she seemed tired.",
       },
+      {
+        label: "Bath time",
+        text: "Mom would not get in the shower this morning. She said it was too cold and pushed my hand away. We did a warm towel wash instead and she settled.",
+      },
+      {
+        label: "After visitors",
+        text: "Mom's sister and her family visited all afternoon. Mom was restless after dinner, pacing and could not settle. Low lights and her music helped.",
+      },
     ],
     askExamples: ["Why is Mom so upset every afternoon?", "What happens after busy visit days?"],
     accentBg: "bg-teal-700",
@@ -99,6 +107,14 @@ export const MODES: Record<Mode, ModeConfig> = {
       {
         label: "Hard morning",
         text: "Arjun had a big meltdown before school, he slept badly and we had a substitute driver today.",
+      },
+      {
+        label: "Screen time ended",
+        text: "Arjun screamed and cried when I turned the tablet off for dinner tonight. I gave him some space in his room and he calmed down after 15 minutes.",
+      },
+      {
+        label: "Loud place",
+        text: "Maya went quiet and covered her ears after the school assembly this afternoon, it was really loud. Her headphones and a quiet corner helped.",
       },
     ],
     askExamples: ["Why are mornings so hard for Arjun?", "What do his hard mornings have in common?"],
