@@ -135,7 +135,7 @@ export const MODES: Record<Mode, ModeConfig> = {
 };
 
 export const MODE_LIST: Mode[] = ["dementia", "autism"];
-export const DEFAULT_MODE: Mode = "dementia";
+export const DEFAULT_MODE: Mode = "autism";
 
 // Controlled vocabulary from docs/DATA_MODEL.md (shared by both modes).
 export const VOCAB = {
