@@ -6,7 +6,7 @@ GTransformer "AI for Global Good". Due Sunday Nov 15, 12 PM PST. Format (final p
 
 Live app: https://web-production-1bb4dc67.up.railway.app (judge invite code `GTRANSFORMER-JUDGE`)
 
-**Updated Nov 15, early morning.** The numbers and the four AI features below are from the build branch on staging, with all four feature flags on. They describe the live app only after the build branch is merged and the flags are set on the `web` service (steps in `docs/HANDOFF.md`). If the merge does not happen, use the Nov 14 numbers: 103 examples, 39 of 44, 59 of 59, and say the model does two things.
+**Updated Nov 15, morning.** The build branch is merged and all four AI feature flags are on for the live app, so the numbers and the five model jobs below describe the live app. They were measured on the staging copy, which runs the same code.
 
 Anything in [SQUARE BRACKETS] is a slot the PM must fill. Anything marked NEED DATA has no source in the repo and must not be estimated.
 
