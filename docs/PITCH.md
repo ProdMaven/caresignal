@@ -139,7 +139,7 @@ Put the live URL and the invite code in the footer of every slide.
 ### Slide 1. Problem
 
 - **Title:** Unspoken (working name). Every need, finally heard.
-- **Subtitle:** Distress is communication
+- **Subtitle:** Many parents carry this in silence. Unspoken gives them a place to say it, and shows what has helped.
 - **On the slide (4 bullets at most):**
   - "People who can't always say what they need. Families who each see one piece."
   - Quote 1 (filled Nov 15): "I asked her what is happening... she's pointing to the head and she's not liking it, and she was crying." A parent on our team, father of an autistic daughter, in a note he spoke into the app.
