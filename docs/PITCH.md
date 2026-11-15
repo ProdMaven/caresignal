@@ -120,9 +120,9 @@ The video is `Unspoken_demo_Aisha.mp4` (85 seconds, 12 steps, in the app's own o
 >
 > We got there by failing. Dialect notes got a different intensity. Fixed. A parent on our team spoke a real note, 150 words. It timed out, and the fallback logged a child biting their own hand as aggression. Fixed, and now a test.
 
-**Slide 5. 3:05 to 3:30 (61 words)**
+**Slide 5. 3:05 to 3:30 (about 90 words; cut the roadmap sentence first if short on time)**
 
-> Who first? Families who share the care of one person. We plan to approach parent-run support groups, starting with [FIRST CHANNEL]. Next, accounts, so entries are private. Then caregiver matching and wearables, on the roadmap. (cut first: this sentence)
+> Who first? Families who share the care of one person. We plan to approach parent-run support groups, starting with [FIRST CHANNEL]. Next, accounts, so entries are private. Today patterns are exact counts, so nothing can be invented. Next we add semantic matching, with a vector index in the same database, so near-miss entries join one pattern. Then caregiver matching and wearables, on the roadmap. (cut first: this sentence)
 >
 > The app is live. Type your own note.
 >
@@ -264,7 +264,7 @@ Run history (from `eval/results/history.json`, `safety/results/history.json`, `d
   - First users: families who share the care of one person
   - First channel (a plan, not a partnership): parent-run support groups we plan to approach, starting with [FIRST CHANNEL]
   - Next: accounts so entries are private, real caregiver interviews, saved data that survives a restart
-  - Roadmap: caregiver-to-caregiver matching (needs moderation first), wearables
+  - Roadmap: semantic matching with a vector index in the same Postgres, so near-miss entries join one pattern (not built yet); caregiver-to-caregiver matching (needs moderation first); wearables
 - **Exact numbers shown:** none.
 - **Speaker note:** End on the closing line, "The pattern speaks for the person who couldn't.", and the live URL. Invite the judges to type their own note.
 
@@ -366,6 +366,8 @@ Two or three short sentences each. If you do not know, say "we have not measured
 
 12. **Why this model, and why not RAG or a vector database?** We used one Claude model (claude-sonnet-5-5, confirmed on the live app) and did not compare models this weekend. The benchmark lets us test a smaller one later. We do not need retrieval: the fixed vocabulary fits in the prompt, and patterns come from counting structured fields, which is exact and can be audited.
 
+12a. **How will pattern matching scale, and are you using a vector database?** Not today, and we say so. Today a pattern is an exact count: same kind of moment, same time of day, same thing logged before it, on at least 4 entries and 60% of the time. That is why a pattern cannot be invented and why every count links to its entries. The limit is that it is strict: "evening" and "night", or two ways of saying the same thing, do not join. The next step is semantic matching: embed each entry, keep the vectors in the same Postgres with pgvector, and group near-miss entries into one candidate pattern. Code still does the counting on top, so the number on screen stays auditable. It is on the roadmap, not in the build; do not describe it as built.
+
 13. **How would you scale it?** Prompt caching is already on, at 98.0% of input tokens. Next we would send short notes to a smaller, cheaper model and keep the larger one for long notes, checked against the same benchmark. Later, once real and consented usage data exists, we could fine-tune a small model. That is a future step. We did not build it.
 
 14. **What did you validate with real people?** Honestly, little so far. One parent on our team, Aisha's father, spoke a real note, and it exposed three bugs that short test sentences never would. He has started logging for his own daughter, one entry so far, which is why she is our example. That is one family, not a study. [INTERVIEWS: number done and roles, or say "interviews start this week"].
@@ -406,6 +408,7 @@ Extra lines to have ready:
 17. Do not say "CareSignal". The product is "Unspoken (working name)" on first mention, then "Unspoken". If asked about the old name: it was changed because CareSignal is an existing healthcare company.
 18. Do not say the dementia flow "is DICE" or "is clinically tested". Say it follows the DICE approach (Describe, Investigate, Create, Evaluate), which was tested in the WeCareAdvisor trial. Our app has not been tested in a trial.
 19. Do not present community rankings ("what helped other families") as working today. They are the long-term vision and run on synthetic data.
+20. Do not say the app uses semantic matching, embeddings or a vector database today. It does not. Patterns are exact counts in code. Semantic matching is the next step on the roadmap; say "next we add", never "we use".
 
 ---
 
