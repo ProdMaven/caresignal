@@ -266,7 +266,7 @@ Run history (from `eval/results/history.json`, `safety/results/history.json`, `d
 
 Record muted. The presenter narrates live with the slide 2 script. Everything named below is the real label on screen, checked on the staging copy on Nov 15.
 
-**Starting state (before you press record):** invite code already entered, Log screen open, top bar shows `Autism support` selected (it is the default), "Who is this about?" shows `Aisha`, "Who is logging?" shows `Jayesh (Dad)`. The video starts on the mic. It never shows the invite screen or "Add the person you care for".
+**Starting state (before you press record):** invite code already entered, Log screen open, top bar shows `Autism support` selected (it is the default), "Who is this about?" shows `Aisha`, "Who is logging?" shows `Jayesh (Dad)`. Aisha is not picked by default: the first person shown in autism mode is Arjun, so tap `Aisha` under "Who is this about?" before you press record. The video starts on the mic. It never shows the invite screen or "Add the person you care for".
 
 | # | Video time | Screen | Tap or type (exact label) | What appears | Narration cue |
 |---|---|---|---|---|---|
@@ -294,7 +294,7 @@ Notes on the steps:
 
 ### Recording checklist
 
-1. Record in Chrome on the copy that has Aisha's profile. On the morning of Nov 15 that was the staging copy (code `STAGING-EVAL`); the same code has since been merged to `main`, so check the live app before choosing. The app is one centered column at any width, so a desktop window works; hide bookmarks and other tabs.
+1. Record in Chrome on the **staging copy** (code `STAGING-EVAL`), not the live app. Both run the same code and both have Aisha's profile, but they hold different entries (checked Nov 15, late morning). On staging her timeline has the demo entries plus one rehearsal note, and the pattern reads 6 of 7. On the live app her timeline also holds the real entry her father logged on Nov 14, which carries red flags, so the timeline and the visit summary there show it with a care team note at the top. That is exactly what "What not to open on camera" below rules out. The app is one centered column at any width, so a desktop window works; hide bookmarks and other tabs.
 2. Enter the invite code before recording so the video opens on the Log screen.
 3. Check the count before you record: Aisha's pattern line goes up by one with every saved take, and there is no reset button. One rehearsal entry was saved on staging on Nov 15 (6 of 7 on screen now).
 4. Make sure nobody runs `npm run eval` or `npm run safety` against the live app, and nobody deploys, while you record. Both reset the data.
@@ -357,7 +357,7 @@ Two or three short sentences each. If you do not know, say "we have not measured
 
 13. **How would you scale it?** Prompt caching is already on, at 98.0% of input tokens. Next we would send short notes to a smaller, cheaper model and keep the larger one for long notes, checked against the same benchmark. Later, once real and consented usage data exists, we could fine-tune a small model. That is a future step. We did not build it.
 
-14. **What did you validate with real people?** Honestly, little so far. One parent on our team, Aisha's father, spoke a real note, and it exposed three bugs that short test sentences never would. He now uses the app for his own daughter, which is why she is our example. That is one family, not a study. [INTERVIEWS: number done and roles, or say "interviews start this week"].
+14. **What did you validate with real people?** Honestly, little so far. One parent on our team, Aisha's father, spoke a real note, and it exposed three bugs that short test sentences never would. He has started logging for his own daughter, one entry so far, which is why she is our example. That is one family, not a study. [INTERVIEWS: number done and roles, or say "interviews start this week"].
 
 15. **What happens after this weekend?** Accounts so entries are private, saved data that survives a restart, and editing after save. Then real interviews and a small test with families from [FIRST CHANNEL]. Caregiver matching and wearables stay on the roadmap until moderation and consent are designed.
 
