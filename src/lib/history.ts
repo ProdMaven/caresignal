@@ -105,8 +105,10 @@ export async function formatHistory(req: FormatHistoryRequest): Promise<FormatHi
     const reply = await callClaude({
       system: HISTORY_SYSTEM,
       messages: [{ role: "user", content: buildHistoryUserMessage(req) }],
-      maxTokens: 1500,
-      timeoutMs: 20_000,
+      // Room to finish: a short history already used about 1,300 tokens, and a reply cut off at the limit
+      // cannot be read, so the caregiver got the rough sentence-by-sentence version instead.
+      maxTokens: 4000,
+      timeoutMs: 26_000,
       maxRetries: 0,
       label: "history",
     });
