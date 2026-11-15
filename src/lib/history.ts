@@ -21,9 +21,22 @@ function clean(text: string): string {
   return text.replace(MEDICINE_NAME, "a medicine").replace(DOSE, "").replace(/\s+/g, " ").replace(/\s+([.,])/g, "$1").trim();
 }
 
+// Oldest first. A milestone with no year stays where it was said: it takes the place in time of the dated
+// milestone before it, or goes first when nothing dated came before it.
+export function orderMilestones<T extends { year: number | null; month: number | null }>(list: T[]): T[] {
+  let carried = -Infinity;
+  return list
+    .map((m, i) => {
+      if (m.year !== null) carried = m.year + (m.month ?? 0) / 100;
+      return { m, i, key: m.year !== null ? m.year + (m.month ?? 0) / 100 : carried };
+    })
+    .sort((a, b) => a.key - b.key || a.i - b.i)
+    .map(({ m }) => m);
+}
+
 function finish(items: Omit<MilestoneInput, "id">[], nowYear: number): MilestoneInput[] {
   const seen = new Set<string>();
-  return items
+  const kept = items
     .map((m, i) => ({
       i,
       m: {
@@ -40,14 +53,8 @@ function finish(items: Omit<MilestoneInput, "id">[], nowYear: number): Milestone
       seen.add(key);
       return true;
     })
-    // Oldest first. Milestones with no date keep the order they were said in, after the dated ones.
-    .sort((a, b) => {
-      const ay = a.m.year ?? Infinity;
-      const by = b.m.year ?? Infinity;
-      return ay - by || (a.m.month ?? 0) - (b.m.month ?? 0) || a.i - b.i;
-    })
-    .slice(0, MAX_MILESTONES)
     .map(({ m }) => m);
+  return orderMilestones(kept).slice(0, MAX_MILESTONES);
 }
 
 // Keyword fallback: one milestone per sentence, with a year when one can be read. Used in mock mode and when the model fails.

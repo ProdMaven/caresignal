@@ -27,11 +27,16 @@ export const CATEGORY_LABEL: Record<MilestoneCategory, string> = {
 };
 const CATEGORIES = Object.keys(CATEGORY_LABEL) as MilestoneCategory[];
 
-// Oldest first; milestones without a year keep their place after the dated ones.
+// Oldest first. A milestone with no year stays where it was said: next to the dated milestone before it,
+// or first when nothing dated came before it. Same rule as the server (src/lib/history.ts).
 function sorted<T extends MilestoneInput>(list: T[]): T[] {
+  let carried = -Infinity;
   return list
-    .map((m, i) => ({ m, i }))
-    .sort((a, b) => (a.m.year ?? Infinity) - (b.m.year ?? Infinity) || (a.m.month ?? 0) - (b.m.month ?? 0) || a.i - b.i)
+    .map((m, i) => {
+      if (m.year !== null) carried = m.year + (m.month ?? 0) / 100;
+      return { m, i, key: m.year !== null ? m.year + (m.month ?? 0) / 100 : carried };
+    })
+    .sort((x, y) => x.key - y.key || x.i - y.i)
     .map(({ m }) => m);
 }
 
@@ -39,7 +44,7 @@ export function HistoryList({ history }: { history: Milestone[] | undefined }) {
   if (!history || history.length === 0) return null;
   return (
     <ol className="flex flex-col gap-2 border-l-2 border-primary/30 pl-3">
-      {sorted(history).map((m) => (
+      {history.map((m) => (
         <li key={m.id} className="flex flex-col">
           <span className="text-xs font-semibold text-muted-foreground">
             {m.when || "Date not given"} · {CATEGORY_LABEL[m.category]}
