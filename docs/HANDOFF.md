@@ -2,7 +2,9 @@
 
 Read this first, then CLAUDE.md, then the docs it lists. Everything below is the state at handoff.
 
-## Where we are (updated Sat Nov 14, after PR 2 merged)
+## Where we are (updated Sat Nov 14, late evening: rename to Unspoken ready to merge)
+- **Name:** the product is now **Unspoken** (working name), formerly CareSignal. Tagline: "Unspoken. Every need, finally heard." See `docs/BRAND.md` and `docs/RENAME.md`. The repository, Railway project and services, both URLs, invite codes, package name, localStorage keys, response headers and internal identifiers keep the old name on purpose.
+- **Rename status:** done on the build branch `claude/caresignal-buildathon-setup-6ss2v0` and deployed to staging. NOT merged: the live app still says CareSignal until the PM gives the go-ahead. Staging evals before and after the rename are identical (benchmark 39 of 44, red team 59 of 59, crisis and out of scope 100%), so the prompt change is kept.
 - **Live app (real AI):** https://web-production-1bb4dc67.up.railway.app. Railway project `caresignal`, service `web`, deploys from `main`. Invite codes: `GTRANSFORMER-JUDGE` (judges, in the README) and `CARE-TRIAL` (caregivers trying it).
 - **Staging:** https://staging-production-8dc505db.up.railway.app, service `staging`, deploys from `claude/caresignal-buildathon-setup-6ss2v0`, invite code `STAGING-EVAL`, shares the API key by reference. Test prompt changes here first, never on the live app.
 - **Merged to `main` (PR 1):** invitation-only entry, Care Profile intake, voice or typed log in either mode with a mic language picker, confirm card, match plus warm line plus next step after Save, timeline, Ask, Winning Patterns with "Did this help?", caregiver check-in, journal, weekly and monthly overview, eval and safety runner.
@@ -25,7 +27,10 @@ Read this first, then CLAUDE.md, then the docs it lists. Everything below is the
 - Cost per request: not measured (`eval/pricing.json` has placeholder prices).
 - Run evals: `NODE_USE_ENV_PROXY=1 EVAL_BASE_URL=<url> EVAL_INVITE_CODE=<code> EVAL_ALLOW_WRITES=true npm run eval` and `npm run safety`. This resets the target server's demo data.
 
+- Rename check on staging (Nov 14): before 39 of 44 and 59 of 59; after 39 of 44 and 59 of 59. Same four benchmark failures (G07, G09, G12, M02).
+
 ## Where to read more
+- `docs/BRAND.md`: name, tagline, story, closing line, wording rules. `docs/PITCH.md` and `docs/pitch.pdf` already use them.
 - `docs/research/feedback_running_list.md`: every piece of feedback (mentor calls, a real parent's note), analyzed, with status. 30 items; nothing is adopted without a PM decision.
 - `docs/research/autism_patterns_by_age_gender.md`: research report (figures from abstracts and summaries, not full texts).
 - `docs/eval_report.md`, `docs/safety_report.md`: latest runs with each failure named.
