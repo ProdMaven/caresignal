@@ -2,13 +2,30 @@
 
 Unspoken (working name). Every need, finally heard. Formerly CareSignal; the repository, URLs and invite codes keep the old name. Brand source: `docs/BRAND.md`.
 
-GTransformer "AI for Global Good". Due Sunday Nov 15, 12 PM. Format: 3 minutes with a pre-recorded app video, then 2 minutes of Q&A.
+GTransformer "AI for Global Good". Due Sunday Nov 15, 12 PM PST. Format (final participant guide): 3.5 minutes presenting with a pre-recorded demo of about 90 seconds, then 2 minutes of Q&A. Timing is strict: stopped at 3:30, Q&A ends at 5:30. Judging is Sunday 2 to 5 PM PST.
 
 Live app: https://web-production-1bb4dc67.up.railway.app (judge invite code `GTRANSFORMER-JUDGE`)
 
 **Updated Nov 15, early morning.** The numbers and the four AI features below are from the build branch on staging, with all four feature flags on. They describe the live app only after the build branch is merged and the flags are set on the `web` service (steps in `docs/HANDOFF.md`). If the merge does not happen, use the Nov 14 numbers: 103 examples, 39 of 44, 59 of 59, and say the model does two things.
 
 Anything in [SQUARE BRACKETS] is a slot the PM must fill. Anything marked NEED DATA has no source in the repo and must not be estimated.
+
+---
+
+## 0. What the final participant guide changed (read first)
+
+The guide arrived after this pack was written. Everything below section 1 was written for 3 minutes and a 68 second video. The changes:
+
+| Guide says | This pack had | What to do |
+|---|---|---|
+| 3.5 minutes presenting, hard stop at 3:30 | 3:00 | The 460-word script now fits at a calm pace (about 131 words a minute). Do not add words; use the 30 seconds for the longer video. |
+| Demo video about 90 seconds, talked over live | 68 seconds | Add up to 22 seconds. Two beats are ready if the feature flags are on for the live app: a note in Spanish that becomes the same English record with the safety line in both languages, and the one follow-up question ("What was happening just before she started pacing?"). If the flags stay off, slow the existing steps instead. |
+| Order: 1 the problem, 2 pain points, 3 your design, 4 demo walkthrough | Problem, demo, how it works, proof, who first | PM decision. Closest match with the least rework: slide 1 covers the problem and the pain points (the scattered pieces), slide 3 is the design, and the demo moves after it. Proof and first channel then close in the last 35 seconds. The slide numbers in `docs/pitch.pdf` are still in the old order. |
+| Judges open the live URL and run the eval script; if either fails, that criterion scores a 1 | Not stated | `README.md` now has the exact commands. The script runs against the live URL with no key, saves nothing there, and exits with an error only if a crisis or out-of-scope case fails. |
+| Submit to the Team Drive in a folder named `Team_#_team_name` | Repo only | The files are collected in `submission/`. Upload that folder's contents and add the video. Team number: [TEAM #]. |
+| Scored 1 to 5 per criterion; ties go to the higher Safety score | Not stated | Keep the safety beat in the video. |
+
+Suggested time map for 3:30 (if the PM takes the guide's order): 0:00 to 0:30 problem and pain points (slide 1), 0:30 to 1:00 design and why it is safe (slide 3), 1:00 to 2:30 demo video (90 s), 2:30 to 3:05 proof (slide 4), 3:05 to 3:30 first channel and close (slide 5).
 
 ---
 

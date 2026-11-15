@@ -10,52 +10,51 @@ GTransformer "AI for Global Good" buildathon, Nov 13 to 15, 2026. Synthetic data
 
 **Live app:** https://web-production-1bb4dc67.up.railway.app (works on laptop and phone, no setup)
 **Invite code for judges:** `GTRANSFORMER-JUDGE` (Unspoken is invitation only; enter this on the first screen)
-**Demo video:** coming (`docs/`)
+**Demo video:** [VIDEO LINK OR FILE] (about 90 seconds, pre-recorded)
 **Headline eval score:** see `docs/eval_report.md` | **Safety pass rate:** see `docs/safety_report.md`
 
 | Deliverable | Location |
 |---|---|
 | Problem | `docs/problem.md` |
 | Pitch (5 slides) | `docs/pitch.pdf` |
+| Data handling note | `docs/DATA_HANDLING.md`, also at the end of `docs/safety_report.md` |
 | Evaluation | `eval/` (cases, script), `eval/results/`, `docs/eval_report.md` |
 | Safety | `safety/prompts.json`, `safety/results/`, `docs/safety_report.md`, `docs/DATA_HANDLING.md` |
 
-## Team setup (10 minutes)
-1. Accept the GitHub invite, then: `git clone https://github.com/ProdMaven/caresignal && cd caresignal`
-2. Create your lane branch: `git checkout -b lane1-frontend` (or `lane2-ai`, `lane3-data`)
-3. Copy `.env.example` to `.env` and add your own `ANTHROPIC_API_KEY`. Never commit `.env`.
-4. Open the folder in Claude Code with your own Claude account. Run `/agents` and confirm 7 agents load.
-5. Paste your lane's starter prompt below as your first message.
+## For judges: try it and check it
 
-## Lane starter prompts (paste into Claude Code)
+**Try the app.** Open the live URL on a laptop or a phone and enter the invite code. Tap the mic or type your own note, for example "Mom was pacing and calling out around 3, she barely ate lunch." Demo data (synthetic) is already loaded for Helen (dementia care) and Arjun (autism support).
 
-**Lane 1, Frontend and demo flow**
-> Read CLAUDE.md, docs/PRD.md, docs/TASKS.md, docs/DATA_MODEL.md and docs/contracts/types.ts. I own Lane 1. Use scaffold-agent to create the Next.js app in this repo per the locked stack (the repo already has files, so run create-next-app in a temp folder and move the app files in without overwriting README.md, CLAUDE.md, .gitignore, .env.example, docs/ or .claude/), copy docs/contracts/types.ts to src/lib/types.ts, create mocks in src/mocks/ for every route in TASKS.md, and build all 5 screens on mocks with USE_MOCKS=true. Then do my Lane 1 tasks in order. Only edit my lane's folders. Commit after each task.
+**Run the eval script against the live app.** Needs Node 20.9 or newer. No API key and no local server are needed, and nothing is saved on the live app.
 
-**Lane 2, AI features**
-> Read CLAUDE.md, docs/PRD.md, docs/TASKS.md, docs/DATA_MODEL.md and docs/contracts/types.ts. I own Lane 2. Pull main after Lane 1 has scaffolded. Use ai-feature-agent to build my Lane 2 tasks in order: callClaude helper with prompt caching, the formatter for /api/log with zod validation against the controlled vocabulary, the demo cache for phrases D1, D2, A1, the pattern summary prompt, and /api/ask with the red-flag rule first. Only edit my lane's folders. Log every architecture choice in docs/DECISIONS.md via the PM.
+```bash
+git clone https://github.com/ProdMaven/caresignal && cd caresignal
+npm install
+EVAL_BASE_URL=https://web-production-1bb4dc67.up.railway.app npm run eval
+EVAL_BASE_URL=https://web-production-1bb4dc67.up.railway.app npm run safety
+```
 
-**Lane 3, Data, patterns, scoring**
-> Read CLAUDE.md, docs/PRD.md, docs/TASKS.md, docs/DATA_MODEL.md, docs/SCORING.md and docs/contracts/types.ts. I own Lane 3. Pull main after Lane 1 has scaffolded. Build my Lane 3 tasks in order: Prisma schema, seed script with the planted patterns and background trials that hit the SCORING seed targets, patterns.ts using the exact rule in DATA_MODEL, scoring.ts using the exact formula in SCORING, and the people, events, patterns and strategies routes. Then write eval/cases.json. Print the seeded pattern counts and strategy scores so the PM can check them against the demo script.
+- `npm run eval` runs the 108 benchmark examples in `eval/cases.json` (30 hand-reviewed) and prints each result as it finishes. It takes about 6 minutes. `npm run safety` runs the 90 red-team prompts in `safety/prompts.json`, about 5 minutes.
+- The script exits with an error only if a crisis or out-of-scope case fails. A few benchmark cases are expected to fail; they are named with the reason in `docs/eval_report.md`.
+- Cases that need to save entries first are listed as "not graded" on the live app, because the script never writes there. Cases for a feature that is switched off on the server are listed the same way.
+- Results are written to `eval/results/` and `safety/results/`, and the two reports in `docs/` are rebuilt.
 
-**Lane 4, PM**
-> Read CLAUDE.md and all of docs/. I am the PM. At each milestone run qa-agent and eval-agent and summarize blockers. At M4 run pitch-agent to produce docs/PITCH.md and docs/ARCHITECTURE.md.
+**Run it with no network at all** (keyword baseline, no AI, lower scores by design):
 
-## Working rules
-- Your lane's folders only. Shared types change only through the PM.
-- Pull before every task. Commit small. Push your branch often.
-- Lane 1 merges to `main` every 2 to 3 hours after the build passes.
-- Standups every 3 hours in the group chat: done, next, blocked.
-- Stuck more than 45 minutes: say so, fake it, or cut it.
+```bash
+npm run build
+USE_MOCKS=true PORT=3333 npm start &
+EVAL_BASE_URL=http://localhost:3333 npm run eval
+```
 
-## Docs
-- `docs/PRD.md`: scope, demo script, out of scope
-- `docs/TASKS.md`: contracts, lanes, milestones, cut list
-- `docs/DATA_MODEL.md`: record schema, vocabulary, pattern rule
-- `docs/SCORING.md`: Winning Pattern score and tiers
-- `docs/DECISIONS.md`: architecture decisions
-- `docs/research/`: interview notes and quotes
-- `docs/DELIVERABLES.md`: what ships by Sunday 12 PM and who owns it
+## The problem, in short
+When a person living with dementia or an autistic child is in pain, hungry, tired or overwhelmed, they often cannot say so. It comes out as distress, and each person who cares for them sees only a piece of what led up to it. Unspoken joins those pieces into one record so families can see what came before a hard moment and what actually helped. It supports caregivers and does not diagnose. More in `docs/problem.md`.
+
+## How it works
+- A fixed safety screen runs before any model call. Red flags lead with "Please contact your doctor or care team", possible emergencies say to call 911, and a caregiver in distress gets the 988 Suicide and Crisis Lifeline.
+- The model turns a spoken or typed note into fields from a fixed vocabulary. The caregiver checks every field before saving.
+- Plain code counts the patterns and ranks what worked. The model never invents a pattern, a number, a cause, a diagnosis or a medication.
+- All people, logs, counts and scores in the app are synthetic.
 
 ## Run locally
 1. `npm install`
@@ -67,3 +66,10 @@ Notes:
 - `USE_MOCKS=true` (the default) serves every route from `src/mocks/`. There is no reset button. `POST /api/reset` restores the seeded data only on a server with `ALLOW_RESET=true` (staging).
 - Invite codes come from `INVITE_CODES` (comma separated). Scripts such as the eval runner can send the header `x-invite-code` instead of the cookie.
 - Railway deploys from `railway.json` (Nixpacks, `npm start`, healthcheck `/api/health`).
+
+## Docs
+- `docs/HANDOFF.md`: current state and numbers
+- `docs/problem.md`, `docs/PITCH.md`, `docs/pitch.pdf`: problem, script, deck
+- `docs/eval_report.md`, `docs/safety_report.md`, `docs/DATA_HANDLING.md`: evaluation, safety, data handling
+- `docs/PRD.md`, `docs/DATA_MODEL.md`, `docs/SCORING.md`, `docs/DECISIONS.md`: scope, record schema, scoring, decisions
+- `docs/research/`: research notes and sources
