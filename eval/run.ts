@@ -197,8 +197,15 @@ async function runExtCase(r: Runner, c: Raw, result: CaseResult, name: string): 
     const mod = (await import(`./lib/ext/${name}`)) as { grade: ExtGrade };
     // Cases that store notes first need a clean store, or one case's entries leak into the next.
     const storesNotes = Array.isArray(c.setup) && c.setup.length > 0;
+    if (storesNotes && !r.writesAllowed) {
+      result.checks.push(notGraded("setup", "Needs to save entries first, and writes are disabled for this base URL (set EVAL_ALLOW_WRITES=true on a test copy, never on the live app)"));
+      return finalize(result, r.options.judge);
+    }
     if (storesNotes && r.writesAllowed) await r.client.call("POST", "/api/reset");
+    const readOnly = (path: string) => path.startsWith("/api/summary") || path.startsWith("/api/ask") || path.startsWith("/api/log");
     const call: ExtCall = async (method, path, body) => {
+      // Never save anything on a server where writes are off (the live app).
+      if (method === "POST" && !readOnly(path) && !r.writesAllowed) return { status: 0, ok: false, body: null, latencyMs: 0, error: "writes are disabled for this base URL" };
       const http = await r.client.call(method, path, body, true);
       if (method === "POST" && !path.startsWith("/api/summary") && !path.startsWith("/api/ask") && !path.startsWith("/api/log")) r.wrote = true;
       return { status: http.status, ok: http.ok, body: http.body, latencyMs: http.latencyMs, source: http.source ?? undefined, error: http.error ?? undefined };
@@ -656,10 +663,11 @@ async function main(): Promise<void> {
   for (const c of cases) {
     const result = options.set === "benchmark" ? await runBenchmarkCase(r, c) : await runRedteamCase(r, c, bias);
     results.push(result);
+    // Printed as each case finishes, so a long run against a real model never looks stuck.
+    console.log(`${result.status.toUpperCase().padEnd(10)} ${result.id.padEnd(5)} ${result.status === "pass" ? "" : result.reason.slice(0, 200)}`);
   }
   const biasGroups = gradeBiasGroups(bias, options.judge);
   if (r.wrote && writesAllowed) await r.client.call("POST", "/api/reset");
-  for (const result of results) console.log(`${result.status.toUpperCase().padEnd(10)} ${result.id.padEnd(5)} ${result.status === "pass" ? "" : result.reason.slice(0, 200)}`);
 
   // History and comparison with the previous run of this set.
   const historyFile = path.join(resultsDir, "history.json");
@@ -725,9 +733,14 @@ async function main(): Promise<void> {
 
   const gate = (name: string, group: string, blocking: boolean) => {
     // A case counts toward a pass bar through its own type or through its `gate` label.
-    const members = results.filter((x) => x.group === group || x.gate === group);
+    // A case that could not be graded on this server (its feature is off, or it needs to save data where
+    // writes are disabled) is listed as not graded and does not count for or against the bar.
+    const all = results.filter((x) => x.group === group || x.gate === group);
+    const members = all.filter((x) => x.status !== "not_graded");
+    const skipped = all.length - members.length;
     const s = members.length ? summarize(members) : undefined;
-    return { name, required: "100%", actual: s ? `${pct(s.passRate)} (${s.pass}/${s.total})` : "no cases run", met: s ? s.pass === s.total : true, blocking };
+    const tail = skipped ? `, ${skipped} not graded on this server` : "";
+    return { name, required: "100%", actual: s ? `${pct(s.passRate)} (${s.pass}/${s.total})${tail}` : `no cases graded${tail}`, met: s ? s.pass === s.total : true, blocking };
   };
   const gates: RunSummary["gates"] = [];
   if (options.set === "benchmark") {

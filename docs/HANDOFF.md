@@ -1,12 +1,38 @@
-# Handoff (updated Sun Nov 15, about 1:30 AM)
+# Handoff (updated Sun Nov 15, morning, after the merge)
 
-Read this first, then CLAUDE.md, then the docs it lists. Deadline: Sunday Nov 15, 12 PM.
+Read this first, then CLAUDE.md, then the docs it lists. **Submit by Sunday Nov 15, 12:00 PM PST. Judging 2 to 5 PM PST.**
 
-## Morning report (Sun Nov 15, overnight build from `docs/AI_FEATURES.md`)
+## Where things stand now
+- **Everything is merged.** PR 5 (the build branch) and PR 6 (judge-ready README and eval script, submission folder) are on `main`. The live app and staging run the same code.
+- **All four AI feature flags are ON on the live app** (`web` service) and on staging: `FEATURE_MULTILINGUAL_SAFETY`, `FEATURE_SUMMARY`, `FEATURE_FOLLOWUP`, `FEATURE_ASK_ROUTER`. To turn one off, remove its variable on `web` and let it redeploy.
+- **The live app shows "Unspoken"**, saves data in Postgres across deploys, and refuses `POST /api/reset`.
+- **Numbers to quote:** benchmark 103 of 108 (95.4%), red team 90 of 90, crisis and out of scope 100%, golden field accuracy 98.0%, about 2.4 s for a short note, $0.005 per note. 198 examples, 89 hand-reviewed. These are from staging with saving allowed. See "Numbers" below for what a judge sees on the live URL.
 
-Building stopped at about 1:30 AM, well before the 5:00 AM stop, because all four features were built and measured. Nothing was merged to `main`. No eval was run against the live app.
+## What the final participant guide requires (received Nov 15)
+| Guide | Our state |
+|---|---|
+| Gates: live public URL, judges type their own inputs, crisis-safe | Met. |
+| 3.5 minutes presenting (hard stop 3:30) plus 2 minutes Q&A; demo video about 90 seconds; order: problem, pain points, design, demo | Script fits (460 words). Video not recorded. Deck is still in the old order (problem, demo, how it works, proof, who first). `docs/PITCH.md` section 0 has a time map. |
+| Evaluation 25%: 100+ examples (30+ hand-reviewed), a metric, a reproducible script, before and after | 108 benchmark examples, exactly 30 hand-reviewed. Script and run history in place. |
+| Safety 10%: 50+ red-team prompts, failures named and fixed, data-handling note | 90 prompts, 59 hand-reviewed. The safety report ends with the full data-handling note. |
+| Problem and need 20%: named user, real evidence of need | **Weakest area. Zero caregiver quotes.** |
+| Judges open the live URL and run the eval script; if either fails that criterion scores a 1 | `README.md` has the exact commands. Tested in the same no-save mode against staging: exit code 0. |
+| Submit to the Team Drive (tiny.cc/BuildTeams26) in a folder `Team_#_team_name` | Files are collected in `submission/`. The upload, the team number and the video are the PM's. |
+| Repo from the organizers' template | Still open. |
 
-### What shipped (build branch and staging only, each behind its flag, all four ON on staging)
+## What only the PM can do before 12:00 PM PST
+1. Record the demo video (about 90 seconds) and put the link in `README.md` and `submission/README.md` (slot `[VIDEO LINK OR FILE]`).
+2. Find the team number (tiny.cc/BuildTeamNames), create the Drive folder, upload the contents of `submission/` plus the video.
+3. Fill the open slots in the deck: team names, quotes, first channel.
+4. Get at least one or two real caregiver quotes into `docs/problem.md` (role only).
+5. Confirm the template repo question with the organizers.
+6. Read the new safety wording that is now live: `ROUTER_CRISIS_MESSAGE` in `src/lib/askRouter.ts` and the translated lines in `src/config/safetyTranslations.ts`.
+
+## Overnight build report (Sun Nov 15, from `docs/AI_FEATURES.md`)
+
+Kept for the record. Building stopped at about 1:30 AM because all four features were built and measured. It has since been merged (see above).
+
+### What shipped (each behind its flag)
 | # | Feature | Flag | Bar from the spec | Result on staging | Kept |
 |---|---|---|---|---|---|
 | 4 | Any language in, same record out; safety line also in the note's language (Spanish, Hindi in both scripts, Mandarin) | `FEATURE_MULTILINGUAL_SAFETY` | Multilingual golden 85%+, crisis 6 of 6, out of scope 3 of 3, English no lower | 24 of 24 cases, field accuracy 100% (88 of 88), crisis 6 of 6, out of scope 3 of 3, English unchanged | Yes |
@@ -43,13 +69,9 @@ Nothing was cut. One feature was changed from the spec:
 3. A Chinese note about a fall, a head injury and no response got the care team line from the rule screen instead of the 911 line. Word lists widened in all three languages; three red-team prompts added (RC14 to RC16).
 4. Two of my own test expectations were wrong and were corrected, with a note on each: ML19 (the app rightly shows the 911 line when the note mentions blood) and RB17 (the Hindi note used a word for "restless", not "agitated").
 
-### Decisions needed from the PM
-1. **Merge go-ahead**, and which of the four flags to turn on for the live app. Merging alone turns nothing on.
-2. **New safety wording to read before it goes live:** `ROUTER_CRISIS_MESSAGE` in `src/lib/askRouter.ts` (shown on Ask when the model labels a question as a crisis that the rules missed), and the translated safety lines in `src/config/safetyTranslations.ts`.
-3. **Native-speaker review** of the Spanish, Hindi and Mandarin word lists, translated safety lines, fixed follow-up questions, and the non-English examples. None has had one.
-4. **Human review of the 109 drafted examples.**
-5. **Visit summary speed.** About 12 s is slow on stage. Options: keep it out of the recorded demo, or leave it on for judges to try. A faster model can be set with `ANTHROPIC_MODEL_SUMMARY`; not tried.
-6. **Pitch.** `docs/PITCH.md`, the deck and `docs/pitch.pdf` now carry tonight's numbers and the five model jobs. They are true for the live app only after the merge with the flags on. If you do not merge, use the Nov 14 numbers (the note at the top of PITCH says which). The slide 3 title changed to "Code counts the patterns. The model reads and writes."
+### Decisions the PM made after the report
+- Merged to `main` and turned all four flags on for the live app (Nov 15, morning).
+- Still open: native-speaker review of the Spanish, Hindi and Mandarin word lists, translated safety lines and examples; human review of the 109 drafted examples; whether to show the visit summary (about 12 s) in the recorded demo. Recommendation: leave it out of the video.
 
 ### Known limits, not fixed
 - The four follow-up red-team prompts were all answered as out of scope before any question was worded, so the wording check was exercised by a direct test of the checker, not through the app.
@@ -58,28 +80,19 @@ Nothing was cut. One feature was changed from the spec:
 - The Ask keyword router (used when the model is down) got 14 of 20 on questions it had not seen.
 - Tonight's runs reset staging data, so earlier test profiles there are gone.
 
-### Exact steps to merge (only on the PM's go-ahead)
-1. Open a pull request from `claude/caresignal-buildathon-setup-6ss2v0` into `main` and merge it (no force-push).
-2. In Railway, on the `web` service, add the flags you want: `FEATURE_MULTILINGUAL_SAFETY=true`, `FEATURE_SUMMARY=true`, `FEATURE_FOLLOWUP=true`, `FEATURE_ASK_ROUTER=true`. Leave any of them out to keep that feature off. Do not set `ALLOW_RESET` there.
-3. Wait for the `web` deploy to finish, then check by hand with the `GTRANSFORMER-JUDGE` code: one English note; "Mamá se cayó y se golpeó la cabeza y no responde." shows the 911 line in English and Spanish; "Mom was agitated and pacing at 3 PM." shows one question; Timeline shows the visit summary button; Ask answers "what usually sets her off in the afternoon?".
-4. Do not run `npm run eval` or `npm run safety` against the live URL.
-5. To turn a feature off later: remove its variable on `web` and let it redeploy.
-
-## The one thing to know
-The live app and the build branch have drifted apart on purpose. The PM is testing on staging and will say when to merge.
-
+## The two copies
 | | Live app (`main`) | Staging (build branch) |
 |---|---|---|
 | URL | https://web-production-1bb4dc67.up.railway.app | https://staging-production-8dc505db.up.railway.app |
 | Invite codes | `GTRANSFORMER-JUDGE` (judges), `CARE-TRIAL` (caregivers) | `STAGING-EVAL` |
 | Railway service | `web`, deploys from `main` | `staging`, deploys from `claude/caresignal-buildathon-setup-6ss2v0` |
-| Name on screen | CareSignal | Unspoken |
-| Data | In memory, lost on every deploy | Saved in Postgres, survives deploys |
-| Commits | PR 1 to 4 merged | About 30 commits ahead of `main`, not merged |
+| Feature flags | All four on | All four on |
+| Data | Saved in Postgres (`STATE_KEY=production`) | Saved in Postgres (`STATE_KEY=staging`), reset by eval runs |
+| Reset route | Refused | Allowed (`ALLOW_RESET=true`) |
 
-Do not merge to `main` without the PM's go-ahead.
+Same code on both. Make and test changes on the build branch and staging first, then merge on the PM's go-ahead.
 
-## What is on the build branch and staging, not yet on the live app
+## What changed since PR 4 (all live now)
 1. **Rename to Unspoken (working name).** Display name only, per `docs/RENAME.md` and `docs/BRAND.md`. Tagline: "Unspoken. Every need, finally heard." The repository, Railway project and services, both URLs, invite codes, package name, localStorage keys, response headers and internal identifiers keep the old name on purpose.
 2. **Each person has their own caregivers.** "Who is logging?" lists the selected person's caregivers. The Care Profile form asks "Who cares for them?".
 3. **The person picked on screen wins.** A note that names nobody goes to the picked person. A note that names someone else on the list keeps the picked person and the confirm card asks whose log it should go to. Example chips show only for the demo person they were written about.
@@ -88,11 +101,11 @@ Do not merge to `main` without the PM's go-ahead.
 6. **Account page replaces the "You" tab.** Who you are logging as, mic language, Care Profiles, About, "Sign out on this device". No passwords and no real login for now.
 6b. **Edit a Care Profile and add its history (contracts v9).** On the Account page each added person has "Edit profile and history". History is the caregiver's own account since the first signs or the diagnosis, spoken or typed, turned into dated milestones they can check and change. It is offered when adding a person and when editing one. Demo people show a seeded history and cannot be edited. Medicine names and doses are stripped. A caregiver who sounds in distress in the history box gets the care message and 988.
 7. **Removed by the PM:** the caregiver check-in, the caregiver journal, and the "Reset demo data" button.
-7b. **Four AI features behind flags (Nov 15).** See the morning report above. All four are on for staging and off everywhere else.
+7b. **Four AI features behind flags (Nov 15).** See the overnight build report above. All four are on for staging and the live app.
 8. **Reset is locked.** `POST /api/reset` only works where `ALLOW_RESET=true`, which is set on staging only. The live app will refuse it.
 
 ## What is real and what is not
-- **On the live app the model does two things:** it turns a caregiver's note into fields (`POST /api/log`), and it turns a spoken or typed history into milestones (`POST /api/history/format`). **With the four flags on (staging) it does three more:** it writes a visit summary from facts that code counted, words one follow-up question, and labels an Ask question. Speech to text is the browser's own.
+- **The model does five things, each one narrow:** it turns a caregiver's note into fields (`POST /api/log`), and it turns a spoken or typed history into milestones (`POST /api/history/format`). With the four flags on it also it writes a visit summary from facts that code counted, words one follow-up question, and labels an Ask question. Speech to text is the browser's own.
 - **Computed in code, no model:** pattern lines, things to check, the content of Ask answers, strategy rankings, the overview, every count in a summary.
 - **Fixed wording, chosen by rules before any model call:** care team, 911, 988 and scope messages. The model can add a red flag, never remove one.
 - **Synthetic:** every person, log entry, family count, percentage and score. Never present them as results.
@@ -100,7 +113,7 @@ Do not merge to `main` without the PM's go-ahead.
 - **Stopgap storage:** saved data is one JSON snapshot, not real tables. Prisma-backed data routes are still not built.
 
 ## Numbers (real model)
-| | Live `main` | Staging, all four features on |
+| | Live `main` on Nov 14, before the merge | Staging, all four features on (final run) |
 |---|---|---|
 | Benchmark | 39 of 44 (88.6%) | 103 of 108 (95.4%) |
 | Golden field accuracy | 98.0% | 98.0% |
@@ -109,7 +122,8 @@ Do not merge to `main` without the PM's go-ahead.
 | Red team | 59 of 59 | 90 of 90 |
 | Typical response | about 2.2 s short notes, 7 to 8 s for a 150-word note | about 2.4 s short notes, same for long ones |
 
-- The staging numbers cover everything on the build branch: the rename, per-person caregivers, the picked-person rule, the new seeded patterns, and the four features. The live numbers are from Nov 14.
+- The staging numbers are the ones to quote. The live app now runs the same code with the same flags.
+- **What a judge sees running the script against the live URL:** the script never saves there, so the 6 cases that need to save entries first are listed as "not graded" (M03, SV05, SV07, SV09, SV10, plus G13 which is never gradable). In that mode on staging the result was 98 pass, 4 fail, 6 not graded, exit code 0. No full eval has been run against the live URL by us.
 - **The history formatter has no eval or red-team cases yet.** It is an input surface with its own prompt (`src/prompts/history.ts`).
 - Run history for the before and after slide: keyword-rule baseline 50.0% and 59.3%; rules only 70.0% and 84.7%; first real-model run 83.3% and 94.9%; after the bias fix 83.3% and 100%; after real-length notes 88.6% and 100%; with the four features 95.4% and 100%. Files: `eval/results/history.json`, `safety/results/history.json`.
 - Example count: 108 benchmark plus 90 red team = 198. Hand-reviewed: 89. Drafted and pending human review: 109.
@@ -118,13 +132,13 @@ Do not merge to `main` without the PM's go-ahead.
 - Run on staging only: `NODE_USE_ENV_PROXY=1 EVAL_BASE_URL=https://staging-production-8dc505db.up.railway.app EVAL_INVITE_CODE=STAGING-EVAL EVAL_ALLOW_WRITES=true npm run eval`, then `npm run safety`. Both reset staging data.
 
 ## Warnings
-- **Run evals on staging, not the live URL.** On staging the runner resets the data before and after. On the live app the reset is refused, so a run there would leave its test people and entries behind in real data.
+- **Run evals with saving allowed on staging only.** Against the live URL the script runs in a no-save mode by default (this is what judges do); never set `EVAL_ALLOW_WRITES=true` there. On staging the runner resets the data before and after. On the live app the reset is refused, so a saving run there would leave its test people and entries behind in real data.
 - **There is no way to clear data from the app.** The reset button is gone. Test entries on the live app can only be removed in the database.
-- **Merging redeploys the live app once** and clears its current in-memory data. From then on data is kept.
+- **Changing a variable on `web` redeploys the live app.** Saved data survives it. Avoid doing it during judging (2 to 5 PM PST).
 - **Do not rewrite or force-push `main`.** Commits 094012d through 4ad9392 are under the PM's email and show as Unverified.
 
 ## Open decisions (PM)
-1. **When to merge the build branch, and which feature flags to turn on.** The staging runs are done (see the morning report). Steps are listed there.
+1. **Slide order.** The guide asks for problem, pain points, design, then demo. The deck is in the old order. Decide whether to move the demo slide after the design slide.
 2. **Four failing benchmark cases** (G07, G09, G12, M02). The picked-person rule now gives the app a person when a note names nobody, but the eval runner does not send one, so G07 and G09 still fail. Decide whether the cases should carry the picked person.
 3. **Recurring self-injury wording.** Every self-injury note shows "Please contact your doctor or care team". Proposal: keep it and add "Is this new or worse than usual?". Touches a non-negotiable rule.
 4. **Mentor feedback**, items 1 to 19 in `docs/research/feedback_running_list.md`. All still Open.
@@ -137,7 +151,7 @@ Do not merge to `main` without the PM's go-ahead.
 
 ## Next actions, in order
 1. **Interviews (biggest gap, 20% of the score).** Zero quotes so far. Use the `CARE-TRIAL` code; ask "What is the hardest part of figuring out what they need?"; record role only in `docs/problem.md` and `docs/research/`.
-2. **Try the four features on staging** (code `STAGING-EVAL`), then give the go-ahead to merge and follow the steps in the morning report.
+2. **Submit:** record the video, upload `submission/` and the video to the Team Drive by 12:00 PM PST (see the list at the top).
 3. **Phone testing.** Voice and the language picker are untested on real devices. Open in Chrome or Safari, not inside a chat app.
 4. **Pitch.** `docs/PITCH.md` and `docs/pitch.pdf` use the Unspoken name, tagline, story and closing line. Still to fill: team names, quotes, video link, first channel. Cost per note is filled in. The script is 460 words, which is brisk.
 5. **Record the demo video** from the click script in `docs/PITCH.md`. Start at the mic. Record on staging or on a fresh Care Profile so earlier test entries do not change the counts.
