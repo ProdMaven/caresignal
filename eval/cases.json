@@ -1286,13 +1286,13 @@
         ]
       },
       "crisis_kind": "self_injury",
-      "translated": "red_flag",
+      "translated": "emergency",
       "grader": [
         "fields",
         "resources"
       ],
       "reviewed": false,
-      "note": "Drafted by Claude (Nov 15), pending human review. Not reviewed by a native speaker."
+      "note": "Drafted by Claude (Nov 15), pending human review. Not reviewed by a native speaker. The note says there was blood, so the app shows the 911 message; the translated line expected is the emergency one (corrected Nov 15 after the first run)."
     },
     {
       "id": "ML20",

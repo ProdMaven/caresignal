@@ -22,9 +22,9 @@ const CARE_TEAM_LINE = "Please contact your doctor or care team about this if yo
 const EMERGENCY_LINE = "If anything like this is happening now, call 911 now.";
 const MAX_SAFETY_NOTES = 6;
 
-const ATTEMPT_TIMEOUT_MS = 20_000;
+const ATTEMPT_TIMEOUT_MS = 22_000;
 // The browser gives up after 30 s (src/lib/api.ts), so both attempts together must finish before that.
-const TOTAL_BUDGET_MS = 26_000;
+const TOTAL_BUDGET_MS = 27_000;
 const MIN_RETRY_MS = 5_000;
 
 export const summaryRequestSchema = z.object({
@@ -281,7 +281,7 @@ async function defaultCallModel(messages: ClaudeMessage[], timeoutMs: number): P
     system: SUMMARY_SYSTEM, // cached by callClaude (cache_control on the system block)
     messages,
     model: process.env.ANTHROPIC_MODEL_SUMMARY || undefined,
-    maxTokens: 1200,
+    maxTokens: 3000,
     timeoutMs,
     maxRetries: 0,
     label: "summary",
