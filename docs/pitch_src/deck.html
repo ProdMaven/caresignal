@@ -50,19 +50,21 @@
   .tag.plan { background: var(--amber); color: #8a5a00; }
 
   /* Design slide */
-  .design .steps { display: flex; align-items: stretch; gap: 9pt; }
+  .design .steps { display: flex; align-items: stretch; gap: 6pt; }
   .design .step { flex: 1; background: var(--card); border: 1.5px solid var(--line); border-radius: 12pt; padding: 11pt 12pt 11pt; display: flex; flex-direction: column; gap: 4pt; min-width: 0; }
   .design .step.ai { border-color: var(--teal); background: var(--teal-soft); }
+  .design .step.nextstep { border-style: dashed; border-color: #9aa8a6; background: transparent; }
+  .design .step.nextstep .n { background: #9aa8a6; }
   .design .step.rules { border-color: var(--amber-line); background: var(--amber); }
   .design .step .n { width: 24pt; height: 24pt; border-radius: 50%; background: var(--ink); color: #fff; font-weight: 700; font-size: 12.5pt; display: flex; align-items: center; justify-content: center; }
-  .design .step b { font-size: 19pt; line-height: 1.15; margin-top: 3pt; }
-  .design .step .d { font-size: 13pt; line-height: 1.28; margin-bottom: 8pt; }
+  .design .step b { font-size: 18pt; line-height: 1.15; margin-top: 3pt; }
+  .design .step .d { font-size: 12.5pt; line-height: 1.28; margin-bottom: 8pt; }
   .design .who { margin-top: auto; align-self: flex-start; font-size: 10.5pt; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; padding: 2pt 9pt; border-radius: 99pt; white-space: nowrap; }
   .design .who.you { background: #e9e6dd; color: var(--ink); }
   .design .who.model { background: var(--teal); color: #fff; }
   .design .who.fixed { background: #8a5a00; color: #fff; }
   .design .step .d + .who { margin-top: auto; }
-  .design .arrow { font-size: 22pt; }
+  .design .arrow { font-size: 18pt; }
   .design .safety { background: var(--amber); border: 1.5px solid var(--amber-line); border-radius: 12pt; padding: 9pt 16pt 10pt; }
   .design h1 { margin-bottom: 10pt; }
   .design .safety > b { display: block; font-size: 12pt; letter-spacing: 0.04em; text-transform: uppercase; color: #8a5a00; margin-bottom: 6pt; }
@@ -138,6 +140,11 @@
         <span class="n">5</span><b>Use</b>
         <span class="d">Patterns, answers and visit summaries, from one record the family shares</span>
         <span class="who model">AI + code</span>
+      </div><div class="arrow">→</div>
+      <div class="step nextstep">
+        <span class="n">6</span><b>Match</b>
+        <span class="d">A vector index joins similar entries into one pattern. Code still counts</span>
+        <span class="who you">Next step</span>
       </div>
     </div>
     <div class="safety">
@@ -153,7 +160,6 @@
       <div class="card"><p><b>Ask</b>AI reads the question. Code answers.</p></div>
       <div class="card"><p><b>Summary</b>AI writes. Code checks every number.</p></div>
     </div>
-    <div class="next"><span class="who">Next</span><span>Semantic matching with a vector index, so similar entries join one pattern. Code still counts.</span></div>
   </div>
   <div class="footer"><span>Possible things to check, never causes. No medication or restraint is ever suggested.</span><span>Supports caregivers. Does not diagnose. · 2 of 5</span></div>
 </section>
