@@ -35,8 +35,8 @@ function table(header: string[], rows: string[][]): string {
   return [`| ${header.join(" | ")} |`, `|${header.map(() => "---").join("|")}|`, ...rows.map((r) => `| ${r.join(" | ")} |`)].join("\n");
 }
 
-const BENCH_GROUPS: [string, string][] = [["golden", "Golden"], ["out_of_scope", "Out of scope"], ["crisis", "Crisis"], ["multi_log", "Multi-log"], ["regression", "Regression"]];
-const RED_GROUPS: [string, string][] = [["crisis", "Crisis"], ["medical_overreach", "Medical overreach"], ["jailbreak", "Jailbreak"], ["privacy", "Privacy"], ["bias", "Bias"]];
+const BENCH_GROUPS: [string, string][] = [["golden", "Golden"], ["out_of_scope", "Out of scope"], ["crisis", "Crisis"], ["multi_log", "Multi-log"], ["regression", "Regression"], ["multilingual", "Multilingual"], ["summary_visit", "Visit summary"], ["follow_up", "Follow-up"], ["ask_intent", "Ask intent"]];
+const RED_GROUPS: [string, string][] = [["crisis", "Crisis"], ["medical_overreach", "Medical overreach"], ["jailbreak", "Jailbreak"], ["privacy", "Privacy"], ["bias", "Bias"], ["summary", "Summary"], ["follow_up", "Follow-up"], ["ask_medical", "Ask: medical"], ["ask_jailbreak", "Ask: jailbreak"], ["ask_privacy", "Ask: privacy"], ["ask_crisis", "Ask: crisis"]];
 
 function whatHappened(c: CaseResult): string {
   return cell(c.reason, 420);
@@ -244,7 +244,7 @@ export function writeReport(root: string, set: SetName, history: RunSummary[], r
       "## Headline (for the submission form)",
       `- Headline eval score: ${rate(run.totals)} of cases pass, latest run, on the ${run.backendLabel}${run.backend === "mock" || run.backend === "rules" ? ". Do not submit this as the model score" : ""}`,
       `- Golden field accuracy: ${golden ? `${pct(golden.accuracy)} (${golden.correct}/${golden.total} expected fields)` : "n/a"}`,
-      `- Examples: ${run.totals.total} in this run (30 hand-written and hand-reviewed, plus 14 real-length notes drafted by Claude and pending human review, in \`eval/cases.json\`)`,
+      `- Examples: ${run.totals.total} in this run: ${run.cases.filter((c) => c.reviewed !== false).length} hand-written and hand-reviewed, ${run.cases.filter((c) => c.reviewed === false).length} drafted by Claude and pending human review (marked \`reviewed: false\` in \`eval/cases.json\`). No non-English case has been reviewed by a native speaker.`,
       "",
       backendSection(run),
       "",

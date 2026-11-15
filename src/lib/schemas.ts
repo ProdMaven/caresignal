@@ -31,6 +31,7 @@ export const draftRecordSchema = z.object({
   confidence: z.record(z.string(), z.number()),
   needsReview: z.array(z.string()),
   redFlags: z.array(z.string()),
+  noteLanguage: z.string().max(12).optional(),
 });
 
 export const parseLogRequestSchema = z.object({
@@ -39,6 +40,8 @@ export const parseLogRequestSchema = z.object({
   loggedBy: z.string().min(1),
   now: z.string().min(1),
   personId: z.string().min(1).max(60).optional(),
+  speechLang: z.string().max(20).optional(),
+  followUpAnswered: z.boolean().optional(),
 });
 
 export const saveEventRequestSchema = z.object({ record: draftRecordSchema });

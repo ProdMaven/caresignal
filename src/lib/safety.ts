@@ -5,6 +5,9 @@
 // Rules started from src/mocks/safety.ts and were widened for the cases in
 // eval/cases.json and safety/prompts.json. Relative imports only (tsx scripts load this).
 
+import { features } from "./features";
+import { screenOtherLanguages } from "./safetyMultilingual";
+
 export const RED_FLAG_VOCAB = [
   "self_injury",
   "head_banging",
@@ -250,15 +253,18 @@ export function finalizeFindings(f: SafetyFindings): SafetyFindings {
 
 export function screenSafety(rawText: string): SafetyScreen {
   const text = normalize(rawText);
-  const caregiverDistress = any(DISTRESS, text);
-  const personWishToDie = !caregiverDistress && any(PERSON_WISH_TO_DIE, text);
+  // Spanish, Hindi and Mandarin phrases, when the feature is on. They only ever add findings.
+  const other = features.multilingualSafety() ? screenOtherLanguages(rawText) : null;
+  const personSaid = any(PERSON_WISH_TO_DIE, text) || Boolean(other?.personWishToDie);
+  const caregiverDistress = any(DISTRESS, text) || Boolean(other?.caregiverDistress && !other.personWishToDie);
+  const personWishToDie = !caregiverDistress && personSaid;
 
-  const flags: string[] = [];
+  const flags: string[] = [...(other?.redFlags ?? [])];
   for (const [flag, pattern] of RED_FLAGS) if (pattern.test(text)) flags.push(flag);
   if (/\bhit (her|his|their) head\b/.test(text)) flags.push("injury");
   if (ROAD_RISK.test(text)) flags.push(DEFAULT_SAFETY_FLAG);
 
-  const emergency = any(EMERGENCY, text) || (flags.includes("fall") && CANNOT_GET_UP.test(text));
+  const emergency = any(EMERGENCY, text) || Boolean(other?.emergency) || (flags.includes("fall") && CANNOT_GET_UP.test(text));
   const possibleAbuse =
     ABUSE.slice(1).some((p) => p.test(text)) || (ABUSE[0].test(text) && ABUSE_ACTOR.test(text));
 
@@ -266,7 +272,7 @@ export function screenSafety(rawText: string): SafetyScreen {
   return {
     ...findings,
     caregiverDistress,
-    scope: scopeOf(text),
+    scope: scopeOf(text) ?? (other?.scopeMedical ? "medical" : null),
     message: caregiverDistress ? DISTRESS_MESSAGE : safetyMessageFor(findings),
   };
 }

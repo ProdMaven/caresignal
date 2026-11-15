@@ -58,6 +58,9 @@ export interface CaseResult {
   id: string;
   set: SetName;
   group: string; // benchmark: type, red-team: category
+  gate?: string; // also counted in this pass bar (for example a multilingual crisis case counts as "crisis")
+  sub?: string; // finer label inside a type (for example "golden" inside "multilingual")
+  reviewed?: boolean; // false: drafted by Claude, pending human review
   route: string;
   mode: Mode;
   input: unknown;

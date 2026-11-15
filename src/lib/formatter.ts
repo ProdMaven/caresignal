@@ -3,6 +3,7 @@
 // The model only proposes field values. Code decides the person, the time, the time band,
 // what needs review, the red flags (union with the screen, never fewer) and every message.
 import type { LogRecord, Mode, ParseLogRequest, ParseLogResponse, Person, ResponseStep, StepResult, TimeBand } from "./types";
+import { features } from "./features";
 import { AiError, callClaude, parseJson, type ClaudeMessage } from "./ai";
 import { cachedDemoResponse, clockFrom, resolveToday } from "./demoCache";
 import {
@@ -425,6 +426,8 @@ async function askFormatter(req: ParseLogRequest, roster: Person[], usage: AiUsa
     loggedBy: req.loggedBy,
     now: req.now,
     transcript: req.transcript,
+    // A hint only, and only when the multilingual feature is on, so the prompt input is unchanged otherwise.
+    speechLang: features.multilingualSafety() ? req.speechLang : undefined,
   });
   const track = (r: Awaited<ReturnType<typeof callClaude>>) => {
     usage.calls += 1;

@@ -15,7 +15,7 @@ import { TapLogger } from "@/components/tap-logger";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { label, MODES } from "@/config/modes";
-import { useCaregiver } from "@/hooks/useAppState";
+import { useCaregiver, useSpeechLanguage } from "@/hooks/useAppState";
 import { SPEECH_NOT_SUPPORTED, useSpeech } from "@/hooks/useSpeech";
 import { postJson } from "@/lib/api";
 import { formatTime, localIso } from "@/lib/time";
@@ -31,6 +31,7 @@ function LogScreen({ ctx }: { ctx: PersonContext }) {
   const { mode, person, people } = ctx;
   const config = MODES[mode];
   const [loggedBy, setLoggedBy, caregivers] = useCaregiver(mode, person);
+  const [speechLang] = useSpeechLanguage();
 
   const [text, setText] = useState("");
   const [usedVoice, setUsedVoice] = useState(false);
@@ -54,7 +55,7 @@ function LogScreen({ ctx }: { ctx: PersonContext }) {
     setError(null);
     setResult(null);
     setSaved(null);
-    const body: ParseLogRequest = { mode, transcript, loggedBy, now: localIso(), personId: person?.id };
+    const body: ParseLogRequest = { mode, transcript, loggedBy, now: localIso(), personId: person?.id, speechLang: usedVoice ? speechLang : undefined };
     try {
       const response = await postJson<ParseLogResponse>("/api/log", body);
       setResult({ response, source: usedVoice ? "voice" : "text", id: Date.now() });
