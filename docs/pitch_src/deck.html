@@ -71,6 +71,8 @@
   .design .safety .lines span:first-child { flex: 1.35; }
   .design .safety .lines span:nth-child(2) { flex: 0.8; }
   .design .safety .lines i { display: block; font-style: normal; font-weight: 400; font-size: 12pt; color: var(--muted); margin-bottom: 1pt; }
+  .design .next { display: flex; align-items: center; gap: 10pt; border: 1.5px dashed #9aa8a6; border-radius: 12pt; padding: 6pt 15pt; font-size: 13.5pt; line-height: 1.3; }
+  .design .next .who { margin: 0; background: #e9e6dd; color: var(--ink); flex: none; }
   .design .split { display: flex; gap: 0.25in; }
   .design .split .card { flex: 1; padding: 8pt 15pt 9pt; }
   .design .split p { font-size: 13.5pt; line-height: 1.3; }
@@ -110,7 +112,7 @@
 <section class="slide design">
   <p class="kicker">Our design</p>
   <h1>From a spoken note to a pattern</h1>
-  <div class="col" style="gap:12pt; flex:1; justify-content:center">
+  <div class="col" style="gap:9pt; flex:1; justify-content:center">
     <div class="steps">
       <div class="step">
         <span class="n">1</span><b>Speak</b>
@@ -151,6 +153,7 @@
       <div class="card"><p><b>Ask</b>AI reads the question. Code answers.</p></div>
       <div class="card"><p><b>Summary</b>AI writes. Code checks every number.</p></div>
     </div>
+    <div class="next"><span class="who">Next</span><span>Semantic matching with a vector index, so similar entries join one pattern. Code still counts.</span></div>
   </div>
   <div class="footer"><span>Possible things to check, never causes. No medication or restraint is ever suggested.</span><span>Supports caregivers. Does not diagnose. · 2 of 5</span></div>
 </section>
