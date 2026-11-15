@@ -4,6 +4,7 @@ import { useCallback, useState } from "react";
 import Link from "next/link";
 import { CircleCheck, Send } from "lucide-react";
 import { ConfirmCard } from "@/components/confirm-card";
+import { FollowUpQuestion } from "@/components/follow-up";
 import { IntakeForm } from "@/components/intake-form";
 import { LanguagePicker } from "@/components/language-picker";
 import { MatchAfterSave } from "@/components/match-after-save";
@@ -37,7 +38,8 @@ function LogScreen({ ctx }: { ctx: PersonContext }) {
   const [usedVoice, setUsedVoice] = useState(false);
   const [parsing, setParsing] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [result, setResult] = useState<{ response: ParseLogResponse; source: LogRecord["source"]; id: number } | null>(null);
+  const [result, setResult] = useState<{ response: ParseLogResponse; source: LogRecord["source"]; id: number; transcript: string } | null>(null);
+  const [skippedFollowUp, setSkippedFollowUp] = useState(false);
   const [saved, setSaved] = useState<LogRecord | null>(null);
 
   const onFinal = useCallback((phrase: string) => {
@@ -47,7 +49,7 @@ function LogScreen({ ctx }: { ctx: PersonContext }) {
   }, []);
   const speech = useSpeech(onFinal);
 
-  async function submit(note: string = text) {
+  async function submit(note: string = text, followUpAnswered = false, voice = usedVoice) {
     const transcript = note.trim();
     if (!transcript || parsing) return;
     if (speech.listening) speech.stop();
@@ -55,10 +57,14 @@ function LogScreen({ ctx }: { ctx: PersonContext }) {
     setError(null);
     setResult(null);
     setSaved(null);
-    const body: ParseLogRequest = { mode, transcript, loggedBy, now: localIso(), personId: person?.id, speechLang: usedVoice ? speechLang : undefined };
+    setSkippedFollowUp(false);
+    const body: ParseLogRequest = {
+      mode, transcript, loggedBy, now: localIso(), personId: person?.id, speechLang: voice ? speechLang : undefined,
+      ...(followUpAnswered ? { followUpAnswered: true } : {}),
+    };
     try {
       const response = await postJson<ParseLogResponse>("/api/log", body);
-      setResult({ response, source: usedVoice ? "voice" : "text", id: Date.now() });
+      setResult({ response, source: voice ? "voice" : "text", id: Date.now(), transcript });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Could not read that note. Please try again.");
     } finally {
@@ -176,6 +182,21 @@ function LogScreen({ ctx }: { ctx: PersonContext }) {
         {parsing && <CardSkeleton lines={5} />}
         {error && <ErrorState message={error} onRetry={() => void submit()} />}
         {result?.response.message && <SafetyMessage message={result.response.message} kind={result.response.kind} />}
+        {result?.response.followUp && result.response.draft && !skippedFollowUp && (
+          <FollowUpQuestion
+            key={`q${result.id}`}
+            question={result.response.followUp.question}
+            busy={parsing}
+            onSkip={() => setSkippedFollowUp(true)}
+            onAnswer={(answer, voice) => {
+              // The answer joins the note, and the note is read again so the entry shows the filled field.
+              const note = `${result.transcript}\nFollow-up answer (to "${result.response.followUp?.question ?? ""}"): ${answer}`;
+              setText(note);
+              if (voice) setUsedVoice(true);
+              void submit(note, true, voice || usedVoice);
+            }}
+          />
+        )}
         {result?.response.draft && result.response.kind !== "caregiver_distress" && people && (
           <ConfirmCard
             key={result.id}

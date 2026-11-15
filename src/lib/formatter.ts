@@ -3,6 +3,7 @@
 // The model only proposes field values. Code decides the person, the time, the time band,
 // what needs review, the red flags (union with the screen, never fewer) and every message.
 import type { LogRecord, Mode, ParseLogRequest, ParseLogResponse, Person, ResponseStep, StepResult, TimeBand } from "./types";
+import { applyFollowUp, FOLLOW_UP_INSTRUCTION } from "./followUp";
 import { features } from "./features";
 import { AiError, callClaude, parseJson, type ClaudeMessage } from "./ai";
 import { cachedDemoResponse, clockFrom, resolveToday } from "./demoCache";
@@ -428,6 +429,8 @@ async function askFormatter(req: ParseLogRequest, roster: Person[], usage: AiUsa
     transcript: req.transcript,
     // A hint only, and only when the multilingual feature is on, so the prompt input is unchanged otherwise.
     speechLang: features.multilingualSafety() ? req.speechLang : undefined,
+    // Only when the follow-up feature is on and this note is not already an answered follow-up.
+    followUpInstruction: features.followUp() && !req.followUpAnswered ? FOLLOW_UP_INSTRUCTION : undefined,
   });
   const track = (r: Awaited<ReturnType<typeof callClaude>>) => {
     usage.calls += 1;
@@ -508,7 +511,8 @@ export async function parseLog(req: ParseLogRequest, roster: Person[]): Promise<
   };
   try {
     const reply = await askFormatter(req, roster, usage);
-    return { response: responseFromReply(req, roster, screen, reply), source: "model", language: reply.language, ai: usage };
+    const response = applyFollowUp(req, responseFromReply(req, roster, screen, reply), reply.followUp);
+    return { response, source: "model", language: reply.language, ai: usage };
   } catch (err) {
     usage.error = err instanceof AiError ? err.code : "unexpected";
     if (!(err instanceof AiError)) console.error("[log] formatter step failed:", err instanceof Error ? err.message : err);
@@ -516,7 +520,7 @@ export async function parseLog(req: ParseLogRequest, roster: Person[]): Promise<
 
   // 4. Model unavailable or unusable: keyword fallback, everything marked for review.
   try {
-    return { response: fallbackResponse(req, roster, screen), source: "fallback", language: null, ai: usage };
+    return { response: applyFollowUp(req, fallbackResponse(req, roster, screen), null), source: "fallback", language: null, ai: usage };
   } catch (err) {
     console.error("[log] fallback failed:", err instanceof Error ? err.message : err);
     // Safety messages are returned no matter what else failed.

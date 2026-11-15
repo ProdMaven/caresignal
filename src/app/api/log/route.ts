@@ -3,6 +3,7 @@
 import { badRequest, mocksEnabled } from "@/lib/env";
 import { parseLog } from "@/lib/formatter";
 import { firstIssue, parseLogRequestSchema } from "@/lib/schemas";
+import { applyFollowUp } from "@/lib/followUp";
 import { applyNoteLanguage } from "@/lib/noteLanguage";
 import { applySelectedPerson } from "@/lib/selectedPerson";
 import { mockLog, mockPeople } from "@/mocks";
@@ -17,7 +18,7 @@ export async function POST(request: Request) {
 
   if (mocksEnabled()) {
     const mocked = applySelectedPerson(mockLog(parsed.data), mockPeople(parsed.data.mode).people, parsed.data.personId);
-    return Response.json(applyNoteLanguage(mocked, parsed.data.transcript, null), { headers: { "x-caresignal-source": "mock" } });
+    return Response.json(applyFollowUp(parsed.data, applyNoteLanguage(mocked, parsed.data.transcript, null), null), { headers: { "x-caresignal-source": "mock" } });
   }
 
   const started = Date.now();
