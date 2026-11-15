@@ -64,6 +64,10 @@ export const createPersonRequestSchema = z
     gender: genderSchema.optional(),
     spectrumLevel: spectrumLevelSchema.optional(),
     communicationLevel: communicationLevelSchema,
+    caregivers: z
+      .array(z.object({ name: z.string().trim().min(1).max(40), role: z.string().trim().min(1).max(40) }))
+      .max(6)
+      .optional(),
   })
   .refine((v) => v.mode !== "autism" || v.spectrumLevel !== undefined, {
     message: "Please choose a spectrum level.",

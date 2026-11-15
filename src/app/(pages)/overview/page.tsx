@@ -65,7 +65,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 export default function OverviewPage() {
   const ctx = usePersonContext();
   const { person, mode } = ctx;
-  const [loggedBy] = useCaregiver(mode);
+  const [loggedBy] = useCaregiver(mode, person);
   const [days, setDays] = useState<7 | 30>(7);
   const overview = useApi<OverviewResponse>(
     person ? `/api/overview?personId=${person.id}&loggedBy=${encodeURIComponent(loggedBy)}&days=${days}` : null,

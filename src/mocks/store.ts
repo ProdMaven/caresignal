@@ -2,6 +2,7 @@
 // (each may be bundled separately) shares one copy for the life of the server.
 import type { JournalEntry, LogRecord, Mode, Mood, Person, StrategyFeedback } from "../lib/types";
 import { addDays, demoToday, isoAt, nowIso } from "../lib/time";
+import { registerCaregivers } from "../config/modes";
 import { buildSeedEvents, PEOPLE, STRATEGIES } from "./data";
 
 interface MockStore {
@@ -19,7 +20,15 @@ const MAX_JOURNAL_ENTRIES = 300; // keeps a public demo from filling up
 
 const MAX_ADDED_PEOPLE = 20; // keeps a public demo from filling up
 
-const globalForStore = globalThis as unknown as { __caresignalMockStore?: MockStore };
+const globalForStore = globalThis as unknown as {
+  __caresignalMockStore?: MockStore;
+  // Called after every change, so the state can be saved (see src/lib/persist.ts). Unset when nothing is saved.
+  __caresignalStoreChanged?: () => void;
+};
+
+function changed(): void {
+  globalForStore.__caresignalStoreChanged?.();
+}
 
 function freshStore(): MockStore {
   const events = buildSeedEvents();
@@ -51,20 +60,34 @@ export function addEvent(draft: Omit<LogRecord, "id" | "loggedAt">): LogRecord {
     loggedAt: nowIso(),
   };
   s.events.push(record);
+  changed();
   return record;
 }
 
 export function resetStore(): number {
   globalForStore.__caresignalMockStore = freshStore();
+  changed();
   return globalForStore.__caresignalMockStore.events.length;
 }
 
 // Intake: add a person the caregiver described. Returns null when the demo is full.
-export function addPerson(input: Omit<Person, "id" | "isFeatured">): Person | null {
+export function addPerson(
+  input: Omit<Person, "id" | "isFeatured" | "caregivers">,
+  caregivers: { name: string; role: string }[] = [],
+): Person | null {
   const s = store();
   if (s.people.length - PEOPLE.length >= MAX_ADDED_PEOPLE) return null;
-  const person: Person = { ...input, id: `p_new_${s.nextPersonId++}`, isFeatured: false };
+  const n = s.nextPersonId++;
+  const person: Person = {
+    ...input,
+    id: `p_new_${n}`,
+    isFeatured: false,
+    // Each added person gets their own caregivers. With none given, the screen falls back to the mode's demo caregivers.
+    caregivers: caregivers.length ? caregivers.map((c, i) => ({ id: `cg_new_${n}_${i + 1}`, name: c.name, role: c.role })) : undefined,
+  };
+  registerCaregivers(person.caregivers);
   s.people.push(person);
+  changed();
   return person;
 }
 
@@ -96,6 +119,7 @@ export function recordFeedback(strategyId: string, voterId: string, helped: bool
   const votes = s.votes.get(strategyId) ?? new Map<string, boolean>();
   votes.set(voterId, helped);
   s.votes.set(strategyId, votes);
+  changed();
   return feedbackFor(strategyId, voterId);
 }
 
@@ -134,5 +158,59 @@ export function addJournalEntry(input: Omit<JournalEntry, "id">): JournalEntry |
   if (s.journal.length >= MAX_JOURNAL_ENTRIES) return null;
   const entry: JournalEntry = { ...input, id: `jr_${s.nextJournalId++}` };
   s.journal.push(entry);
+  changed();
   return entry;
+}
+
+// ---------------------------------------------------------------------------
+// Snapshot: everything caregivers added, as plain JSON, so it can outlive a deploy.
+// Seeded demo data is NOT saved. It is rebuilt on load so its dates stay current.
+// ---------------------------------------------------------------------------
+const SEED_JOURNAL_IDS = new Set(seedJournal().map((j) => j.id));
+
+export interface StoreSnapshot {
+  version: 1;
+  addedEvents: LogRecord[];
+  nextId: number;
+  addedPeople: Person[];
+  nextPersonId: number;
+  votes: [string, [string, boolean][]][];
+  addedJournal: JournalEntry[];
+  nextJournalId: number;
+}
+
+export function snapshotStore(): StoreSnapshot {
+  const s = store();
+  const seedEventCount = buildSeedEvents().length;
+  return {
+    version: 1,
+    addedEvents: s.events.filter((e) => Number(e.id.replace("evt_", "")) > seedEventCount),
+    nextId: s.nextId,
+    addedPeople: s.people.filter((p) => !p.isFeatured),
+    nextPersonId: s.nextPersonId,
+    votes: [...s.votes.entries()].map(([strategyId, votes]) => [strategyId, [...votes.entries()]]),
+    addedJournal: s.journal.filter((j) => !SEED_JOURNAL_IDS.has(j.id)),
+    nextJournalId: s.nextJournalId,
+  };
+}
+
+// Rebuilds the store from fresh seed data plus a saved snapshot. Returns false when the snapshot is not usable.
+export function restoreStore(raw: unknown): boolean {
+  const snap = raw as Partial<StoreSnapshot> | null;
+  if (!snap || snap.version !== 1 || !Array.isArray(snap.addedEvents) || !Array.isArray(snap.addedPeople)) return false;
+  const fresh = freshStore();
+  fresh.events.push(...snap.addedEvents);
+  fresh.nextId = Math.max(fresh.nextId, Number(snap.nextId) || 0);
+  fresh.people.push(...snap.addedPeople);
+  fresh.nextPersonId = Math.max(fresh.nextPersonId, Number(snap.nextPersonId) || 0);
+  fresh.votes = new Map((snap.votes ?? []).map(([strategyId, votes]) => [strategyId, new Map(votes)]));
+  fresh.journal.push(...(snap.addedJournal ?? []));
+  fresh.nextJournalId = Math.max(fresh.nextJournalId, Number(snap.nextJournalId) || 0);
+  fresh.people.forEach((p) => registerCaregivers(p.caregivers));
+  globalForStore.__caresignalMockStore = fresh;
+  return true;
+}
+
+export function onStoreChanged(listener: () => void): void {
+  globalForStore.__caresignalStoreChanged = listener;
 }

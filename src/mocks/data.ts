@@ -14,6 +14,11 @@ export const PEOPLE: Person[] = [
     aliases: ["Helen", "Mom", "Mum", "Mother", "Mama"],
     ageBandOrSetting: "79, lives at home with family",
     isFeatured: true,
+    caregivers: [
+      { id: "cg_neha", name: "Neha", role: "daughter" },
+      { id: "cg_ravi", name: "Ravi", role: "son, weekends" },
+      { id: "cg_rosa", name: "Rosa", role: "home aide, weekday mornings" },
+    ],
   },
   {
     id: "p_arjun",
@@ -22,6 +27,10 @@ export const PEOPLE: Person[] = [
     aliases: ["Arjun"],
     ageBandOrSetting: "Age 7, home and school",
     isFeatured: true,
+    caregivers: [
+      { id: "cg_priya", name: "Priya", role: "mother" },
+      { id: "cg_dev", name: "Dev", role: "father" },
+    ],
   },
   {
     id: "p_maya",
@@ -30,6 +39,7 @@ export const PEOPLE: Person[] = [
     aliases: ["Maya"],
     ageBandOrSetting: "Age 9, home and school",
     isFeatured: true,
+    caregivers: [{ id: "cg_lena", name: "Lena", role: "mother" }],
   },
 ];
 

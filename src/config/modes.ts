@@ -190,7 +190,21 @@ export function eventDot(value: string): string {
   return "bg-stone-400";
 }
 
+// Caregivers of people added through intake. Kept on globalThis so server routes (bundled separately) and
+// client screens each share one copy.
+const registry = (() => {
+  const g = globalThis as unknown as { __caresignalCaregivers?: Map<string, string> };
+  g.__caresignalCaregivers ??= new Map<string, string>();
+  return g.__caresignalCaregivers;
+})();
+
+export function registerCaregivers(list: { id: string; name: string }[] | undefined): void {
+  list?.forEach((c) => registry.set(c.id, c.name));
+}
+
 export function caregiverName(id: string): string {
+  const added = registry.get(id);
+  if (added) return added;
   for (const m of MODE_LIST) {
     const found = MODES[m].caregivers.find((c) => c.id === id);
     if (found) return found.name;

@@ -75,7 +75,7 @@ export function mockCreatePerson(req: CreatePersonRequest): CreatePersonResponse
     gender: req.gender,
     spectrumLevel: req.mode === "autism" ? req.spectrumLevel : undefined,
     communicationLevel: req.communicationLevel,
-  });
+  }, req.caregivers ?? []);
   return person ? { person } : null;
 }
 

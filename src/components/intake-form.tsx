@@ -2,7 +2,7 @@
 
 // Intake: a caregiver adds the person they care for. Caregiver-reported, never a diagnosis.
 import { useState } from "react";
-import { UserRoundPlus } from "lucide-react";
+import { UserRoundPlus, X } from "lucide-react";
 import { ErrorState } from "@/components/states";
 import { Button } from "@/components/ui/button";
 import {
@@ -85,10 +85,15 @@ export function IntakeForm({ mode, onCreated }: { mode: Mode; onCreated: (person
   const [gender, setGender] = useState<Gender | null>(null);
   const [level, setLevel] = useState<SpectrumLevel | null>(null);
   const [communication, setCommunication] = useState<CommunicationLevel | null>(null);
+  // Who cares for them. The first row is the person filling in the form.
+  const [carers, setCarers] = useState<{ name: string; role: string }[]>([{ name: "", role: "" }]);
+  const setCarer = (i: number, patch: Partial<{ name: string; role: string }>) =>
+    setCarers((list) => list.map((c, j) => (j === i ? { ...c, ...patch } : c)));
+  const filledCarers = carers.map((c) => ({ name: c.name.trim(), role: c.role.trim() })).filter((c) => c.name && c.role);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const ready = Boolean(name.trim() && ageBand && communication && (!autism || level));
+  const ready = Boolean(name.trim() && ageBand && communication && (!autism || level) && carers[0].name.trim() && carers[0].role.trim());
 
   async function save() {
     if (!ready || !ageBand || !communication || busy) return;
@@ -102,6 +107,7 @@ export function IntakeForm({ mode, onCreated }: { mode: Mode; onCreated: (person
       gender: gender ?? undefined,
       spectrumLevel: autism ? level ?? undefined : undefined,
       communicationLevel: communication,
+      caregivers: filledCarers,
     };
     try {
       const res = await postJson<CreatePersonResponse>("/api/people", body);
@@ -109,6 +115,7 @@ export function IntakeForm({ mode, onCreated }: { mode: Mode; onCreated: (person
       setName("");
       setAlias("");
       setGender(null);
+      setCarers([{ name: "", role: "" }]);
       setLevel(null);
       setCommunication(null);
       onCreated(res.person);
@@ -156,6 +163,48 @@ export function IntakeForm({ mode, onCreated }: { mode: Mode; onCreated: (person
             <Choice legend="How would you describe their spectrum level?" options={LEVELS} value={level} onChange={setLevel} />
           )}
           <Choice legend="How do they usually communicate?" options={COMMUNICATION} value={communication} onChange={setCommunication} />
+          <fieldset className="flex flex-col gap-2">
+            <legend className="mb-1 text-sm font-semibold text-muted-foreground">Who cares for them?</legend>
+            <p className="text-xs text-muted-foreground">
+              Start with yourself, then add anyone else who will log, such as a partner, a grandparent, or a home aide.
+              First names or nicknames only.
+            </p>
+            {carers.map((c, i) => (
+              <div key={i} className="flex items-center gap-2">
+                <Input
+                  value={c.name}
+                  onChange={(e) => setCarer(i, { name: e.target.value })}
+                  placeholder={i === 0 ? "Your name" : "Their name"}
+                  aria-label={i === 0 ? "Your name" : `Caregiver ${i + 1} name`}
+                  maxLength={40}
+                  autoComplete="off"
+                />
+                <Input
+                  value={c.role}
+                  onChange={(e) => setCarer(i, { role: e.target.value })}
+                  placeholder={i === 0 ? (autism ? "You are their (father)" : "You are their (daughter)") : "They are the (home aide)"}
+                  aria-label={i === 0 ? "Your relationship to them" : `Caregiver ${i + 1} relationship`}
+                  maxLength={40}
+                  autoComplete="off"
+                />
+                {i > 0 && (
+                  <button
+                    type="button"
+                    onClick={() => setCarers((list) => list.filter((_, j) => j !== i))}
+                    aria-label={`Remove caregiver ${i + 1}`}
+                    className="rounded-full p-2 text-muted-foreground hover:bg-muted hover:text-foreground"
+                  >
+                    <X className="size-4" aria-hidden />
+                  </button>
+                )}
+              </div>
+            ))}
+            {carers.length < 6 && (
+              <Button type="button" variant="outline" size="sm" className="self-start" onClick={() => setCarers((list) => [...list, { name: "", role: "" }])}>
+                Add another caregiver
+              </Button>
+            )}
+          </fieldset>
           {error && <ErrorState message={error} />}
         </div>
         <DialogFooter>

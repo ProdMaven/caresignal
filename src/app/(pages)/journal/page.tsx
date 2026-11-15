@@ -14,6 +14,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { YouTabs } from "@/components/you-tabs";
 import { MODES } from "@/config/modes";
 import { useApi } from "@/hooks/useApi";
+import { usePersonContext } from "@/components/person-picker";
 import { useCaregiver, useMode } from "@/hooks/useAppState";
 import { SPEECH_NOT_SUPPORTED, useSpeech } from "@/hooks/useSpeech";
 import { postJson } from "@/lib/api";
@@ -49,7 +50,8 @@ export default function JournalPage() {
 function Journal() {
   const [mode] = useMode();
   const config = MODES[mode];
-  const [loggedBy, setLoggedBy] = useCaregiver(mode);
+  const { person } = usePersonContext();
+  const [loggedBy, setLoggedBy, caregivers] = useCaregiver(mode, person);
   const list = useApi<JournalListResponse>(`/api/journal?loggedBy=${encodeURIComponent(loggedBy)}`);
 
   const [mood, setMood] = useState<Mood | null>(null);
@@ -113,7 +115,7 @@ function Journal() {
           }}
           className="h-12 rounded-lg border border-input bg-card px-3 text-base font-normal text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
-          {config.caregivers.map((c) => (
+          {caregivers.map((c) => (
             <option key={c.id} value={c.id}>
               {c.name} ({c.role})
             </option>

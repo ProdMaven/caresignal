@@ -62,14 +62,23 @@ export function useSelectedPerson(mode: Mode, people: Person[] | null): [Person 
   return [person, setPerson];
 }
 
-// Who is logging. Falls back to the first caregiver of the mode.
-export function useCaregiver(mode: Mode): [string, (id: string) => void] {
-  const key = `caresignal.caregiver.${mode}`;
+// The caregivers of one person: their own list when they have one, otherwise the mode's demo caregivers.
+export function caregiversFor(mode: Mode, person: Person | null | undefined): { id: string; name: string; role: string }[] {
+  return person?.caregivers?.length ? person.caregivers : MODES[mode].caregivers;
+}
+
+// Who is logging, for the person on screen. Falls back to that person's first caregiver.
+export function useCaregiver(
+  mode: Mode,
+  person?: Person | null,
+): [string, (id: string) => void, { id: string; name: string; role: string }[]] {
+  // People added through intake remember their own choice; demo people keep the original key.
+  const key = person && !person.isFeatured ? `caresignal.caregiver.${mode}.${person.id}` : `caresignal.caregiver.${mode}`;
   const stored = useStored(key);
-  const caregivers = MODES[mode].caregivers;
+  const caregivers = caregiversFor(mode, person);
   const id = caregivers.find((c) => c.id === stored)?.id ?? caregivers[0].id;
   const setCaregiver = useCallback((next: string) => write(key, next), [key]);
-  return [id, setCaregiver];
+  return [id, setCaregiver, caregivers];
 }
 
 // The language the caregiver speaks into the mic. Shared by every screen with a mic.

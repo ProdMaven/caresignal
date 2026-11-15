@@ -19,7 +19,11 @@ export interface Person {
   gender?: Gender; // optional at intake; used for bias audits and display only, never to branch logic
   spectrumLevel?: SpectrumLevel; // autism mode only
   communicationLevel?: CommunicationLevel;
+  // v6: the people who care for this person. "Who is logging?" lists these, not another family's caregivers.
+  caregivers?: CaregiverRef[];
 }
+
+export interface CaregiverRef { id: string; name: string; role: string } // role in plain words, for example "father" or "home aide"
 
 export type AgeBand = "2_5" | "6_11" | "12_17" | "adult";
 export type Gender = "girl_or_woman" | "boy_or_man" | "nonbinary" | "prefer_not_to_say";
@@ -148,6 +152,7 @@ export interface CreatePersonRequest {
   gender?: Gender;
   spectrumLevel?: SpectrumLevel; // required in autism mode
   communicationLevel: CommunicationLevel;
+  caregivers?: { name: string; role: string }[]; // first names or nicknames only; the first entry is the person filling in the form
 }
 export interface CreatePersonResponse { person: Person }
 

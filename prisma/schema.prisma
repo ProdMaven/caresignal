@@ -24,6 +24,7 @@ model Person {
   gender             String? // display and bias audits only, never branches logic
   spectrumLevel      String? // autism mode only: "mild" | "medium" | "severe"
   communicationLevel String? // "speaks_in_sentences" | "some_words" | "mostly_non_speaking"
+  caregivers         String  @default("[]") // JSON { id, name, role }[]: who cares for this person (contracts v6)
   events           Event[]
   patterns         Pattern[]
 }

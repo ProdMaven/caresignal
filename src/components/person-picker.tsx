@@ -2,7 +2,7 @@
 
 import { ErrorState } from "@/components/states";
 import { Skeleton } from "@/components/ui/skeleton";
-import { MODES } from "@/config/modes";
+import { MODES, registerCaregivers } from "@/config/modes";
 import { useApi } from "@/hooks/useApi";
 import { useMode, useSelectedPerson } from "@/hooks/useAppState";
 import type { Mode, PeopleResponse, Person } from "@/lib/types";
@@ -23,6 +23,8 @@ export function usePersonContext(): PersonContext {
   const [mode] = useMode();
   const { data, loading, error, reload } = useApi<PeopleResponse>(`/api/people?mode=${mode}`);
   const people = data?.people ?? null;
+  // So timelines and answers can show the names of caregivers added through intake.
+  people?.forEach((p) => registerCaregivers(p.caregivers));
   const [person, setPerson] = useSelectedPerson(mode, people);
   return { mode, people, person, setPerson, loading, error, reload };
 }

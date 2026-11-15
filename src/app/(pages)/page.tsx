@@ -31,7 +31,7 @@ export default function HomePage() {
 function LogScreen({ ctx }: { ctx: PersonContext }) {
   const { mode, person, people } = ctx;
   const config = MODES[mode];
-  const [loggedBy, setLoggedBy] = useCaregiver(mode);
+  const [loggedBy, setLoggedBy, caregivers] = useCaregiver(mode, person);
 
   const [text, setText] = useState("");
   const [usedVoice, setUsedVoice] = useState(false);
@@ -98,7 +98,7 @@ function LogScreen({ ctx }: { ctx: PersonContext }) {
           onChange={(e) => setLoggedBy(e.target.value)}
           className="h-12 rounded-lg border border-input bg-card px-3 text-base font-normal text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
-          {config.caregivers.map((c) => (
+          {caregivers.map((c) => (
             <option key={c.id} value={c.id}>
               {c.name} ({c.role})
             </option>
