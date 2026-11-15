@@ -26,8 +26,8 @@ The demo profile "Maya" is now **Aisha**, the daughter of a team member (Jayesh)
 ## What only the PM can do before 12:00 PM PST
 1. Record the demo video (about 90 seconds) and put the link in `README.md` and `submission/README.md` (slot `[VIDEO LINK OR FILE]`).
 2. Find the team number (tiny.cc/BuildTeamNames), create the Drive folder, upload the contents of `submission/` plus the video.
-3. Fill the open slots in the deck: team names, quotes, first channel.
-4. Get at least one or two real caregiver quotes into `docs/problem.md` (role only).
+3. Fill the open slots in the deck: video link and first channel. Team name (Unspoken: Jayesh, Prisha, Aadi, Vinod) and two quotes from a parent on the team are filled.
+4. Done: two quotes from one parent on the team are in `docs/problem.md` (source in `docs/research/caregiver_quotes.md`). It is one parent, not a study; a dementia caregiver quote is still missing.
 5. Confirm the template repo question with the organizers.
 6. Read the new safety wording that is now live: `ROUTER_CRISIS_MESSAGE` in `src/lib/askRouter.ts` and the translated lines in `src/config/safetyTranslations.ts`.
 
