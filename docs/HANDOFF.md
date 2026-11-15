@@ -23,11 +23,12 @@ Do not merge to `main` without the PM's go-ahead.
 4. **Saved data.** A Postgres service was added to the Railway project. When `STATE_DATABASE_URL` is set, everything people add (Care Profiles, log entries, "Did this help?" answers) is saved as one JSON snapshot per app (`STATE_KEY`) after each change and restored at server start. Seeded demo data is rebuilt on each start so its dates stay current. Both variables are already set on `web` (`STATE_KEY=production`) and `staging` (`STATE_KEY=staging`), so the live app starts saving as soon as the branch is merged. Verified on staging: a tester's profile survived many deploys.
 5. **Seven seeded demo patterns** (was four), each with strategies and an example chip. Helen: afternoon agitation after a small lunch, morning refused care around bathing, evening restlessness after a visit. Arjun: morning meltdown after poor sleep, after a routine change, evening hard transition after screen time ends. Maya: afternoon shutdown after loud noise. What each rests on is in `docs/research/seeded_patterns_sources.md`. All counts and scores are synthetic.
 6. **Account page replaces the "You" tab.** Who you are logging as, mic language, Care Profiles, About, "Sign out on this device". No passwords and no real login for now.
+6b. **Edit a Care Profile and add its history (contracts v9).** On the Account page each added person has "Edit profile and history". History is the caregiver's own account since the first signs or the diagnosis, spoken or typed, turned into dated milestones they can check and change. It is offered when adding a person and when editing one. Demo people show a seeded history and cannot be edited. Medicine names and doses are stripped. A caregiver who sounds in distress in the history box gets the care message and 988.
 7. **Removed by the PM:** the caregiver check-in, the caregiver journal, and the "Reset demo data" button.
 8. **Reset is locked.** `POST /api/reset` only works where `ALLOW_RESET=true`, which is set on staging only. The live app will refuse it.
 
 ## What is real and what is not
-- **The model does one thing:** it turns a caregiver's note into fields (`POST /api/log`). That is the only use of `ANTHROPIC_API_KEY`. Speech to text is the browser's own.
+- **The model does two things:** it turns a caregiver's note into fields (`POST /api/log`), and it turns a spoken or typed history into milestones (`POST /api/history/format`). Those are the only uses of `ANTHROPIC_API_KEY`. Speech to text is the browser's own.
 - **Computed in code, no model:** pattern lines, things to check, Ask answers, strategy rankings, the overview.
 - **Fixed wording, chosen by rules before any model call:** care team, 911, 988 and scope messages. The model can add a red flag, never remove one.
 - **Synthetic:** every person, log entry, family count, percentage and score. Never present them as results.
@@ -46,6 +47,7 @@ Last full runs. The live numbers are from `main`; the staging numbers are from t
 | Red team | 59 of 59 | 59 of 59 |
 | Typical response | about 2.2 s short notes, 7 to 8 s for a 150-word note | same |
 
+- **The history formatter has no eval or red-team cases yet.** It is a new input surface with a new prompt (`src/prompts/history.ts`).
 - **Evals have NOT been rerun since the rename check.** Since then: per-person caregivers, the picked-person rule, three new seeded patterns, removal of check-in and journal, removal of the reset button. No prompt changed, but the person handling and the seed did. One full run on staging is needed before merging. It wipes staging data.
 - Run history for the before and after slide: keyword-rule baseline 50.0% and 59.3%; rules only 70.0% and 84.7%; first real-model run 83.3% and 94.9%; after the bias fix 83.3% and 100%; after real-length notes 88.6% and 100%. Files: `eval/results/history.json`, `safety/results/history.json`.
 - Example count: 44 benchmark plus 59 red team = 103. Hand-reviewed: 30. The 14 real-length cases were drafted by Claude and are pending human review.

@@ -19,6 +19,14 @@ export const PEOPLE: Person[] = [
       { id: "cg_ravi", name: "Ravi", role: "son, weekends" },
       { id: "cg_rosa", name: "Rosa", role: "home aide, weekday mornings" },
     ],
+    history: [
+      { id: "ms_1", when: "About 5 years ago", year: 2021, month: null, category: "diagnosis", text: "Started forgetting names and repeating questions; the family thought it was age." },
+      { id: "ms_2", when: "Spring 2022", year: 2022, month: 4, category: "diagnosis", text: "Diagnosed with dementia by a specialist at a memory clinic." },
+      { id: "ms_3", when: "Summer 2022", year: 2022, month: 7, category: "change", text: "Stopped driving after getting lost on a familiar road." },
+      { id: "ms_4", when: "2024", year: 2024, month: null, category: "setting", text: "Moved in with her daughter's family." },
+      { id: "ms_5", when: "Last year", year: 2025, month: null, category: "health", text: "Fell in the kitchen, broke her wrist, and spent a week in hospital." },
+      { id: "ms_6", when: "January 2026", year: 2026, month: 1, category: "support", text: "A home aide began helping on weekday mornings." },
+    ],
   },
   {
     id: "p_arjun",
@@ -30,6 +38,14 @@ export const PEOPLE: Person[] = [
     caregivers: [
       { id: "cg_priya", name: "Priya", role: "mother" },
       { id: "cg_dev", name: "Dev", role: "father" },
+    ],
+    history: [
+      { id: "ms_1", when: "Age 2", year: 2021, month: null, category: "diagnosis", text: "Parents noticed he was not using words and lined up his toys for long stretches." },
+      { id: "ms_2", when: "Age 3", year: 2022, month: null, category: "diagnosis", text: "Assessed and identified as autistic." },
+      { id: "ms_3", when: "2022", year: 2022, month: null, category: "support", text: "Started speech therapy once a week." },
+      { id: "ms_4", when: "Fall 2024", year: 2024, month: 10, category: "setting", text: "Started kindergarten with a classroom aide." },
+      { id: "ms_5", when: "2025", year: 2025, month: null, category: "change", text: "Began speaking in short sentences at home." },
+      { id: "ms_6", when: "This fall", year: 2026, month: 9, category: "change", text: "Mornings before school became harder after a change of bus driver." },
     ],
   },
   {

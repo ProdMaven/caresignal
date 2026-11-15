@@ -42,7 +42,7 @@ Family caregiver speaks -> AI formats a structured record -> pattern finder upda
 4. After Save: the matching pattern, a warm line, and the top next step, on the same screen.
 5. (Removed Nov 14 by the PM: caregiver check-in screen. A caregiver who sounds in distress in a note still gets a caring message and the 988 Suicide and Crisis Lifeline, and nothing is logged.)
 6. Feedback on every suggestion: "Did this help?" The count shows next to the score and never changes the score.
-7. Weekly and monthly overview of the logs. (Caregiver journal removed Nov 14 by the PM.) Account page: who is logging, mic language, Care Profiles, sign out on this device. No passwords for now.
+7. History for each Care Profile: milestones since the first signs or the diagnosis, spoken or typed and turned into a dated list, when adding a person and when editing one from Account. Weekly and monthly overview of the logs. (Caregiver journal removed Nov 14 by the PM.) Account page: who is logging, mic language, Care Profiles, sign out on this device. No passwords for now.
 8. Roadmap only, not built: messaging between matched caregivers (needs moderation first).
 
 Build order: step 4 above, then real AI on /api/log and the eval runner, then feedback, language picker, and the overview. Every new input surface gets red-team cases.

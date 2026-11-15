@@ -2,16 +2,18 @@
 
 // Intake: a caregiver adds the person they care for. Caregiver-reported, never a diagnosis.
 import { useState } from "react";
-import { UserRoundPlus, X } from "lucide-react";
+import { Pencil, UserRoundPlus, X } from "lucide-react";
+import { HistoryEditor } from "@/components/history";
 import { ErrorState } from "@/components/states";
 import { Button } from "@/components/ui/button";
 import {
   Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { postJson } from "@/lib/api";
+import { fetchJson, postJson } from "@/lib/api";
 import type {
-  AgeBand, CommunicationLevel, CreatePersonRequest, CreatePersonResponse, Gender, Mode, Person, SpectrumLevel,
+  AgeBand, CommunicationLevel, CreatePersonRequest, CreatePersonResponse, Gender, MilestoneInput, Mode, Person, SpectrumLevel,
+  UpdatePersonRequest, UpdatePersonResponse,
 } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
@@ -76,20 +78,26 @@ function Choice<T extends string>({
   );
 }
 
-export function IntakeForm({ mode, onCreated }: { mode: Mode; onCreated: (person: Person) => void }) {
+// Adds a Care Profile, or edits one when `person` is given. Both include the history.
+export function IntakeForm({ mode, onCreated, person }: { mode: Mode; onCreated: (person: Person) => void; person?: Person }) {
+  const editing = Boolean(person);
   const autism = mode === "autism";
   const [open, setOpen] = useState(false);
-  const [name, setName] = useState("");
-  const [alias, setAlias] = useState("");
-  const [ageBand, setAgeBand] = useState<AgeBand | null>(autism ? null : "adult");
-  const [gender, setGender] = useState<Gender | null>(null);
-  const [level, setLevel] = useState<SpectrumLevel | null>(null);
-  const [communication, setCommunication] = useState<CommunicationLevel | null>(null);
+  const [name, setName] = useState(person?.displayName ?? "");
+  const [alias, setAlias] = useState(person ? person.aliases.filter((a) => a !== person.displayName).join(", ") : "");
+  const [ageBand, setAgeBand] = useState<AgeBand | null>(person?.ageBand ?? (autism ? null : "adult"));
+  const [gender, setGender] = useState<Gender | null>(person?.gender ?? null);
+  const [level, setLevel] = useState<SpectrumLevel | null>(person?.spectrumLevel ?? null);
+  const [communication, setCommunication] = useState<CommunicationLevel | null>(person?.communicationLevel ?? null);
+  const [history, setHistory] = useState<MilestoneInput[]>(person?.history ?? []);
   // Who cares for them. The first row is the person filling in the form.
-  const [carers, setCarers] = useState<{ name: string; role: string }[]>([{ name: "", role: "" }]);
+  const [carers, setCarers] = useState<{ id?: string; name: string; role: string }[]>(
+    person?.caregivers?.length ? person.caregivers.map((c) => ({ ...c })) : [{ name: "", role: "" }],
+  );
   const setCarer = (i: number, patch: Partial<{ name: string; role: string }>) =>
     setCarers((list) => list.map((c, j) => (j === i ? { ...c, ...patch } : c)));
-  const filledCarers = carers.map((c) => ({ name: c.name.trim(), role: c.role.trim() })).filter((c) => c.name && c.role);
+  const filledCarers = carers.map((c) => ({ id: c.id, name: c.name.trim(), role: c.role.trim() })).filter((c) => c.name && c.role);
+  const filledHistory = history.map((m) => ({ ...m, text: m.text.trim(), when: m.when.trim() })).filter((m) => m.text);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -99,17 +107,29 @@ export function IntakeForm({ mode, onCreated }: { mode: Mode; onCreated: (person
     if (!ready || !ageBand || !communication || busy) return;
     setBusy(true);
     setError(null);
-    const body: CreatePersonRequest = {
-      mode,
-      displayName: name.trim(),
-      aliases: alias.split(",").map((a) => a.trim()).filter(Boolean),
-      ageBand,
-      gender: gender ?? undefined,
-      spectrumLevel: autism ? level ?? undefined : undefined,
-      communicationLevel: communication,
-      caregivers: filledCarers,
-    };
+    const aliases = alias.split(",").map((a) => a.trim()).filter(Boolean);
     try {
+      if (person) {
+        const body: UpdatePersonRequest = {
+          displayName: name.trim(), aliases, ageBand, gender, spectrumLevel: autism ? level ?? undefined : undefined,
+          communicationLevel: communication, caregivers: filledCarers, history: filledHistory,
+        };
+        const res = await fetchJson<UpdatePersonResponse>(`/api/people/${person.id}`, { method: "PATCH", body: JSON.stringify(body) });
+        setOpen(false);
+        onCreated(res.person);
+        return;
+      }
+      const body: CreatePersonRequest = {
+        mode,
+        displayName: name.trim(),
+        aliases,
+        ageBand,
+        gender: gender ?? undefined,
+        spectrumLevel: autism ? level ?? undefined : undefined,
+        communicationLevel: communication,
+        caregivers: filledCarers.map(({ name: n, role }) => ({ name: n, role })),
+        history: filledHistory,
+      };
       const res = await postJson<CreatePersonResponse>("/api/people", body);
       setOpen(false);
       setName("");
@@ -118,6 +138,7 @@ export function IntakeForm({ mode, onCreated }: { mode: Mode; onCreated: (person
       setCarers([{ name: "", role: "" }]);
       setLevel(null);
       setCommunication(null);
+      setHistory([]);
       onCreated(res.person);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Could not save the profile. Please try again.");
@@ -129,14 +150,21 @@ export function IntakeForm({ mode, onCreated }: { mode: Mode; onCreated: (person
   return (
     <Dialog open={open} onOpenChange={(next) => { setOpen(next); if (next) setError(null); }}>
       <DialogTrigger asChild>
-        <Button variant="outline" size="sm" className="self-start">
-          <UserRoundPlus className="size-4" aria-hidden />
-          Add the person you care for
-        </Button>
+        {editing ? (
+          <Button variant="outline" size="sm" className="self-start">
+            <Pencil className="size-4" aria-hidden />
+            Edit profile and history
+          </Button>
+        ) : (
+          <Button variant="outline" size="sm" className="self-start">
+            <UserRoundPlus className="size-4" aria-hidden />
+            Add the person you care for
+          </Button>
+        )}
       </DialogTrigger>
       <DialogContent className="max-h-[90dvh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Tell us about the person you care for</DialogTitle>
+          <DialogTitle>{editing ? `Edit ${person?.displayName ?? "profile"}` : "Tell us about the person you care for"}</DialogTitle>
           <DialogDescription>
             A few questions so patterns and ideas fit {autism ? "your child" : "them"} better. These are your own
             words, not a diagnosis. Please use a first name or nickname only.
@@ -205,13 +233,14 @@ export function IntakeForm({ mode, onCreated }: { mode: Mode; onCreated: (person
               </Button>
             )}
           </fieldset>
+          <HistoryEditor mode={mode} value={history} onChange={setHistory} personName={name} />
           {error && <ErrorState message={error} />}
         </div>
         <DialogFooter>
           <DialogClose asChild>
             <Button variant="ghost" disabled={busy}>Cancel</Button>
           </DialogClose>
-          <Button onClick={save} disabled={!ready || busy}>{busy ? "Saving..." : "Save profile"}</Button>
+          <Button onClick={save} disabled={!ready || busy}>{busy ? "Saving..." : editing ? "Save changes" : "Save profile"}</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

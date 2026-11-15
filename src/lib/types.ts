@@ -21,6 +21,8 @@ export interface Person {
   communicationLevel?: CommunicationLevel;
   // v6: the people who care for this person. "Who is logging?" lists these, not another family's caregivers.
   caregivers?: CaregiverRef[];
+  // v9: the caregiver's own account of the journey so far, as dated milestones. Reported by the caregiver, never a diagnosis by the app.
+  history?: Milestone[];
 }
 
 export interface CaregiverRef { id: string; name: string; role: string } // role in plain words, for example "father" or "home aide"
@@ -156,6 +158,7 @@ export interface CreatePersonRequest {
   spectrumLevel?: SpectrumLevel; // required in autism mode
   communicationLevel: CommunicationLevel;
   caregivers?: { name: string; role: string }[]; // first names or nicknames only; the first entry is the person filling in the form
+  history?: MilestoneInput[];
 }
 export interface CreatePersonResponse { person: Person }
 
@@ -186,3 +189,39 @@ export interface OverviewResponse {
   topContexts: OverviewCount[]; // contextBefore tags, most frequent first
   whatHelped: { key: string; tried: number; calmed: number }[]; // responseTried tags and how often the outcome was calmed
 }
+
+// History: milestones since the condition was first noticed or diagnosed, up to today.
+// The caregiver speaks or types the story; POST /api/history/format turns it into milestones they can check and edit.
+export type MilestoneCategory = "diagnosis" | "change" | "support" | "health" | "setting" | "other";
+export interface Milestone {
+  id: string;
+  when: string; // as shown, for example "2021", "March 2023", "About 3 years ago"
+  year: number | null; // for ordering; null when the caregiver gave no date
+  month: number | null; // 1 to 12, or null
+  category: MilestoneCategory;
+  text: string; // one plain sentence. No medicine names or doses.
+}
+export type MilestoneInput = Omit<Milestone, "id"> & { id?: string };
+
+// POST /api/history/format  (parse only; does not save)
+export interface FormatHistoryRequest { mode: Mode; text: string; now: string }
+export interface FormatHistoryResponse {
+  // milestones: the story was turned into milestones. caregiver_distress: the speaker is in distress (care + 988).
+  // out_of_scope: a question or request the app does not answer.
+  kind: "milestones" | "caregiver_distress" | "out_of_scope";
+  message: string | null;
+  milestones: MilestoneInput[];
+}
+
+// PATCH /api/people/[id]  (edit a Care Profile, including its history). Only people added through intake can be edited.
+export interface UpdatePersonRequest {
+  displayName?: string;
+  aliases?: string[];
+  ageBand?: AgeBand;
+  gender?: Gender | null;
+  spectrumLevel?: SpectrumLevel;
+  communicationLevel?: CommunicationLevel;
+  caregivers?: { id?: string; name: string; role: string }[]; // an id keeps an existing caregiver; no id adds one
+  history?: MilestoneInput[];
+}
+export interface UpdatePersonResponse { person: Person }

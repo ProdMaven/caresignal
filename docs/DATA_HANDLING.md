@@ -7,10 +7,11 @@
 
 ## What Unspoken stores
 - Structured log fields and the text transcript of each note, Care Profiles (first name or nickname, age band, optional gender, spectrum level, communication level, and the first names and roles of the people who care for them), and "Did this help?" answers. Audio is never stored; speech is converted to text in the browser.
-- No diagnoses, medications, or clinical records are created by the app.
+- An optional history for each Care Profile: dated milestones in the caregiver's own words (first signs or a diagnosis they report, changes, support started, health events, changes of setting). The app records what the caregiver says; it never produces a diagnosis. Medicine names and doses are removed from milestones.
+- No clinical records are created by the app.
 
 ## What leaves the app
-- Each note's text is sent to the Anthropic API to be formatted into fields. Pattern lines, Ask answers and overview numbers are computed in code and are not sent anywhere. No other third parties receive data.
+- Each note's text is sent to the Anthropic API to be formatted into fields. The spoken or typed history is sent to the same API to be turned into milestones. Pattern lines, Ask answers and overview numbers are computed in code and are not sent anywhere. No other third parties receive data.
 - No data is sold, shared, or used for advertising.
 
 ## Community statistics ("what worked for others")

@@ -77,7 +77,7 @@ How the quote slots work:
 
 **Slide 3. 1:35 to 2:05 (83 words)**
 
-> The model has one job. It turns words into fields. Plain code counts the patterns, so the model cannot invent a pattern. A fixed safety screen runs before any model call. Red flags lead to your doctor or care team. Emergencies say call 911. A caregiver in distress gets the 988 Suicide and Crisis Lifeline. It never suggests medication or restraint. Supports caregivers. Does not diagnose. If the model fails, the safety message still shows. (cut first: the last sentence)
+> In the log, the model has one job. It turns words into fields. Plain code counts the patterns, so the model cannot invent a pattern. A fixed safety screen runs before any model call. Red flags lead to your doctor or care team. Emergencies say call 911. A caregiver in distress gets the 988 Suicide and Crisis Lifeline. It never suggests medication or restraint. Supports caregivers. Does not diagnose. If the model fails, the safety message still shows. (cut first: the last sentence)
 
 **Slide 4. 2:05 to 2:38 (84 words)**
 
@@ -328,7 +328,7 @@ Two or three short sentences each. If you do not know, say "we have not measured
 
 Extra lines to have ready:
 
-- **"Does the Ask screen use AI?"** No. Ask answers and pattern summary lines are computed text built from the counts. The model does one thing in this build: it turns a caregiver's note into fields.
+- **"Does the Ask screen use AI?"** No. Ask answers and pattern summary lines are computed text built from the counts. The model does two things in this build: it turns a caregiver's note into fields, and it turns a spoken history into a list of milestones the caregiver checks before saving.
 - **"The snack card says research-backed with a score of 81. Where is that from?"** It is demo data. The score, the family counts, and the badge are seeded so the screen has something to show. They are not findings.
 - **"Why two communities?"** The need is the same and the engine is the same. For the pitch we show one use case, logging, and one short beat of the second mode.
 

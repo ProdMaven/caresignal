@@ -5,6 +5,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Info, LogOut, UserRound } from "lucide-react";
+import { HistoryList } from "@/components/history";
 import { IntakeForm } from "@/components/intake-form";
 import { LanguagePicker } from "@/components/language-picker";
 import { PersonPicker, usePersonContext } from "@/components/person-picker";
@@ -101,15 +102,30 @@ export default function AccountPage() {
         {people && people.length > 0 ? (
           <ul className="flex flex-col gap-2">
             {people.map((p) => (
-              <li key={p.id} className="flex items-start gap-3 rounded-lg border px-3 py-2">
+              <li key={p.id} className="flex items-start gap-3 rounded-lg border px-3 py-3">
                 <UserRound className="mt-0.5 size-5 shrink-0 text-muted-foreground" aria-hidden />
-                <div className="min-w-0">
+                <div className="min-w-0 flex-1">
                   <p className="font-semibold">
                     {p.displayName} {p.isFeatured && <span className="text-xs font-normal text-muted-foreground">(demo)</span>}
                   </p>
                   <p className="text-sm text-muted-foreground">{profileLine(p)}</p>
                   {p.caregivers && p.caregivers.length > 0 && (
                     <p className="text-sm text-muted-foreground">Cared for by {p.caregivers.map((c) => `${c.name} (${c.role})`).join(", ")}</p>
+                  )}
+                  {p.history && p.history.length > 0 ? (
+                    <details className="mt-2">
+                      <summary className="cursor-pointer text-sm font-semibold">History ({p.history.length} milestones)</summary>
+                      <div className="mt-2">
+                        <HistoryList history={p.history} />
+                      </div>
+                    </details>
+                  ) : (
+                    <p className="mt-1 text-sm text-muted-foreground">No history added yet.</p>
+                  )}
+                  {!p.isFeatured && (
+                    <div className="mt-2">
+                      <IntakeForm key={`${p.id}:${p.history?.length ?? 0}:${p.displayName}`} mode={p.mode} person={p} onCreated={() => ctx.reload()} />
+                    </div>
                   )}
                 </div>
               </li>

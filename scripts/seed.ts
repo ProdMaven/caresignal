@@ -38,7 +38,7 @@ export async function seed(client?: PrismaClient): Promise<SeedResult> {
       prisma.person.deleteMany(),
 
       prisma.person.createMany({
-        data: PEOPLE.map((p) => ({ ...p, aliases: JSON.stringify(p.aliases), caregivers: JSON.stringify(p.caregivers ?? []) })),
+        data: PEOPLE.map((p) => ({ ...p, aliases: JSON.stringify(p.aliases), caregivers: JSON.stringify(p.caregivers ?? []), history: JSON.stringify(p.history ?? []) })),
       }),
       prisma.event.createMany({
         data: events.map((e) => ({

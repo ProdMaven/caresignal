@@ -1,6 +1,6 @@
 // In-memory store for mock mode. Lives on globalThis so every route handler
 // (each may be bundled separately) shares one copy for the life of the server.
-import type { LogRecord, Mode, Person, StrategyFeedback } from "../lib/types";
+import type { LogRecord, Milestone, MilestoneInput, Mode, Person, StrategyFeedback, UpdatePersonRequest } from "../lib/types";
 import { nowIso } from "../lib/time";
 import { registerCaregivers } from "../config/modes";
 import { buildSeedEvents, PEOPLE, STRATEGIES } from "./data";
@@ -70,9 +70,60 @@ export function resetStore(): number {
 }
 
 // Intake: add a person the caregiver described. Returns null when the demo is full.
+// Gives every milestone an id and keeps the ones that already have one.
+function withMilestoneIds(history: MilestoneInput[] | undefined): Milestone[] | undefined {
+  if (!history) return undefined;
+  const used = new Set(history.map((m) => m.id).filter(Boolean));
+  let n = 1;
+  return history.map((m) => {
+    if (m.id) return { ...m, id: m.id };
+    while (used.has(`ms_${n}`)) n++;
+    used.add(`ms_${n}`);
+    return { ...m, id: `ms_${n}` };
+  });
+}
+
+const AGE_LABEL: Record<string, string> = { "2_5": "Age 2 to 5", "6_11": "Age 6 to 11", "12_17": "Age 12 to 17", adult: "Adult" };
+
+// Edits a person added through intake. Existing caregivers keep their ids so earlier entries still show the right name.
+export function updatePerson(id: string, patch: UpdatePersonRequest): Person | null {
+  const s = store();
+  const index = s.people.findIndex((p) => p.id === id && !p.isFeatured);
+  if (index < 0) return null;
+  const current = s.people[index];
+  const next: Person = { ...current };
+  if (patch.displayName !== undefined) next.displayName = patch.displayName.trim();
+  if (patch.aliases !== undefined || patch.displayName !== undefined) {
+    next.aliases = Array.from(new Set([next.displayName, ...(patch.aliases ?? current.aliases.filter((a) => a !== current.displayName))].map((a) => a.trim()).filter(Boolean)));
+  }
+  if (patch.ageBand !== undefined) {
+    next.ageBand = patch.ageBand;
+    next.ageBandOrSetting = AGE_LABEL[patch.ageBand] ?? next.ageBandOrSetting;
+  }
+  if (patch.gender !== undefined) next.gender = patch.gender ?? undefined;
+  if (patch.spectrumLevel !== undefined && next.mode === "autism") next.spectrumLevel = patch.spectrumLevel;
+  if (patch.communicationLevel !== undefined) next.communicationLevel = patch.communicationLevel;
+  if (patch.caregivers !== undefined) {
+    const prefix = `cg_new_${id.replace("p_new_", "")}_`;
+    const existingIds = new Set((current.caregivers ?? []).map((c) => c.id));
+    let n = (current.caregivers ?? []).reduce((max, c) => Math.max(max, Number(c.id.replace(prefix, "")) || 0), 0);
+    next.caregivers = patch.caregivers.map((c) => ({
+      id: c.id && existingIds.has(c.id) ? c.id : `${prefix}${++n}`,
+      name: c.name.trim(),
+      role: c.role.trim(),
+    }));
+    registerCaregivers(next.caregivers);
+  }
+  if (patch.history !== undefined) next.history = withMilestoneIds(patch.history);
+  s.people[index] = next;
+  changed();
+  return next;
+}
+
 export function addPerson(
-  input: Omit<Person, "id" | "isFeatured" | "caregivers">,
+  input: Omit<Person, "id" | "isFeatured" | "caregivers" | "history">,
   caregivers: { name: string; role: string }[] = [],
+  history?: MilestoneInput[],
 ): Person | null {
   const s = store();
   if (s.people.length - PEOPLE.length >= MAX_ADDED_PEOPLE) return null;
@@ -83,6 +134,7 @@ export function addPerson(
     isFeatured: false,
     // Each added person gets their own caregivers. With none given, the screen falls back to the mode's demo caregivers.
     caregivers: caregivers.length ? caregivers.map((c, i) => ({ id: `cg_new_${n}_${i + 1}`, name: c.name, role: c.role })) : undefined,
+    history: withMilestoneIds(history),
   };
   registerCaregivers(person.caregivers);
   s.people.push(person);
