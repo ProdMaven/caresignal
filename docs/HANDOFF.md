@@ -24,8 +24,8 @@ The demo profile "Maya" is now **Aisha**, the daughter of a team member (Jayesh)
 | Repo from the organizers' template | Still open. |
 
 ## What only the PM can do before 12:00 PM PST
-1. Record the demo video (about 90 seconds) and put the link in `README.md` and `submission/README.md` (slot `[VIDEO LINK OR FILE]`).
-2. Find the team number (tiny.cc/BuildTeamNames), create the Drive folder, upload the contents of `submission/` plus the video.
+1. Done: the demo video (85 seconds) is `submission/Unspoken_demo_Aisha.mp4` and is linked from both READMEs and the deck.
+2. Team 4. Create the Drive folder `Team_4_Unspoken` (tiny.cc/BuildTeams26) and upload the contents of `submission/`, which now includes the video.
 3. Fill the open slots in the deck: video link and first channel. Team name (Unspoken: Jayesh, Prisha, Aadi, Vinod) and two quotes from a parent on the team are filled.
 4. Done: two quotes from one parent on the team are in `docs/problem.md` (source in `docs/research/caregiver_quotes.md`). It is one parent, not a study; a dementia caregiver quote is still missing.
 5. Confirm the template repo question with the organizers.

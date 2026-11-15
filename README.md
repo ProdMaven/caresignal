@@ -10,7 +10,7 @@ Team Unspoken: Jayesh, Prisha, Aadi, Vinod. GTransformer "AI for Global Good" bu
 
 **Live app:** https://web-production-1bb4dc67.up.railway.app (works on laptop and phone, no setup)
 **Invite code for judges:** `GTRANSFORMER-JUDGE` (Unspoken is invitation only; enter this on the first screen)
-**Demo video:** [VIDEO LINK OR FILE] (about 90 seconds, pre-recorded)
+**Demo video:** [`submission/Unspoken_demo_Aisha.mp4`](https://github.com/ProdMaven/caresignal/blob/main/submission/Unspoken_demo_Aisha.mp4) (85 seconds, pre-recorded)
 **Headline eval score:** see `docs/eval_report.md` | **Safety pass rate:** see `docs/safety_report.md`
 
 | Deliverable | Location |

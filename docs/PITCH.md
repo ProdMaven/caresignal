@@ -24,7 +24,7 @@ The guide arrived after this pack was written. Everything below section 1 was fi
 | Demo video about 90 seconds, talked over live | 68 seconds | Add up to 22 seconds. Two beats are ready if the feature flags are on for the live app: a note in Spanish that becomes the same English record with the safety line in both languages, and the one follow-up question ("What was happening just before she started pacing?"). If the flags stay off, slow the existing steps instead. |
 | Order: 1 the problem, 2 pain points, 3 your design, 4 demo walkthrough | Problem, demo, how it works, proof, who first | PM decision. Closest match with the least rework: slide 1 covers the problem and the pain points (the scattered pieces), slide 3 is the design, and the demo moves after it. Proof and first channel then close in the last 35 seconds. The slide numbers in `docs/pitch.pdf` are still in the old order. |
 | Judges open the live URL and run the eval script; if either fails, that criterion scores a 1 | Not stated | `README.md` now has the exact commands. The script runs against the live URL with no key, saves nothing there, and exits with an error only if a crisis or out-of-scope case fails. |
-| Submit to the Team Drive in a folder named `Team_#_team_name` | Repo only | The files are collected in `submission/`. Upload that folder's contents and add the video. Team number: [TEAM #]. |
+| Submit to the Team Drive in a folder named `Team_#_team_name` | Repo only | The files are collected in `submission/`. Upload that folder's contents and add the video. Team number: 4, folder `Team_4_Unspoken`. |
 | Scored 1 to 5 per criterion; ties go to the higher Safety score | Not stated | Keep the safety beat in the video. |
 
 Suggested time map for 3:30 (if the PM takes the guide's order): 0:00 to 0:30 problem and pain points (slide 1), 0:30 to 1:00 design and why it is safe (slide 3), 1:00 to 2:30 demo video (90 s), 2:30 to 3:05 proof (slide 4), 3:05 to 3:30 first channel and close (slide 5).
@@ -120,9 +120,9 @@ The video is `Unspoken_demo_Aisha.mp4` (85 seconds, 12 steps, in the app's own o
 >
 > We got there by failing. Dialect notes got a different intensity. Fixed. A parent on our team spoke a real note, 150 words. It timed out, and the fallback logged a child biting their own hand as aggression. Fixed, and now a test.
 
-**Slide 5. 3:05 to 3:30 (61 words)**
+**Slide 5. 3:05 to 3:30 (about 90 words; cut the roadmap sentence first if short on time)**
 
-> Who first? Families who share the care of one person. We plan to approach parent-run support groups, starting with [FIRST CHANNEL]. Next, accounts, so entries are private. Then caregiver matching and wearables, on the roadmap. (cut first: this sentence)
+> Who first? Families who share the care of one person. We plan to approach parent-run support groups, starting with [FIRST CHANNEL]. Next, accounts, so entries are private. Today patterns are exact counts, so nothing can be invented. Next we add semantic matching, with a vector index in the same database, so near-miss entries join one pattern. Then caregiver matching and wearables, on the roadmap. (cut first: this sentence)
 >
 > The app is live. Type your own note.
 >
@@ -139,7 +139,7 @@ Put the live URL and the invite code in the footer of every slide.
 ### Slide 1. Problem
 
 - **Title:** Unspoken (working name). Every need, finally heard.
-- **Subtitle:** Distress is communication
+- **Subtitle:** Many parents carry this in silence. Unspoken gives them a place to say it, and shows what has helped.
 - **On the slide (4 bullets at most):**
   - "People who can't always say what they need. Families who each see one piece."
   - Quote 1 (filled Nov 15): "I asked her what is happening... she's pointing to the head and she's not liking it, and she was crying." A parent on our team, father of an autistic daughter, in a note he spoke into the app.
@@ -152,7 +152,7 @@ Put the live URL and the invite code in the footer of every slide.
 ### Slide 2. Demo
 
 - **Title:** One record of each hard moment
-- **On the slide:** one visual only, the 90-second video ([VIDEO LINK OR FILE]), full height. Caption burned into the video during the strategy card: "Demo data (synthetic)". Small line under the video: "Aisha is a team member's daughter, shown with her parent's consent. Entries on screen are demo entries."
+- **On the slide:** one visual only, the 85-second video (`submission/Unspoken_demo_Aisha.mp4`), full height. Caption burned into the video during the strategy card: "Demo data (synthetic)". Small line under the video: "Aisha is a team member's daughter, shown with her parent's consent. Entries on screen are demo entries."
 - **Exact numbers shown:** none on the slide. The video shows Aisha's pattern count and the strategy card numbers. All of them come from demo entries and seed data.
 - **Speaker note:** Narrate live over the muted video using the slide 2 script. Say "Care Profile" if you name the person picker. Never say "caregiver profile". Do not read the count, the score or the percentages aloud; let the screen show them. First names only for the family, and nothing about Aisha beyond what is on screen.
 
@@ -264,7 +264,7 @@ Run history (from `eval/results/history.json`, `safety/results/history.json`, `d
   - First users: families who share the care of one person
   - First channel (a plan, not a partnership): parent-run support groups we plan to approach, starting with [FIRST CHANNEL]
   - Next: accounts so entries are private, real caregiver interviews, saved data that survives a restart
-  - Roadmap: caregiver-to-caregiver matching (needs moderation first), wearables
+  - Roadmap: semantic matching with a vector index in the same Postgres, so near-miss entries join one pattern (not built yet); caregiver-to-caregiver matching (needs moderation first); wearables
 - **Exact numbers shown:** none.
 - **Speaker note:** End on the closing line, "The pattern speaks for the person who couldn't.", and the live URL. Invite the judges to type their own note.
 
@@ -334,7 +334,7 @@ Use this if time is cut or the main file will not play.
 1. Say: "The video is in the repo. Here is the same flow in three pictures." Show three stills placed in the slide 2 notes: the confirm card with the two steps, the match panel, the timeline.
 2. Speak the 30-second cut lines over the stills.
 3. Do not open the live app during the 3.5 minutes. Offer it in Q&A: "It is live right now. The code is GTRANSFORMER-JUDGE."
-4. Backup file: [VIDEO LINK OR FILE]. The 30-second cut uses steps 1 to 4 and step 10 of the main video.
+4. Backup file: `submission/Unspoken_demo_Aisha.mp4`. The 30-second cut uses steps 1 to 4 and step 10 of the main video.
 
 ---
 
@@ -365,6 +365,8 @@ Two or three short sentences each. If you do not know, say "we have not measured
 11. **What is the business model, and what does it cost per user?** We do not have a validated model. Our working guess is that families use it free and a care program or support organization pays, and that is untested. Cost: about half a cent per note ($0.005, from measured token usage and public list prices on Nov 15). That covers turning a note into fields only; the summary, Ask and follow-up calls are not priced yet.
 
 12. **Why this model, and why not RAG or a vector database?** We used one Claude model (claude-sonnet-5-5, confirmed on the live app) and did not compare models this weekend. The benchmark lets us test a smaller one later. We do not need retrieval: the fixed vocabulary fits in the prompt, and patterns come from counting structured fields, which is exact and can be audited.
+
+12a. **How will pattern matching scale, and are you using a vector database?** Not today, and we say so. Today a pattern is an exact count: same kind of moment, same time of day, same thing logged before it, on at least 4 entries and 60% of the time. That is why a pattern cannot be invented and why every count links to its entries. The limit is that it is strict: "evening" and "night", or two ways of saying the same thing, do not join. The next step is semantic matching: embed each entry, keep the vectors in the same Postgres with pgvector, and group near-miss entries into one candidate pattern. Code still does the counting on top, so the number on screen stays auditable. It is on the roadmap, not in the build; do not describe it as built.
 
 13. **How would you scale it?** Prompt caching is already on, at 98.0% of input tokens. Next we would send short notes to a smaller, cheaper model and keep the larger one for long notes, checked against the same benchmark. Later, once real and consented usage data exists, we could fine-tune a small model. That is a future step. We did not build it.
 
@@ -406,6 +408,7 @@ Extra lines to have ready:
 17. Do not say "CareSignal". The product is "Unspoken (working name)" on first mention, then "Unspoken". If asked about the old name: it was changed because CareSignal is an existing healthcare company.
 18. Do not say the dementia flow "is DICE" or "is clinically tested". Say it follows the DICE approach (Describe, Investigate, Create, Evaluate), which was tested in the WeCareAdvisor trial. Our app has not been tested in a trial.
 19. Do not present community rankings ("what helped other families") as working today. They are the long-term vision and run on synthetic data.
+20. Do not say the app uses semantic matching, embeddings or a vector database today. It does not. Patterns are exact counts in code. Semantic matching is the next step on the roadmap; say "next we add", never "we use".
 
 ---
 
@@ -418,7 +421,7 @@ Extra lines to have ready:
 | Quote 2 (filled Nov 15) | Deck slide 1 only | "She has never done something like this ever before." The same parent. A quote from a dementia caregiver is still missing. |
 | [FIRST CHANNEL] | Script slide 5, deck slide 5, Q&A 10 and 15 | The name of one parent-run support group the team can actually reach. If none, the script stops at "parent-run support groups." |
 | Team names (filled Nov 15) | Deck slide 1 | Team Unspoken: Jayesh, Prisha, Aadi, Vinod |
-| [VIDEO LINK OR FILE] | Deck slide 2, fallback plan | Where the 90-second cut and the 30-second cut live (Team Drive folder; the files are too large for the repo) |
+| Video file (filled Nov 15) | Deck slide 2, fallback plan | `submission/Unspoken_demo_Aisha.mp4` (85 seconds). The 30-second cut is not made. |
 | Consent check | Video, slide 2 | Jayesh confirms, after watching the final cut, that Aisha's first name and the screens shown are fine to present and upload |
 | [INTERVIEWS] | Q&A 14 | How many caregivers were interviewed and their roles, or the honest "none yet" |
 | Cost per note (filled Nov 15: $0.005) | Deck slide 4, Q&A 11 | Done. Source and date are in `eval/pricing.json`. Cost per user or per month is still NEED DATA. |

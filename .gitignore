@@ -22,3 +22,6 @@ prisma/*.db
 prisma/*.db-journal
 # written by `next dev`; kept out of git (it contains an em-dash, which docs rules forbid)
 AGENTS.md
+
+# Zipped copy of submission/ made for upload; the folder itself is tracked.
+dist/
