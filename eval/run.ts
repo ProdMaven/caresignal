@@ -195,6 +195,9 @@ async function runExtCase(r: Runner, c: Raw, result: CaseResult, name: string): 
   result.input = c.input ?? c.question ?? c.setup ?? null;
   try {
     const mod = (await import(`./lib/ext/${name}`)) as { grade: ExtGrade };
+    // Cases that store notes first need a clean store, or one case's entries leak into the next.
+    const storesNotes = Array.isArray(c.setup) && c.setup.length > 0;
+    if (storesNotes && r.writesAllowed) await r.client.call("POST", "/api/reset");
     const call: ExtCall = async (method, path, body) => {
       const http = await r.client.call(method, path, body, true);
       if (method === "POST" && !path.startsWith("/api/summary") && !path.startsWith("/api/ask") && !path.startsWith("/api/log")) r.wrote = true;
