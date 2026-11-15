@@ -48,6 +48,33 @@
   ol.fails li { font-size: 12.5pt; line-height: 1.3; }
   .tag { display: inline-block; font-size: 10.5pt; font-weight: 700; padding: 1pt 7pt; border-radius: 99pt; background: var(--teal-soft); color: var(--teal); margin-right: 5pt; text-transform: uppercase; letter-spacing: 0.03em; }
   .tag.plan { background: var(--amber); color: #8a5a00; }
+
+  /* Design slide */
+  .design .steps { display: flex; align-items: stretch; gap: 9pt; }
+  .design .step { flex: 1; background: var(--card); border: 1.5px solid var(--line); border-radius: 12pt; padding: 11pt 12pt 11pt; display: flex; flex-direction: column; gap: 4pt; min-width: 0; }
+  .design .step.ai { border-color: var(--teal); background: var(--teal-soft); }
+  .design .step.rules { border-color: var(--amber-line); background: var(--amber); }
+  .design .step .n { width: 24pt; height: 24pt; border-radius: 50%; background: var(--ink); color: #fff; font-weight: 700; font-size: 12.5pt; display: flex; align-items: center; justify-content: center; }
+  .design .step b { font-size: 19pt; line-height: 1.15; margin-top: 3pt; }
+  .design .step .d { font-size: 13pt; line-height: 1.28; margin-bottom: 8pt; }
+  .design .who { margin-top: auto; align-self: flex-start; font-size: 10.5pt; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; padding: 2pt 9pt; border-radius: 99pt; white-space: nowrap; }
+  .design .who.you { background: #e9e6dd; color: var(--ink); }
+  .design .who.model { background: var(--teal); color: #fff; }
+  .design .who.fixed { background: #8a5a00; color: #fff; }
+  .design .step .d + .who { margin-top: auto; }
+  .design .arrow { font-size: 22pt; }
+  .design .safety { background: var(--amber); border: 1.5px solid var(--amber-line); border-radius: 12pt; padding: 9pt 16pt 10pt; }
+  .design h1 { margin-bottom: 10pt; }
+  .design .safety > b { display: block; font-size: 12pt; letter-spacing: 0.04em; text-transform: uppercase; color: #8a5a00; margin-bottom: 6pt; }
+  .design .safety .lines { display: flex; gap: 0.3in; }
+  .design .safety .lines span { flex: 1; font-size: 14.5pt; font-weight: 600; line-height: 1.25; }
+  .design .safety .lines span:first-child { flex: 1.35; }
+  .design .safety .lines span:nth-child(2) { flex: 0.8; }
+  .design .safety .lines i { display: block; font-style: normal; font-weight: 400; font-size: 12pt; color: var(--muted); margin-bottom: 1pt; }
+  .design .split { display: flex; gap: 0.25in; }
+  .design .split .card { flex: 1; padding: 8pt 15pt 9pt; }
+  .design .split p { font-size: 13.5pt; line-height: 1.3; }
+  .design .split b { display: block; font-size: 15pt; color: var(--teal); margin-bottom: 1pt; }
 </style>
 </head>
 <body>
@@ -80,40 +107,52 @@
 </section>
 
 <!-- 2. Design: the journey of one note (called slide 3 in docs/PITCH.md) -->
-<section class="slide">
+<section class="slide design">
   <p class="kicker">Our design</p>
   <h1>From a spoken note to a pattern</h1>
-  <div class="col" style="gap:16pt; flex:1; justify-content:center">
-    <div class="flow" style="gap:10pt">
-      <div class="box" style="padding:14pt 14pt 13pt; ; display:flex; flex-direction:column; gap:6pt">
-        <span style="width:26pt;height:26pt;border-radius:50%;background:var(--ink);color:#fff;font-weight:700;font-size:13pt;display:flex;align-items:center;justify-content:center">1</span>
-        <b style="font-size:19pt; margin:2pt 0 0">Speak</b><span style="font-size:14pt; line-height:1.3">A parent says or types what happened, in any language</span>
-        <span style="margin-top:auto; align-self:flex-start; font-size:10.5pt; font-weight:700; padding:2pt 9pt; border-radius:99pt; white-space:nowrap; background:var(--amber);color:#8a5a00">YOU</span></div><div class="arrow" style="font-size:24pt">→</div>
-      <div class="box" style="padding:14pt 14pt 13pt; border-color:var(--teal);background:var(--teal-soft); display:flex; flex-direction:column; gap:6pt">
-        <span style="width:26pt;height:26pt;border-radius:50%;background:var(--ink);color:#fff;font-weight:700;font-size:13pt;display:flex;align-items:center;justify-content:center">2</span>
-        <b style="font-size:19pt; margin:2pt 0 0">Structure</b><span style="font-size:14pt; line-height:1.3">AI turns the words into a record: what came before, what was tried</span>
-        <span style="margin-top:auto; align-self:flex-start; font-size:10.5pt; font-weight:700; padding:2pt 9pt; border-radius:99pt; white-space:nowrap; background:var(--teal);color:#fff">AI CALL</span></div><div class="arrow" style="font-size:24pt">→</div>
-      <div class="box" style="padding:14pt 14pt 13pt; ; display:flex; flex-direction:column; gap:6pt">
-        <span style="width:26pt;height:26pt;border-radius:50%;background:var(--ink);color:#fff;font-weight:700;font-size:13pt;display:flex;align-items:center;justify-content:center">3</span>
-        <b style="font-size:19pt; margin:2pt 0 0">Review</b><span style="font-size:14pt; line-height:1.3">The parent checks it, changes anything, and saves</span>
-        <span style="margin-top:auto; align-self:flex-start; font-size:10.5pt; font-weight:700; padding:2pt 9pt; border-radius:99pt; white-space:nowrap; background:var(--amber);color:#8a5a00">YOU</span></div><div class="arrow" style="font-size:24pt">→</div>
-      <div class="box" style="padding:14pt 14pt 13pt; ; display:flex; flex-direction:column; gap:6pt">
-        <span style="width:26pt;height:26pt;border-radius:50%;background:var(--ink);color:#fff;font-weight:700;font-size:13pt;display:flex;align-items:center;justify-content:center">4</span>
-        <b style="font-size:19pt; margin:2pt 0 0">Store</b><span style="font-size:14pt; line-height:1.3">One shared log for everyone who cares for the person</span>
-        <span style="margin-top:auto; align-self:flex-start; font-size:10.5pt; font-weight:700; padding:2pt 9pt; border-radius:99pt; white-space:nowrap; background:#e9e6dd;color:var(--ink)">DATABASE</span></div><div class="arrow" style="font-size:24pt">→</div>
-      <div class="box" style="padding:14pt 14pt 13pt; border-color:var(--teal);background:var(--teal-soft); display:flex; flex-direction:column; gap:6pt">
-        <span style="width:26pt;height:26pt;border-radius:50%;background:var(--ink);color:#fff;font-weight:700;font-size:13pt;display:flex;align-items:center;justify-content:center">5</span>
-        <b style="font-size:19pt; margin:2pt 0 0">Use</b><span style="font-size:14pt; line-height:1.3">Patterns, answers to questions, and a summary for a visit</span>
-        <span style="margin-top:auto; align-self:flex-start; font-size:10.5pt; font-weight:700; padding:2pt 9pt; border-radius:99pt; white-space:nowrap; background:var(--teal);color:#fff">AI CALLS + CODE</span></div>
+  <div class="col" style="gap:12pt; flex:1; justify-content:center">
+    <div class="steps">
+      <div class="step">
+        <span class="n">1</span><b>Speak</b>
+        <span class="d">A parent says or types what happened, in their own words</span>
+        <span class="who you">You</span>
+      </div><div class="arrow">→</div>
+      <div class="step rules">
+        <span class="n">2</span><b>Safety</b>
+        <span class="d">Fixed rules read the note first and pick the safety message</span>
+        <span class="who fixed">Rules, no AI</span>
+      </div><div class="arrow">→</div>
+      <div class="step ai">
+        <span class="n">3</span><b>Structure</b>
+        <span class="d">AI turns the words into a record: what came before, what was tried</span>
+        <span class="who model">AI</span>
+      </div><div class="arrow">→</div>
+      <div class="step">
+        <span class="n">4</span><b>Review</b>
+        <span class="d">The parent checks it, changes anything, and saves</span>
+        <span class="who you">You</span>
+      </div><div class="arrow">→</div>
+      <div class="step ai">
+        <span class="n">5</span><b>Use</b>
+        <span class="d">Patterns, answers and visit summaries, from one record the family shares</span>
+        <span class="who model">AI + code</span>
+      </div>
     </div>
-    <div style="display:flex; gap:0.3in">
-      <div class="card" style="flex:1; padding:11pt 16pt"><p style="font-size:14.5pt"><b>Patterns:</b> code counts. No AI.</p></div>
-      <div class="card" style="flex:1; padding:11pt 16pt"><p style="font-size:14.5pt"><b>Ask:</b> AI reads the question, code answers.</p></div>
-      <div class="card" style="flex:1; padding:11pt 16pt"><p style="font-size:14.5pt"><b>Summary:</b> AI writes, code checks.</p></div>
+    <div class="safety">
+      <b>What the safety check says, before anything else</b>
+      <div class="lines">
+        <span><i>Red flag</i>"Please contact your doctor or care team"</span>
+        <span><i>Possible emergency</i>Call 911 now</span>
+        <span><i>Caregiver in distress</i>988 Lifeline. Nothing is logged</span>
+      </div>
     </div>
-    <p class="small" style="font-size:12.5pt">A fixed safety check runs before every AI call. Built with Next.js, Claude through the Anthropic API, Postgres and Railway.</p>
+    <div class="split">
+      <div class="card"><p><b>Patterns</b>Code counts them. No AI.</p></div>
+      <div class="card"><p><b>Ask</b>AI reads the question. Code answers.</p></div>
+      <div class="card"><p><b>Summary</b>AI writes. Code checks every number.</p></div>
+    </div>
   </div>
-  <div class="footer"><span></span><span>Supports caregivers. Does not diagnose. · 2 of 5</span></div>
+  <div class="footer"><span>Possible things to check, never causes. No medication or restraint is ever suggested.</span><span>Supports caregivers. Does not diagnose. · 2 of 5</span></div>
 </section>
 
 <!-- 3. Demo (called slide 2 in docs/PITCH.md) -->
