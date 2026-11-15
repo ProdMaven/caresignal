@@ -1,6 +1,6 @@
 # Tasks, lanes, and contracts
 
-## Contracts (frozen, v6 Nov 14)
+## Contracts (frozen, v7 Nov 14)
 Types: `docs/contracts/types.ts`. v2 changes by the PM: added POST /api/reset (`ResetResponse`) and `Source` value `"text"` for typed notes. Scope decision: full PRD scope, both modes live, /api/ask stays. v3 changes by the PM: intake profile fields on `Person` (ageBand, gender, spectrumLevel, communicationLevel), POST /api/people (`CreatePersonRequest`), and POST /api/invite for invitation-only entry.
 
 | Route | Method | Request | Response | Owner |

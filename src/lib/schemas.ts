@@ -38,6 +38,7 @@ export const parseLogRequestSchema = z.object({
   transcript: z.string().trim().min(1, "Please say or type a note first.").max(2000),
   loggedBy: z.string().min(1),
   now: z.string().min(1),
+  personId: z.string().min(1).max(60).optional(),
 });
 
 export const saveEventRequestSchema = z.object({ record: draftRecordSchema });

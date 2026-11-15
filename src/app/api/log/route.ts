@@ -3,6 +3,7 @@
 import { badRequest, mocksEnabled } from "@/lib/env";
 import { parseLog } from "@/lib/formatter";
 import { firstIssue, parseLogRequestSchema } from "@/lib/schemas";
+import { applySelectedPerson } from "@/lib/selectedPerson";
 import { mockLog, mockPeople } from "@/mocks";
 
 export const dynamic = "force-dynamic";
@@ -13,7 +14,9 @@ export async function POST(request: Request) {
   const parsed = parseLogRequestSchema.safeParse(body);
   if (!parsed.success) return badRequest(firstIssue(parsed.error));
 
-  if (mocksEnabled()) return Response.json(mockLog(parsed.data));
+  if (mocksEnabled()) {
+    return Response.json(applySelectedPerson(mockLog(parsed.data), mockPeople(parsed.data.mode).people, parsed.data.personId));
+  }
 
   const started = Date.now();
   try {
@@ -33,7 +36,7 @@ export async function POST(request: Request) {
     };
     console.log(`[log] ${JSON.stringify(meta)}`);
 
-    return Response.json(outcome.response, {
+    return Response.json(applySelectedPerson(outcome.response, roster, parsed.data.personId), {
       headers: { "x-caresignal-source": outcome.source, "x-caresignal-meta": JSON.stringify(meta) },
     });
   } catch (err) {

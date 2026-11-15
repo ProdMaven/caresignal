@@ -65,6 +65,9 @@ export interface ParseLogRequest {
   transcript: string;
   loggedBy: string;
   now: string; // ISO, client clock, used to resolve "around 3"
+  // v7: the person picked on screen. It wins unless the note clearly names someone else on the list;
+  // then the draft keeps the picked person and `candidates` holds [named person, picked person] so the card can ask.
+  personId?: string;
 }
 export interface ParseLogResponse {
   // event: a normal log. caregiver_distress: the speaker is in distress (show care + 988, do not log).

@@ -55,7 +55,7 @@ function LogScreen({ ctx }: { ctx: PersonContext }) {
     setError(null);
     setResult(null);
     setSaved(null);
-    const body: ParseLogRequest = { mode, transcript, loggedBy, now: localIso() };
+    const body: ParseLogRequest = { mode, transcript, loggedBy, now: localIso(), personId: person?.id };
     try {
       const response = await postJson<ParseLogResponse>("/api/log", body);
       setResult({ response, source: usedVoice ? "voice" : "text", id: Date.now() });
@@ -72,6 +72,9 @@ function LogScreen({ ctx }: { ctx: PersonContext }) {
     setResult(null);
     setError(null);
   }
+
+  // Example notes are written about one demo person, so they only show while that person is picked.
+  const examples = config.logExamples.filter((ex) => !ex.personId || ex.personId === person?.id);
 
   const savedPerson = saved ? people?.find((p) => p.id === saved.personId) : null;
 
@@ -147,23 +150,25 @@ function LogScreen({ ctx }: { ctx: PersonContext }) {
           <Send className="size-5" aria-hidden />
           {parsing ? "Reading your note..." : "Turn into a log entry"}
         </Button>
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="text-sm text-muted-foreground">Try an example:</span>
-          {config.logExamples.map((ex) => (
-            <button
-              key={ex.label}
-              type="button"
-              disabled={parsing}
-              onClick={() => {
-                setText(ex.text);
-                setUsedVoice(false);
-              }}
-              className="rounded-full border bg-muted px-3 py-1.5 text-sm font-medium hover:bg-secondary"
-            >
-              {ex.label}
-            </button>
-          ))}
-        </div>
+        {examples.length > 0 && (
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="text-sm text-muted-foreground">Try an example:</span>
+            {examples.map((ex) => (
+              <button
+                key={ex.label}
+                type="button"
+                disabled={parsing}
+                onClick={() => {
+                  setText(ex.text);
+                  setUsedVoice(false);
+                }}
+                className="rounded-full border bg-muted px-3 py-1.5 text-sm font-medium hover:bg-secondary"
+              >
+                {ex.label}
+              </button>
+            ))}
+          </div>
+        )}
       </form>
 
       {/* Result area. A safety or scope message always renders before anything else. */}
@@ -179,6 +184,7 @@ function LogScreen({ ctx }: { ctx: PersonContext }) {
             people={people}
             fallbackPerson={person}
             unmatchedPerson={result.response.unmatchedPerson}
+            candidates={result.response.candidates}
             source={result.source}
             onDiscard={clearAll}
             onSaved={(record) => {
