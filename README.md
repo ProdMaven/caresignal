@@ -6,7 +6,7 @@ Formerly CareSignal. The repository and URLs keep the old name.
 
 One shared record of each hard moment, built from the voices of everyone who cares for a person who cannot always say what they need: a parent living with dementia or an autistic child. AI turns a spoken sentence into a structured record, statistics find the patterns behind distress, and strategies are ranked by what actually worked for others. Supports caregivers. Does not diagnose.
 
-GTransformer "AI for Global Good" buildathon, Nov 13 to 15, 2026. Synthetic data only.
+GTransformer "AI for Global Good" buildathon, Nov 13 to 15, 2026. Synthetic data, with one profile shared by a team member's family with their consent.
 
 **Live app:** https://web-production-1bb4dc67.up.railway.app (works on laptop and phone, no setup)
 **Invite code for judges:** `GTRANSFORMER-JUDGE` (Unspoken is invitation only; enter this on the first screen)
@@ -54,7 +54,7 @@ When a person living with dementia or an autistic child is in pain, hungry, tire
 - A fixed safety screen runs before any model call. Red flags lead with "Please contact your doctor or care team", possible emergencies say to call 911, and a caregiver in distress gets the 988 Suicide and Crisis Lifeline.
 - The model turns a spoken or typed note into fields from a fixed vocabulary. The caregiver checks every field before saving.
 - Plain code counts the patterns and ranks what worked. The model never invents a pattern, a number, a cause, a diagnosis or a medication.
-- All people, logs, counts and scores in the app are synthetic.
+- The people, logs, counts and scores in the app are synthetic. One exception: Aisha's profile and history are shared by her family, with their consent, as a live example. The entries seeded for her are examples.
 
 ## Run locally
 1. `npm install`

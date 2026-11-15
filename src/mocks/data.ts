@@ -49,13 +49,23 @@ export const PEOPLE: Person[] = [
     ],
   },
   {
+    // Aisha's profile is shared by her family, with their consent, as a live example (PM, Nov 15). The id stays
+    // "p_maya" and "Maya" stays as an alias so earlier notes and the test set still match. The seeded entries
+    // below are examples written for the demo. Her own history and entries live in saved data, not in this file.
     id: "p_maya",
     mode: "autism",
-    displayName: "Maya",
-    aliases: ["Maya"],
-    ageBandOrSetting: "Age 9, home and school",
+    displayName: "Aisha",
+    aliases: ["Aisha", "Maya"],
+    ageBandOrSetting: "Age 12 to 17",
+    ageBand: "12_17",
+    gender: "girl_or_woman",
+    spectrumLevel: "medium",
+    communicationLevel: "some_words",
     isFeatured: true,
-    caregivers: [{ id: "cg_lena", name: "Lena", role: "mother" }],
+    caregivers: [
+      { id: "cg_jayesh", name: "Jayesh", role: "Dad" },
+      { id: "cg_minal", name: "Minal", role: "Mother" },
+    ],
   },
 ];
 
@@ -89,7 +99,7 @@ function pick<T>(list: T[], i: number): T {
 //   Helen: evening restlessness, 5 events, 4 after a visit.
 //   Arjun: morning meltdown, 9 events, 7 after poor sleep (Dev logged 5 of those nights),
 //          6 with a routine change.
-//   Maya:  afternoon shutdown, 6 events, 5 after loud noise.
+//   Aisha: afternoon shutdown, 6 events, 5 after loud noise.
 //   Helen: morning refused care, 6 events, 5 around bathing.
 //   Arjun: evening hard transition, 6 events, 5 after screen time ended.
 export function buildSeedEvents(today: string = demoToday()): LogRecord[] {
@@ -277,17 +287,17 @@ export function buildSeedEvents(today: string = demoToday()): LogRecord[] {
     });
   });
 
-  // ---------- Maya (autism, no pattern yet) ----------
-  const maya = { mode: "autism" as const, personId: "p_maya", loggedBy: "cg_lena" };
+  // ---------- Aisha (autism, no pattern yet) ----------
+  const maya = { mode: "autism" as const, personId: "p_maya", loggedBy: "cg_minal" };
   specs.push({
     ...maya, date: W(2), hour: 13, minute: 30, eventType: "shutdown", intensity: 2, behaviors: ["withdrawing", "covering_ears"],
     durationMin: 30, contextBefore: ["loud_noise"], environment: ["school", "noisy"], responseTried: ["quiet_space"],
-    outcome: "calmed", rawNote: "Maya went quiet and hid under her hood after the fire drill at school. Quiet corner helped.",
+    outcome: "calmed", rawNote: "Aisha went quiet and hid under her hood after the fire drill at school. Quiet corner helped.",
   });
   specs.push({
     ...maya, date: W(8), hour: 15, minute: 45, eventType: "shutdown", intensity: 1, behaviors: ["withdrawing"],
     durationMin: 20, contextBefore: ["crowd"], environment: ["outing", "crowded"], responseTried: ["break_time"],
-    outcome: "calmed", rawNote: "Maya stopped talking at the grocery store, it was packed. We took a break in the car.",
+    outcome: "calmed", rawNote: "Aisha stopped talking at the grocery store, it was packed. We took a break in the car.",
   });
   specs.push({
     ...maya, date: W(5), hour: 17, minute: 30, eventType: "stimming_increase", intensity: 1, behaviors: ["rocking"],
@@ -297,17 +307,17 @@ export function buildSeedEvents(today: string = demoToday()): LogRecord[] {
   specs.push({
     ...maya, date: E(1), hour: 10, minute: 0, eventType: "stimming_increase", intensity: 1, behaviors: ["repetitive_speech"],
     contextBefore: ["new_person"], outcome: "unknown",
-    rawNote: "Maya repeated lines from her show a lot when the new sitter arrived.",
+    rawNote: "Aisha repeated lines from her show a lot when the new sitter arrived.",
   });
   specs.push({
     ...maya, date: W(10), hour: 22, minute: 15, eventType: "sleep_trouble", intensity: 1, durationMin: 45,
     environment: ["bedtime"], responseTried: ["deep_pressure"], outcome: "calmed",
-    rawNote: "Maya could not fall asleep until after 10. Tucking the blanket in tight helped.",
+    rawNote: "Aisha could not fall asleep until after 10. Tucking the blanket in tight helped.",
   });
   specs.push({
     ...maya, date: W(13), hour: 7, minute: 40, eventType: "transition_distress", intensity: 2, behaviors: ["crying"],
     durationMin: 10, contextBefore: ["clothing_texture"], responseTried: ["reassurance"], outcome: "calmed",
-    rawNote: "Maya cried getting dressed, the new sweater felt scratchy. Switched to her soft one.",
+    rawNote: "Aisha cried getting dressed, the new sweater felt scratchy. Switched to her soft one.",
   });
 
   // ---------- Added patterns (see docs/research/seeded_patterns_sources.md) ----------
@@ -354,11 +364,11 @@ export function buildSeedEvents(today: string = demoToday()): LogRecord[] {
     rawNote: "Arjun did not want to leave his cousins' house and cried in the car for a few minutes.",
   });
 
-  // Maya: afternoon shutdowns after loud places. With the two above: 6 events, 5 after loud noise.
+  // Aisha: afternoon shutdowns after loud places. With the two above: 6 events, 5 after loud noise.
   const noiseNotes: [string, string[], string[]][] = [
-    ["Maya went silent and covered her ears after the school assembly. She stayed under her hood all the way home.", ["school", "noisy"], ["quiet_space"]],
-    ["The cafeteria was very loud today, her teacher said. Maya would not talk after pickup and curled up in the back seat.", ["school", "noisy"], ["break_time"]],
-    ["Birthday party with music and balloons popping. Maya hid behind the couch and would not come out.", ["outing", "noisy"], ["sensory_tool", "quiet_space"]],
+    ["Aisha went silent and covered her ears after the school assembly. She stayed under her hood all the way home.", ["school", "noisy"], ["quiet_space"]],
+    ["The cafeteria was very loud today, her teacher said. Aisha would not talk after pickup and curled up in the back seat.", ["school", "noisy"], ["break_time"]],
+    ["Birthday party with music and balloons popping. Aisha hid behind the couch and would not come out.", ["outing", "noisy"], ["sensory_tool", "quiet_space"]],
     ["The hand dryers in the mall bathroom set her off. She froze and would not speak for a while afterwards.", ["outing", "noisy"], ["sensory_tool"]],
   ];
   [W(4), W(6), E(2), W(11)].forEach((date, i) => {

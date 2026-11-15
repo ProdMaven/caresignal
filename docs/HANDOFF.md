@@ -8,6 +8,9 @@ Read this first, then CLAUDE.md, then the docs it lists. **Submit by Sunday Nov 
 - **The live app shows "Unspoken"**, saves data in Postgres across deploys, and refuses `POST /api/reset`.
 - **Numbers to quote:** benchmark 103 of 108 (95.4%), red team 90 of 90, crisis and out of scope 100%, golden field accuracy 98.0%, about 2.4 s for a short note, $0.005 per note. 198 examples, 89 hand-reviewed. These are from staging with saving allowed. See "Numbers" below for what a judge sees on the live URL.
 
+## One real profile (Nov 15, PM decision)
+The demo profile "Maya" is now **Aisha**, the daughter of a team member (Jayesh), used as a live example with his consent. Her history and the entry he logged were moved from the profile he had added into this one and live in saved data only, not in the repository. The other entries on her profile are seeded examples. This is an exception to "synthetic data only" in `CLAUDE.md`; the rule there has not been reworded. `docs/DATA_HANDLING.md`, the About screen and the READMEs say so. If the family asks, the profile can be removed.
+
 ## What the final participant guide requires (received Nov 15)
 | Guide | Our state |
 |---|---|

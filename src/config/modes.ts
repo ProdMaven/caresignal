@@ -105,7 +105,8 @@ export const MODES: Record<Mode, ModeConfig> = {
     caregivers: [
       { id: "cg_priya", name: "Priya", role: "Arjun's mother" },
       { id: "cg_dev", name: "Dev", role: "Arjun's father" },
-      { id: "cg_lena", name: "Lena", role: "Maya's mother" },
+      { id: "cg_jayesh", name: "Jayesh", role: "Aisha's father" },
+      { id: "cg_minal", name: "Minal", role: "Aisha's mother" },
     ],
     logExamples: [
       {
@@ -121,7 +122,7 @@ export const MODES: Record<Mode, ModeConfig> = {
       {
         label: "Loud place",
         personId: "p_maya",
-        text: "Maya went quiet and covered her ears after the school assembly this afternoon, it was really loud. Her headphones and a quiet corner helped.",
+        text: "Aisha went quiet and covered her ears after the school assembly this afternoon, it was really loud. Her headphones and a quiet corner helped.",
       },
     ],
     askExamples: ["Why are mornings so hard for Arjun?", "What do his hard mornings have in common?"],

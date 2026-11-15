@@ -285,7 +285,7 @@ Notes on the steps:
 2. Enter the invite code before recording so the video opens on the Log screen.
 3. Start clean: record on the staging copy, or on a freshly added Care Profile, so earlier test entries do not change the counts on screen. There is no reset button any more.
 4. Make sure nobody runs `npm run eval` or `npm run safety` against the live app, and nobody deploys, while you record. Both reset the data.
-5. No real names on screen. Only Helen, Neha, Rosa, Arjun, Priya, Maya. Check the browser profile icon, autofill, and the clipboard.
+5. No real names on screen except Aisha's profile, which her family shared with consent (Aisha, Jayesh, Minal). Otherwise only Helen, Neha, Rosa, Arjun, Priya. Check the browser profile icon, autofill, and the clipboard.
 6. Allow the mic in the browser before recording. Use a quiet room or a headset.
 7. Do one full dry run, then reset again, then record. Record three takes.
 8. If the model is slow on step 7: keep recording, then trim the wait in editing. If it falls back or fails twice, use the backup crisis beat below.

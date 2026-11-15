@@ -87,8 +87,9 @@ export default function AboutPage() {
           </p>
           <p>Strategy scores are based on family logs, not a clinical trial. Discuss them with your care team.</p>
           <p>
-            Everything in this demo is synthetic. Helen, Arjun, Maya, their caregivers, and the other families are made
-            up. Please do not enter real names or private health details.
+            Helen, Arjun, their caregivers, and the other families are made up, and so are all counts and scores.
+            Aisha&apos;s profile is shared by her family, with their consent, as a live example; the entries seeded
+            for her are examples. Please do not enter real names or private health details.
           </p>
         </CardContent>
       </Card>
