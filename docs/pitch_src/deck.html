@@ -79,35 +79,27 @@
   <div class="footer"><span></span><span>Supports caregivers. Does not diagnose. · 1 of 5</span></div>
 </section>
 
-<!-- 2. Design: how it works and why it is safe (called slide 3 in docs/PITCH.md) -->
+<!-- 2. Design: where AI is used (called slide 3 in docs/PITCH.md) -->
 <section class="slide">
   <p class="kicker">Our design</p>
-  <h1>The model reads and writes. Code counts.</h1>
-  <div class="col" style="gap:20pt; justify-content:center; flex:1">
+  <h1 style="margin-bottom:12pt">Where AI is used, and where it is not</h1>
+  <div class="col" style="gap:12pt; flex:1">
     <div class="flow">
-      <div class="box" style="font-size:15pt"><b style="font-size:17pt">Say it</b>Voice or text, any language</div><div class="arrow">→</div>
-      <div class="box code" style="font-size:15pt"><b style="font-size:17pt">Safety check</b>Fixed rules, before any AI</div><div class="arrow">→</div>
-      <div class="box model" style="font-size:15pt"><b style="font-size:17pt">AI fills the record</b>From a fixed list of fields</div><div class="arrow">→</div>
-      <div class="box" style="font-size:15pt"><b style="font-size:17pt">You confirm</b>Change anything, then save</div><div class="arrow">→</div>
-      <div class="box code" style="font-size:15pt"><b style="font-size:17pt">Code counts</b>Patterns cannot be invented</div>
+      <div class="box" style="padding:7pt 11pt"><b>Say it</b>Voice or text, any language</div><div class="arrow">→</div>
+      <div class="box code" style="padding:7pt 11pt"><b>Safety check</b>Fixed rules, before any AI</div><div class="arrow">→</div>
+      <div class="box model" style="padding:7pt 11pt"><b>AI fills the record</b>From a fixed list of fields</div><div class="arrow">→</div>
+      <div class="box" style="padding:7pt 11pt"><b>You confirm</b>Change anything, then save</div><div class="arrow">→</div>
+      <div class="box code" style="padding:7pt 11pt"><b>Code counts</b>Patterns cannot be invented</div>
     </div>
-    <div style="display:flex; gap:0.35in">
-      <div class="card" style="flex:1; padding:16pt 20pt; border-color:var(--teal); background:var(--teal-soft)"><p style="font-size:18pt"><b>The model reads and writes</b></p>
-        <ul style="margin-top:10pt; gap:8pt">
-          <li>Turns a note into a record, in any language</li>
-          <li>Asks one follow-up question</li>
-          <li>Writes the summary for a visit</li>
-        </ul>
-      </div>
-      <div class="card" style="flex:1; padding:16pt 20pt"><p style="font-size:18pt"><b>Code counts and checks</b></p>
-        <ul style="margin-top:10pt; gap:8pt">
-          <li>Finds the patterns in the logs</li>
-          <li>Answers questions from your own entries</li>
-          <li>Checks every number the model writes</li>
-        </ul>
-      </div>
-    </div>
-    <p class="small" style="font-size:13.5pt">Supports caregivers. Does not diagnose. Possible things to check, never causes.</p>
+    <table style="font-size:13.5pt; background:var(--card); border:1px solid var(--line); border-radius:10pt">
+      <tr><th style="width:21%">Feature</th><th style="width:38%; color:var(--teal)">What AI does</th><th>What code does</th></tr>
+      <tr><td><b>Log</b></td><td>Turns a spoken or typed note into a record, in any language</td><td>Runs safety rules first, checks every field against a fixed list</td></tr>
+      <tr><td><b>Follow-up question</b></td><td>Words one short question</td><td>Decides which piece is missing</td></tr>
+      <tr><td><b>Ask</b></td><td>Reads the question and labels what is being asked</td><td>Answers with counts and links from the person's own logs</td></tr>
+      <tr><td><b>Summary for a visit</b></td><td>Writes the brief from facts that code counted</td><td>Checks every number and quote, or writes it itself</td></tr>
+      <tr><td><b>Patterns, What worked</b></td><td style="color:var(--muted)">No AI</td><td>Counts what came before hard moments and scores what helped</td></tr>
+    </table>
+    <p class="small" style="font-size:12.5pt"><b style="color:var(--ink)">Built with:</b> Next.js and TypeScript · Claude through the Anthropic API, server side, with prompt caching · speech to text in the browser · Postgres · Railway · 198 test examples run with one command</p>
   </div>
   <div class="footer"><span></span><span>Supports caregivers. Does not diagnose. · 2 of 5</span></div>
 </section>
