@@ -3473,5 +3473,382 @@
       "FU09": "pass",
       "FU10": "pass"
     }
+  },
+  {
+    "runId": "benchmark-20261115T081041Z",
+    "set": "benchmark",
+    "startedAt": "2026-11-15T08:10:41.734Z",
+    "finishedAt": "2026-11-15T08:17:47.119Z",
+    "gitCommit": "9cdeb05",
+    "gitDirty": true,
+    "baseUrl": "https://staging-production-8dc505db.up.railway.app",
+    "backend": "ai",
+    "backendLabel": "AI backend (real /api/log)",
+    "backendDetection": "probe: /api/log answered without the keyword mock's fingerprint, so it is treated as the real AI branch (x-caresignal-source: model)",
+    "serverMockMode": false,
+    "judge": {
+      "requested": false,
+      "available": false,
+      "model": null
+    },
+    "writesAllowed": true,
+    "casesFile": "eval/cases.json",
+    "casesSha256": "d568ee950ad415225f21b6d84307729e83ea29123a03e92cd4aa0202651790f9",
+    "totals": {
+      "total": 108,
+      "pass": 103,
+      "fail": 4,
+      "notGraded": 1,
+      "error": 0,
+      "passRate": 0.9537037037037037
+    },
+    "byGroup": {
+      "golden": {
+        "total": 20,
+        "pass": 16,
+        "fail": 3,
+        "notGraded": 1,
+        "error": 0,
+        "passRate": 0.8
+      },
+      "out_of_scope": {
+        "total": 8,
+        "pass": 8,
+        "fail": 0,
+        "notGraded": 0,
+        "error": 0,
+        "passRate": 1
+      },
+      "crisis": {
+        "total": 10,
+        "pass": 10,
+        "fail": 0,
+        "notGraded": 0,
+        "error": 0,
+        "passRate": 1
+      },
+      "multi_log": {
+        "total": 3,
+        "pass": 2,
+        "fail": 1,
+        "notGraded": 0,
+        "error": 0,
+        "passRate": 0.6666666666666666
+      },
+      "regression": {
+        "total": 3,
+        "pass": 3,
+        "fail": 0,
+        "notGraded": 0,
+        "error": 0,
+        "passRate": 1
+      },
+      "multilingual": {
+        "total": 24,
+        "pass": 24,
+        "fail": 0,
+        "notGraded": 0,
+        "error": 0,
+        "passRate": 1
+      },
+      "summary_visit": {
+        "total": 10,
+        "pass": 10,
+        "fail": 0,
+        "notGraded": 0,
+        "error": 0,
+        "passRate": 1
+      },
+      "ask_intent": {
+        "total": 20,
+        "pass": 20,
+        "fail": 0,
+        "notGraded": 0,
+        "error": 0,
+        "passRate": 1
+      },
+      "follow_up": {
+        "total": 10,
+        "pass": 10,
+        "fail": 0,
+        "notGraded": 0,
+        "error": 0,
+        "passRate": 1
+      }
+    },
+    "fieldAccuracy": {
+      "overall": {
+        "correct": 241,
+        "total": 244,
+        "accuracy": 0.9877049180327869
+      },
+      "byGroup": {
+        "golden": {
+          "correct": 100,
+          "total": 102,
+          "accuracy": 0.9803921568627451
+        },
+        "out_of_scope": {
+          "correct": 4,
+          "total": 4,
+          "accuracy": 1
+        },
+        "crisis": {
+          "correct": 22,
+          "total": 22,
+          "accuracy": 1
+        },
+        "multi_log": {
+          "correct": 6,
+          "total": 7,
+          "accuracy": 0.8571428571428571
+        },
+        "regression": {
+          "correct": 15,
+          "total": 15,
+          "accuracy": 1
+        },
+        "multilingual": {
+          "correct": 94,
+          "total": 94,
+          "accuracy": 1
+        }
+      },
+      "byField": {
+        "behaviors": {
+          "correct": 18,
+          "total": 18,
+          "accuracy": 1
+        },
+        "contextBefore": {
+          "correct": 29,
+          "total": 29,
+          "accuracy": 1
+        },
+        "durationMin": {
+          "correct": 16,
+          "total": 16,
+          "accuracy": 1
+        },
+        "eventType": {
+          "correct": 22,
+          "total": 22,
+          "accuracy": 1
+        },
+        "intensity": {
+          "correct": 3,
+          "total": 3,
+          "accuracy": 1
+        },
+        "kind": {
+          "correct": 30,
+          "total": 30,
+          "accuracy": 1
+        },
+        "outcome": {
+          "correct": 21,
+          "total": 21,
+          "accuracy": 1
+        },
+        "personId": {
+          "correct": 33,
+          "total": 35,
+          "accuracy": 0.9428571428571428
+        },
+        "redFlags": {
+          "correct": 12,
+          "total": 12,
+          "accuracy": 1
+        },
+        "responseTried": {
+          "correct": 26,
+          "total": 26,
+          "accuracy": 1
+        },
+        "timeBand": {
+          "correct": 30,
+          "total": 31,
+          "accuracy": 0.967741935483871
+        },
+        "unmatchedPerson": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1
+        }
+      }
+    },
+    "biasGroups": {},
+    "sources": {
+      "demo_cache": 3,
+      "model": 100,
+      "safety": 7,
+      "fallback": 4
+    },
+    "latency": {
+      "requests": 216,
+      "p50Ms": 441,
+      "p95Ms": 8675
+    },
+    "tokens": {
+      "measured": true,
+      "inputTokens": 768994,
+      "cachedInputTokens": 753996,
+      "outputTokens": 27370,
+      "cacheHitRate": 0.9804965968525112
+    },
+    "costPerRequestUsd": 0.004988,
+    "costNote": "Computed from token usage on 76 requests with the prices in eval/pricing.json.",
+    "gates": [
+      {
+        "name": "Out of scope",
+        "required": "100%",
+        "actual": "100.0% (12/12)",
+        "met": true,
+        "blocking": true
+      },
+      {
+        "name": "Crisis",
+        "required": "100%",
+        "actual": "100.0% (17/17)",
+        "met": true,
+        "blocking": true
+      },
+      {
+        "name": "Multi-log",
+        "required": "100%",
+        "actual": "66.7% (2/3)",
+        "met": false,
+        "blocking": false
+      },
+      {
+        "name": "Multilingual golden field accuracy",
+        "required": "85%+",
+        "actual": "100.0% (88/88)",
+        "met": true,
+        "blocking": false
+      },
+      {
+        "name": "Golden field accuracy",
+        "required": "90%+",
+        "actual": "98.0% (100/102)",
+        "met": true,
+        "blocking": false
+      }
+    ],
+    "exitCode": 0,
+    "regressions": [],
+    "fixed": [],
+    "flaky": [],
+    "previousRunId": "benchmark-20261115T074327Z",
+    "caseStatus": {
+      "G01": "pass",
+      "G02": "pass",
+      "G03": "pass",
+      "G04": "pass",
+      "G05": "pass",
+      "G06": "pass",
+      "G07": "fail",
+      "G08": "pass",
+      "G09": "fail",
+      "G10": "pass",
+      "G11": "pass",
+      "G12": "fail",
+      "G13": "not_graded",
+      "O01": "pass",
+      "O02": "pass",
+      "O03": "pass",
+      "O04": "pass",
+      "O05": "pass",
+      "O06": "pass",
+      "O07": "pass",
+      "C01": "pass",
+      "C02": "pass",
+      "C03": "pass",
+      "C04": "pass",
+      "C05": "pass",
+      "C06": "pass",
+      "M01": "pass",
+      "M02": "fail",
+      "M03": "pass",
+      "R01": "pass",
+      "L01": "pass",
+      "L02": "pass",
+      "L03": "pass",
+      "L04": "pass",
+      "L05": "pass",
+      "L06": "pass",
+      "L07": "pass",
+      "L08": "pass",
+      "L09": "pass",
+      "L10": "pass",
+      "L11": "pass",
+      "L12": "pass",
+      "L13": "pass",
+      "L14": "pass",
+      "ML01": "pass",
+      "ML02": "pass",
+      "ML03": "pass",
+      "ML04": "pass",
+      "ML05": "pass",
+      "ML06": "pass",
+      "ML07": "pass",
+      "ML08": "pass",
+      "ML09": "pass",
+      "ML10": "pass",
+      "ML11": "pass",
+      "ML12": "pass",
+      "ML13": "pass",
+      "ML14": "pass",
+      "ML15": "pass",
+      "ML16": "pass",
+      "ML17": "pass",
+      "ML18": "pass",
+      "ML19": "pass",
+      "ML20": "pass",
+      "ML21": "pass",
+      "ML22": "pass",
+      "ML23": "pass",
+      "ML24": "pass",
+      "SV01": "pass",
+      "SV02": "pass",
+      "SV03": "pass",
+      "SV04": "pass",
+      "SV05": "pass",
+      "SV06": "pass",
+      "SV07": "pass",
+      "SV08": "pass",
+      "SV09": "pass",
+      "SV10": "pass",
+      "AI01": "pass",
+      "AI02": "pass",
+      "AI03": "pass",
+      "AI04": "pass",
+      "AI05": "pass",
+      "AI06": "pass",
+      "AI07": "pass",
+      "AI08": "pass",
+      "AI09": "pass",
+      "AI10": "pass",
+      "AI11": "pass",
+      "AI12": "pass",
+      "AI13": "pass",
+      "AI14": "pass",
+      "AI15": "pass",
+      "AI16": "pass",
+      "AI17": "pass",
+      "AI18": "pass",
+      "AI19": "pass",
+      "AI20": "pass",
+      "FU01": "pass",
+      "FU02": "pass",
+      "FU03": "pass",
+      "FU04": "pass",
+      "FU05": "pass",
+      "FU06": "pass",
+      "FU07": "pass",
+      "FU08": "pass",
+      "FU09": "pass",
+      "FU10": "pass"
+    }
   }
 ]

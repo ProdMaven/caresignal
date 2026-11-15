@@ -96,7 +96,7 @@
 <!-- 3. How it works and why it is safe -->
 <section class="slide">
   <p class="kicker">How it works and why it is safe</p>
-  <h1>Statistics find the pattern. The model only fills in the fields.</h1>
+  <h1>Code counts the patterns. The model reads and writes.</h1>
   <div class="col" style="gap:13pt">
     <div class="flow">
       <div class="box"><b>Caregiver note</b>Voice or typed, any language</div><div class="arrow">→</div>
@@ -110,8 +110,9 @@
       <b>Possible emergency:</b> call 911. <b>Caregiver in distress:</b> the 988 Suicide and Crisis Lifeline, and nothing is logged.
     </div>
     <div style="display:flex; gap:0.3in">
-      <div class="card" style="flex:1"><p style="font-size:14pt"><b>Supports caregivers. Does not diagnose.</b></p><p class="small" style="margin-top:4pt">Possible things to check, never causes. No medication, restraint, or clinician-supervised strategies are suggested.</p></div>
-      <div class="card" style="flex:1"><p style="font-size:14pt"><b>Data handling</b></p><p class="small" style="margin-top:4pt">Synthetic data only. Audio is never stored. Community numbers show only with 5 or more families, with the count visible.</p></div>
+      <div class="card" style="flex:1; padding:9pt 13pt"><p style="font-size:13pt"><b>Supports caregivers. Does not diagnose.</b></p><p class="small" style="margin-top:2pt">Possible things to check, never causes. No medication or restraint is ever suggested.</p></div>
+      <div class="card" style="flex:1; padding:9pt 13pt"><p style="font-size:13pt"><b>Where the model helps</b></p><p class="small" style="margin-top:2pt">Note to fields, in any language. A visit summary from counted facts, checked in code. One follow-up question. Reading an Ask question.</p></div>
+      <div class="card" style="flex:1; padding:9pt 13pt"><p style="font-size:13pt"><b>Data handling</b></p><p class="small" style="margin-top:2pt">Synthetic data only. Audio is never stored. Community numbers need 5 or more families, count shown.</p></div>
     </div>
   </div>
   <div class="footer"><span>Try it: <b>web-production-1bb4dc67.up.railway.app</b> · invite code <b>GTRANSFORMER-JUDGE</b></span><span>Supports caregivers. Does not diagnose. · 3 of 5</span></div>
@@ -123,24 +124,24 @@
   <h1>We measured it, broke it, and fixed it</h1>
   <div class="row">
     <div class="col" style="flex:1.05; gap:9pt">
-      <table style="font-size:12.5pt">
+      <table style="font-size:11.5pt">
         <tr><th>Step</th><th>Benchmark</th><th>Red team</th></tr>
         <tr><td>Keyword rules, no model</td><td class="num">50.0% (15 of 30)</td><td class="num">59.3% (35 of 59)</td></tr>
         <tr><td>Safety screen and fallback</td><td class="num">70.0% (21 of 30)</td><td class="num">84.7% (50 of 59)</td></tr>
         <tr><td>First real-model run</td><td class="num">83.3% (25 of 30)</td><td class="num">94.9% (56 of 59)</td></tr>
         <tr><td>After the bias fix</td><td class="num">83.3% (25 of 30)</td><td class="num">100% (59 of 59)</td></tr>
-        <tr class="last"><td>After real-length notes</td><td class="num">88.6% (39 of 44)</td><td class="num">100% (59 of 59)</td></tr>
+        <tr><td>After real-length notes</td><td class="num">88.6% (39 of 44)</td><td class="num">100% (59 of 59)</td></tr>
+        <tr class="last"><td>With four AI features on</td><td class="num">95.4% (103 of 108)</td><td class="num">100% (90 of 90)</td></tr>
       </table>
-      <p class="small">103 examples, one command, every run kept. All checks are deterministic. The last step added 14 real-length cases: the original 30 still pass 25, and all 14 new cases pass. 30 cases are hand-reviewed; the 14 new ones are pending review.</p>
-      <p class="small"><b style="color:var(--ink)">Still failing, and why:</b> 4 of 44. Two notes name nobody while two children are on the roster, so the app asks instead of guessing. One summary line includes a second count. One follow-up note has no earlier context. One case cannot be graded as written.</p>
-      <p class="small">Cost per request: <span class="fill">NEED DATA</span></p>
+      <p class="small">198 examples, one command, every run kept. All checks are deterministic. The last step added 64 new-feature cases, all passing; the original 44 still pass 39. 89 examples are hand-reviewed; 109 are drafted and pending review. Cost per note: $0.005 (measured tokens, public list prices, Nov 15).</p>
+      <p class="small"><b style="color:var(--ink)">Still failing:</b> 4 of 108. Two notes name nobody while two children are on the roster, so the app asks. One summary line has a second count. One follow-up note has no earlier context. One case cannot be graded as written.</p>
     </div>
     <div class="col" style="gap:10pt">
       <div class="tiles">
-        <div class="tile"><div class="n">59 of 59</div><div class="c">red-team prompts pass: crisis 13, medical overreach 12, jailbreak 10, privacy 10, bias 14</div></div>
+        <div class="tile"><div class="n">90 of 90</div><div class="c">red-team prompts pass: crisis 16, medical overreach 12, jailbreak 10, privacy 10, bias 18, new features 24</div></div>
         <div class="tile"><div class="n">100%</div><div class="c">crisis and out-of-scope cases on the benchmark</div></div>
         <div class="tile"><div class="n">98.0%</div><div class="c">field accuracy on the golden cases</div></div>
-        <div class="tile"><div class="n">2.2 s</div><div class="c">typical short note; 7 to 8 s for a 150-word spoken note</div></div>
+        <div class="tile"><div class="n">2.4 s</div><div class="c">typical short note; 7 to 8 s for a 150-word spoken note</div></div>
       </div>
       <div class="card" style="padding:10pt 14pt">
         <p style="font-size:13pt; font-weight:700; margin-bottom:5pt">Found, fixed, and now regression tests</p>
