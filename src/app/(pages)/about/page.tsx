@@ -3,7 +3,7 @@ import { Check, X } from "lucide-react";
 import { GuardrailBanner } from "@/components/states";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-export const metadata: Metadata = { title: "About CareSignal" };
+export const metadata: Metadata = { title: "About Unspoken" };
 
 const DOES = [
   "Turns a spoken or typed sentence into a tidy log entry you can check and correct.",
@@ -24,10 +24,10 @@ export default function AboutPage() {
   return (
     <>
       <div className="flex flex-col gap-1">
-        <h1 className="text-2xl font-bold tracking-tight">About CareSignal</h1>
+        <h1 className="text-2xl font-bold tracking-tight">About Unspoken</h1>
         <p className="text-muted-foreground">
-          For anyone who lives with or cares for someone who cannot say what they need, such as a parent living with
-          dementia or an autistic child. Distress is communication. CareSignal helps you notice what it may be saying.
+          Every need, finally heard. For anyone who lives with or cares for someone who cannot always say what they need, such as a parent living with
+          dementia or an autistic child. Distress is communication. Unspoken helps you notice what it may be saying.
         </p>
       </div>
       <GuardrailBanner />

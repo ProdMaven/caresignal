@@ -79,7 +79,7 @@ function LogScreen({ ctx }: { ctx: PersonContext }) {
     <>
       <div className="flex flex-col gap-1">
         <h1 className="text-2xl font-bold tracking-tight">What happened?</h1>
-        <p className="text-muted-foreground">{config.logPrompt} CareSignal turns it into a log entry you can check.</p>
+        <p className="text-muted-foreground">{config.logPrompt} Unspoken turns it into a log entry you can check.</p>
       </div>
 
       <PersonPicker ctx={ctx} />

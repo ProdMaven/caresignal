@@ -3,9 +3,9 @@ import { BottomNav, TopBar } from "@/components/site-chrome";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "CareSignal",
+  title: "Unspoken",
   description:
-    "Voice-first logging for people who care for someone who cannot say what they need. Supports caregivers. Does not diagnose.",
+    "Unspoken. Every need, finally heard. One shared record of each hard moment, for people who care for someone who cannot always say what they need. Supports caregivers. Does not diagnose.",
 };
 
 export const viewport: Viewport = {

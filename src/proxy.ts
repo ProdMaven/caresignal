@@ -14,7 +14,7 @@ export function proxy(request: NextRequest) {
   if (isValidInvite(code)) return NextResponse.next();
 
   if (pathname.startsWith("/api/")) {
-    return NextResponse.json({ error: "CareSignal is invitation only. Please enter your invite code first." }, { status: 401 });
+    return NextResponse.json({ error: "Unspoken is invitation only. Please enter your invite code first." }, { status: 401 });
   }
   return NextResponse.redirect(new URL("/invite", request.url));
 }

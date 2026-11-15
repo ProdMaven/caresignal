@@ -21,3 +21,4 @@
 - A reported remedy is recorded as given (`remedy_given`) with no name and no result, and is excluded from statistics: rejected both dropping it and treating the report as a medication question. Parents report what they did; the app must not scold them, and must not measure or rank medicines.
 - Self-directed biting and hitting are their own behaviors and always raise the self-injury flag: rejected one "biting" tag. The keyword fallback had logged a child biting her own hand as aggression.
 - Formatter time limit raised from 9 to 18 seconds, client limit to 30: rejected keeping the "under 5 seconds" target for every note. Real spoken notes are about 150 words and took about 9 seconds, so most fell back to keyword rules.
+- Renamed CareSignal to Unspoken: rejected keeping the name. CareSignal is an existing healthcare company (remote patient monitoring, part of Lightbeam Health Solutions), which is a conflict in front of investors and care programs.

@@ -1,4 +1,4 @@
-// CareSignal benchmark and red-team runner.
+// Unspoken (formerly CareSignal) benchmark and red-team runner.
 //
 //   npm run eval                          benchmark, eval/cases.json   -> eval/results/ + docs/eval_report.md
 //   npm run safety                        red team, safety/prompts.json -> safety/results/ + docs/safety_report.md
@@ -586,7 +586,7 @@ async function main(): Promise<void> {
   if (writesAllowed) await r.client.call("POST", "/api/reset");
   await r.loadRoster();
 
-  console.log(`CareSignal ${options.set} run against ${options.baseUrl}`);
+  console.log(`Unspoken ${options.set} run against ${options.baseUrl}`);
   console.log(`Backend: ${backend.backendLabel}`);
   console.log(`Judge: ${options.judge ? (r.judgeAvailable ? `on (${JUDGE_MODEL})` : "requested but unavailable, judge checks are not graded") : "off (deterministic checks only)"}`);
   console.log("");

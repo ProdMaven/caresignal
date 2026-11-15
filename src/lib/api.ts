@@ -21,7 +21,7 @@ export async function fetchJson<T>(url: string, init?: RequestInit): Promise<T> 
     if (err instanceof DOMException && err.name === "AbortError") {
       throw new Error("That took too long. Please check your connection and try again.");
     }
-    if (err instanceof TypeError) throw new Error("Could not reach CareSignal. Please check your connection and try again.");
+    if (err instanceof TypeError) throw new Error("Could not reach Unspoken. Please check your connection and try again.");
     throw err;
   } finally {
     clearTimeout(timer);

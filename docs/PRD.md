@@ -1,7 +1,7 @@
-# CareSignal PRD (buildathon scope)
+# Unspoken PRD (buildathon scope)
 
 ## 1. One-liner
-For caregivers of people who cannot say what they need, CareSignal turns a spoken sentence into a structured log, finds the patterns behind distress, and recommends strategies ranked by what actually worked for others. It supports caregivers and never diagnoses.
+For caregivers of people who cannot always say what they need, Unspoken (working name, formerly CareSignal) turns a spoken sentence into a structured log, finds the patterns behind distress, and recommends strategies ranked by what actually worked for others. It supports caregivers and never diagnoses.
 
 Pitch line: "Distress is communication. We help caregivers decode it, and every family's experience makes the next family's answer better."
 

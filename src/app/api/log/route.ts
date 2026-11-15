@@ -39,7 +39,7 @@ export async function POST(request: Request) {
   } catch (err) {
     console.error("[log] could not parse note:", err instanceof Error ? err.message : err);
     return Response.json(
-      { error: "CareSignal could not read that note right now. Nothing was saved. Please try again in a moment, or use the tap form." },
+      { error: "Unspoken could not read that note right now. Nothing was saved. Please try again in a moment, or use the tap form." },
       { status: 503 },
     );
   }

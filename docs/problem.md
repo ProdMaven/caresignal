@@ -35,7 +35,7 @@ NEED DATA. Interviews at the event with caregivers of a person living with demen
 - Families already share care across several people and phones; there is no shared, low-effort record of what each person sees.
 
 ## What we are not
-Not a diagnostic tool, not medical advice, not a replacement for doctors, therapists, or care teams. CareSignal supports caregivers and never diagnoses.
+Not a diagnostic tool, not medical advice, not a replacement for doctors, therapists, or care teams. Unspoken supports caregivers and never diagnoses.
 
 ## Sources
 - AARP and National Alliance for Caregiving, Caregiving in the U.S. 2025: https://www.aarp.org/press/releases/2025-07-24-new-report-reveals-crisis-point-for-americas-63-million-family-caregivers.html

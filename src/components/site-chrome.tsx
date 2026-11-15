@@ -39,12 +39,14 @@ export function TopBar() {
       <div className="mx-auto flex w-full max-w-xl flex-wrap items-center justify-between gap-x-3 gap-y-2 px-4 py-2.5">
         <Link href="/" className="flex items-center gap-2 text-lg font-bold tracking-tight">
           <HeartHandshake className="size-6 text-primary" aria-hidden />
-          CareSignal
+          Unspoken
         </Link>
+        {/* The tagline shows where there is room: the invite screen has no mode switch beside the wordmark. */}
+        {gated && <span className="text-sm text-muted-foreground">Every need, finally heard.</span>}
         {!gated && (
           <div className="flex items-center gap-2">
             <ModeSwitch />
-            <Link href="/about" aria-label="About CareSignal" className="rounded-full p-2 text-muted-foreground hover:text-foreground">
+            <Link href="/about" aria-label="About Unspoken" className="rounded-full p-2 text-muted-foreground hover:text-foreground">
               <Info className="size-5" aria-hidden />
             </Link>
           </div>

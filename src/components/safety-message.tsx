@@ -21,7 +21,7 @@ const TITLE: Record<Tone, string> = {
   care: "You matter too",
   emergency: "This may be an emergency",
   red_flag: "Please check with your care team",
-  scope: "Outside what CareSignal can do",
+  scope: "Outside what Unspoken can do",
 };
 
 // Safety or scope message. Always rendered before anything else in a result.

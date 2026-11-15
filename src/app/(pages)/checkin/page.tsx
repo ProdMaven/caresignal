@@ -47,7 +47,7 @@ export default function CheckInPage() {
     try {
       setReply(await postJson<CheckInResponse>("/api/checkin", body));
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Could not reach CareSignal. Please try again.");
+      setError(err instanceof Error ? err.message : "Could not reach Unspoken. Please try again.");
     } finally {
       setBusy(false);
     }

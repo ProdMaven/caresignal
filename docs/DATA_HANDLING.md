@@ -4,7 +4,7 @@
 - All people, families, and logs are synthetic. No real patient, child, or caregiver data was collected or used.
 - Judges' typed or spoken test inputs are stored only in the demo database and are wiped by "Reset demo data" and on every redeploy.
 
-## What CareSignal stores
+## What Unspoken stores
 - Structured log fields and the text transcript of each note. Audio is never stored; speech is converted to text in the browser.
 - No diagnoses, medications, or clinical records are created by the app.
 

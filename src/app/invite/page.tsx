@@ -39,7 +39,7 @@ export default function InvitePage() {
     <div className="flex flex-col gap-5 pt-6">
       <div className="flex flex-col gap-2">
         <ShieldCheck className="size-10 text-primary" aria-hidden />
-        <h1 className="text-2xl font-bold tracking-tight">CareSignal is invitation only</h1>
+        <h1 className="text-2xl font-bold tracking-tight">Unspoken is invitation only</h1>
         <p className="text-muted-foreground">
           Families share sensitive notes here, and what works for one family helps the next. To keep that trustworthy,
           every caregiver joins through an invite from a support group, care team, or another family.
@@ -68,7 +68,7 @@ export default function InvitePage() {
         />
         {error && <ErrorState message={error} />}
         <Button type="submit" size="lg" disabled={busy}>
-          {busy ? "Checking..." : "Enter CareSignal"}
+          {busy ? "Checking..." : "Enter Unspoken"}
         </Button>
       </form>
 

@@ -31,7 +31,7 @@ Read this first, then CLAUDE.md, then the docs it lists. Everything below is the
 - `docs/eval_report.md`, `docs/safety_report.md`: latest runs with each failure named.
 
 ## Decisions made
-- Product: CareSignal, one engine for two communities (dementia, autism). Users are anyone who lives with or cares for the person (parents, adult children, spouses, siblings, home aides).
+- Product: Unspoken (working name; renamed from CareSignal on Nov 14, see `docs/BRAND.md`), one engine for two communities (dementia, autism). Users are anyone who lives with or cares for the person (parents, adult children, spouses, siblings, home aides).
 - Statistics find patterns and compute scores; Claude only formats notes and explains numbers.
 - Synthetic data only. Organizer-required folder layout: `eval/`, `safety/`, `docs/problem.md`, `docs/eval_report.md`, `docs/safety_report.md`, `docs/pitch.pdf`.
 - Judges must be able to type their own input: text box next to the mic, live AI on any input, "Reset demo data" button.
