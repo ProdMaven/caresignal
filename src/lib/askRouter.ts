@@ -10,7 +10,7 @@ import { computePatterns, eventsInWindow } from "../mocks/patterns";
 import { OUT_OF_SCOPE_MESSAGE, screenSafety as screenAskSafety } from "../mocks/safety";
 import { ASK_INTENTS, ASK_ROUTER_SYSTEM, ASK_TIME_BANDS, buildAskRouterUserMessage } from "../prompts/askRouter";
 import { AiError, callClaude, parseJson } from "./ai";
-import { answerFor } from "./askAnswers";
+import { ADVICE_QUESTION, answerFor } from "./askAnswers";
 import { mocksEnabled } from "./env";
 import { normalize, SCOPE_MESSAGES, screenSafety as screenNoteSafety } from "./safety";
 import { EVENT_TYPES } from "./schemas";
@@ -164,7 +164,7 @@ export function keywordUnderstanding(question: string, mode: Mode): AskUnderstan
   if (note.scope) return { intent: "other" }; // another person's data, or a request to change the rules
 
   const t = normalize(question);
-  const intent = INTENT_RULES.find(([, pattern]) => pattern.test(t))?.[0] ?? typoIntent(t) ?? "other";
+  const intent = INTENT_RULES.find(([, pattern]) => pattern.test(t))?.[0] ?? typoIntent(t) ?? (ADVICE_QUESTION.test(t) ? "what_helped" : "other");
   if (NO_PARAMETER_INTENTS.includes(intent)) return { intent };
 
   const understanding: AskUnderstanding = { intent };
@@ -281,5 +281,5 @@ export async function askWithRouter(req: AskRequest, person: Person, allEvents: 
 
   const mine = allEvents.filter((e) => e.personId === person.id);
   const patterns = computePatterns(person.id, mine);
-  return { response: { ...answerFor(understanding, person, mine, patterns), source }, source };
+  return { response: { ...answerFor(understanding, person, mine, patterns, undefined, req.question), source }, source };
 }
