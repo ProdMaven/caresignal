@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Heart, HeartHandshake, Info, MessageCircleQuestion, Mic, Trophy, UserRound } from "lucide-react";
+import { HeartHandshake, UserCog, Info, MessageCircleQuestion, Mic, Trophy, UserRound } from "lucide-react";
 import { MODE_LIST, MODES } from "@/config/modes";
 import { useMode } from "@/hooks/useAppState";
 import { cn } from "@/lib/utils";
@@ -61,7 +61,7 @@ const NAV = [
   { href: "/person", label: "Timeline", icon: UserRound },
   { href: "/ask", label: "Ask", icon: MessageCircleQuestion },
   { href: "/patterns", label: "What worked", icon: Trophy },
-  { href: "/checkin", label: "You", icon: Heart },
+  { href: "/account", label: "Account", icon: UserCog },
 ];
 
 export function BottomNav() {
@@ -72,7 +72,7 @@ export function BottomNav() {
       <ul className="mx-auto flex w-full max-w-xl">
         {NAV.map(({ href, label, icon: Icon }) => {
           const active =
-            href === "/" ? pathname === "/" : pathname.startsWith(href) || (href === "/checkin" && pathname.startsWith("/journal")) ||
+            href === "/" ? pathname === "/" : pathname.startsWith(href) || (href === "/account" && (pathname.startsWith("/checkin") || pathname.startsWith("/journal"))) ||
             (href === "/person" && pathname.startsWith("/overview"));
           return (
             <li key={href} className="flex-1">

@@ -44,3 +44,10 @@ export async function POST(request: Request) {
   });
   return response;
 }
+
+// DELETE /api/invite: sign out on this device by clearing the invite cookie.
+export async function DELETE() {
+  const response = NextResponse.json({ ok: true, message: null } satisfies InviteResponse);
+  response.cookies.set(INVITE_COOKIE, "", { httpOnly: true, sameSite: "lax", secure: process.env.NODE_ENV === "production", path: "/", maxAge: 0 });
+  return response;
+}

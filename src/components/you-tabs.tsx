@@ -5,11 +5,12 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 const TABS = [
+  { href: "/account", label: "Account" },
   { href: "/checkin", label: "Check in" },
   { href: "/journal", label: "My journal" },
 ];
 
-// Switch between the two spaces that are for the caregiver.
+// Switch between the caregiver's own pages: account settings, check-in, and journal.
 export function YouTabs() {
   const pathname = usePathname();
   return (
