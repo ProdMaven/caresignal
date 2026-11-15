@@ -137,7 +137,7 @@ export function screenOtherLanguages(rawText: string): OtherLanguageFindings {
 
 // ---- Which language a note is in, from the script and a few very common words. Used to pick the translated line.
 const ES_WORDS = /\b(el|la|los|las|que|de|del|una|con|por|para|pero|muy|esta|estaba|hoy|ayer|despues|porque|mi|se|le|lo|y|no|mama|papa|hijo|hija|abuela|abuelo)\b/g;
-const HI_WORDS = /\b(hai|hain|nahi|nahin|kya|mein|ko|ka|ki|ke|tha|thi|raha|rahi|gaya|gayi|aaj|kal|bahut|aur|phir|usne|maine|humne|khana|baad|subah|shaam|raat|ne|se|din|kuch|mummy|papa|unke|uske|mujhse|hota|kar|gir|chot|lagi)\b/g;
+const HI_WORDS = /\b(hai|hain|nahi|nahin|kya|mein|ko|ka|ki|ke|tha|thi|raha|rahi|gaya|gayi|aaj|kal|bahut|aur|phir|usne|maine|humne|khana|baad|subah|shaam|raat|ne|se|din|kuch|mummy|papa|unke|uske|mujhse|hota|kar|gir|chot|lagi|apna|apne|apni|par|pe|liya|diya|kiya|hua|hui|the|ho|hi|bhi|toh|wo|woh|yeh|unhe|use|gusse|haath|sir|khoon|nikal|aaya|aayi|patak|kaat|deewar|ghar|aaram|mila|chup|shor|bilkul|baje|uth|koshish|wapas|bistar)\b/g;
 
 export function detectNoteLanguage(rawText: string): OtherLanguage | "en" | "mixed" {
   const text = rawText.toLowerCase();
@@ -150,7 +150,7 @@ export function detectNoteLanguage(rawText: string): OtherLanguage | "en" | "mix
   const words = (latin.match(/[a-z]+/g) ?? []).length || 1;
   const es = (latin.match(ES_WORDS) ?? []).length + (/[¿¡ñ]/.test(text) ? 3 : 0) + Math.min(3, (text.match(/[áéíóú]/g) ?? []).length);
   const hi = (latin.match(HI_WORDS) ?? []).length;
-  if (hi >= 3 && hi / words > 0.25 && hi > es) return "hi";
+  if (hi >= 3 && hi / words > 0.3 && hi > es) return "hi";
   if (es >= 3 && es / words > 0.25) return "es";
   if (devanagari > 0 || han > 0) return "mixed";
   return "en";
