@@ -59,6 +59,8 @@ export interface LogRecord {
   confidence: Record<string, number>;
   needsReview: string[];
   redFlags: string[];
+  // v10: language of the note as given (BCP 47, for example "en", "es", "hi", "zh"; "mixed" allowed). rawNote is never translated.
+  noteLanguage?: string;
 }
 
 // POST /api/log  (parse only; does not save)
@@ -70,6 +72,8 @@ export interface ParseLogRequest {
   // v7: the person picked on screen. It wins unless the note clearly names someone else on the list;
   // then the draft keeps the picked person and `candidates` holds [named person, picked person] so the card can ask.
   personId?: string;
+  speechLang?: string; // v10: from the mic language picker; a hint only
+  followUpAnswered?: boolean; // v10: true when this note already includes a follow-up answer, so no second question is asked
 }
 export interface ParseLogResponse {
   // event: a normal log. caregiver_distress: the speaker is in distress (show care + 988, do not log).
@@ -79,7 +83,11 @@ export interface ParseLogResponse {
   draft: Omit<LogRecord, "id" | "loggedAt"> | null;
   unmatchedPerson: boolean; // true if name not in roster
   candidates: Person[]; // if ambiguous
+  followUp?: FollowUp | null; // v10: at most one question for the piece that would help most; null or absent when nothing is asked
 }
+
+// v10: one follow-up question. Code picks the field; the model only phrases the question.
+export interface FollowUp { field: "contextBefore" | "stepResult" | "occurredAt"; question: string }
 
 // POST /api/events  (save a confirmed draft)
 export interface SaveEventRequest { record: Omit<LogRecord, "id" | "loggedAt"> }
@@ -119,7 +127,16 @@ export interface AskResponse {
   evidence: { text: string; eventIds: string[] }[];
   relatedPatternKeys: string[];
   dataSufficient: boolean;
+  intent?: AskIntent; // v10: what the question was understood to be
+  source?: "model" | "fallback" | "safety"; // v10: which path chose the intent
 }
+
+// v10: Ask router. A fast model returns only a label and parameters; code computes the answer.
+export type AskIntent =
+  | "when_does_it_happen" | "what_comes_before" | "what_helped" | "how_often"
+  | "who_saw_it" | "compare_periods" | "what_is_new" | "about_the_app"
+  | "medical_out_of_scope" | "crisis" | "other";
+export interface AskUnderstanding { intent: AskIntent; eventType?: string; timeBand?: TimeBand; days?: 7 | 14 | 30 }
 
 export type Tier =
   | "not_recommended"
@@ -225,3 +242,21 @@ export interface UpdatePersonRequest {
   history?: MilestoneInput[];
 }
 export interface UpdatePersonResponse { person: Person }
+
+// v10: visit and handoff summary. POST /api/summary
+// Code builds the facts; the model only writes the sections; code checks the draft and falls back to templates.
+export type SummaryAudience = "doctor" | "therapist_school" | "caregiver_handoff";
+export interface SummaryRequest { mode: Mode; personId: string; audience: SummaryAudience; days: 7 | 14 | 30 }
+export interface SummarySection { heading: string; text: string; eventIds: string[] }
+export interface SummaryResponse {
+  safetyNotes: { text: string; eventIds: string[] }[]; // red-flag entries in the window, listed first, fixed wording
+  title: string; // for example "Helen: last 14 days"
+  sections: SummarySection[];
+  questionsToAsk: string[]; // questions for the professional, never conclusions
+  dataSufficient: boolean; // false when fewer than 3 entries; then sections explain what to log
+  source: "model" | "fallback";
+  disclaimer: string; // fixed: "Written from caregiver logs. Not a diagnosis. Discuss with your care team."
+}
+
+// v10: which optional AI features are switched on for this server. GET /api/features
+export interface FeaturesResponse { multilingualSafety: boolean; summary: boolean; followUp: boolean; askRouter: boolean }
