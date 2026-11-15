@@ -11,7 +11,12 @@
 - No clinical records are created by the app.
 
 ## What leaves the app
-- Each note's text is sent to the Anthropic API to be formatted into fields. The spoken or typed history is sent to the same API to be turned into milestones. Pattern lines, Ask answers and overview numbers are computed in code and are not sent anywhere. No other third parties receive data.
+Text is sent to the Anthropic API in four places, and nowhere else. Audio is never sent; speech becomes text in the browser.
+- **A note** (`POST /api/log`): the note's text, the first names and nicknames on the Care Profile list, who is logging, the time, and, when voice was used, the mic language as a hint. It comes back as fields. When the follow-up question is on, the same call may also word one question.
+- **A history** (`POST /api/history/format`): the spoken or typed history, to be turned into milestones.
+- **A visit summary** (`POST /api/summary`, when the feature is on): a facts object that code computed from one person's logs (counts by kind and time of day, the listed patterns with their counts, what was tried and how often it helped, entries per caregiver by first name) and up to a few short quotes from that person's notes. The raw log entries are not sent. Medicine names and doses are removed before anything is sent.
+- **A question on the Ask screen** (`POST /api/ask`, when the feature is on): the question text only, sent to a small fast model that returns a label for what is being asked. No log entries are sent; code writes the answer from the selected person's logs.
+- Pattern lines, counts, scores, Ask answers and overview numbers are computed in code. Safety messages are fixed wording chosen by rules before any model call. No other third parties receive data.
 - No data is sold, shared, or used for advertising.
 
 ## Community statistics ("what worked for others")

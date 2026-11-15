@@ -184,12 +184,6 @@ export const formatterReplySchema = z.object({
       dayOffset: z.number().int().min(-7).max(0).catch(0),
     })
     .catch({ hour: null, minute: 0, meridiem: null, anchor: null, dayOffset: 0 }),
-  // v10: optional question suggested by the model. Code decides whether it is used (src/lib/followUp.ts).
-  followUp: z
-    .object({ field: z.string().max(40), question: z.string().max(400) })
-    .nullable()
-    .catch(null)
-    .optional(),
   redFlags: looseStrings,
   safety: z
     .object({
