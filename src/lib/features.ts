@@ -9,6 +9,11 @@ export const features = {
   summary: () => on("FEATURE_SUMMARY"),
   followUp: () => on("FEATURE_FOLLOWUP"),
   askRouter: () => on("FEATURE_ASK_ROUTER"),
+  // Semantic matching (Nov 16): entries that mean the same thing in different words can be found together.
+  semanticMatch: () => on("FEATURE_SEMANTIC_MATCH"),
+  // Second switch for the storage path only: search embeddings in Postgres with pgvector instead of in code.
+  // Needs the migration in scripts/pgvector/, which has not been run.
+  usePgvector: () => on("USE_PGVECTOR"),
 };
 
 export function featureFlags(): FeaturesResponse {
@@ -17,5 +22,7 @@ export function featureFlags(): FeaturesResponse {
     summary: features.summary(),
     followUp: features.followUp(),
     askRouter: features.askRouter(),
+    // Present only when on, so the response is unchanged while the flag is off.
+    ...(features.semanticMatch() ? { semanticMatch: true } : {}),
   };
 }

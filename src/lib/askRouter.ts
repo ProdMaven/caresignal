@@ -12,6 +12,7 @@ import { ASK_INTENTS, ASK_ROUTER_SYSTEM, ASK_TIME_BANDS, buildAskRouterUserMessa
 import { AiError, callClaude, parseJson } from "./ai";
 import { ADVICE_QUESTION, answerFor } from "./askAnswers";
 import { mocksEnabled } from "./env";
+import { features } from "./features";
 import { normalize, SCOPE_MESSAGES, screenSafety as screenNoteSafety } from "./safety";
 import { EVENT_TYPES } from "./schemas";
 import type { AskIntent, AskRequest, AskResponse, AskUnderstanding, LogRecord, Mode, Person, TimeBand } from "./types";
@@ -280,6 +281,19 @@ export async function askWithRouter(req: AskRequest, person: Person, allEvents: 
   }
 
   const mine = allEvents.filter((e) => e.personId === person.id);
+
+  // Semantic matching (flag): a question that clearly means one "what came before" tag is answered from the
+  // entries retrieved for this person. Medical and crisis questions never reach this point.
+  if (features.semanticMatch()) {
+    try {
+      const { semanticAsk } = await import("./semantic/ask");
+      const found = await semanticAsk(req.question, person, mine, understanding);
+      if (found) return { response: { ...found, source }, source };
+    } catch (err) {
+      console.error("[semantic] ask retrieval failed, answering the usual way:", err instanceof Error ? err.message : err);
+    }
+  }
+
   const patterns = computePatterns(person.id, mine);
   return { response: { ...answerFor(understanding, person, mine, patterns, undefined, req.question), source }, source };
 }

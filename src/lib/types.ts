@@ -114,6 +114,9 @@ export interface PatternCard {
   thingsToCheck: string[]; // possible unmet needs, never diagnoses
   patternKey: string; // eventType|contextTag
   evidenceEventIds: string[];
+  // v11 (semantic matching, flag on only): entries counted with this pattern because their wording is close in
+  // meaning to the tag, not because of their label. Shown on the card so the caregiver can remove one.
+  similarityJoined?: { eventId: string; clause: string; score: number }[];
 }
 // GET /api/patterns?personId=
 export interface PatternsResponse { patterns: PatternCard[] }
@@ -129,6 +132,9 @@ export interface AskResponse {
   dataSufficient: boolean;
   intent?: AskIntent; // v10: what the question was understood to be
   source?: "model" | "fallback" | "safety"; // v10: which path chose the intent
+  // v11 (semantic matching, flag on only): the tag the question was matched to by meaning, and which of the
+  // selected person's entries were retrieved by label and which by similar wording.
+  semantic?: { concept: string; byLabel: string[]; bySimilarity: string[] };
 }
 
 // v10: Ask router. A fast model returns only a label and parameters; code computes the answer.
@@ -259,4 +265,4 @@ export interface SummaryResponse {
 }
 
 // v10: which optional AI features are switched on for this server. GET /api/features
-export interface FeaturesResponse { multilingualSafety: boolean; summary: boolean; followUp: boolean; askRouter: boolean }
+export interface FeaturesResponse { multilingualSafety: boolean; summary: boolean; followUp: boolean; askRouter: boolean; semanticMatch?: boolean }

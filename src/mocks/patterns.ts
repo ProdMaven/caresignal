@@ -6,6 +6,8 @@ import type { LogRecord, PatternCard, PatternsResponse, TimeBand } from "../lib/
 import { addDays, demoToday, TIME_BAND_LABEL, wallParts } from "../lib/time";
 import { caregiverName, label } from "../config/modes";
 import { WINDOW_DAYS } from "./data";
+import { features } from "../lib/features";
+import { similarityTags } from "../lib/semantic/index";
 
 const MIN_EVENTS = 4;
 const MIN_RATIO = 0.6;
@@ -86,9 +88,19 @@ export function computePatterns(personId: string, allEvents: LogRecord[], today:
   for (const [key, group] of groups) {
     if (group.length < MIN_EVENTS) continue;
     const [eventType, timeBand] = key.split("|") as [string, TimeBand];
-    const tags = new Set(group.flatMap((e) => e.contextBefore));
+    // Semantic matching (flag): an entry whose wording is close in meaning to a tag is counted with it.
+    // The index only says which entries are related; the counting below is unchanged.
+    const joined = new Map<string, Map<string, { clause: string; score: number }>>();
+    if (features.semanticMatch()) {
+      for (const e of group) for (const t of similarityTags(e)) {
+        if (!joined.has(t.tag)) joined.set(t.tag, new Map());
+        joined.get(t.tag)!.set(e.id, { clause: t.clause, score: t.score });
+      }
+    }
+    const tags = new Set([...group.flatMap((e) => e.contextBefore), ...joined.keys()]);
     for (const tag of tags) {
-      const matches = group.filter((e) => e.contextBefore.includes(tag));
+      const bySimilarity = joined.get(tag);
+      const matches = group.filter((e) => e.contextBefore.includes(tag) || bySimilarity?.has(e.id));
       const ratio = matches.length / group.length;
       if (matches.length < MIN_EVENTS || ratio < MIN_RATIO) continue;
 
@@ -142,6 +154,9 @@ export function computePatterns(personId: string, allEvents: LogRecord[], today:
         crossNames,
         crossEventIds,
         loggedByCounts,
+        ...(bySimilarity && bySimilarity.size > 0
+          ? { similarityJoined: matches.filter((m) => bySimilarity.has(m.id)).map((m) => ({ eventId: m.id, ...bySimilarity.get(m.id)! })) }
+          : {}),
       });
     }
   }

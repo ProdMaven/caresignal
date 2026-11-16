@@ -3,6 +3,8 @@
 import type { LogRecord, Milestone, MilestoneInput, Mode, Person, StrategyFeedback, UpdatePersonRequest } from "../lib/types";
 import { nowIso } from "../lib/time";
 import { registerCaregivers } from "../config/modes";
+import { features } from "../lib/features";
+import { resetSemantic, restoreSemantic, snapshotSemantic, type SemanticSnapshot } from "../lib/semantic/index";
 import { buildSeedEvents, PEOPLE, STRATEGIES } from "./data";
 
 interface MockStore {
@@ -65,8 +67,14 @@ export function addEvent(draft: Omit<LogRecord, "id" | "loggedAt">): LogRecord {
   return record;
 }
 
+// Lets other server code (the semantic index) ask for the app state to be saved again.
+export function touchStore(): void {
+  changed();
+}
+
 export function resetStore(): number {
   globalForStore.__caresignalMockStore = freshStore();
+  resetSemantic();
   changed();
   return globalForStore.__caresignalMockStore.events.length;
 }
@@ -189,6 +197,8 @@ export interface StoreSnapshot {
   votes: [string, [string, boolean][]][];
   // History a family shared for a demo profile. Kept in saved data only, never in the seed file.
   featuredHistory?: Record<string, Milestone[]>;
+  // Semantic matching (flag on only): embeddings for added entries and the joins a caregiver removed.
+  semantic?: SemanticSnapshot;
 }
 
 // An added profile that is folded into a demo profile the first time saved data is loaded after this change:
@@ -222,6 +232,8 @@ export function snapshotStore(): StoreSnapshot {
     nextPersonId: s.nextPersonId,
     votes: [...s.votes.entries()].map(([strategyId, votes]) => [strategyId, [...votes.entries()]]),
     featuredHistory: { ...(s.featuredHistory ?? {}) },
+    // Only written while the flag is on, so saved state is unchanged otherwise.
+    ...(features.semanticMatch() ? { semantic: snapshotSemantic((id) => Number(id.replace("evt_", "")) >= FIRST_ADDED_EVENT_ID) } : {}),
   };
 }
 
@@ -241,6 +253,7 @@ export function restoreStore(raw: unknown): boolean {
   fresh.featuredHistory = featuredHistory;
   fresh.people = fresh.people.map((p) => (p.isFeatured && featuredHistory[p.id]?.length ? { ...p, history: featuredHistory[p.id] } : p));
   fresh.people.forEach((p) => registerCaregivers(p.caregivers));
+  if (features.semanticMatch()) restoreSemantic(snap.semantic);
   globalForStore.__caresignalMockStore = fresh;
   // A profile was folded in: save the new shape once the save hook is attached.
   if (fresh.people.length !== before) setTimeout(changed, 2_000);

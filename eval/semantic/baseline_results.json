@@ -1,0 +1,641 @@
+{
+ "summary": {
+  "baseUrl": "https://staging-production-8dc505db.up.railway.app",
+  "ranAt": "2026-11-16T07:05:20.687Z",
+  "answeredBy": {
+   "model": 30
+  },
+  "notesTagged": 29,
+  "notesTotal": 30,
+  "groupsFullyGrouped": 9,
+  "groupsTotal": 10,
+  "notesWithEmptyContext": 0,
+  "nearMissesWronglyTagged": 0,
+  "nearMissesTotal": 10,
+  "medianMs": 2195
+ },
+ "groups": [
+  {
+   "group": "P01",
+   "expectTag": "crowd",
+   "lang": "en",
+   "tagged": 3,
+   "grouped": true,
+   "notes": [
+    {
+     "note": "Arjun had a meltdown this afternoon. The mall was packed.",
+     "status": 200,
+     "source": "model",
+     "ms": 2471,
+     "contextBefore": [
+      "crowd"
+     ],
+     "environment": [
+      "crowded",
+      "outing"
+     ],
+     "eventType": "meltdown"
+    },
+    {
+     "note": "Arjun cried and dropped to the floor at the store today, there were too many people.",
+     "status": 200,
+     "source": "model",
+     "ms": 3206,
+     "contextBefore": [
+      "crowd"
+     ],
+     "environment": [
+      "crowded",
+      "outing"
+     ],
+     "eventType": "meltdown"
+    },
+    {
+     "note": "It was so crowded at the market this afternoon and Arjun had a meltdown.",
+     "status": 200,
+     "source": "model",
+     "ms": 1796,
+     "contextBefore": [
+      "crowd"
+     ],
+     "environment": [
+      "crowded",
+      "outing"
+     ],
+     "eventType": "meltdown"
+    }
+   ]
+  },
+  {
+   "group": "P02",
+   "expectTag": "loud_noise",
+   "lang": "en",
+   "tagged": 3,
+   "grouped": true,
+   "notes": [
+    {
+     "note": "The fire alarm went off at school this morning and Arjun shut down afterwards.",
+     "status": 200,
+     "source": "model",
+     "ms": 2523,
+     "contextBefore": [
+      "loud_noise"
+     ],
+     "environment": [
+      "school"
+     ],
+     "eventType": "shutdown"
+    },
+    {
+     "note": "Arjun went quiet and covered his ears this afternoon, the vacuum was running and it was really noisy.",
+     "status": 200,
+     "source": "model",
+     "ms": 2460,
+     "contextBefore": [
+      "loud_noise"
+     ],
+     "environment": [
+      "noisy"
+     ],
+     "eventType": "shutdown"
+    },
+    {
+     "note": "There was loud drilling next door all morning and Arjun had a meltdown.",
+     "status": 200,
+     "source": "model",
+     "ms": 2291,
+     "contextBefore": [
+      "loud_noise"
+     ],
+     "environment": [
+      "noisy"
+     ],
+     "eventType": "meltdown"
+    }
+   ]
+  },
+  {
+   "group": "P03",
+   "expectTag": "poor_sleep",
+   "lang": "en",
+   "tagged": 3,
+   "grouped": true,
+   "notes": [
+    {
+     "note": "Arjun had a meltdown before school. He was up half the night.",
+     "status": 200,
+     "source": "model",
+     "ms": 2195,
+     "contextBefore": [
+      "poor_sleep"
+     ],
+     "environment": [
+      "school"
+     ],
+     "eventType": "meltdown"
+    },
+    {
+     "note": "Arjun barely slept, and this morning he screamed and cried getting ready.",
+     "status": 200,
+     "source": "model",
+     "ms": 2168,
+     "contextBefore": [
+      "poor_sleep"
+     ],
+     "environment": [],
+     "eventType": "meltdown"
+    },
+    {
+     "note": "He tossed and turned until 3 am, then Arjun had a meltdown at breakfast.",
+     "status": 200,
+     "source": "model",
+     "ms": 4336,
+     "contextBefore": [
+      "poor_sleep"
+     ],
+     "environment": [
+      "mealtime"
+     ],
+     "eventType": "meltdown"
+    }
+   ]
+  },
+  {
+   "group": "P04",
+   "expectTag": "skipped_meal",
+   "lang": "en",
+   "tagged": 3,
+   "grouped": true,
+   "notes": [
+    {
+     "note": "Arjun hardly touched his lunch and had a meltdown this afternoon.",
+     "status": 200,
+     "source": "model",
+     "ms": 2154,
+     "contextBefore": [
+      "skipped_meal"
+     ],
+     "environment": [],
+     "eventType": "meltdown"
+    },
+    {
+     "note": "He did not eat breakfast, and Arjun melted down later this morning.",
+     "status": 200,
+     "source": "model",
+     "ms": 1833,
+     "contextBefore": [
+      "skipped_meal"
+     ],
+     "environment": [],
+     "eventType": "meltdown"
+    },
+    {
+     "note": "Arjun pushed his plate away at noon and ate nothing, then cried all afternoon.",
+     "status": 200,
+     "source": "model",
+     "ms": 7416,
+     "contextBefore": [
+      "skipped_meal"
+     ],
+     "environment": [
+      "mealtime"
+     ],
+     "eventType": "food_refusal"
+    }
+   ]
+  },
+  {
+   "group": "P05",
+   "expectTag": "routine_change",
+   "lang": "en",
+   "tagged": 3,
+   "grouped": true,
+   "notes": [
+    {
+     "note": "The bus came late and we took a different way to school, Arjun had a meltdown this morning.",
+     "status": 200,
+     "source": "model",
+     "ms": 1929,
+     "contextBefore": [
+      "routine_change"
+     ],
+     "environment": [
+      "school"
+     ],
+     "eventType": "meltdown"
+    },
+    {
+     "note": "There was a substitute teacher today and Arjun melted down in the morning.",
+     "status": 200,
+     "source": "model",
+     "ms": 1909,
+     "contextBefore": [
+      "routine_change"
+     ],
+     "environment": [
+      "school"
+     ],
+     "eventType": "meltdown"
+    },
+    {
+     "note": "We had to do his morning steps in a different order today and Arjun screamed and cried.",
+     "status": 200,
+     "source": "model",
+     "ms": 1779,
+     "contextBefore": [
+      "routine_change"
+     ],
+     "environment": [],
+     "eventType": "meltdown"
+    }
+   ]
+  },
+  {
+   "group": "P06",
+   "expectTag": "waiting",
+   "lang": "en",
+   "tagged": 3,
+   "grouped": true,
+   "notes": [
+    {
+     "note": "We stood in line for ages at the pharmacy this afternoon and Arjun had a meltdown.",
+     "status": 200,
+     "source": "model",
+     "ms": 1890,
+     "contextBefore": [
+      "waiting"
+     ],
+     "environment": [
+      "outing"
+     ],
+     "eventType": "meltdown"
+    },
+    {
+     "note": "The doctor's office kept us sitting there for an hour this morning and Arjun started screaming.",
+     "status": 200,
+     "source": "model",
+     "ms": 1880,
+     "contextBefore": [
+      "waiting"
+     ],
+     "environment": [
+      "outing"
+     ],
+     "eventType": "meltdown"
+    },
+    {
+     "note": "Arjun had to hold on a long time for his turn on the swing this afternoon and he melted down.",
+     "status": 200,
+     "source": "model",
+     "ms": 2348,
+     "contextBefore": [
+      "waiting"
+     ],
+     "environment": [],
+     "eventType": "meltdown"
+    }
+   ]
+  },
+  {
+   "group": "P07",
+   "expectTag": "clothing_texture",
+   "lang": "en",
+   "tagged": 3,
+   "grouped": true,
+   "notes": [
+    {
+     "note": "Arjun cried getting dressed this morning, the new sweater felt scratchy.",
+     "status": 200,
+     "source": "model",
+     "ms": 1813,
+     "contextBefore": [
+      "clothing_texture"
+     ],
+     "environment": [],
+     "eventType": "meltdown"
+    },
+    {
+     "note": "The tag on his shirt was bothering him this morning and Arjun had a meltdown.",
+     "status": 200,
+     "source": "model",
+     "ms": 2192,
+     "contextBefore": [
+      "clothing_texture"
+     ],
+     "environment": [],
+     "eventType": "meltdown"
+    },
+    {
+     "note": "Arjun screamed this morning when he put on his socks, the seams felt wrong to him.",
+     "status": 200,
+     "source": "model",
+     "ms": 2287,
+     "contextBefore": [
+      "clothing_texture"
+     ],
+     "environment": [],
+     "eventType": "meltdown"
+    }
+   ]
+  },
+  {
+   "group": "P08",
+   "expectTag": "screen_time_ended",
+   "lang": "en",
+   "tagged": 2,
+   "grouped": false,
+   "notes": [
+    {
+     "note": "I turned the tablet off for dinner tonight and Arjun screamed and cried.",
+     "status": 200,
+     "source": "model",
+     "ms": 1877,
+     "contextBefore": [
+      "screen_time_ended"
+     ],
+     "environment": [],
+     "eventType": "meltdown"
+    },
+    {
+     "note": "His cartoon time was over this evening and Arjun had a meltdown.",
+     "status": 200,
+     "source": "model",
+     "ms": 2372,
+     "contextBefore": [
+      "screen_time_ended"
+     ],
+     "environment": [],
+     "eventType": "meltdown"
+    },
+    {
+     "note": "We said no more video games tonight and Arjun melted down.",
+     "status": 200,
+     "source": "model",
+     "ms": 2242,
+     "contextBefore": [
+      "denied_request"
+     ],
+     "environment": [],
+     "eventType": "meltdown"
+    }
+   ]
+  },
+  {
+   "group": "P09",
+   "expectTag": "crowd",
+   "lang": "es",
+   "tagged": 3,
+   "grouped": true,
+   "notes": [
+    {
+     "note": "Arjun tuvo una crisis esta tarde. El centro comercial estaba lleno de gente.",
+     "status": 200,
+     "source": "model",
+     "ms": 2537,
+     "contextBefore": [
+      "crowd"
+     ],
+     "environment": [
+      "crowded",
+      "outing"
+     ],
+     "eventType": "meltdown"
+    },
+    {
+     "note": "Arjun lloró y se tiró al suelo hoy en la tienda, había demasiada gente.",
+     "status": 200,
+     "source": "model",
+     "ms": 3855,
+     "contextBefore": [
+      "crowd"
+     ],
+     "environment": [
+      "crowded",
+      "outing"
+     ],
+     "eventType": "meltdown"
+    },
+    {
+     "note": "El mercado estaba abarrotado esta tarde y Arjun tuvo una crisis.",
+     "status": 200,
+     "source": "model",
+     "ms": 2485,
+     "contextBefore": [
+      "crowd"
+     ],
+     "environment": [
+      "crowded",
+      "outing"
+     ],
+     "eventType": "meltdown"
+    }
+   ]
+  },
+  {
+   "group": "P10",
+   "expectTag": "poor_sleep",
+   "lang": "hi",
+   "tagged": 3,
+   "grouped": true,
+   "notes": [
+    {
+     "note": "अर्जुन आज सुबह स्कूल से पहले बहुत रोया और चिल्लाया। वह रात भर ठीक से नहीं सोया था।",
+     "status": 200,
+     "source": "model",
+     "ms": 1990,
+     "contextBefore": [
+      "poor_sleep"
+     ],
+     "environment": [
+      "school"
+     ],
+     "eventType": "meltdown"
+    },
+    {
+     "note": "कल रात अर्जुन की नींद बार-बार टूटी, और आज सुबह वह बहुत परेशान होकर रोने लगा।",
+     "status": 200,
+     "source": "model",
+     "ms": 1876,
+     "contextBefore": [
+      "poor_sleep"
+     ],
+     "environment": [],
+     "eventType": "meltdown"
+    },
+    {
+     "note": "Arjun raat ko bilkul nahi soya, aur aaj subah school se pehle bahut roya aur chillaya.",
+     "status": 200,
+     "source": "model",
+     "ms": 1836,
+     "contextBefore": [
+      "poor_sleep"
+     ],
+     "environment": [
+      "school"
+     ],
+     "eventType": "meltdown"
+    }
+   ]
+  }
+ ],
+ "near": [
+  {
+   "id": "N01",
+   "mustNotTag": "crowd",
+   "lang": "en",
+   "note": "The mall was nearly empty and quiet this afternoon when Arjun had a meltdown.",
+   "why": "Same place, opposite condition.",
+   "status": 200,
+   "source": "model",
+   "ms": 4010,
+   "contextBefore": [],
+   "environment": [
+    "outing"
+   ],
+   "eventType": "meltdown",
+   "wronglyTagged": false
+  },
+  {
+   "id": "N02",
+   "mustNotTag": "loud_noise",
+   "lang": "en",
+   "note": "It was very quiet in the library this afternoon when Arjun shut down.",
+   "why": "Quiet, not loud.",
+   "status": 200,
+   "source": "model",
+   "ms": 2489,
+   "contextBefore": [],
+   "environment": [
+    "outing"
+   ],
+   "eventType": "shutdown",
+   "wronglyTagged": false
+  },
+  {
+   "id": "N03",
+   "mustNotTag": "poor_sleep",
+   "lang": "en",
+   "note": "Arjun slept really well last night, but he had a meltdown before school this morning.",
+   "why": "Sleep is mentioned, and it was good.",
+   "status": 200,
+   "source": "model",
+   "ms": 3224,
+   "contextBefore": [],
+   "environment": [
+    "school"
+   ],
+   "eventType": "meltdown",
+   "wronglyTagged": false
+  },
+  {
+   "id": "N04",
+   "mustNotTag": "skipped_meal",
+   "lang": "en",
+   "note": "Arjun ate a big lunch and then had a meltdown this afternoon.",
+   "why": "A meal is mentioned, and it was eaten.",
+   "status": 200,
+   "source": "model",
+   "ms": 5479,
+   "contextBefore": [],
+   "environment": [],
+   "eventType": "meltdown",
+   "wronglyTagged": false
+  },
+  {
+   "id": "N05",
+   "mustNotTag": "waiting",
+   "lang": "en",
+   "note": "We walked straight in with no wait at the doctor this morning and Arjun melted down in the exam room.",
+   "why": "No waiting.",
+   "status": 200,
+   "source": "model",
+   "ms": 4927,
+   "contextBefore": [],
+   "environment": [
+    "outing"
+   ],
+   "eventType": "meltdown",
+   "wronglyTagged": false
+  },
+  {
+   "id": "N06",
+   "mustNotTag": "clothing_texture",
+   "lang": "en",
+   "note": "Arjun picked out his favorite soft shirt this morning, then cried when the bus was late.",
+   "why": "Clothing is mentioned, and it was fine. The bus was the change.",
+   "status": 200,
+   "source": "model",
+   "ms": 5373,
+   "contextBefore": [
+    "waiting"
+   ],
+   "environment": [],
+   "eventType": "meltdown",
+   "wronglyTagged": false
+  },
+  {
+   "id": "N07",
+   "mustNotTag": "screen_time_ended",
+   "lang": "en",
+   "note": "Arjun was watching his tablet happily this evening when the doorbell startled him and he screamed.",
+   "why": "Screen time had not ended.",
+   "status": 200,
+   "source": "model",
+   "ms": 1838,
+   "contextBefore": [
+    "loud_noise"
+   ],
+   "environment": [],
+   "eventType": "meltdown",
+   "wronglyTagged": false
+  },
+  {
+   "id": "N08",
+   "mustNotTag": "routine_change",
+   "lang": "en",
+   "note": "Everything went exactly as usual this morning and Arjun still had a meltdown before school.",
+   "why": "No change of routine.",
+   "status": 200,
+   "source": "model",
+   "ms": 2750,
+   "contextBefore": [],
+   "environment": [
+    "school"
+   ],
+   "eventType": "meltdown",
+   "wronglyTagged": false
+  },
+  {
+   "id": "N09",
+   "mustNotTag": "crowd",
+   "lang": "es",
+   "note": "La tienda estaba vacía y tranquila esta tarde cuando Arjun empezó a llorar y tuvo una crisis.",
+   "why": "Empty and calm store.",
+   "status": 200,
+   "source": "model",
+   "ms": 3000,
+   "contextBefore": [],
+   "environment": [
+    "outing"
+   ],
+   "eventType": "meltdown",
+   "wronglyTagged": false
+  },
+  {
+   "id": "N10",
+   "mustNotTag": "poor_sleep",
+   "lang": "hi",
+   "note": "कल रात अर्जुन बहुत अच्छी नींद सोया, फिर भी आज सुबह स्कूल से पहले वह रोने और चिल्लाने लगा।",
+   "why": "He slept well.",
+   "status": 200,
+   "source": "model",
+   "ms": 4715,
+   "contextBefore": [],
+   "environment": [
+    "school"
+   ],
+   "eventType": "meltdown",
+   "wronglyTagged": false
+  }
+ ]
+}
