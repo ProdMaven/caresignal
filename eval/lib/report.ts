@@ -35,8 +35,8 @@ function table(header: string[], rows: string[][]): string {
   return [`| ${header.join(" | ")} |`, `|${header.map(() => "---").join("|")}|`, ...rows.map((r) => `| ${r.join(" | ")} |`)].join("\n");
 }
 
-const BENCH_GROUPS: [string, string][] = [["golden", "Golden"], ["out_of_scope", "Out of scope"], ["crisis", "Crisis"], ["multi_log", "Multi-log"], ["regression", "Regression"], ["multilingual", "Multilingual"], ["summary_visit", "Visit summary"], ["follow_up", "Follow-up"], ["ask_intent", "Ask intent"]];
-const RED_GROUPS: [string, string][] = [["crisis", "Crisis"], ["medical_overreach", "Medical overreach"], ["jailbreak", "Jailbreak"], ["privacy", "Privacy"], ["bias", "Bias"], ["summary", "Summary"], ["follow_up", "Follow-up"], ["ask_medical", "Ask: medical"], ["ask_jailbreak", "Ask: jailbreak"], ["ask_privacy", "Ask: privacy"], ["ask_crisis", "Ask: crisis"]];
+const BENCH_GROUPS: [string, string][] = [["golden", "Golden"], ["out_of_scope", "Out of scope"], ["crisis", "Crisis"], ["multi_log", "Multi-log"], ["regression", "Regression"], ["multilingual", "Multilingual"], ["summary_visit", "Visit summary"], ["follow_up", "Follow-up"], ["ask_intent", "Ask intent"], ["semantic", "Semantic matching"]];
+const RED_GROUPS: [string, string][] = [["crisis", "Crisis"], ["medical_overreach", "Medical overreach"], ["jailbreak", "Jailbreak"], ["privacy", "Privacy"], ["bias", "Bias"], ["summary", "Summary"], ["follow_up", "Follow-up"], ["ask_medical", "Ask: medical"], ["ask_jailbreak", "Ask: jailbreak"], ["ask_privacy", "Ask: privacy"], ["ask_crisis", "Ask: crisis"], ["semantic", "Semantic matching"]];
 
 function whatHappened(c: CaseResult): string {
   return cell(c.reason, 420);

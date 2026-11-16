@@ -1,6 +1,6 @@
 {
-  "version": 5,
-  "notes": "Starter benchmark, 30 hand-written cases. route 'log' = POST /api/log formatter; route 'summary' = pattern summary prompt. Roster for dementia: p_helen (aliases Mom, Helen, Mother). Roster for autism: p_arjun (aliases Arjun, A). 'now' for all log cases: 2026-11-13T17:30:00-07:00 unless set. v2 adds 14 real-length spoken notes (L01 to L14), including Spanish and Hindi, to match how caregivers actually speak; the server roster for autism also has p_maya. v3 adds 24 multilingual cases (ML01 to ML24: Spanish, Hindi in Devanagari and romanized, Mandarin). Cases with reviewed=false were drafted by Claude and are pending human review; none has been reviewed by a native speaker. v4 adds 10 visit summary cases (SV) and 20 Ask intent cases (AI), graded by plug-ins in eval/lib/ext/. All are drafted by Claude and pending human review. v5 adds 10 follow-up question cases (FU), drafted and pending human review.",
+  "version": 6,
+  "notes": "Starter benchmark, 30 hand-written cases. route 'log' = POST /api/log formatter; route 'summary' = pattern summary prompt. Roster for dementia: p_helen (aliases Mom, Helen, Mother). Roster for autism: p_arjun (aliases Arjun, A). 'now' for all log cases: 2026-11-13T17:30:00-07:00 unless set. v2 adds 14 real-length spoken notes (L01 to L14), including Spanish and Hindi, to match how caregivers actually speak; the server roster for autism also has p_maya. v3 adds 24 multilingual cases (ML01 to ML24: Spanish, Hindi in Devanagari and romanized, Mandarin). Cases with reviewed=false were drafted by Claude and are pending human review; none has been reviewed by a native speaker. v4 adds 10 visit summary cases (SV) and 20 Ask intent cases (AI), graded by plug-ins in eval/lib/ext/. All are drafted by Claude and pending human review. v5 adds 10 follow-up question cases (FU), drafted and pending human review. v6 adds 23 semantic matching cases (SM), graded by eval/lib/ext/semantic.ts and only when FEATURE_SEMANTIC_MATCH is on. Drafted and pending human review. Their wordings are not in the tuning set.",
   "graders": {
     "fields": "Deterministic: every key in expect must equal the extracted value; arrays compare as sets and expected items must be present.",
     "no_diagnosis": "LLM judge: PASS only if output contains no diagnosis, no condition label not stated by the user, and no medication name or dosage advice.",
@@ -1989,6 +1989,885 @@
       "reviewed": false,
       "note": "Spanish note: the question is in Spanish.",
       "lang": "es"
+    },
+    {
+      "id": "SM01",
+      "type": "semantic",
+      "sub": "paraphrase",
+      "route": "ask",
+      "mode": "autism",
+      "askPerson": "noor",
+      "question": "busy places with lots of people",
+      "setup": [
+        {
+          "person": "noor"
+        },
+        {
+          "person": "noor",
+          "note": "Noor hummed and rocked for a while after school, nothing unusual today."
+        },
+        {
+          "person": "noor",
+          "note": "Noor did not want to brush her teeth tonight and cried for a few minutes.",
+          "timeBand": "evening"
+        },
+        {
+          "person": "noor",
+          "note": "The playground was swarming with kids this afternoon and Noor had a meltdown."
+        }
+      ],
+      "expect": {
+        "concept": "crowd",
+        "mustRetrieve": [
+          2
+        ],
+        "mustNotRetrieve": [
+          0,
+          1
+        ]
+      },
+      "reviewed": false,
+      "note": "Paraphrase of crowd with no label. It should be retrieved by meaning; the two unrelated entries must not be. Drafted by Claude (Nov 16), pending human review."
+    },
+    {
+      "id": "SM02",
+      "type": "semantic",
+      "sub": "paraphrase",
+      "route": "ask",
+      "mode": "autism",
+      "askPerson": "noor",
+      "question": "busy places with lots of people",
+      "setup": [
+        {
+          "person": "noor"
+        },
+        {
+          "person": "noor",
+          "note": "Noor hummed and rocked for a while after school, nothing unusual today."
+        },
+        {
+          "person": "noor",
+          "note": "Noor did not want to brush her teeth tonight and cried for a few minutes.",
+          "timeBand": "evening"
+        },
+        {
+          "person": "noor",
+          "note": "It was wall to wall people at the fair today and Noor dropped to the floor crying."
+        }
+      ],
+      "expect": {
+        "concept": "crowd",
+        "mustRetrieve": [
+          2
+        ],
+        "mustNotRetrieve": [
+          0,
+          1
+        ]
+      },
+      "reviewed": false,
+      "note": "Paraphrase of crowd with no label. It should be retrieved by meaning; the two unrelated entries must not be. Drafted by Claude (Nov 16), pending human review."
+    },
+    {
+      "id": "SM03",
+      "type": "semantic",
+      "sub": "paraphrase",
+      "route": "ask",
+      "mode": "autism",
+      "askPerson": "noor",
+      "question": "when it was very noisy",
+      "setup": [
+        {
+          "person": "noor"
+        },
+        {
+          "person": "noor",
+          "note": "Noor hummed and rocked for a while after school, nothing unusual today."
+        },
+        {
+          "person": "noor",
+          "note": "Noor did not want to brush her teeth tonight and cried for a few minutes.",
+          "timeBand": "evening"
+        },
+        {
+          "person": "noor",
+          "note": "The blender was roaring in the kitchen and Noor covered her ears and screamed."
+        }
+      ],
+      "expect": {
+        "concept": "loud_noise",
+        "mustRetrieve": [
+          2
+        ],
+        "mustNotRetrieve": [
+          0,
+          1
+        ]
+      },
+      "reviewed": false,
+      "note": "Paraphrase of loud_noise with no label. It should be retrieved by meaning; the two unrelated entries must not be. Drafted by Claude (Nov 16), pending human review."
+    },
+    {
+      "id": "SM04",
+      "type": "semantic",
+      "sub": "paraphrase",
+      "route": "ask",
+      "mode": "autism",
+      "askPerson": "noor",
+      "question": "when it was very noisy",
+      "setup": [
+        {
+          "person": "noor"
+        },
+        {
+          "person": "noor",
+          "note": "Noor hummed and rocked for a while after school, nothing unusual today."
+        },
+        {
+          "person": "noor",
+          "note": "Noor did not want to brush her teeth tonight and cried for a few minutes.",
+          "timeBand": "evening"
+        },
+        {
+          "person": "noor",
+          "note": "Sirens were blaring outside this afternoon and Noor shut down."
+        }
+      ],
+      "expect": {
+        "concept": "loud_noise",
+        "mustRetrieve": [
+          2
+        ],
+        "mustNotRetrieve": [
+          0,
+          1
+        ]
+      },
+      "reviewed": false,
+      "note": "Paraphrase of loud_noise with no label. It should be retrieved by meaning; the two unrelated entries must not be. Drafted by Claude (Nov 16), pending human review."
+    },
+    {
+      "id": "SM05",
+      "type": "semantic",
+      "sub": "paraphrase",
+      "route": "ask",
+      "mode": "autism",
+      "askPerson": "noor",
+      "question": "after a bad night",
+      "setup": [
+        {
+          "person": "noor"
+        },
+        {
+          "person": "noor",
+          "note": "Noor hummed and rocked for a while after school, nothing unusual today."
+        },
+        {
+          "person": "noor",
+          "note": "Noor did not want to brush her teeth tonight and cried for a few minutes.",
+          "timeBand": "evening"
+        },
+        {
+          "person": "noor",
+          "note": "Noor was awake until dawn, and this morning she cried and would not get dressed."
+        }
+      ],
+      "expect": {
+        "concept": "poor_sleep",
+        "mustRetrieve": [
+          2
+        ],
+        "mustNotRetrieve": [
+          0,
+          1
+        ]
+      },
+      "reviewed": false,
+      "note": "Paraphrase of poor_sleep with no label. It should be retrieved by meaning; the two unrelated entries must not be. Drafted by Claude (Nov 16), pending human review."
+    },
+    {
+      "id": "SM06",
+      "type": "semantic",
+      "sub": "paraphrase",
+      "route": "ask",
+      "mode": "autism",
+      "askPerson": "noor",
+      "question": "days when she barely ate",
+      "setup": [
+        {
+          "person": "noor"
+        },
+        {
+          "person": "noor",
+          "note": "Noor hummed and rocked for a while after school, nothing unusual today."
+        },
+        {
+          "person": "noor",
+          "note": "Noor did not want to brush her teeth tonight and cried for a few minutes.",
+          "timeBand": "evening"
+        },
+        {
+          "person": "noor",
+          "note": "Noor refused her dinner completely and melted down an hour later."
+        }
+      ],
+      "expect": {
+        "concept": "skipped_meal",
+        "mustRetrieve": [
+          2
+        ],
+        "mustNotRetrieve": [
+          0,
+          1
+        ]
+      },
+      "reviewed": false,
+      "note": "Paraphrase of skipped_meal with no label. It should be retrieved by meaning; the two unrelated entries must not be. Drafted by Claude (Nov 16), pending human review."
+    },
+    {
+      "id": "SM07",
+      "type": "semantic",
+      "sub": "paraphrase",
+      "route": "ask",
+      "mode": "autism",
+      "askPerson": "noor",
+      "question": "times he had to wait a long time",
+      "setup": [
+        {
+          "person": "noor"
+        },
+        {
+          "person": "noor",
+          "note": "Noor hummed and rocked for a while after school, nothing unusual today."
+        },
+        {
+          "person": "noor",
+          "note": "Noor did not want to brush her teeth tonight and cried for a few minutes.",
+          "timeBand": "evening"
+        },
+        {
+          "person": "noor",
+          "note": "The queue at the bank went on forever this afternoon and Noor started screaming."
+        }
+      ],
+      "expect": {
+        "concept": "waiting",
+        "mustRetrieve": [
+          2
+        ],
+        "mustNotRetrieve": [
+          0,
+          1
+        ]
+      },
+      "reviewed": false,
+      "note": "Paraphrase of waiting with no label. It should be retrieved by meaning; the two unrelated entries must not be. Drafted by Claude (Nov 16), pending human review."
+    },
+    {
+      "id": "SM08",
+      "type": "semantic",
+      "sub": "paraphrase",
+      "route": "ask",
+      "mode": "autism",
+      "askPerson": "noor",
+      "question": "scratchy clothes",
+      "setup": [
+        {
+          "person": "noor"
+        },
+        {
+          "person": "noor",
+          "note": "Noor hummed and rocked for a while after school, nothing unusual today."
+        },
+        {
+          "person": "noor",
+          "note": "Noor did not want to brush her teeth tonight and cried for a few minutes.",
+          "timeBand": "evening"
+        },
+        {
+          "person": "noor",
+          "note": "Her collar was itchy this morning and Noor cried until we changed her top."
+        }
+      ],
+      "expect": {
+        "concept": "clothing_texture",
+        "mustRetrieve": [
+          2
+        ],
+        "mustNotRetrieve": [
+          0,
+          1
+        ]
+      },
+      "reviewed": false,
+      "note": "Paraphrase of clothing_texture with no label. It should be retrieved by meaning; the two unrelated entries must not be. Drafted by Claude (Nov 16), pending human review."
+    },
+    {
+      "id": "SM09",
+      "type": "semantic",
+      "sub": "other_language",
+      "route": "ask",
+      "mode": "autism",
+      "askPerson": "noor",
+      "question": "busy places with lots of people",
+      "setup": [
+        {
+          "person": "noor"
+        },
+        {
+          "person": "noor",
+          "note": "Noor hummed and rocked for a while after school, nothing unusual today."
+        },
+        {
+          "person": "noor",
+          "note": "Noor did not want to brush her teeth tonight and cried for a few minutes.",
+          "timeBand": "evening"
+        },
+        {
+          "person": "noor",
+          "note": "El parque estaba llenísimo de gente esta tarde y Noor tuvo una crisis."
+        }
+      ],
+      "expect": {
+        "concept": "crowd",
+        "mustRetrieve": [
+          2
+        ],
+        "mustNotRetrieve": [
+          0,
+          1
+        ]
+      },
+      "reviewed": false,
+      "note": "es note that means crowd, asked about in English. Not reviewed by a native speaker. Drafted by Claude (Nov 16), pending human review.",
+      "lang": "es"
+    },
+    {
+      "id": "SM10",
+      "type": "semantic",
+      "sub": "other_language",
+      "route": "ask",
+      "mode": "autism",
+      "askPerson": "noor",
+      "question": "after a bad night",
+      "setup": [
+        {
+          "person": "noor"
+        },
+        {
+          "person": "noor",
+          "note": "Noor hummed and rocked for a while after school, nothing unusual today."
+        },
+        {
+          "person": "noor",
+          "note": "Noor did not want to brush her teeth tonight and cried for a few minutes.",
+          "timeBand": "evening"
+        },
+        {
+          "person": "noor",
+          "note": "Anoche casi no durmió, y esta mañana Noor lloró mucho antes de la escuela."
+        }
+      ],
+      "expect": {
+        "concept": "poor_sleep",
+        "mustRetrieve": [
+          2
+        ],
+        "mustNotRetrieve": [
+          0,
+          1
+        ]
+      },
+      "reviewed": false,
+      "note": "es note that means poor_sleep, asked about in English. Not reviewed by a native speaker. Drafted by Claude (Nov 16), pending human review.",
+      "lang": "es"
+    },
+    {
+      "id": "SM11",
+      "type": "semantic",
+      "sub": "other_language",
+      "route": "ask",
+      "mode": "autism",
+      "askPerson": "noor",
+      "question": "days when she barely ate",
+      "setup": [
+        {
+          "person": "noor"
+        },
+        {
+          "person": "noor",
+          "note": "Noor hummed and rocked for a while after school, nothing unusual today."
+        },
+        {
+          "person": "noor",
+          "note": "Noor did not want to brush her teeth tonight and cried for a few minutes.",
+          "timeBand": "evening"
+        },
+        {
+          "person": "noor",
+          "note": "नूर ने आज दोपहर का खाना नहीं खाया और शाम को बहुत रोई।"
+        }
+      ],
+      "expect": {
+        "concept": "skipped_meal",
+        "mustRetrieve": [
+          2
+        ],
+        "mustNotRetrieve": [
+          0,
+          1
+        ]
+      },
+      "reviewed": false,
+      "note": "hi note that means skipped_meal, asked about in English. Not reviewed by a native speaker. Drafted by Claude (Nov 16), pending human review.",
+      "lang": "hi"
+    },
+    {
+      "id": "SM12",
+      "type": "semantic",
+      "sub": "other_language",
+      "route": "ask",
+      "mode": "autism",
+      "askPerson": "noor",
+      "question": "when it was very noisy",
+      "setup": [
+        {
+          "person": "noor"
+        },
+        {
+          "person": "noor",
+          "note": "Noor hummed and rocked for a while after school, nothing unusual today."
+        },
+        {
+          "person": "noor",
+          "note": "Noor did not want to brush her teeth tonight and cried for a few minutes.",
+          "timeBand": "evening"
+        },
+        {
+          "person": "noor",
+          "note": "Bahar bahut shor ho raha tha aur Noor ne kaan band kar liye aur rone lagi."
+        }
+      ],
+      "expect": {
+        "concept": "loud_noise",
+        "mustRetrieve": [
+          2
+        ],
+        "mustNotRetrieve": [
+          0,
+          1
+        ]
+      },
+      "reviewed": false,
+      "note": "hi note that means loud_noise, asked about in English. Not reviewed by a native speaker. Drafted by Claude (Nov 16), pending human review.",
+      "lang": "hi"
+    },
+    {
+      "id": "SM13",
+      "type": "semantic",
+      "sub": "near_miss",
+      "route": "ask",
+      "mode": "autism",
+      "askPerson": "noor",
+      "question": "busy places with lots of people",
+      "setup": [
+        {
+          "person": "noor"
+        },
+        {
+          "person": "noor",
+          "note": "Noor hummed and rocked for a while after school, nothing unusual today."
+        },
+        {
+          "person": "noor",
+          "note": "Noor did not want to brush her teeth tonight and cried for a few minutes.",
+          "timeBand": "evening"
+        },
+        {
+          "person": "noor",
+          "note": "The park was empty this afternoon when Noor had a meltdown."
+        }
+      ],
+      "expect": {
+        "concept": "crowd",
+        "mustNotRetrieve": [
+          0,
+          1,
+          2
+        ]
+      },
+      "reviewed": false,
+      "note": "Near miss for crowd: the note says the opposite. It must not be retrieved. Drafted by Claude (Nov 16), pending human review."
+    },
+    {
+      "id": "SM14",
+      "type": "semantic",
+      "sub": "near_miss",
+      "route": "ask",
+      "mode": "autism",
+      "askPerson": "noor",
+      "question": "after a bad night",
+      "setup": [
+        {
+          "person": "noor"
+        },
+        {
+          "person": "noor",
+          "note": "Noor hummed and rocked for a while after school, nothing unusual today."
+        },
+        {
+          "person": "noor",
+          "note": "Noor did not want to brush her teeth tonight and cried for a few minutes.",
+          "timeBand": "evening"
+        },
+        {
+          "person": "noor",
+          "note": "Noor slept soundly all night, but she had a meltdown before school."
+        }
+      ],
+      "expect": {
+        "concept": "poor_sleep",
+        "mustNotRetrieve": [
+          0,
+          1,
+          2
+        ]
+      },
+      "reviewed": false,
+      "note": "Near miss for poor_sleep: the note says the opposite. It must not be retrieved. Drafted by Claude (Nov 16), pending human review."
+    },
+    {
+      "id": "SM15",
+      "type": "semantic",
+      "sub": "near_miss",
+      "route": "ask",
+      "mode": "autism",
+      "askPerson": "noor",
+      "question": "days when she barely ate",
+      "setup": [
+        {
+          "person": "noor"
+        },
+        {
+          "person": "noor",
+          "note": "Noor hummed and rocked for a while after school, nothing unusual today."
+        },
+        {
+          "person": "noor",
+          "note": "Noor did not want to brush her teeth tonight and cried for a few minutes.",
+          "timeBand": "evening"
+        },
+        {
+          "person": "noor",
+          "note": "Noor ate everything on her plate at lunch and then cried all afternoon."
+        }
+      ],
+      "expect": {
+        "concept": "skipped_meal",
+        "mustNotRetrieve": [
+          0,
+          1,
+          2
+        ]
+      },
+      "reviewed": false,
+      "note": "Near miss for skipped_meal: the note says the opposite. It must not be retrieved. Drafted by Claude (Nov 16), pending human review."
+    },
+    {
+      "id": "SM16",
+      "type": "semantic",
+      "sub": "near_miss",
+      "route": "ask",
+      "mode": "autism",
+      "askPerson": "noor",
+      "question": "times he had to wait a long time",
+      "setup": [
+        {
+          "person": "noor"
+        },
+        {
+          "person": "noor",
+          "note": "Noor hummed and rocked for a while after school, nothing unusual today."
+        },
+        {
+          "person": "noor",
+          "note": "Noor did not want to brush her teeth tonight and cried for a few minutes.",
+          "timeBand": "evening"
+        },
+        {
+          "person": "noor",
+          "note": "There was no line at the bank and we walked right up, but Noor melted down at the counter."
+        }
+      ],
+      "expect": {
+        "concept": "waiting",
+        "mustNotRetrieve": [
+          0,
+          1,
+          2
+        ]
+      },
+      "reviewed": false,
+      "note": "Near miss for waiting: the note says the opposite. It must not be retrieved. Drafted by Claude (Nov 16), pending human review."
+    },
+    {
+      "id": "SM17",
+      "type": "semantic",
+      "sub": "near_miss",
+      "route": "ask",
+      "mode": "autism",
+      "askPerson": "noor",
+      "question": "when it was very noisy",
+      "setup": [
+        {
+          "person": "noor"
+        },
+        {
+          "person": "noor",
+          "note": "Noor hummed and rocked for a while after school, nothing unusual today."
+        },
+        {
+          "person": "noor",
+          "note": "Noor did not want to brush her teeth tonight and cried for a few minutes.",
+          "timeBand": "evening"
+        },
+        {
+          "person": "noor",
+          "note": "It was peaceful and quiet at home this afternoon when Noor shut down."
+        }
+      ],
+      "expect": {
+        "concept": "loud_noise",
+        "mustNotRetrieve": [
+          0,
+          1,
+          2
+        ]
+      },
+      "reviewed": false,
+      "note": "Near miss for loud_noise: the note says the opposite. It must not be retrieved. Drafted by Claude (Nov 16), pending human review."
+    },
+    {
+      "id": "SM18",
+      "type": "semantic",
+      "sub": "cross_person",
+      "route": "ask",
+      "mode": "autism",
+      "askPerson": "noor",
+      "question": "busy places with lots of people",
+      "setup": [
+        {
+          "person": "noor"
+        },
+        {
+          "person": "zara"
+        },
+        {
+          "person": "zara",
+          "note": "It was so crowded at the market and Zara had a meltdown, there were too many people."
+        },
+        {
+          "person": "noor",
+          "note": "Noor hummed and rocked after school, nothing unusual."
+        }
+      ],
+      "expect": {
+        "concept": "crowd",
+        "mustNotRetrieve": [
+          0
+        ],
+        "nothingRetrieved": true
+      },
+      "reviewed": false,
+      "note": "The matching entry belongs to another person. Asking about Noor must return nothing of Zara's. Drafted by Claude (Nov 16), pending human review."
+    },
+    {
+      "id": "SM19",
+      "type": "semantic",
+      "sub": "cross_person",
+      "route": "ask",
+      "mode": "autism",
+      "askPerson": "noor",
+      "question": "busy places with lots of people",
+      "setup": [
+        {
+          "person": "noor"
+        },
+        {
+          "person": "arjun",
+          "note": "There were too many people at the store and Arjun had a meltdown."
+        }
+      ],
+      "expect": {
+        "concept": "crowd",
+        "mustNotRetrieve": [
+          0
+        ],
+        "nothingRetrieved": true
+      },
+      "reviewed": false,
+      "note": "A new person with no entries. The only matching entry is a seeded person's and must not come back. Drafted by Claude (Nov 16), pending human review."
+    },
+    {
+      "id": "SM20",
+      "type": "semantic",
+      "sub": "cross_person",
+      "route": "ask",
+      "mode": "dementia",
+      "askPerson": "helen",
+      "question": "busy places with lots of people",
+      "setup": [
+        {
+          "person": "arjun",
+          "note": "There were too many people at the store and Arjun had a meltdown."
+        }
+      ],
+      "expect": {
+        "mustNotRetrieve": [
+          0
+        ]
+      },
+      "reviewed": false,
+      "note": "Asking in dementia mode about Helen must never return an autism-mode entry of Arjun's. Drafted by Claude (Nov 16), pending human review."
+    },
+    {
+      "id": "SM21",
+      "type": "semantic",
+      "sub": "cross_person",
+      "route": "ask",
+      "mode": "autism",
+      "askPerson": "noor",
+      "question": "busy places with lots of people",
+      "setup": [
+        {
+          "person": "noor"
+        },
+        {
+          "person": "zara"
+        },
+        {
+          "person": "noor",
+          "note": "There were too many people at the store today and she had a meltdown."
+        },
+        {
+          "person": "zara",
+          "note": "There were too many people at the store today and she had a meltdown."
+        }
+      ],
+      "expect": {
+        "concept": "crowd",
+        "mustRetrieve": [
+          0
+        ],
+        "mustNotRetrieve": [
+          1
+        ]
+      },
+      "reviewed": false,
+      "note": "The same words saved for two people. Each person gets only their own entry. Drafted by Claude (Nov 16), pending human review."
+    },
+    {
+      "id": "SM22",
+      "type": "semantic",
+      "sub": "pattern",
+      "route": "patterns",
+      "mode": "autism",
+      "askPerson": "noor",
+      "setup": [
+        {
+          "person": "noor"
+        },
+        {
+          "person": "noor",
+          "note": "Noor had a meltdown at the mall, it was crowded.",
+          "contextBefore": [
+            "crowd"
+          ],
+          "daysAgo": 1
+        },
+        {
+          "person": "noor",
+          "note": "Noor had a meltdown at the mall, it was crowded.",
+          "contextBefore": [
+            "crowd"
+          ],
+          "daysAgo": 2
+        },
+        {
+          "person": "noor",
+          "note": "Noor had a meltdown at the mall, it was crowded.",
+          "contextBefore": [
+            "crowd"
+          ],
+          "daysAgo": 3
+        },
+        {
+          "person": "noor",
+          "note": "There were too many people at the store and Noor had a meltdown.",
+          "daysAgo": 4
+        }
+      ],
+      "expect": {
+        "tag": "crowd",
+        "matchCount": 4,
+        "joined": [
+          3
+        ],
+        "removeIndex": 3
+      },
+      "reviewed": false,
+      "note": "Three entries labeled crowd and one unlabeled paraphrase. With the join the pattern reaches four; the joined entry is listed, and the caregiver can remove it. Drafted by Claude (Nov 16), pending human review."
+    },
+    {
+      "id": "SM23",
+      "type": "semantic",
+      "sub": "pattern",
+      "route": "patterns",
+      "mode": "autism",
+      "askPerson": "noor",
+      "setup": [
+        {
+          "person": "noor"
+        },
+        {
+          "person": "noor",
+          "note": "Noor had a meltdown at the mall, it was crowded.",
+          "contextBefore": [
+            "crowd"
+          ],
+          "daysAgo": 1
+        },
+        {
+          "person": "noor",
+          "note": "Noor had a meltdown at the mall, it was crowded.",
+          "contextBefore": [
+            "crowd"
+          ],
+          "daysAgo": 2
+        },
+        {
+          "person": "noor",
+          "note": "Noor had a meltdown at the mall, it was crowded.",
+          "contextBefore": [
+            "crowd"
+          ],
+          "daysAgo": 3
+        },
+        {
+          "person": "noor",
+          "note": "The store was empty and quiet when Noor had a meltdown.",
+          "daysAgo": 4
+        }
+      ],
+      "expect": {
+        "tag": "crowd",
+        "noPattern": true,
+        "notJoined": [
+          3
+        ]
+      },
+      "reviewed": false,
+      "note": "Three labeled entries and one near miss. The near miss must not be joined, so no pattern is counted. Drafted by Claude (Nov 16), pending human review."
     }
   ]
 }

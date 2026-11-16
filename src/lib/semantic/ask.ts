@@ -29,8 +29,9 @@ function counts<T extends string>(values: T[]): [T, number][] {
 // Returns null when the question does not clearly mean one tag: the ordinary Ask answer is used, unchanged.
 export async function semanticAsk(question: string, person: Person, allEvents: LogRecord[], understanding: AskUnderstanding): Promise<AskResponse | null> {
   if (SKIP.includes(understanding.intent)) return null;
-  // A question that already names a kind of moment or a time of day is answered the usual way.
-  if (understanding.eventType || understanding.timeBand) return null;
+  // A question that already names a kind of moment ("her afternoon agitation") is answered the usual way.
+  // A time of day alone does not stop retrieval: "nights when he did not sleep" is about sleep, not about the night band.
+  if (understanding.eventType) return null;
 
   const scored = await conceptScores(question);
   const tag = bestConcept(scored.scores);

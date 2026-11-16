@@ -180,11 +180,12 @@ function base(set: SetName, c: Raw, group: string): CaseResult {
 // Each new feature grades its own cases in eval/lib/ext/<name>.ts and exports grade(case, call).
 type ExtCall = (method: "GET" | "POST", path: string, body?: unknown) => Promise<{ status: number; ok: boolean; body: unknown; latencyMs: number; source?: string; error?: string }>;
 type ExtGrade = (c: Raw, call: ExtCall) => Promise<{ actual: unknown; checks: CheckResult[]; latencyMs: number }>;
-const EXT_FOR_TYPE: Record<string, string> = { summary_visit: "summary", ask_intent: "ask", follow_up: "followup" };
+const EXT_FOR_TYPE: Record<string, string> = { summary_visit: "summary", ask_intent: "ask", follow_up: "followup", semantic: "semantic" };
 const extFor = (c: Raw): string | null => {
   const category = String(c.category ?? "");
   if (EXT_FOR_TYPE[String(c.type)]) return EXT_FOR_TYPE[String(c.type)];
   if (category === "summary") return "summary";
+  if (category === "semantic") return "semantic";
   if (category.startsWith("ask")) return "ask";
   if (category === "follow_up") return "followup";
   return null;

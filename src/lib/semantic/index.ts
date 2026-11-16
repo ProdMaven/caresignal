@@ -43,13 +43,19 @@ export function entryText(e: LogRecord): string {
   return [(e.rawNote ?? "").trim(), fields.join(", ")].filter(Boolean).join(" | ");
 }
 
+// Embeddings do not understand "the opposite": "ate a good lunch" scores close to "barely ate lunch".
+// A clause with one of these words is never joined by similarity. It is a blunt, English-only guard, added after
+// a seeded entry that says "ate a good lunch" was joined to the skipped-meal pattern at 0.92 (Nov 16).
+const OPPOSITE_CUE = /\b(good|well|soundly|big|plenty|everything|fine|as usual|no (line|wait|queue|problem|trouble)|empty|quiet|peaceful|calm)\b/i;
+
 // A tag counts only when it clears the threshold and leads every tag that is not itself above the threshold by the margin.
 function tagsFor(scores: Record<string, number>, clause: Record<string, string>): EntryEmbedding["concepts"] {
   const ranked = Object.entries(scores).sort((a, b) => b[1] - a[1]);
   const below = ranked.find(([, s]) => s < CONCEPT_THRESHOLD)?.[1] ?? 0;
   return ranked
     .filter(([, s]) => s >= CONCEPT_THRESHOLD && s - below >= CONCEPT_MARGIN)
-    .map(([tag, score]) => ({ tag, score, clause: clause[tag] ?? "" }));
+    .map(([tag, score]) => ({ tag, score, clause: clause[tag] ?? "" }))
+    .filter((c) => !OPPOSITE_CUE.test(c.clause));
 }
 
 export async function embedEntry(e: LogRecord): Promise<EntryEmbedding> {

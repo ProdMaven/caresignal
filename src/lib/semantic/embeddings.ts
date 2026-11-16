@@ -62,8 +62,13 @@ export function roundVector(v: number[]): number[] {
 
 // Clauses of a note. A whole note shares too much wording with every other note ("he had a meltdown"),
 // so matching works on the short pieces that carry the detail.
+// Words that say when, not what. Dropped from a clause before it is compared, so "too many people at the
+// store today" is compared as "too many people at the store".
+const WHEN_WORDS = /\b(this (morning|afternoon|evening)|today|tonight|last night|yesterday|esta (mañana|tarde|noche)|hoy|anoche|aaj|kal raat)\b|आज|कल रात/gi;
+
 export function clauses(text: string): string[] {
   return text
+    .replace(WHEN_WORDS, " ")
     .split(/[.!?;।]+|,|\band\b|\bbut\b|\bthen\b|\bwhen\b|\by\b|\bpero\b|\bcuando\b|\baur\b|और|लेकिन|，|。/i)
     .map((s) => s.trim())
     .filter((s) => s.split(/\s+/).length >= 2 || /[ऀ-ॿ一-鿿]{3,}/.test(s))

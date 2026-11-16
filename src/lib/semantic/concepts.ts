@@ -5,7 +5,7 @@ import { clauses, cosine, embed } from "./embeddings";
 // Tuned on eval/semantic/paraphrase_set.json with scripts/semantic-tune.ts (see docs/DECISIONS.md).
 // At or above the threshold, and ahead of the next tag by the margin, a clause counts as meaning that tag.
 // Below it, nothing is ever joined.
-export const CONCEPT_THRESHOLD = 0.9;
+export const CONCEPT_THRESHOLD = 0.91;
 export const CONCEPT_MARGIN = 0.02;
 
 const g = globalThis as unknown as { __unspokenConceptVectors?: Promise<Record<string, number[][]>> | null };
