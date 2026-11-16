@@ -1,6 +1,59 @@
-# Handoff (updated Sun Nov 15, night, after the event)
+# Handoff (updated Mon Nov 16, early morning, after the overnight run)
 
 Read this first, then CLAUDE.md, then the docs it lists. **Submit by Sunday Nov 15, 12:00 PM PST. Judging 2 to 5 PM PST.**
+
+## Overnight run, Nov 16 (semantic matching). Read this first.
+
+Unattended run on the build branch only. Nothing was merged, no pull request was opened, no migration or schema change was run against the Railway Postgres, nothing on the `web` service was touched, no flag was changed on staging, and no invite code was written to any file.
+
+### 1. What was built, and what is behind which flag
+Everything below is behind **`FEATURE_SEMANTIC_MATCH`, off unless the server sets it.** With it off the app behaves as before: the staging runs with the flag off give the same results as Nov 15.
+- **Local embeddings.** `Xenova/multilingual-e5-small` (384 dimensions) runs inside the Node process. No new API key, and no note text goes to any outside service. Each saved entry's own words plus its structured fields are embedded when it is saved; seeded entries are embedded at start. (`src/lib/semantic/`)
+- **How matching works.** A clause of a note, or a question, is compared with plain phrases for each "what came before" tag (`src/config/semanticConcepts.ts`). At 0.91 or above, with a clear lead over the next tag, it counts as meaning that tag. Below that nothing is joined. Code still counts and writes every number.
+- **Ask by retrieval.** A question that clearly means one tag ("busy places with lots of people") is answered from the selected person's entries that carry the tag by label or by similar wording, with counts written by code and every entry linked. Medical and crisis questions are decided first and never reach it. No model reads the retrieved notes.
+- **Patterns.** An entry whose wording is close to a tag is counted with it. The pattern card lists those entries with a Remove button, and a removal is remembered.
+- **Storage, two ways.** Tonight: embeddings are kept with the saved app state and similarity is computed in code. Prepared and NOT run: `scripts/pgvector/001_entry_embeddings.sql` and the query path behind a second flag, **`USE_PGVECTOR`, off**. The two paths gave the same result on 21 of 21 test searches in a throwaway in-process Postgres (`scripts/semantic-storage-test.ts`). A backfill script exists (`scripts/backfill-embeddings.ts`) and has only been run in dry-run mode on a local sample file.
+- **Every lookup filters by person first**, in both storage paths. The tests found no entry returned for the wrong person.
+- **Evaluation.** 23 cases of type "semantic" in `eval/cases.json` and 9 prompts of category "semantic" in `safety/prompts.json`, graded only when the flag is on. All drafted by Claude and marked `reviewed: false`.
+
+### 2. Baseline and after, side by side
+Baseline was measured before any feature code. Details and method are in `docs/eval_report.md` under "Semantic matching: baseline" and "Semantic matching: results".
+
+| | Baseline (today, no semantic matching) | With semantic matching |
+|---|---|---|
+| 30 paraphrase notes given the right tag | **29 of 30** by the note formatter on staging | 16 of 30 by similarity alone |
+| 10 near misses wrongly grouped | 0 of 10 | 0 of 10 |
+| Held-out semantic cases (wordings not used for tuning) | not graded with the flag off | 14 of 23 pass |
+| Held-out: entries that should be found for a question | 0 of 13 (an unlabeled entry cannot be found by topic) | 4 of 13 (recall 31%) |
+| Held-out: entries that must not be found | 0 of 43 | 0 of 43 (precision 100% on what was returned) |
+| Seeded entries with nothing for "what came before" | 19 of 62; only 1 of those describes a trigger that is in the vocabulary | similarity joins 4 seeded entries beyond their labels: 3 reasonable, 1 wrong |
+| Benchmark on staging, real model, flag off | 103 pass, 4 fail (same four), of 108 | unchanged: 103 pass, 4 fail; the 23 semantic cases are listed as not run |
+| Red team on staging, real model, flag off | 90 of 90 | unchanged: 90 of 90; the 9 semantic prompts are listed as not run |
+| Crisis and out of scope | 100% | 100% |
+| Existing cases that changed with the flag on (local, same backend) | | none, benchmark and red team |
+| The 9 semantic red-team prompts (local, flag on) | | 9 of 9 |
+| Time added | | about 20 to 40 ms when a note is saved; about 2.5 ms on an Ask question that matches no tag; model loads once in about 1.2 s |
+| Cost added per note | $0.005 per note today | no added API cost (the model runs in the app); memory use not measured |
+
+### 3. Did semantic matching earn its place?
+**Not yet: the note formatter already groups 29 of 30 paraphrases with no false joins, while similarity with this small local model found 4 of 13 held-out matches and needed a strict threshold and an extra guard to avoid joining notes that say the opposite, so I recommend leaving the flag off.** If the goal stays, the stronger routes are a larger embedding model, or asking the Ask router (which already calls a model) to name the tag. The plumbing built tonight (index, person filter, storage paths, pattern card list, evals) would carry over to either.
+
+### 4. Skipped or blocked, and why
+- **No run with the real model and the flag on.** The flag-on runs were local, where there is no model key, so the formatter and router ran on their keyword fallbacks. Turning the flag on for staging is on your approval list, so I did not do it. The flag-off runs on staging use the real model.
+- **The model hub is not reachable from this session.** The app is written to download the model files from the public hub on first use. For local tests I used an identical copy of the same files from an npm package (`dsh-plugin-discover-model` 0.1.0), copied the data files only into a folder outside the repo, and ran none of its code. SHA-256 of `model_quantized.onnx`: `f80102d3f2a1229f387d3c81909990d8945513e347b0eab049f7de3c6f98c193`. Please compare it with the hub's listed hash before trusting it. On staging the first start with the flag on will download about 135 MB; that path is untested.
+- **The pgvector migration was not run** and the pgvector path was only tested in a throwaway in-process Postgres.
+- **The backfill was not run** against any real database.
+- **Recall could not be raised further tonight** without loosening precision. All 8 held-out English paraphrases were missed.
+- **Marathi, Mandarin and other languages were not tested** for matching. Spanish and Hindi phrases are not reviewed by native speakers.
+- **Unattended defaults I took** (also in `docs/DECISIONS.md`): three optional fields added to the shared types (contracts v11), which normally change only through you; the threshold 0.91; retrieval answers only when a question clearly means one tag and names no kind of moment; the report headline no longer counts cases for a switched-off feature against the score.
+- Not changed, as instructed: `docs/PITCH.md`, the deck, the README. The deck's design slide still shows "Match" as a step; with the flag off there is still no semantic matching running anywhere.
+
+### 5. Steps that need your approval, in order
+1. **Decide whether to go on at all** (see point 3). If not, nothing else is needed; the code sits unused behind the flag.
+2. **Turn `FEATURE_SEMANTIC_MATCH` on for staging only.** In Railway, `staging` service, add `FEATURE_SEMANTIC_MATCH=true`. Watch the first start: it downloads the model. Then run `npm run eval` and `npm run safety` against staging with `EVAL_ALLOW_WRITES=true` and the staging code in `EVAL_INVITE_CODE`. Keep it on only if crisis, out of scope and the red team stay at 100% and no existing case changes.
+3. **Run the pgvector migration** (only if you want the database path): `psql "$STATE_DATABASE_URL" -f scripts/pgvector/001_entry_embeddings.sql`. It creates the `vector` extension and one new table in the Postgres that the live app and staging share. It changes no existing table. Then set `USE_PGVECTOR=true` on staging, and run `npx tsx scripts/backfill-embeddings.ts --dry-run` before `--write-pgvector`.
+4. **Merge the build branch to `main`.** Safe with the flag off: the live app loads none of the new code paths. It does add two packages (`@huggingface/transformers` and, for tests only, an in-process Postgres), which make the install larger; the staging build with them succeeded.
+5. Only after 2 has passed on staging: consider the flag on the live app.
 
 ## After the event (Sun Nov 15, night). Read this before anything below.
 - **Result:** the team (Team 4) won first prize. The submission deadline has passed; the lines above about submitting are history.

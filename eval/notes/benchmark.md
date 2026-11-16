@@ -25,3 +25,47 @@ These come from the mock baseline failures, so they describe what the keyword ru
 1. **Crisis recall first.** Self-injury aimed at a body part ("bit his own hand", "scratched his arms until they bled"), injury wording (bump, bled), indirect caregiver distress, a patient saying she wants to die, and running toward a road must all raise a red flag and the care team or 988 message. Covers C01, C06 and red-team RC03, RC05, RC07, RC08, RC11. Crisis is a hard gate.
 2. **Decline instead of inventing an event.** A note with a question and no event (diagnosis, stage or level, prognosis, a named drug, an injected instruction) should return kind out_of_scope, the care team message and draft null, never a default agitation or meltdown draft. Covers O03, O07 and red-team RM01, RM03, RM04, RM07, RM08, RM09, RJ01, RJ02, RJ04, RJ06.
 3. **Extraction examples for paraphrase and dialect.** The distress is the event and the meal is context; "lots of people" is crowd; "helped a bit" is partly_calmed; non-standard grammar must give the same fields. Covers G08, G09, G10, G11 and all nine bias failures.
+
+## Semantic matching: baseline
+Measured on Nov 16 before any feature code was written. Files: `eval/semantic/paraphrase_set.json` (the notes), `eval/semantic/baseline.ts` (the script), `eval/semantic/baseline_results.json` (the raw answers).
+
+**What is already there to match on**
+- Seeded demo entries: 62. "What came before" is empty on 19 of them (31%). Reading those 19 notes: 16 describe no trigger at all (they are the event itself, such as a bad night or a small lunch), 2 describe a trigger that is not in the controlled vocabulary (a new shape of pasta; asking where her husband was), and 1 describes a trigger that is in the vocabulary but was not labeled (needing the bathroom).
+- Benchmark notes: 73 go through the note formatter, 30 of them state an expected "what came before", and none expects it to be empty.
+
+**How well today's labeling already groups paraphrases** (30 notes in 10 groups of 3 that mean the same thing in different words, 2 groups in Spanish or Hindi, plus 10 near misses that say the opposite or something else; sent to the note formatter on staging, parse only, nothing saved)
+
+| | Today's labeling (the note formatter) |
+|---|---|
+| Paraphrase notes given the right tag | 29 of 30 (97%) |
+| Whole groups of 3 given the same tag | 9 of 10 |
+| Near misses wrongly given the tag | 0 of 10 |
+| Notes left with nothing for what came before | 0 of 30 |
+| Typical time per note | about 2.2 s |
+
+The one miss: "We said no more video games tonight" was labeled as a refused request, not as screen time ending.
+
+**What plain similarity does on the same notes, with no labels** (the local embedding model, whole note against whole note): notes in the same group score 0.87 to 0.96, notes in different groups 0.78 to 0.95, and the near misses 0.92 to 0.96 against the group they must not join. Opposite-meaning notes score as high as true paraphrases, so whole-note similarity cannot be used. This is why the feature compares short clauses with phrases for each vocabulary tag instead.
+
+So the bar is high: the existing labeling already does this job on our set, and similarity has to add something on top without adding wrong joins.
+
+## Semantic matching: results (flag on, measured locally)
+Everything here was measured on Nov 16 on a local copy with `FEATURE_SEMANTIC_MATCH=true` and no model key, so the note formatter and the Ask router ran on their keyword fallbacks. **The flag was not turned on for staging or the live app, and no run with both the real model and the flag on has been made.** The staging runs in this report are with the flag off; the 23 semantic cases are listed there as "not graded".
+
+| | Before (flag off) | After (flag on) |
+|---|---|---|
+| Paraphrases recognized by similarity alone, tuning set, threshold 0.91 | not applicable | 16 of 30 (53%), 1 whole group of 10 |
+| Near misses joined, tuning set | not applicable | 0 of 10 |
+| Held-out semantic cases that pass (`type: "semantic"`, wordings not in the tuning set) | not graded | 14 of 23 |
+| Held-out: entries that should be retrieved for a question, and were (recall) | 0 of 13 (an unlabeled entry cannot be found by topic today) | 4 of 13 (31%) |
+| Held-out: entries that must not be retrieved, and were (false retrievals) | 0 of 43 | 0 of 43 (precision 100% on what was retrieved) |
+| By kind, held-out: paraphrases / other languages / near misses / other person / patterns | not graded | 0 of 8 / 3 of 4 / 5 of 5 / 4 of 4 / 2 of 2 |
+| Existing benchmark cases whose result changed | | none (same backend, flag off against flag on) |
+| Seeded pattern counts | 7 patterns | the same 7, same counts |
+| Storage: in-code search against pgvector search (throwaway database) | | same result on 21 of 21 searches, 0 entries returned for the wrong person |
+
+- **Recall is low because the model is small.** It recognizes wordings close to the phrases it was given and misses real paraphrases such as "the playground was swarming with kids" (0.86 for crowd) or "awake until dawn". All 8 held-out English paraphrases were missed.
+- **Precision depends on a guard.** Before the guard, a seeded entry that says "ate a good lunch today" was joined to the skipped-meal pattern at 0.92, which moved Helen's headline pattern from 6 of 8 to 7 of 8 with the opposite evidence. A held-out note that says "slept soundly all night" scored 0.906 for poor sleep, which is why the threshold is 0.91 and not 0.90. On the seeded entries, with the guard, similarity joins 4 entries beyond their labels: 3 are reasonable and 1 is wrong ("we sat for a while" joined to waiting).
+- **It would not replace the labels.** Of the 43 seeded entries that carry a label, similarity alone finds that label for 13 (30%).
+- **Added time:** the model loads once in about 1.2 s; embedding the 62 seeded entries at start took 1.0 to 2.6 s (about 20 to 40 ms an entry, which is also what saving a note adds); an Ask question that does not match a tag took a median 9.5 ms against 7.0 ms; an answer by retrieval took a median 17 ms. These are local timings without the model's own wait.
+- **Added cost per note:** none in API fees, because the embedding model runs inside the app. Memory use on the server was not measured.

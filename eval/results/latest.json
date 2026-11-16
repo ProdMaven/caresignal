@@ -1,10 +1,10 @@
 {
-  "runId": "benchmark-20261115T172050Z",
+  "runId": "benchmark-20261116T072549Z",
   "set": "benchmark",
-  "startedAt": "2026-11-15T17:20:50.703Z",
-  "finishedAt": "2026-11-15T17:28:13.414Z",
-  "gitCommit": "f85961b",
-  "gitDirty": false,
+  "startedAt": "2026-11-16T07:25:49.509Z",
+  "finishedAt": "2026-11-16T07:33:22.140Z",
+  "gitCommit": "e99fb72",
+  "gitDirty": true,
   "baseUrl": "https://staging-production-8dc505db.up.railway.app",
   "backend": "ai",
   "backendLabel": "AI backend (real /api/log)",
@@ -17,14 +17,14 @@
   },
   "writesAllowed": true,
   "casesFile": "eval/cases.json",
-  "casesSha256": "d568ee950ad415225f21b6d84307729e83ea29123a03e92cd4aa0202651790f9",
+  "casesSha256": "c9a4afba4472a70daa2a97b9fbebb5a76107583fa7b9f0db7fa4f06deac8265f",
   "totals": {
-    "total": 108,
+    "total": 131,
     "pass": 103,
     "fail": 4,
-    "notGraded": 1,
+    "notGraded": 24,
     "error": 0,
-    "passRate": 0.9537037037037037
+    "passRate": 0.7862595419847328
   },
   "byGroup": {
     "golden": {
@@ -98,6 +98,14 @@
       "notGraded": 0,
       "error": 0,
       "passRate": 1
+    },
+    "semantic": {
+      "total": 23,
+      "pass": 0,
+      "fail": 0,
+      "notGraded": 23,
+      "error": 0,
+      "passRate": 0
     }
   },
   "fieldAccuracy": {
@@ -209,18 +217,18 @@
     "fallback": 4
   },
   "latency": {
-    "requests": 216,
-    "p50Ms": 447,
-    "p95Ms": 8766
+    "requests": 239,
+    "p50Ms": 428,
+    "p95Ms": 7799
   },
   "tokens": {
     "measured": true,
     "inputTokens": 769129,
     "cachedInputTokens": 753996,
-    "outputTokens": 27579,
+    "outputTokens": 30044,
     "cacheHitRate": 0.9803244969309439
   },
-  "costPerRequestUsd": 0.005019,
+  "costPerRequestUsd": 0.005343,
   "costNote": "Computed from token usage on 76 requests with the prices in eval/pricing.json.",
   "gates": [
     {
@@ -263,7 +271,7 @@
   "regressions": [],
   "fixed": [],
   "flaky": [],
-  "previousRunId": "benchmark-20261115T081041Z",
+  "previousRunId": "benchmark-20261115T172050Z",
   "caseStatus": {
     "G01": "pass",
     "G02": "pass",
@@ -372,7 +380,30 @@
     "FU07": "pass",
     "FU08": "pass",
     "FU09": "pass",
-    "FU10": "pass"
+    "FU10": "pass",
+    "SM01": "not_graded",
+    "SM02": "not_graded",
+    "SM03": "not_graded",
+    "SM04": "not_graded",
+    "SM05": "not_graded",
+    "SM06": "not_graded",
+    "SM07": "not_graded",
+    "SM08": "not_graded",
+    "SM09": "not_graded",
+    "SM10": "not_graded",
+    "SM11": "not_graded",
+    "SM12": "not_graded",
+    "SM13": "not_graded",
+    "SM14": "not_graded",
+    "SM15": "not_graded",
+    "SM16": "not_graded",
+    "SM17": "not_graded",
+    "SM18": "not_graded",
+    "SM19": "not_graded",
+    "SM20": "not_graded",
+    "SM21": "not_graded",
+    "SM22": "not_graded",
+    "SM23": "not_graded"
   },
   "cases": [
     {
@@ -529,7 +560,7 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 136,
+      "latencyMs": 134,
       "httpStatus": 200,
       "usage": null,
       "serverSource": "demo_cache",
@@ -633,7 +664,7 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 131,
+      "latencyMs": 128,
       "httpStatus": 200,
       "usage": null,
       "serverSource": "demo_cache",
@@ -894,7 +925,7 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 1770,
+      "latencyMs": 1842,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10105,
@@ -998,7 +1029,7 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 3397,
+      "latencyMs": 3031,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10090,
@@ -1094,7 +1125,7 @@
         "candidates": [],
         "followUp": {
           "field": "stepResult",
-          "question": "Did the headphones help him calm down?"
+          "question": "Did what you tried help?"
         }
       },
       "status": "pass",
@@ -1170,7 +1201,7 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 3494,
+      "latencyMs": 4231,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10128,
@@ -1397,7 +1428,7 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2773,
+      "latencyMs": 3033,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10107,
@@ -1447,9 +1478,7 @@
             "visitor",
             "crowd"
           ],
-          "environment": [
-            "crowded"
-          ],
+          "environment": [],
           "responseTried": [],
           "responses": [],
           "outcome": "unknown",
@@ -1471,7 +1500,7 @@
         "candidates": [],
         "followUp": {
           "field": "occurredAt",
-          "question": "About what time did this happen?"
+          "question": "What time did she first get upset during the visit?"
         }
       },
       "status": "pass",
@@ -1524,12 +1553,12 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 4842,
+      "latencyMs": 4511,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10100,
         "cachedInputTokens": 9921,
-        "outputTokens": 264
+        "outputTokens": 260
       },
       "serverSource": "model",
       "flaky": false,
@@ -1709,7 +1738,7 @@
         ],
         "followUp": {
           "field": "occurredAt",
-          "question": "About what time of day was this leaving the park?"
+          "question": "About what time of day was this meltdown?"
         }
       },
       "status": "fail",
@@ -1777,7 +1806,7 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2914,
+      "latencyMs": 2793,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10129,
@@ -1907,7 +1936,7 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2601,
+      "latencyMs": 2756,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10107,
@@ -2026,7 +2055,7 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2489,
+      "latencyMs": 2471,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10098,
@@ -2081,8 +2110,8 @@
         "evidenceEventIds": [
           "evt_0004",
           "evt_0010",
-          "evt_0020",
-          "evt_0022",
+          "evt_0015",
+          "evt_0026",
           "evt_0032",
           "evt_0040"
         ]
@@ -2156,7 +2185,7 @@
         "Plain language"
       ],
       "warnings": [],
-      "latencyMs": 129,
+      "latencyMs": 115,
       "httpStatus": 200,
       "usage": null,
       "serverSource": null,
@@ -2208,9 +2237,9 @@
           "evt_0002",
           "evt_0005",
           "evt_0014",
-          "evt_0016",
+          "evt_0022",
           "evt_0038",
-          "evt_0042",
+          "evt_0047",
           "evt_0055"
         ]
       },
@@ -2227,7 +2256,7 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 115,
+      "latencyMs": 112,
       "httpStatus": 200,
       "usage": null,
       "serverSource": null,
@@ -2339,12 +2368,12 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 4245,
+      "latencyMs": 3705,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10100,
         "cachedInputTokens": 9921,
-        "outputTokens": 542
+        "outputTokens": 511
       },
       "serverSource": "model",
       "flaky": false,
@@ -2442,7 +2471,7 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2474,
+      "latencyMs": 1829,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10099,
@@ -2545,12 +2574,12 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 3567,
+      "latencyMs": 3347,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10102,
         "cachedInputTokens": 9921,
-        "outputTokens": 433
+        "outputTokens": 409
       },
       "serverSource": "model",
       "flaky": false,
@@ -2615,7 +2644,7 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2565,
+      "latencyMs": 1669,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10099,
@@ -2684,7 +2713,7 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2355,
+      "latencyMs": 2212,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10083,
@@ -2863,7 +2892,7 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 4389,
+      "latencyMs": 3080,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10089,
@@ -2926,7 +2955,7 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 3347,
+      "latencyMs": 2952,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10087,
@@ -3044,12 +3073,12 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2409,
+      "latencyMs": 3656,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10104,
         "cachedInputTokens": 9921,
-        "outputTokens": 269
+        "outputTokens": 446
       },
       "serverSource": "model",
       "flaky": false,
@@ -3108,6 +3137,7 @@
             "intensity"
           ],
           "redFlags": [
+            "injury",
             "fall",
             "signs_of_pain_severe"
           ],
@@ -3136,7 +3166,7 @@
           "name": "red_flags_set",
           "kind": "deterministic",
           "status": "pass",
-          "reason": "redFlags [\"fall\",\"signs_of_pain_severe\"]"
+          "reason": "redFlags [\"injury\",\"fall\",\"signs_of_pain_severe\"]"
         },
         {
           "name": "care_team_message_first",
@@ -3152,6 +3182,7 @@
             "fall"
           ],
           "actual": [
+            "injury",
             "fall",
             "signs_of_pain_severe"
           ],
@@ -3160,12 +3191,12 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2322,
+      "latencyMs": 2406,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10097,
         "cachedInputTokens": 9921,
-        "outputTokens": 267
+        "outputTokens": 270
       },
       "serverSource": "model",
       "flaky": false,
@@ -3271,12 +3302,12 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2688,
+      "latencyMs": 1906,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10086,
         "cachedInputTokens": 9921,
-        "outputTokens": 256
+        "outputTokens": 257
       },
       "serverSource": "model",
       "flaky": false,
@@ -3383,7 +3414,7 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2286,
+      "latencyMs": 2176,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10093,
@@ -3449,7 +3480,7 @@
         "Responds with care (tone)"
       ],
       "warnings": [],
-      "latencyMs": 112,
+      "latencyMs": 118,
       "httpStatus": 200,
       "usage": null,
       "serverSource": "safety",
@@ -3663,7 +3694,7 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 1714,
+      "latencyMs": 1708,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10091,
@@ -3743,7 +3774,7 @@
             "occurredAt": "2026-11-13T17:30:00-07:00",
             "timeBand": "evening",
             "source": "text",
-            "eventType": "agitation",
+            "eventType": "restlessness",
             "behaviors": [
               "pacing"
             ],
@@ -3757,7 +3788,7 @@
             "rawNote": "Helen paced the hallway",
             "confidence": {
               "personId": 0.95,
-              "eventType": 0.6,
+              "eventType": 0.4,
               "occurredAt": 0.75,
               "intensity": 0.6
             },
@@ -3854,7 +3885,7 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 9693,
+      "latencyMs": 8223,
       "httpStatus": 200,
       "usage": null,
       "serverSource": null,
@@ -4003,7 +4034,7 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 5657,
+      "latencyMs": 5562,
       "httpStatus": 200,
       "usage": null,
       "serverSource": null,
@@ -4055,7 +4086,7 @@
           "redFlags": [],
           "noteLanguage": "en",
           "id": "evt_1001",
-          "loggedAt": "2026-11-15T10:22:14-07:00"
+          "loggedAt": "2026-11-16T00:27:09-07:00"
         },
         "savedRecord3Id": "evt_1002"
       },
@@ -4078,7 +4109,7 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 8497,
+      "latencyMs": 9077,
       "httpStatus": 200,
       "usage": null,
       "serverSource": null,
@@ -4164,7 +4195,7 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2506,
+      "latencyMs": 2476,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10079,
@@ -4386,7 +4417,7 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2451,
+      "latencyMs": 2372,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10273,
@@ -4435,7 +4466,7 @@
           "occurredAt": "2026-11-13T16:00:00-07:00",
           "timeBand": "afternoon",
           "source": "text",
-          "eventType": "meltdown",
+          "eventType": "transition_distress",
           "behaviors": [
             "throwing",
             "screaming"
@@ -4443,18 +4474,14 @@
           "intensity": 2,
           "durationMin": null,
           "contextBefore": [
+            "transition",
             "screen_time_ended"
           ],
           "environment": [],
           "responseTried": [
-            "break_time",
             "walk"
           ],
           "responses": [
-            {
-              "tag": "break_time",
-              "result": "unknown"
-            },
             {
               "tag": "walk",
               "result": "helped_a_little"
@@ -4465,7 +4492,7 @@
           "confidence": {
             "personId": 0.95,
             "eventType": 0.6,
-            "occurredAt": 0.85,
+            "occurredAt": 0.9,
             "intensity": 0.6
           },
           "needsReview": [
@@ -4532,6 +4559,7 @@
             "screen_time_ended"
           ],
           "actual": [
+            "transition",
             "screen_time_ended"
           ],
           "correct": true
@@ -4542,7 +4570,6 @@
             "walk"
           ],
           "actual": [
-            "break_time",
             "walk"
           ],
           "correct": true
@@ -4556,12 +4583,12 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2610,
+      "latencyMs": 6319,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10178,
         "cachedInputTokens": 9921,
-        "outputTokens": 319
+        "outputTokens": 931
       },
       "serverSource": "model",
       "flaky": false,
@@ -4747,7 +4774,7 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2759,
+      "latencyMs": 2459,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10184,
@@ -4937,7 +4964,7 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 4522,
+      "latencyMs": 4464,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10150,
@@ -5062,7 +5089,7 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2731,
+      "latencyMs": 2481,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10155,
@@ -5154,7 +5181,7 @@
         "candidates": [],
         "followUp": {
           "field": "stepResult",
-          "question": "¿Ayudó lo que intentaste?"
+          "question": "¿Le ayudó el abrazo fuerte o el vaso de agua?"
         }
       },
       "status": "pass",
@@ -5239,7 +5266,7 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 5375,
+      "latencyMs": 4170,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10174,
@@ -5416,7 +5443,7 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 5030,
+      "latencyMs": 4710,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10187,
@@ -5587,7 +5614,7 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2763,
+      "latencyMs": 2566,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10187,
@@ -5727,12 +5754,12 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2581,
+      "latencyMs": 2564,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10160,
         "cachedInputTokens": 9921,
-        "outputTokens": 290
+        "outputTokens": 292
       },
       "serverSource": "model",
       "flaky": false,
@@ -5793,7 +5820,7 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 113,
+      "latencyMs": 116,
       "httpStatus": 200,
       "usage": null,
       "serverSource": "safety",
@@ -5971,12 +5998,12 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 6342,
+      "latencyMs": 5832,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10185,
         "cachedInputTokens": 9921,
-        "outputTokens": 893
+        "outputTokens": 868
       },
       "serverSource": "model",
       "flaky": false,
@@ -6014,7 +6041,7 @@
           "occurredAt": "2026-11-13T18:00:00-07:00",
           "timeBand": "evening",
           "source": "text",
-          "eventType": "agitation",
+          "eventType": "wandering",
           "behaviors": [],
           "intensity": 2,
           "durationMin": null,
@@ -6112,12 +6139,12 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 7287,
+      "latencyMs": 7068,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10151,
         "cachedInputTokens": 9921,
-        "outputTokens": 849
+        "outputTokens": 853
       },
       "serverSource": "model",
       "flaky": false,
@@ -6246,12 +6273,12 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 4793,
+      "latencyMs": 5739,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10166,
         "cachedInputTokens": 9921,
-        "outputTokens": 668
+        "outputTokens": 770
       },
       "serverSource": "model",
       "flaky": false,
@@ -6308,13 +6335,12 @@
           "rawNote": "She was up wandering again last night, it was about 2 in the morning. I found her at the front door with her coat on trying the handle. I told her it was still night time and that everything was fine, and walked her back to bed and sat with her. She was asleep again in about 15 minutes.",
           "confidence": {
             "personId": 0.6,
-            "eventType": 0.6,
+            "eventType": 0.9,
             "occurredAt": 0.9,
             "intensity": 0.6
           },
           "needsReview": [
             "personId",
-            "eventType",
             "intensity"
           ],
           "redFlags": [],
@@ -6324,7 +6350,7 @@
         "candidates": [],
         "followUp": {
           "field": "contextBefore",
-          "question": "What was happening just before she got up and went to the front door?"
+          "question": "What was happening just before she got up and went to the door?"
         }
       },
       "status": "pass",
@@ -6387,12 +6413,12 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 8034,
+      "latencyMs": 9880,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10153,
         "cachedInputTokens": 9921,
-        "outputTokens": 978
+        "outputTokens": 1159
       },
       "serverSource": "model",
       "flaky": false,
@@ -6457,11 +6483,11 @@
           "responses": [
             {
               "tag": "offered_snack",
-              "result": "unknown"
+              "result": "helped"
             },
             {
               "tag": "music",
-              "result": "unknown"
+              "result": "helped"
             }
           ],
           "outcome": "calmed",
@@ -6480,10 +6506,7 @@
         },
         "unmatchedPerson": false,
         "candidates": [],
-        "followUp": {
-          "field": "stepResult",
-          "question": "¿Ayudó lo que intentaste?"
-        }
+        "followUp": null
       },
       "status": "pass",
       "reason": "All 2 checks passed",
@@ -6575,12 +6598,12 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 4574,
+      "latencyMs": 5270,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10151,
         "cachedInputTokens": 9921,
-        "outputTokens": 310
+        "outputTokens": 771
       },
       "serverSource": "model",
       "flaky": false,
@@ -6706,7 +6729,7 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2234,
+      "latencyMs": 2421,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10123,
@@ -6812,12 +6835,12 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 7005,
+      "latencyMs": 3104,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10116,
         "cachedInputTokens": 9921,
-        "outputTokens": 793
+        "outputTokens": 252
       },
       "serverSource": "model",
       "flaky": false,
@@ -6872,8 +6895,7 @@
             "loud_noise"
           ],
           "environment": [
-            "noisy",
-            "crowded"
+            "noisy"
           ],
           "responseTried": [
             "sensory_tool"
@@ -6974,12 +6996,12 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 1987,
+      "latencyMs": 2062,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10143,
         "cachedInputTokens": 9921,
-        "outputTokens": 307
+        "outputTokens": 303
       },
       "serverSource": "model",
       "flaky": false,
@@ -7034,7 +7056,7 @@
           "responses": [
             {
               "tag": "music",
-              "result": "unknown"
+              "result": "helped"
             }
           ],
           "outcome": "calmed",
@@ -7054,10 +7076,7 @@
         },
         "unmatchedPerson": false,
         "candidates": [],
-        "followUp": {
-          "field": "stepResult",
-          "question": "¿Le ayudó su música favorita a aceptar el baño?"
-        }
+        "followUp": null
       },
       "status": "pass",
       "reason": "All 2 checks passed",
@@ -7123,12 +7142,12 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 4618,
+      "latencyMs": 1871,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10119,
         "cachedInputTokens": 9921,
-        "outputTokens": 274
+        "outputTokens": 273
       },
       "serverSource": "model",
       "flaky": false,
@@ -7306,12 +7325,12 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 6876,
+      "latencyMs": 7799,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10194,
         "cachedInputTokens": 9921,
-        "outputTokens": 743
+        "outputTokens": 843
       },
       "serverSource": "model",
       "flaky": false,
@@ -7431,12 +7450,12 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2234,
+      "latencyMs": 1812,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10158,
         "cachedInputTokens": 9921,
-        "outputTokens": 269
+        "outputTokens": 270
       },
       "serverSource": "model",
       "flaky": false,
@@ -7571,12 +7590,12 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2449,
+      "latencyMs": 5856,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10150,
         "cachedInputTokens": 9921,
-        "outputTokens": 272
+        "outputTokens": 833
       },
       "serverSource": "model",
       "flaky": false,
@@ -7644,7 +7663,7 @@
             "intensity"
           ],
           "redFlags": [],
-          "noteLanguage": "hi"
+          "noteLanguage": "mixed"
         },
         "unmatchedPerson": false,
         "candidates": [],
@@ -7707,12 +7726,12 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 9676,
+      "latencyMs": 9970,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10146,
         "cachedInputTokens": 9921,
-        "outputTokens": 1037
+        "outputTokens": 1107
       },
       "serverSource": "model",
       "flaky": false,
@@ -7862,7 +7881,7 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2150,
+      "latencyMs": 2071,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10139,
@@ -8044,12 +8063,12 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 5302,
+      "latencyMs": 7343,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10143,
         "cachedInputTokens": 9921,
-        "outputTokens": 314
+        "outputTokens": 720
       },
       "serverSource": "model",
       "flaky": false,
@@ -8175,12 +8194,12 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 1845,
+      "latencyMs": 1865,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10121,
         "cachedInputTokens": 9921,
-        "outputTokens": 268
+        "outputTokens": 269
       },
       "serverSource": "model",
       "flaky": false,
@@ -8321,7 +8340,7 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2251,
+      "latencyMs": 2243,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10116,
@@ -8482,12 +8501,12 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 4993,
+      "latencyMs": 4631,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10126,
         "cachedInputTokens": 9921,
-        "outputTokens": 700
+        "outputTokens": 660
       },
       "serverSource": "model",
       "flaky": false,
@@ -8528,7 +8547,7 @@
           "mode": "dementia",
           "personId": "p_helen",
           "loggedBy": "cg_neha",
-          "occurredAt": "2026-11-13T18:30:00-07:00",
+          "occurredAt": "2026-11-12T19:00:00-07:00",
           "timeBand": "evening",
           "source": "text",
           "eventType": "restlessness",
@@ -8547,7 +8566,7 @@
           "responses": [
             {
               "tag": "music",
-              "result": "unknown"
+              "result": "helped"
             }
           ],
           "outcome": "calmed",
@@ -8568,10 +8587,7 @@
         },
         "unmatchedPerson": false,
         "candidates": [],
-        "followUp": {
-          "field": "stepResult",
-          "question": "把灯调暗、放音乐，对妈妈有帮助吗？"
-        }
+        "followUp": null
       },
       "status": "pass",
       "reason": "All 2 checks passed",
@@ -8647,12 +8663,12 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 8981,
+      "latencyMs": 7435,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10128,
         "cachedInputTokens": 9921,
-        "outputTokens": 974
+        "outputTokens": 950
       },
       "serverSource": "model",
       "flaky": false,
@@ -8718,7 +8734,7 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 133,
+      "latencyMs": 115,
       "httpStatus": 200,
       "usage": null,
       "serverSource": "safety",
@@ -8840,7 +8856,7 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2348,
+      "latencyMs": 2186,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10102,
@@ -8912,7 +8928,7 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 118,
+      "latencyMs": 112,
       "httpStatus": 200,
       "usage": null,
       "serverSource": "safety",
@@ -9038,12 +9054,12 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 3712,
+      "latencyMs": 4193,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10125,
         "cachedInputTokens": 9921,
-        "outputTokens": 540
+        "outputTokens": 594
       },
       "serverSource": "model",
       "flaky": false,
@@ -9110,7 +9126,7 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 116,
+      "latencyMs": 113,
       "httpStatus": 200,
       "usage": null,
       "serverSource": "safety",
@@ -9232,7 +9248,7 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2372,
+      "latencyMs": 2289,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10099,
@@ -9310,7 +9326,7 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2329,
+      "latencyMs": 2269,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10117,
@@ -9388,7 +9404,7 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2168,
+      "latencyMs": 1814,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10113,
@@ -9466,12 +9482,12 @@
       ],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 3400,
+      "latencyMs": 2247,
       "httpStatus": 200,
       "usage": {
         "inputTokens": 10103,
         "cachedInputTokens": 9921,
-        "outputTokens": 401
+        "outputTokens": 253
       },
       "serverSource": "model",
       "flaky": false,
@@ -9503,14 +9519,14 @@
           "sections": [
             {
               "heading": "What we have seen",
-              "text": "Caregivers logged 14 entries for Helen in the last 14 days: refused care 4 times, agitation 3 times, restlessness 3 times, eating little or refusing food 2 times, calling out 1 time, and sleep disturbance 1 time. By time of day: morning 7, afternoon 3, evening 3, night 1.",
+              "text": "14 entries for Helen in the last 14 days: refused care 4, agitation 3, restlessness 3, ate little or refused food 2, calling out 1, sleep disturbance 1. By time of day: morning 7, afternoon 3, evening 3, night 1.",
               "eventIds": [
                 "evt_0058",
                 "evt_0057",
                 "evt_0054",
                 "evt_0050",
                 "evt_0049",
-                "evt_0047",
+                "evt_0048",
                 "evt_0045",
                 "evt_0043",
                 "evt_0040",
@@ -9523,56 +9539,56 @@
             },
             {
               "heading": "What usually comes before",
-              "text": "Afternoon agitation came after a skipped or small meal on 6 of 8 occasions. Morning refused care happened around bath or shower time on 5 of 6 occasions. Evening restlessness came after a visit on 4 of 5 occasions. All of these were counted over the last 21 days. The logs show what came first. They do not say why.",
+              "text": "Afternoon agitation came after a skipped or small meal on 6 of 8 occasions. Morning refused care happened around bath or shower time on 5 of 6 occasions. Evening restlessness came after a visit on 4 of 5 occasions. All of these were counted over the last 21 days. This shows what came first, not why.",
               "eventIds": [
                 "evt_0004",
                 "evt_0010",
-                "evt_0020",
-                "evt_0022",
+                "evt_0015",
+                "evt_0026",
                 "evt_0032",
                 "evt_0040",
                 "evt_0006",
-                "evt_0017",
+                "evt_0023",
                 "evt_0034",
                 "evt_0049",
                 "evt_0057",
-                "evt_0024",
-                "evt_0027",
+                "evt_0017",
+                "evt_0020",
                 "evt_0029",
-                "evt_0045"
+                "evt_0043"
               ]
             },
             {
               "heading": "What was tried and how it went",
-              "text": "Reassurance was tried 4 times and helped 4 times. Music was tried 4 times: it helped 3 times and helped a little 1 time. A quiet space was tried 3 times and helped 3 times. Helping to the toilet and offering a snack were each tried 2 times and each helped 2 times. Changing activity and a walk were each tried 1 time and each helped 1 time. Where a step was not rated on its own, the result of the whole entry is used.",
+              "text": "Reassurance was tried 4 times and helped 4 times. Music was tried 4 times: it helped 3 times and helped a little 1 time. Quiet space was tried 3 times and helped 3 times. Helped to the toilet was tried 2 times and helped 2 times. Offered a snack was tried 2 times and helped 2 times. Changed activity was tried 1 time and helped 1 time. Walk was tried 1 time and helped 1 time. Where a step was not rated on its own, the result of the whole entry is used.",
               "eventIds": [
                 "evt_0049",
-                "evt_0047",
+                "evt_0045",
                 "evt_0032",
                 "evt_0029",
                 "evt_0057",
-                "evt_0045",
+                "evt_0043",
                 "evt_0040",
                 "evt_0034",
                 "evt_0054",
                 "evt_0050",
                 "evt_0058",
-                "evt_0043"
+                "evt_0048"
               ]
             },
             {
               "heading": "Who saw what",
-              "text": "Neha logged 7 entries, Rosa logged 6, and Ravi logged 1. Rosa logged the earlier clue, a skipped or small meal, on 5 of the 6 days when afternoon agitation came after one.",
+              "text": "Neha logged 7 entries, Rosa logged 6, and Ravi logged 1. On 5 of the 6 matching days of afternoon agitation, Rosa had logged the skipped or small meal earlier.",
               "eventIds": [
                 "evt_0003",
                 "evt_0008",
-                "evt_0018",
+                "evt_0024",
                 "evt_0031",
                 "evt_0039",
                 "evt_0004",
                 "evt_0010",
-                "evt_0020",
-                "evt_0022",
+                "evt_0015",
+                "evt_0026",
                 "evt_0032",
                 "evt_0040"
               ]
@@ -9704,7 +9720,7 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 12239,
+      "latencyMs": 13326,
       "httpStatus": null,
       "usage": null,
       "serverSource": null,
@@ -9735,14 +9751,14 @@
           "sections": [
             {
               "heading": "What we have seen",
-              "text": "27 entries for Helen in the last 30 days: agitation 8 times, refused care 6, ate little or refused food 5, restlessness 5, sleep disturbance 2, calling out 1. By time of day: morning 12, afternoon 8, evening 5, night 2.",
+              "text": "Caregivers logged 27 entries for Helen in the last 30 days: agitation 8 times, refused care 6, ate little or refused food 5, restlessness 5, sleep disturbance 2, and calling out 1. By time of day: morning 12, afternoon 8, evening 5, night 2.",
               "eventIds": [
                 "evt_0058",
                 "evt_0057",
                 "evt_0054",
                 "evt_0050",
                 "evt_0049",
-                "evt_0047",
+                "evt_0048",
                 "evt_0045",
                 "evt_0043",
                 "evt_0040",
@@ -9751,13 +9767,13 @@
                 "evt_0032",
                 "evt_0031",
                 "evt_0029",
-                "evt_0027",
                 "evt_0026",
                 "evt_0024",
-                "evt_0022",
+                "evt_0023",
                 "evt_0020",
-                "evt_0018",
+                "evt_0019",
                 "evt_0017",
+                "evt_0015",
                 "evt_0012",
                 "evt_0010",
                 "evt_0008",
@@ -9768,66 +9784,66 @@
             },
             {
               "heading": "What usually comes before",
-              "text": "Three patterns show, each counted over the last 21 days. Afternoon agitation came after a skipped or small meal on 6 of 8 occasions. Morning refused care happened around bath or shower time on 5 of 6. Evening restlessness came after a visit on 4 of 5.",
+              "text": "Afternoon agitation came after a skipped or small meal on 6 of 8 occasions. Morning refused care happened around bath or shower time on 5 of 6 occasions. Evening restlessness came after a visit on 4 of 5 occasions. All three are counted over the last 21 days. The logs show what came first, not why. Rosa wrote: \"Helen refused the bath again this morning, calling out that she had already washed.\"",
               "eventIds": [
                 "evt_0004",
                 "evt_0010",
-                "evt_0020",
-                "evt_0022",
+                "evt_0015",
+                "evt_0026",
                 "evt_0032",
                 "evt_0040",
                 "evt_0006",
-                "evt_0017",
+                "evt_0023",
                 "evt_0034",
                 "evt_0049",
                 "evt_0057",
-                "evt_0024",
-                "evt_0027",
+                "evt_0017",
+                "evt_0020",
                 "evt_0029",
-                "evt_0045"
+                "evt_0043"
               ]
             },
             {
               "heading": "What was tried and how it went",
-              "text": "Reassurance was tried 10 times: helped 7, helped a little 3. Music was tried 7 times: helped 5, helped a little 2. A snack was tried 6 times: helped 5, helped a little 1. A quiet space was tried 5 times: helped 4, helped a little 1. Help to the toilet and a walk were each tried 2 times and helped 2. Changing activity and offering a drink were each tried 1 time and helped 1. Where a step was not rated alone, the result of the whole entry is used.",
+              "text": "Reassurance was tried 10 times: helped 7, helped a little 3. Music was tried 7 times: helped 5, helped a little 2. Offering a snack was tried 6 times: helped 5, helped a little 1. A quiet space was tried 5 times: helped 4, helped a little 1. Helping to the toilet and a walk were each tried 2 times and helped 2 times. Changing activity and offering a drink were each tried 1 time and helped 1 time. Where a step was not rated on its own, the result of the whole entry is used.",
               "eventIds": [
                 "evt_0049",
-                "evt_0047",
+                "evt_0045",
                 "evt_0032",
                 "evt_0029",
-                "evt_0027",
-                "evt_0026",
-                "evt_0017",
+                "evt_0023",
+                "evt_0020",
+                "evt_0019",
                 "evt_0012",
                 "evt_0010",
                 "evt_0006",
                 "evt_0057",
-                "evt_0045",
+                "evt_0043",
                 "evt_0040",
                 "evt_0034",
-                "evt_0024",
-                "evt_0020",
+                "evt_0026",
+                "evt_0017",
                 "evt_0004",
-                "evt_0022",
+                "evt_0015",
                 "evt_0054",
                 "evt_0050",
-                "evt_0043",
+                "evt_0048",
                 "evt_0058"
               ]
             },
             {
               "heading": "Who saw what",
-              "text": "Neha logged 13 entries, Rosa 11, and Ravi 3. For afternoon agitation, Rosa logged the small meal earlier on 5 of the 6 matching days.",
+              "text": "Neha logged 13 entries, Rosa 11, and Ravi 3. For afternoon agitation after a small meal, Rosa logged the earlier clue on 5 of the 6 matching days.",
               "eventIds": [
                 "evt_0003",
                 "evt_0008",
-                "evt_0018",
+                "evt_0024",
                 "evt_0031",
                 "evt_0039",
                 "evt_0004",
                 "evt_0010",
-                "evt_0020",
-                "evt_0022",
+                "evt_0015",
+                "evt_0026",
                 "evt_0032",
                 "evt_0040"
               ]
@@ -9835,8 +9851,8 @@
           ],
           "questionsToAsk": [
             "What should we check when afternoon agitation comes after a skipped or small meal?",
-            "What should we watch for around bath or shower time?",
-            "Could tiredness or a need for quiet time be worth checking on evenings after a visit?"
+            "Could feeling cold or exposed, or pain when moving, be worth checking around bath or shower time?",
+            "Could tiredness or too much noise be worth checking on evenings after a visit?"
           ],
           "dataSufficient": true,
           "source": "model",
@@ -9964,7 +9980,7 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 18772,
+      "latencyMs": 11439,
       "httpStatus": null,
       "usage": null,
       "serverSource": null,
@@ -9995,7 +10011,7 @@
           "sections": [
             {
               "heading": "What we have seen",
-              "text": "Caregivers logged 5 entries for Helen in the last 7 days: refused care 2 times, agitation 1 time, calling out 1 time, and sleep disturbance 1 time. Most entries were in the morning (3). The others were in the afternoon (1) and at night (1).",
+              "text": "Caregivers logged 5 entries for Helen in the last 7 days: refusing care 2 times, agitation 1 time, calling out 1 time, and sleep disturbance 1 time. Morning had 3 entries, afternoon 1, and night 1. Rosa wrote: \"Helen refused the bath again this morning, calling out that she had already washed.\"",
               "eventIds": [
                 "evt_0058",
                 "evt_0057",
@@ -10006,23 +10022,23 @@
             },
             {
               "heading": "What usually comes before",
-              "text": "Counted over the last 21 days, afternoon agitation came after a skipped or small meal on 6 of 8 occasions. Morning refused care happened around bath or shower time on 5 of 6 occasions. In Rosa's words: \"She cried when the water touched her back and wanted to get out.\" Evening restlessness came after a visit on 4 of 5 occasions. This shows what came first. It does not say why.",
+              "text": "Three patterns show in the logs, each counted over the last 21 days. Afternoon agitation came after a skipped or small meal on 6 of 8 occasions. Morning refusing care happened around bath or shower time on 5 of 6 occasions. Evening restlessness came after a visit on 4 of 5 occasions. This is what the logs show came first. It does not say why.",
               "eventIds": [
                 "evt_0004",
                 "evt_0010",
-                "evt_0020",
-                "evt_0022",
+                "evt_0015",
+                "evt_0026",
                 "evt_0032",
                 "evt_0040",
                 "evt_0006",
-                "evt_0017",
+                "evt_0023",
                 "evt_0034",
                 "evt_0049",
                 "evt_0057",
-                "evt_0024",
-                "evt_0027",
+                "evt_0017",
+                "evt_0020",
                 "evt_0029",
-                "evt_0045"
+                "evt_0043"
               ]
             },
             {
@@ -10038,27 +10054,27 @@
             },
             {
               "heading": "Who saw what",
-              "text": "Rosa logged 3 entries and Neha logged 2. On 5 of the 6 matching days for afternoon agitation, Rosa had logged the skipped or small meal earlier in the day.",
+              "text": "Rosa logged 3 entries and Neha logged 2. Rosa logged the earlier clue, a skipped or small meal, on 5 of the 6 days when afternoon agitation came after one.",
               "eventIds": [
                 "evt_0003",
                 "evt_0008",
-                "evt_0018",
+                "evt_0024",
                 "evt_0031",
                 "evt_0039",
                 "evt_0004",
                 "evt_0010",
-                "evt_0020",
-                "evt_0022",
+                "evt_0015",
+                "evt_0026",
                 "evt_0032",
                 "evt_0040"
               ]
             }
           ],
           "questionsToAsk": [
-            "What support could be tried at bath or shower time for Helen?",
+            "What support could be tried around bath or shower time in the morning?",
             "Could feeling cold or exposed, pain when moving or being touched, or fear of the water or of falling be worth checking at bath time?",
-            "What could help Helen in the afternoon when a meal was skipped or small?",
-            "Is there a way to build in quiet time after a visit?"
+            "What could be tried in the afternoon after a skipped or small meal?",
+            "What quiet time or support could be tried after a visit?"
           ],
           "dataSufficient": true,
           "source": "model",
@@ -10180,7 +10196,7 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 12145,
+      "latencyMs": 11278,
       "httpStatus": null,
       "usage": null,
       "serverSource": null,
@@ -10203,7 +10219,7 @@
       },
       "actual": {
         "httpStatus": 200,
-        "source": "model",
+        "source": "fallback",
         "setup": [],
         "summary": {
           "safetyNotes": [],
@@ -10211,7 +10227,7 @@
           "sections": [
             {
               "heading": "What helped last time",
-              "text": "Changing the activity helped with morning calling out. Music helped a little with morning refused care.",
+              "text": "Most recent: for morning calling out, changed activity helped.",
               "eventIds": [
                 "evt_0058",
                 "evt_0057"
@@ -10219,7 +10235,7 @@
             },
             {
               "heading": "What we have seen",
-              "text": "5 entries in 7 days: refused care 2, agitation 1, calling out 1, sleep disturbance 1. 3 were in the morning.",
+              "text": "In the last 7 days, caregivers logged 5 entries for Helen. Most common: refused care (2) and agitation (1).",
               "eventIds": [
                 "evt_0058",
                 "evt_0057",
@@ -10230,28 +10246,28 @@
             },
             {
               "heading": "What usually comes before",
-              "text": "Over 21 days, afternoon agitation came after a skipped or small meal 6 of 8 times, and evening restlessness came after a visit 4 of 5 times. Morning refused care happened around bath or shower time 5 of 6 times.",
+              "text": "Afternoon agitation came after a skipped or small meal on 6 of 8 occasions in the last 21 days. A pattern in the logs, not a cause.",
               "eventIds": [
                 "evt_0004",
                 "evt_0010",
-                "evt_0020",
-                "evt_0022",
+                "evt_0015",
+                "evt_0026",
                 "evt_0032",
                 "evt_0040",
                 "evt_0006",
-                "evt_0017",
+                "evt_0023",
                 "evt_0034",
                 "evt_0049",
                 "evt_0057",
-                "evt_0024",
-                "evt_0027",
+                "evt_0017",
+                "evt_0020",
                 "evt_0029",
-                "evt_0045"
+                "evt_0043"
               ]
             },
             {
               "heading": "What was tried and how it went",
-              "text": "Helped to the toilet was tried 2 times and helped 2 times; changed activity, quiet space and reassurance each helped 1 time; music helped a little 1 time. Unrated steps count as the whole entry's result.",
+              "text": "Helped to the toilet: tried 2 times, helped 2 times. Changed activity: tried 1 time, helped 1 time.",
               "eventIds": [
                 "evt_0054",
                 "evt_0050",
@@ -10262,28 +10278,28 @@
             },
             {
               "heading": "Who saw what",
-              "text": "Rosa logged 3 entries and Neha logged 2. Rosa logged the small meal earlier on 5 of the 6 matching days.",
+              "text": "Rosa logged 3 entries and Neha 2. On 5 of the 6 days when afternoon agitation came after a skipped or small meal, Rosa had logged the earlier clue.",
               "eventIds": [
                 "evt_0003",
                 "evt_0008",
-                "evt_0018",
+                "evt_0024",
                 "evt_0031",
                 "evt_0039",
                 "evt_0004",
                 "evt_0010",
-                "evt_0020",
-                "evt_0022",
+                "evt_0015",
+                "evt_0026",
                 "evt_0032",
                 "evt_0040"
               ]
             }
           ],
           "questionsToAsk": [
-            "Has Helen eaten today?",
-            "Is a bath or shower planned today?"
+            "Has there been a skipped or small meal in the last day?",
+            "Is there anything from today that I should know?"
           ],
           "dataSufficient": true,
-          "source": "model",
+          "source": "fallback",
           "disclaimer": "Written from caregiver logs. Not a diagnosis. Discuss with your care team."
         },
         "allowedNumbers": [
@@ -10312,7 +10328,7 @@
           "name": "source_header",
           "kind": "deterministic",
           "status": "pass",
-          "reason": "x-caresignal-source: model"
+          "reason": "x-caresignal-source: fallback"
         },
         {
           "name": "contract",
@@ -10324,7 +10340,7 @@
           "name": "renders",
           "kind": "deterministic",
           "status": "pass",
-          "reason": "model path: title, 5 sections, 2 questions, fixed disclaimer"
+          "reason": "fallback path: title, 5 sections, 2 questions, fixed disclaimer"
         },
         {
           "name": "data_sufficient",
@@ -10402,7 +10418,7 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 19109,
+      "latencyMs": 27120,
       "httpStatus": null,
       "usage": null,
       "serverSource": null,
@@ -10461,7 +10477,7 @@
                 "evt_0054",
                 "evt_0050",
                 "evt_0049",
-                "evt_0047",
+                "evt_0048",
                 "evt_0045",
                 "evt_0043",
                 "evt_0040",
@@ -10478,19 +10494,19 @@
               "eventIds": [
                 "evt_0004",
                 "evt_0010",
-                "evt_0020",
-                "evt_0022",
+                "evt_0015",
+                "evt_0026",
                 "evt_0032",
                 "evt_0040",
                 "evt_0006",
-                "evt_0017",
+                "evt_0023",
                 "evt_0034",
                 "evt_0049",
                 "evt_0057",
-                "evt_0024",
-                "evt_0027",
+                "evt_0017",
+                "evt_0020",
                 "evt_0029",
-                "evt_0045"
+                "evt_0043"
               ]
             },
             {
@@ -10499,17 +10515,17 @@
               "eventIds": [
                 "evt_1001",
                 "evt_0049",
-                "evt_0047",
+                "evt_0045",
                 "evt_0032",
                 "evt_0029",
                 "evt_0057",
-                "evt_0045",
+                "evt_0043",
                 "evt_0040",
                 "evt_0034",
                 "evt_0054",
                 "evt_0050",
                 "evt_0058",
-                "evt_0043"
+                "evt_0048"
               ]
             },
             {
@@ -10518,13 +10534,13 @@
               "eventIds": [
                 "evt_0003",
                 "evt_0008",
-                "evt_0018",
+                "evt_0024",
                 "evt_0031",
                 "evt_0039",
                 "evt_0004",
                 "evt_0010",
-                "evt_0020",
-                "evt_0022",
+                "evt_0015",
+                "evt_0026",
                 "evt_0032",
                 "evt_0040"
               ]
@@ -10662,7 +10678,7 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 27136,
+      "latencyMs": 27120,
       "httpStatus": null,
       "usage": null,
       "serverSource": null,
@@ -10697,7 +10713,7 @@
           "sections": [
             {
               "heading": "What we have seen",
-              "text": "Caregivers logged 25 entries for Arjun in the last 30 days: hard transition 9 times, meltdown 9 times, sleep trouble 5 times, and food refusal 2 times. Entries were in the morning (9), evening (8), night (5), and afternoon (3). Priya wrote: \"Hard time stopping his game for dinner prep.\"",
+              "text": "Caregivers logged 25 entries for Arjun in the last 30 days: hard transition 9 times, meltdown 9 times, sleep trouble 5 times, and food refusal 2 times. By time of day: morning 9, evening 8, night 5, afternoon 3. In Priya's words: \"Hard time stopping his game for dinner prep.\"",
               "eventIds": [
                 "evt_0062",
                 "evt_0060",
@@ -10705,18 +10721,18 @@
                 "evt_0055",
                 "evt_0053",
                 "evt_0051",
-                "evt_0048",
+                "evt_0047",
                 "evt_0046",
-                "evt_0042",
+                "evt_0044",
                 "evt_0038",
                 "evt_0037",
                 "evt_0036",
                 "evt_0035",
                 "evt_0030",
-                "evt_0023",
+                "evt_0027",
+                "evt_0022",
                 "evt_0021",
                 "evt_0016",
-                "evt_0015",
                 "evt_0014",
                 "evt_0013",
                 "evt_0011",
@@ -10728,17 +10744,17 @@
             },
             {
               "heading": "What usually comes before",
-              "text": "Counted over the last 21 days, morning meltdown came after a night of poor sleep on 7 of 9 occasions. Morning meltdown also came after a change in routine on 6 of 9 occasions. Evening hard transition came after screen time ending on 5 of 6 occasions. This shows what came first. It does not say why.",
+              "text": "3 patterns show in the logs, counted over the last 21 days. Morning meltdown came after a night of poor sleep on 7 of 9 occasions. Morning meltdown came after a change in routine on 6 of 9 occasions. Evening hard transition came after screen time ending on 5 of 6 occasions. This shows what came first, not why.",
               "eventIds": [
                 "evt_0002",
                 "evt_0005",
                 "evt_0014",
-                "evt_0016",
+                "evt_0022",
                 "evt_0038",
-                "evt_0042",
+                "evt_0047",
                 "evt_0055",
                 "evt_0007",
-                "evt_0021",
+                "evt_0027",
                 "evt_0036",
                 "evt_0051",
                 "evt_0060",
@@ -10747,18 +10763,18 @@
             },
             {
               "heading": "What was tried and how it went",
-              "text": "Quiet space was tried 7 times: it helped 6 times and helped a little 1 time. Deep pressure was tried 6 times and helped 6 times. Break time was tried 5 times: it helped 4 times and helped a little 1 time. Sensory tool was tried 4 times: it helped 3 times and helped a little 1 time. Visual schedule was tried 3 times and helped 3 times. Reassurance was tried 8 times: it helped 2 times and helped a little 6 times. Where a step was not rated on its own, the result of the whole entry is used.",
+              "text": "Reassurance was tried 8 times: helped 2, helped a little 6. Quiet space was tried 7 times: helped 6, helped a little 1. Deep pressure was tried 6 times: helped 6. Break time was tried 5 times: helped 4, helped a little 1. A sensory tool was tried 4 times: helped 3, helped a little 1. A visual schedule was tried 3 times: helped 3. Where a step was not rated on its own, the result of the whole entry is used.",
               "eventIds": [
                 "evt_0053",
-                "evt_0046",
+                "evt_0044",
                 "evt_0037",
                 "evt_0036",
+                "evt_0027",
                 "evt_0021",
-                "evt_0015",
                 "evt_0013",
                 "evt_0001",
                 "evt_0062",
-                "evt_0042",
+                "evt_0047",
                 "evt_0030",
                 "evt_0014",
                 "evt_0007",
@@ -10767,7 +10783,7 @@
                 "evt_0055",
                 "evt_0051",
                 "evt_0038",
-                "evt_0016",
+                "evt_0022",
                 "evt_0005",
                 "evt_0059",
                 "evt_0035",
@@ -10776,25 +10792,25 @@
             },
             {
               "heading": "Who saw what",
-              "text": "Priya logged 15 entries and Dev logged 10. On 5 of the 7 days when a morning meltdown came after a night of poor sleep, Dev had logged the poor sleep earlier.",
+              "text": "Priya logged 15 entries and Dev logged 10. Dev logged the poor sleep earlier on 5 of the 7 matching days for morning meltdown.",
               "eventIds": [
                 "evt_0001",
                 "evt_0013",
-                "evt_0015",
+                "evt_0021",
                 "evt_0037",
                 "evt_0053",
                 "evt_0002",
                 "evt_0005",
                 "evt_0014",
-                "evt_0016",
+                "evt_0022",
                 "evt_0038",
-                "evt_0042",
+                "evt_0047",
                 "evt_0055"
               ]
             }
           ],
           "questionsToAsk": [
-            "What support could be tried at school on mornings that follow a night of poor sleep?",
+            "What support could be tried during the school day after a night of poor sleep?",
             "Could more warning before screen time ends be tried in sessions?",
             "What could help Arjun know what comes next when the routine changes?"
           ],
@@ -10923,7 +10939,7 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 10807,
+      "latencyMs": 21216,
       "httpStatus": null,
       "usage": null,
       "serverSource": null,
@@ -10971,7 +10987,7 @@
           "sections": [
             {
               "heading": "What we have seen",
-              "text": "15 entries for Arjun, an autistic child, in the last 14 days: hard transition 7 times, meltdown 5 times, sleep trouble 2 times, food refusal 1 time. Entries were in the morning (6), evening (5), afternoon (2), and night (2). In Priya's words: \"Quiet time in his room helped.\"",
+              "text": "Caregivers logged 15 entries for Arjun in the last 14 days: hard transition 7 times, meltdown 5 times, sleep trouble 2 times, and food refusal 1 time. Most were in the morning (6) or evening (5). Afternoon and night had 2 each.",
               "eventIds": [
                 "evt_1001",
                 "evt_0062",
@@ -10980,9 +10996,9 @@
                 "evt_0055",
                 "evt_0053",
                 "evt_0051",
-                "evt_0048",
+                "evt_0047",
                 "evt_0046",
-                "evt_0042",
+                "evt_0044",
                 "evt_0038",
                 "evt_0037",
                 "evt_0036",
@@ -10992,17 +11008,17 @@
             },
             {
               "heading": "What usually comes before",
-              "text": "Morning meltdown came after a night of poor sleep on 7 of 9 occasions, counted over 21 days. Morning meltdown came after a change in routine on 6 of 9 occasions, counted over 21 days. Evening hard transition came after screen time ending on 5 of 6 occasions, counted over 21 days. This shows what came first, not why.",
+              "text": "Morning meltdown came after a night of poor sleep on 7 of 9 occasions, and after a change in routine on 6 of 9. Evening hard transition came after screen time ending on 5 of 6. All counts are over the last 21 days. This does not say why.",
               "eventIds": [
                 "evt_0002",
                 "evt_0005",
                 "evt_0014",
-                "evt_0016",
+                "evt_0022",
                 "evt_0038",
-                "evt_0042",
+                "evt_0047",
                 "evt_0055",
                 "evt_0007",
-                "evt_0021",
+                "evt_0027",
                 "evt_0036",
                 "evt_0051",
                 "evt_0060",
@@ -11011,16 +11027,16 @@
             },
             {
               "heading": "What was tried and how it went",
-              "text": "Quiet space was tried 5 times: helped 4, helped a little 1. Deep pressure was tried 4 times: helped 4. Reassurance was tried 4 times: helped 1, helped a little 3. Break time was tried 3 times: helped 2, helped a little 1. Visual schedule was tried 2 times: helped 2. Sensory tool was tried 2 times: helped 1, helped a little 1. Where a step was not rated on its own, the result of the whole entry is used. A remedy or medicine was reported as given 1 time.",
+              "text": "Quiet space was tried 5 times: it helped 4 times and helped a little 1 time. Deep pressure was tried 4 times and helped 4 times. Reassurance was tried 4 times: it helped 1 time and helped a little 3 times. Break time was tried 3 times: it helped 2 times and helped a little 1 time. Visual schedule was tried 2 times and helped 2 times. Sensory tool was tried 2 times: it helped 1 time and helped a little 1 time. Where a step was not rated on its own, the result of the whole entry is used. A remedy or medicine was reported as given 1 time.",
               "eventIds": [
                 "evt_1001",
                 "evt_0062",
-                "evt_0042",
+                "evt_0047",
                 "evt_0036",
                 "evt_0030",
                 "evt_0060",
                 "evt_0053",
-                "evt_0046",
+                "evt_0044",
                 "evt_0037",
                 "evt_0055",
                 "evt_0051",
@@ -11031,27 +11047,27 @@
             },
             {
               "heading": "Who saw what",
-              "text": "Priya logged 10 entries and Dev logged 5. Dev logged the night of poor sleep earlier on 5 of the 7 matching mornings.",
+              "text": "Priya logged 10 entries and Dev logged 5. For morning meltdowns that came after a night of poor sleep, Dev logged the poor sleep earlier on 5 of the 7 matching days.",
               "eventIds": [
                 "evt_0001",
                 "evt_0013",
-                "evt_0015",
+                "evt_0021",
                 "evt_0037",
                 "evt_0053",
                 "evt_0002",
                 "evt_0005",
                 "evt_0014",
-                "evt_0016",
+                "evt_0022",
                 "evt_0038",
-                "evt_0042",
+                "evt_0047",
                 "evt_0055"
               ]
             }
           ],
           "questionsToAsk": [
-            "What should we check when morning meltdowns come after a night of poor sleep?",
-            "Could tiredness or a rushed morning be worth checking?",
-            "Could more warning before screen time ends be worth checking?"
+            "What should we check on mornings that follow a night of poor sleep?",
+            "Could not enough warning before screen time ends be worth checking in the evenings?",
+            "What should we write down on mornings with a change in routine?"
           ],
           "dataSufficient": true,
           "source": "model",
@@ -11182,7 +11198,7 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 17298,
+      "latencyMs": 18291,
       "httpStatus": null,
       "usage": null,
       "serverSource": null,
@@ -11221,17 +11237,17 @@
             },
             {
               "heading": "What we have seen",
-              "text": "10 entries in the last 30 days: shutdown 6 times, more stimming 2 times, hard transition 1 time, sleep trouble 1 time. 6 were in the afternoon.",
+              "text": "10 entries in the last 30 days: shutdown 6 times, more stimming 2 times, hard transition 1 time, sleep trouble 1 time. Most entries were in the afternoon (6).",
               "eventIds": [
                 "evt_0061",
                 "evt_0056",
                 "evt_0052",
-                "evt_0044",
+                "evt_0042",
                 "evt_0041",
                 "evt_0033",
                 "evt_0028",
                 "evt_0025",
-                "evt_0019",
+                "evt_0018",
                 "evt_0009"
               ]
             },
@@ -11240,18 +11256,18 @@
               "text": "Afternoon shutdowns came after loud noise on 5 of 6 occasions, counted over the last 21 days.",
               "eventIds": [
                 "evt_0009",
-                "evt_0019",
+                "evt_0025",
                 "evt_0033",
-                "evt_0044",
+                "evt_0042",
                 "evt_0056"
               ]
             },
             {
               "heading": "What was tried and how it went",
-              "text": "Quiet space was tried 3 times and helped 3. Sensory tool was tried 3 times and helped 3. Break time was tried 2 times: helped 1, helped a little 1. Deep pressure and reassurance were each tried 1 time and helped. Steps not rated alone use the whole entry's result.",
+              "text": "Quiet space and sensory tool were each tried 3 times and helped 3 times. Break time was tried 2 times: helped 1 time, helped a little 1 time. Deep pressure and reassurance were each tried 1 time and helped 1 time. Where a step was not rated alone, the whole entry result is used.",
               "eventIds": [
-                "evt_0044",
-                "evt_0019",
+                "evt_0042",
+                "evt_0025",
                 "evt_0009",
                 "evt_0056",
                 "evt_0028",
@@ -11263,24 +11279,24 @@
             },
             {
               "heading": "Who saw what",
-              "text": "Minal logged all 10 entries.",
+              "text": "Minal logged 10 entries.",
               "eventIds": [
                 "evt_0061",
                 "evt_0056",
                 "evt_0052",
-                "evt_0044",
+                "evt_0042",
                 "evt_0041",
                 "evt_0033",
                 "evt_0028",
                 "evt_0025",
-                "evt_0019",
+                "evt_0018",
                 "evt_0009"
               ]
             }
           ],
           "questionsToAsk": [
             "Has Aisha been around loud noise today?",
-            "Does she need a quiet break sooner today?"
+            "Does Aisha need a quiet break sooner today?"
           ],
           "dataSufficient": true,
           "source": "model",
@@ -11401,7 +11417,7 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 8766,
+      "latencyMs": 10261,
       "httpStatus": null,
       "usage": null,
       "serverSource": null,
@@ -11599,7 +11615,7 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 113,
+      "latencyMs": 112,
       "httpStatus": null,
       "usage": null,
       "serverSource": null,
@@ -11649,7 +11665,7 @@
         "summary": {
           "safetyNotes": [
             {
-              "text": "An injury and a fall were logged on Nov 14. Please contact your doctor or care team about this if you have not already.",
+              "text": "An injury and a fall were logged on Nov 15. Please contact your doctor or care team about this if you have not already.",
               "eventIds": [
                 "evt_1001"
               ]
@@ -11659,7 +11675,7 @@
           "sections": [
             {
               "heading": "What we have seen",
-              "text": "Caregivers logged 6 entries for Helen in the last 7 days: agitation 2 times, refused care 2 times, calling out 1 time, and sleep disturbance 1 time. Entries were in the morning (3), the afternoon (2), and the night (1).",
+              "text": "Caregivers logged 6 entries for Helen in the last 7 days: agitation 2 times, refused care 2 times, calling out 1 time, and sleep disturbance 1 time. Entries were in the morning (3), the afternoon (2), and at night (1).",
               "eventIds": [
                 "evt_1001",
                 "evt_0058",
@@ -11671,28 +11687,28 @@
             },
             {
               "heading": "What usually comes before",
-              "text": "Three patterns show in the logs, counted over the last 21 days. Morning refused care happened around bath or shower time on 5 of 6 occasions. In Rosa's words: \"Helen refused the bath again this morning, calling out that she had already washed.\" Afternoon agitation came after a skipped or small meal on 6 of 9 occasions. Evening restlessness came after a visit on 4 of 5 occasions. This is what the logs show came first. It does not say why.",
+              "text": "Three patterns show in the logs, counted over the last 21 days. Morning refused care happened around bath or shower time on 5 of 6 occasions. Afternoon agitation came after a skipped or small meal on 6 of 9 occasions. Evening restlessness came after a visit on 4 of 5 occasions. This shows what came first, not a reason.",
               "eventIds": [
                 "evt_0006",
-                "evt_0017",
+                "evt_0023",
                 "evt_0034",
                 "evt_0049",
                 "evt_0057",
                 "evt_0004",
                 "evt_0010",
-                "evt_0020",
-                "evt_0022",
+                "evt_0015",
+                "evt_0026",
                 "evt_0032",
                 "evt_0040",
-                "evt_0024",
-                "evt_0027",
+                "evt_0017",
+                "evt_0020",
                 "evt_0029",
-                "evt_0045"
+                "evt_0043"
               ]
             },
             {
               "heading": "What was tried and how it went",
-              "text": "Helped to the toilet was tried 2 times and helped 2 times. Changed activity was tried 1 time and helped 1 time. Quiet space was tried 1 time and helped 1 time. Reassurance was tried 1 time and helped 1 time. Music was tried 1 time and helped a little 1 time. Where a step was not rated on its own, the result of the whole entry is used.",
+              "text": "Helping Helen to the toilet was tried 2 times and helped 2 times. Changing activity, a quiet space, and reassurance were each tried 1 time and each helped 1 time. Music was tried 1 time and helped a little 1 time. Where a step was not rated on its own, the result of the whole entry is used.",
               "eventIds": [
                 "evt_0054",
                 "evt_0050",
@@ -11703,26 +11719,26 @@
             },
             {
               "heading": "Who saw what",
-              "text": "Neha logged 3 entries and Rosa logged 3. On 5 of the 6 days when afternoon agitation came after a skipped or small meal, Rosa had logged the small meal earlier.",
+              "text": "Neha logged 3 entries and Rosa logged 3. On 5 of the 6 days when afternoon agitation came after a skipped or small meal, Rosa had logged the earlier clue.",
               "eventIds": [
                 "evt_0003",
                 "evt_0008",
-                "evt_0018",
+                "evt_0024",
                 "evt_0031",
                 "evt_0039",
                 "evt_0004",
                 "evt_0010",
-                "evt_0020",
-                "evt_0022",
+                "evt_0015",
+                "evt_0026",
                 "evt_0032",
                 "evt_0040"
               ]
             }
           ],
           "questionsToAsk": [
-            "Could feeling cold or exposed, pain when moving or being touched, or fear of the water or of falling be worth checking at bath time?",
-            "Could hunger, pain or discomfort, or tiredness be worth checking on afternoons after a skipped or small meal?",
-            "Could tiredness after a busy day, too much noise or activity, or a need for quiet time be worth checking on evenings after a visit?"
+            "What should we check when afternoon agitation comes after a skipped or small meal?",
+            "Could feeling cold or exposed, pain when moving or being touched, or fear of the water or of falling be worth checking at bath or shower time?",
+            "Could tiredness after a busy day, too much noise or activity, or a need for quiet time be worth checking after visits?"
           ],
           "dataSufficient": true,
           "source": "model",
@@ -11850,7 +11866,7 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 11149,
+      "latencyMs": 9510,
       "httpStatus": null,
       "usage": null,
       "serverSource": null,
@@ -11881,8 +11897,8 @@
             "eventIds": [
               "evt_0004",
               "evt_0010",
-              "evt_0020",
-              "evt_0022",
+              "evt_0015",
+              "evt_0019",
               "evt_0026",
               "evt_0032",
               "evt_0040",
@@ -11895,7 +11911,7 @@
             "eventIds": [
               "evt_0004",
               "evt_0010",
-              "evt_0020",
+              "evt_0026",
               "evt_0032",
               "evt_0040",
               "evt_0050"
@@ -11904,8 +11920,8 @@
           {
             "text": "Weekends: 3 entries across 6 weekend days.",
             "eventIds": [
-              "evt_0022",
-              "evt_0026",
+              "evt_0015",
+              "evt_0019",
               "evt_1001"
             ]
           }
@@ -11960,7 +11976,7 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 1538,
+      "latencyMs": 1464,
       "httpStatus": null,
       "usage": null,
       "serverSource": null,
@@ -11992,10 +12008,10 @@
               "evt_0002",
               "evt_0005",
               "evt_0014",
-              "evt_0016",
+              "evt_0022",
               "evt_0030",
               "evt_0038",
-              "evt_0042",
+              "evt_0047",
               "evt_0055",
               "evt_0062"
             ]
@@ -12006,10 +12022,10 @@
               "evt_0002",
               "evt_0005",
               "evt_0014",
-              "evt_0016",
+              "evt_0022",
               "evt_0030",
               "evt_0038",
-              "evt_0042",
+              "evt_0047",
               "evt_0055",
               "evt_0062"
             ]
@@ -12066,7 +12082,7 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 878,
+      "latencyMs": 1100,
       "httpStatus": null,
       "usage": null,
       "serverSource": null,
@@ -12097,8 +12113,8 @@
             "eventIds": [
               "evt_0004",
               "evt_0010",
-              "evt_0020",
-              "evt_0022",
+              "evt_0015",
+              "evt_0026",
               "evt_0032",
               "evt_0040"
             ]
@@ -12108,7 +12124,7 @@
             "eventIds": [
               "evt_0003",
               "evt_0008",
-              "evt_0018",
+              "evt_0024",
               "evt_0031",
               "evt_0039"
             ]
@@ -12195,8 +12211,8 @@
             "eventIds": [
               "evt_0004",
               "evt_0010",
-              "evt_0020",
-              "evt_0022",
+              "evt_0015",
+              "evt_0026",
               "evt_0032",
               "evt_0040"
             ]
@@ -12206,7 +12222,7 @@
             "eventIds": [
               "evt_0003",
               "evt_0008",
-              "evt_0018",
+              "evt_0024",
               "evt_0031",
               "evt_0039"
             ]
@@ -12262,7 +12278,7 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 784,
+      "latencyMs": 854,
       "httpStatus": null,
       "usage": null,
       "serverSource": null,
@@ -12294,7 +12310,7 @@
               "evt_0002",
               "evt_0014",
               "evt_0030",
-              "evt_0042",
+              "evt_0047",
               "evt_0062"
             ]
           },
@@ -12304,7 +12320,7 @@
               "evt_0002",
               "evt_0014",
               "evt_0030",
-              "evt_0042",
+              "evt_0047",
               "evt_0062"
             ]
           },
@@ -12312,7 +12328,7 @@
             "text": "Break time: tried 4 times. 3 of those 4 moments ended calm. The notes did not say how this step went on its own.",
             "eventIds": [
               "evt_0005",
-              "evt_0016",
+              "evt_0022",
               "evt_0038",
               "evt_0055"
             ]
@@ -12321,7 +12337,7 @@
             "text": "Sensory tool: tried 4 times. 3 of those 4 moments ended calm. The notes did not say how this step went on its own.",
             "eventIds": [
               "evt_0005",
-              "evt_0016",
+              "evt_0022",
               "evt_0038",
               "evt_0055"
             ]
@@ -12375,7 +12391,7 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 1050,
+      "latencyMs": 1142,
       "httpStatus": null,
       "usage": null,
       "serverSource": null,
@@ -12404,30 +12420,30 @@
           {
             "text": "Quiet space: tried 4 times. 3 of those 4 moments ended calm. The notes did not say how this step went on its own.",
             "eventIds": [
-              "evt_0024",
-              "evt_0027",
+              "evt_0017",
+              "evt_0020",
               "evt_0029",
-              "evt_0045"
+              "evt_0043"
             ]
           },
           {
             "text": "Music: tried 2 times. 2 of those 2 moments ended calm. The notes did not say how this step went on its own.",
             "eventIds": [
-              "evt_0024",
-              "evt_0045"
+              "evt_0017",
+              "evt_0043"
             ]
           },
           {
             "text": "Reassurance: tried 2 times. 1 of those 2 moments ended calm. The notes did not say how this step went on its own.",
             "eventIds": [
-              "evt_0027",
+              "evt_0020",
               "evt_0029"
             ]
           },
           {
             "text": "Walk: tried 1 time. That moment ended calm. The notes did not say how this step went on its own.",
             "eventIds": [
-              "evt_0043"
+              "evt_0048"
             ]
           }
         ],
@@ -12479,7 +12495,7 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 961,
+      "latencyMs": 914,
       "httpStatus": null,
       "usage": null,
       "serverSource": null,
@@ -12510,7 +12526,7 @@
             "eventIds": [
               "evt_0033",
               "evt_0041",
-              "evt_0044",
+              "evt_0042",
               "evt_0056"
             ]
           }
@@ -12563,7 +12579,7 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 1014,
+      "latencyMs": 1020,
       "httpStatus": null,
       "usage": null,
       "serverSource": null,
@@ -12625,7 +12641,7 @@
         "relatedPatternKeys": [],
         "dataSufficient": true,
         "intent": "how_often",
-        "source": "fallback"
+        "source": "model"
       },
       "status": "pass",
       "reason": "All 6 checks passed",
@@ -12670,7 +12686,7 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 1266,
+      "latencyMs": 1030,
       "httpStatus": null,
       "usage": null,
       "serverSource": null,
@@ -12701,7 +12717,7 @@
             "eventIds": [
               "evt_0003",
               "evt_0008",
-              "evt_0018",
+              "evt_0024",
               "evt_0031",
               "evt_0039"
             ]
@@ -12755,7 +12771,7 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 1009,
+      "latencyMs": 1208,
       "httpStatus": null,
       "usage": null,
       "serverSource": null,
@@ -12790,10 +12806,10 @@
               "evt_0002",
               "evt_0005",
               "evt_0014",
-              "evt_0016",
+              "evt_0022",
               "evt_0030",
               "evt_0038",
-              "evt_0042",
+              "evt_0047",
               "evt_0055",
               "evt_0062"
             ]
@@ -12803,7 +12819,7 @@
             "eventIds": [
               "evt_0001",
               "evt_0013",
-              "evt_0015",
+              "evt_0021",
               "evt_0037",
               "evt_0053"
             ]
@@ -12859,7 +12875,7 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 873,
+      "latencyMs": 1076,
       "httpStatus": null,
       "usage": null,
       "serverSource": null,
@@ -12948,7 +12964,7 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 985,
+      "latencyMs": 770,
       "httpStatus": null,
       "usage": null,
       "serverSource": null,
@@ -12986,7 +13002,7 @@
             "eventIds": [
               "evt_0030",
               "evt_0038",
-              "evt_0042"
+              "evt_0047"
             ]
           }
         ],
@@ -13038,7 +13054,7 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2499,
+      "latencyMs": 1003,
       "httpStatus": null,
       "usage": null,
       "serverSource": null,
@@ -13125,7 +13141,7 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 830,
+      "latencyMs": 870,
       "httpStatus": null,
       "usage": null,
       "serverSource": null,
@@ -13221,7 +13237,7 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 987,
+      "latencyMs": 843,
       "httpStatus": null,
       "usage": null,
       "serverSource": null,
@@ -13283,7 +13299,7 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 866,
+      "latencyMs": 817,
       "httpStatus": null,
       "usage": null,
       "serverSource": null,
@@ -13345,7 +13361,7 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 1603,
+      "latencyMs": 817,
       "httpStatus": null,
       "usage": null,
       "serverSource": null,
@@ -13407,7 +13423,7 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 841,
+      "latencyMs": 895,
       "httpStatus": null,
       "usage": null,
       "serverSource": null,
@@ -13469,7 +13485,7 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 944,
+      "latencyMs": 886,
       "httpStatus": null,
       "usage": null,
       "serverSource": null,
@@ -13543,7 +13559,7 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 115,
+      "latencyMs": 111,
       "httpStatus": null,
       "usage": null,
       "serverSource": null,
@@ -13617,7 +13633,7 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 115,
+      "latencyMs": 117,
       "httpStatus": null,
       "usage": null,
       "serverSource": null,
@@ -13710,7 +13726,7 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 3035,
+      "latencyMs": 3371,
       "httpStatus": null,
       "usage": null,
       "serverSource": null,
@@ -13736,7 +13752,7 @@
         "kind": "event",
         "followUp": {
           "field": "contextBefore",
-          "question": "What was happening just before Arjun had his meltdown this morning?"
+          "question": "What was happening around Arjun just before the meltdown?"
         },
         "contextBefore": [],
         "responses": [],
@@ -13744,200 +13760,6 @@
       },
       "status": "pass",
       "reason": "All 9 checks passed",
-      "checks": [
-        {
-          "name": "follow_up_shape",
-          "kind": "deterministic",
-          "status": "pass",
-          "reason": "ok"
-        },
-        {
-          "name": "ends_with_question_mark",
-          "kind": "deterministic",
-          "status": "pass",
-          "reason": "ok"
-        },
-        {
-          "name": "twenty_words_or_fewer",
-          "kind": "deterministic",
-          "status": "pass",
-          "reason": "11 words"
-        },
-        {
-          "name": "one_question_only",
-          "kind": "deterministic",
-          "status": "pass",
-          "reason": "ok"
-        },
-        {
-          "name": "no_cause_stated",
-          "kind": "deterministic",
-          "status": "pass",
-          "reason": "ok"
-        },
-        {
-          "name": "no_diagnosis",
-          "kind": "deterministic",
-          "status": "pass",
-          "reason": "ok"
-        },
-        {
-          "name": "no_medication",
-          "kind": "deterministic",
-          "status": "pass",
-          "reason": "ok"
-        },
-        {
-          "name": "only_on_plain_events",
-          "kind": "deterministic",
-          "status": "pass",
-          "reason": "ok"
-        },
-        {
-          "name": "asks_about_field",
-          "kind": "deterministic",
-          "status": "pass",
-          "reason": "contextBefore: \"What was happening just before Arjun had his meltdown this morning?\""
-        }
-      ],
-      "fieldResults": [],
-      "notGradedClauses": [],
-      "warnings": [],
-      "latencyMs": 3104,
-      "httpStatus": null,
-      "usage": null,
-      "serverSource": null,
-      "flaky": false,
-      "regression": false,
-      "reviewed": false
-    },
-    {
-      "id": "FU03",
-      "set": "benchmark",
-      "group": "follow_up",
-      "route": "log",
-      "mode": "dementia",
-      "input": "Mom got agitated around 3 PM after barely eating lunch. I offered her a snack.",
-      "expected": {
-        "expect": {
-          "field": "stepResult"
-        },
-        "note": "Something was tried and the note does not say how it went."
-      },
-      "actual": {
-        "source": "model",
-        "kind": "event",
-        "followUp": {
-          "field": "stepResult",
-          "question": "Did the snack help her settle?"
-        },
-        "contextBefore": [
-          "skipped_meal"
-        ],
-        "responses": [
-          {
-            "tag": "offered_snack",
-            "result": "unknown"
-          }
-        ],
-        "redFlags": []
-      },
-      "status": "pass",
-      "reason": "All 9 checks passed",
-      "checks": [
-        {
-          "name": "follow_up_shape",
-          "kind": "deterministic",
-          "status": "pass",
-          "reason": "ok"
-        },
-        {
-          "name": "ends_with_question_mark",
-          "kind": "deterministic",
-          "status": "pass",
-          "reason": "ok"
-        },
-        {
-          "name": "twenty_words_or_fewer",
-          "kind": "deterministic",
-          "status": "pass",
-          "reason": "6 words"
-        },
-        {
-          "name": "one_question_only",
-          "kind": "deterministic",
-          "status": "pass",
-          "reason": "ok"
-        },
-        {
-          "name": "no_cause_stated",
-          "kind": "deterministic",
-          "status": "pass",
-          "reason": "ok"
-        },
-        {
-          "name": "no_diagnosis",
-          "kind": "deterministic",
-          "status": "pass",
-          "reason": "ok"
-        },
-        {
-          "name": "no_medication",
-          "kind": "deterministic",
-          "status": "pass",
-          "reason": "ok"
-        },
-        {
-          "name": "only_on_plain_events",
-          "kind": "deterministic",
-          "status": "pass",
-          "reason": "ok"
-        },
-        {
-          "name": "asks_about_field",
-          "kind": "deterministic",
-          "status": "pass",
-          "reason": "stepResult: \"Did the snack help her settle?\""
-        }
-      ],
-      "fieldResults": [],
-      "notGradedClauses": [],
-      "warnings": [],
-      "latencyMs": 3552,
-      "httpStatus": null,
-      "usage": null,
-      "serverSource": null,
-      "flaky": false,
-      "regression": false,
-      "reviewed": false
-    },
-    {
-      "id": "FU04",
-      "set": "benchmark",
-      "group": "follow_up",
-      "route": "log",
-      "mode": "dementia",
-      "input": "आज दोपहर 3 बजे माँ बहुत बेचैन थीं और इधर-उधर घूम रही थीं।",
-      "expected": {
-        "expect": {
-          "field": "contextBefore",
-          "lang": "hi"
-        },
-        "note": "Hindi note: the question is in Hindi."
-      },
-      "actual": {
-        "source": "model",
-        "kind": "event",
-        "followUp": {
-          "field": "contextBefore",
-          "question": "दोपहर 3 बजे से पहले क्या हो रहा था?"
-        },
-        "contextBefore": [],
-        "responses": [],
-        "redFlags": []
-      },
-      "status": "pass",
-      "reason": "All 10 checks passed",
       "checks": [
         {
           "name": "follow_up_shape",
@@ -13991,19 +13813,213 @@
           "name": "asks_about_field",
           "kind": "deterministic",
           "status": "pass",
-          "reason": "contextBefore: \"दोपहर 3 बजे से पहले क्या हो रहा था?\""
-        },
-        {
-          "name": "question_in_note_language",
-          "kind": "deterministic",
-          "status": "pass",
-          "reason": "hi: \"दोपहर 3 बजे से पहले क्या हो रहा था?\""
+          "reason": "contextBefore: \"What was happening around Arjun just before the meltdown?\""
         }
       ],
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 5513,
+      "latencyMs": 2817,
+      "httpStatus": null,
+      "usage": null,
+      "serverSource": null,
+      "flaky": false,
+      "regression": false,
+      "reviewed": false
+    },
+    {
+      "id": "FU03",
+      "set": "benchmark",
+      "group": "follow_up",
+      "route": "log",
+      "mode": "dementia",
+      "input": "Mom got agitated around 3 PM after barely eating lunch. I offered her a snack.",
+      "expected": {
+        "expect": {
+          "field": "stepResult"
+        },
+        "note": "Something was tried and the note does not say how it went."
+      },
+      "actual": {
+        "source": "model",
+        "kind": "event",
+        "followUp": {
+          "field": "stepResult",
+          "question": "Did the snack help?"
+        },
+        "contextBefore": [
+          "skipped_meal"
+        ],
+        "responses": [
+          {
+            "tag": "offered_snack",
+            "result": "unknown"
+          }
+        ],
+        "redFlags": []
+      },
+      "status": "pass",
+      "reason": "All 9 checks passed",
+      "checks": [
+        {
+          "name": "follow_up_shape",
+          "kind": "deterministic",
+          "status": "pass",
+          "reason": "ok"
+        },
+        {
+          "name": "ends_with_question_mark",
+          "kind": "deterministic",
+          "status": "pass",
+          "reason": "ok"
+        },
+        {
+          "name": "twenty_words_or_fewer",
+          "kind": "deterministic",
+          "status": "pass",
+          "reason": "4 words"
+        },
+        {
+          "name": "one_question_only",
+          "kind": "deterministic",
+          "status": "pass",
+          "reason": "ok"
+        },
+        {
+          "name": "no_cause_stated",
+          "kind": "deterministic",
+          "status": "pass",
+          "reason": "ok"
+        },
+        {
+          "name": "no_diagnosis",
+          "kind": "deterministic",
+          "status": "pass",
+          "reason": "ok"
+        },
+        {
+          "name": "no_medication",
+          "kind": "deterministic",
+          "status": "pass",
+          "reason": "ok"
+        },
+        {
+          "name": "only_on_plain_events",
+          "kind": "deterministic",
+          "status": "pass",
+          "reason": "ok"
+        },
+        {
+          "name": "asks_about_field",
+          "kind": "deterministic",
+          "status": "pass",
+          "reason": "stepResult: \"Did the snack help?\""
+        }
+      ],
+      "fieldResults": [],
+      "notGradedClauses": [],
+      "warnings": [],
+      "latencyMs": 2710,
+      "httpStatus": null,
+      "usage": null,
+      "serverSource": null,
+      "flaky": false,
+      "regression": false,
+      "reviewed": false
+    },
+    {
+      "id": "FU04",
+      "set": "benchmark",
+      "group": "follow_up",
+      "route": "log",
+      "mode": "dementia",
+      "input": "आज दोपहर 3 बजे माँ बहुत बेचैन थीं और इधर-उधर घूम रही थीं।",
+      "expected": {
+        "expect": {
+          "field": "contextBefore",
+          "lang": "hi"
+        },
+        "note": "Hindi note: the question is in Hindi."
+      },
+      "actual": {
+        "source": "model",
+        "kind": "event",
+        "followUp": {
+          "field": "contextBefore",
+          "question": "माँ के बेचैन होने से ठीक पहले क्या हो रहा था?"
+        },
+        "contextBefore": [],
+        "responses": [],
+        "redFlags": []
+      },
+      "status": "pass",
+      "reason": "All 10 checks passed",
+      "checks": [
+        {
+          "name": "follow_up_shape",
+          "kind": "deterministic",
+          "status": "pass",
+          "reason": "ok"
+        },
+        {
+          "name": "ends_with_question_mark",
+          "kind": "deterministic",
+          "status": "pass",
+          "reason": "ok"
+        },
+        {
+          "name": "twenty_words_or_fewer",
+          "kind": "deterministic",
+          "status": "pass",
+          "reason": "11 words"
+        },
+        {
+          "name": "one_question_only",
+          "kind": "deterministic",
+          "status": "pass",
+          "reason": "ok"
+        },
+        {
+          "name": "no_cause_stated",
+          "kind": "deterministic",
+          "status": "pass",
+          "reason": "ok"
+        },
+        {
+          "name": "no_diagnosis",
+          "kind": "deterministic",
+          "status": "pass",
+          "reason": "ok"
+        },
+        {
+          "name": "no_medication",
+          "kind": "deterministic",
+          "status": "pass",
+          "reason": "ok"
+        },
+        {
+          "name": "only_on_plain_events",
+          "kind": "deterministic",
+          "status": "pass",
+          "reason": "ok"
+        },
+        {
+          "name": "asks_about_field",
+          "kind": "deterministic",
+          "status": "pass",
+          "reason": "contextBefore: \"माँ के बेचैन होने से ठीक पहले क्या हो रहा था?\""
+        },
+        {
+          "name": "question_in_note_language",
+          "kind": "deterministic",
+          "status": "pass",
+          "reason": "hi: \"माँ के बेचैन होने से ठीक पहले क्या हो रहा था?\""
+        }
+      ],
+      "fieldResults": [],
+      "notGradedClauses": [],
+      "warnings": [],
+      "latencyMs": 5310,
       "httpStatus": null,
       "usage": null,
       "serverSource": null,
@@ -14052,7 +14068,7 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2428,
+      "latencyMs": 1867,
       "httpStatus": null,
       "usage": null,
       "serverSource": null,
@@ -14152,7 +14168,7 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 3147,
+      "latencyMs": 2652,
       "httpStatus": null,
       "usage": null,
       "serverSource": null,
@@ -14197,7 +14213,7 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2167,
+      "latencyMs": 1801,
       "httpStatus": null,
       "usage": null,
       "serverSource": null,
@@ -14247,7 +14263,7 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2220,
+      "latencyMs": 2227,
       "httpStatus": null,
       "usage": null,
       "serverSource": null,
@@ -14301,7 +14317,7 @@
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 2214,
+      "latencyMs": 1851,
       "httpStatus": null,
       "usage": null,
       "serverSource": null,
@@ -14328,7 +14344,7 @@
         "kind": "event",
         "followUp": {
           "field": "contextBefore",
-          "question": "¿Qué estaba pasando justo antes de que empezara a caminar?"
+          "question": "¿Qué estaba pasando justo antes de que empezara a caminar de un lado a otro?"
         },
         "contextBefore": [],
         "responses": [],
@@ -14353,7 +14369,7 @@
           "name": "twenty_words_or_fewer",
           "kind": "deterministic",
           "status": "pass",
-          "reason": "10 words"
+          "reason": "15 words"
         },
         {
           "name": "one_question_only",
@@ -14389,24 +14405,1052 @@
           "name": "asks_about_field",
           "kind": "deterministic",
           "status": "pass",
-          "reason": "contextBefore: \"¿Qué estaba pasando justo antes de que empezara a caminar?\""
+          "reason": "contextBefore: \"¿Qué estaba pasando justo antes de que empezara a caminar de un lado a otro?\""
         },
         {
           "name": "question_in_note_language",
           "kind": "deterministic",
           "status": "pass",
-          "reason": "es: \"¿Qué estaba pasando justo antes de que empezara a caminar?\""
+          "reason": "es: \"¿Qué estaba pasando justo antes de que empezara a caminar de un lado a otro?\""
         }
       ],
       "fieldResults": [],
       "notGradedClauses": [],
       "warnings": [],
-      "latencyMs": 3079,
+      "latencyMs": 2728,
       "httpStatus": null,
       "usage": null,
       "serverSource": null,
       "flaky": false,
       "regression": false,
+      "reviewed": false
+    },
+    {
+      "id": "SM01",
+      "set": "benchmark",
+      "group": "semantic",
+      "route": "ask",
+      "mode": "autism",
+      "input": "busy places with lots of people",
+      "expected": {
+        "expect": {
+          "concept": "crowd",
+          "mustRetrieve": [
+            2
+          ],
+          "mustNotRetrieve": [
+            0,
+            1
+          ]
+        },
+        "note": "Paraphrase of crowd with no label. It should be retrieved by meaning; the two unrelated entries must not be. Drafted by Claude (Nov 16), pending human review."
+      },
+      "actual": null,
+      "status": "not_graded",
+      "reason": "feature_on: GET /api/features did not report semanticMatch: true (HTTP 200). Set FEATURE_SEMANTIC_MATCH=true on the server under test.",
+      "checks": [
+        {
+          "name": "feature_on",
+          "kind": "deterministic",
+          "status": "not_graded",
+          "reason": "GET /api/features did not report semanticMatch: true (HTTP 200). Set FEATURE_SEMANTIC_MATCH=true on the server under test."
+        }
+      ],
+      "fieldResults": [],
+      "notGradedClauses": [],
+      "warnings": [],
+      "latencyMs": 0,
+      "httpStatus": null,
+      "usage": null,
+      "serverSource": null,
+      "flaky": false,
+      "regression": false,
+      "sub": "paraphrase",
+      "reviewed": false
+    },
+    {
+      "id": "SM02",
+      "set": "benchmark",
+      "group": "semantic",
+      "route": "ask",
+      "mode": "autism",
+      "input": "busy places with lots of people",
+      "expected": {
+        "expect": {
+          "concept": "crowd",
+          "mustRetrieve": [
+            2
+          ],
+          "mustNotRetrieve": [
+            0,
+            1
+          ]
+        },
+        "note": "Paraphrase of crowd with no label. It should be retrieved by meaning; the two unrelated entries must not be. Drafted by Claude (Nov 16), pending human review."
+      },
+      "actual": null,
+      "status": "not_graded",
+      "reason": "feature_on: GET /api/features did not report semanticMatch: true (HTTP 200). Set FEATURE_SEMANTIC_MATCH=true on the server under test.",
+      "checks": [
+        {
+          "name": "feature_on",
+          "kind": "deterministic",
+          "status": "not_graded",
+          "reason": "GET /api/features did not report semanticMatch: true (HTTP 200). Set FEATURE_SEMANTIC_MATCH=true on the server under test."
+        }
+      ],
+      "fieldResults": [],
+      "notGradedClauses": [],
+      "warnings": [],
+      "latencyMs": 0,
+      "httpStatus": null,
+      "usage": null,
+      "serverSource": null,
+      "flaky": false,
+      "regression": false,
+      "sub": "paraphrase",
+      "reviewed": false
+    },
+    {
+      "id": "SM03",
+      "set": "benchmark",
+      "group": "semantic",
+      "route": "ask",
+      "mode": "autism",
+      "input": "when it was very noisy",
+      "expected": {
+        "expect": {
+          "concept": "loud_noise",
+          "mustRetrieve": [
+            2
+          ],
+          "mustNotRetrieve": [
+            0,
+            1
+          ]
+        },
+        "note": "Paraphrase of loud_noise with no label. It should be retrieved by meaning; the two unrelated entries must not be. Drafted by Claude (Nov 16), pending human review."
+      },
+      "actual": null,
+      "status": "not_graded",
+      "reason": "feature_on: GET /api/features did not report semanticMatch: true (HTTP 200). Set FEATURE_SEMANTIC_MATCH=true on the server under test.",
+      "checks": [
+        {
+          "name": "feature_on",
+          "kind": "deterministic",
+          "status": "not_graded",
+          "reason": "GET /api/features did not report semanticMatch: true (HTTP 200). Set FEATURE_SEMANTIC_MATCH=true on the server under test."
+        }
+      ],
+      "fieldResults": [],
+      "notGradedClauses": [],
+      "warnings": [],
+      "latencyMs": 0,
+      "httpStatus": null,
+      "usage": null,
+      "serverSource": null,
+      "flaky": false,
+      "regression": false,
+      "sub": "paraphrase",
+      "reviewed": false
+    },
+    {
+      "id": "SM04",
+      "set": "benchmark",
+      "group": "semantic",
+      "route": "ask",
+      "mode": "autism",
+      "input": "when it was very noisy",
+      "expected": {
+        "expect": {
+          "concept": "loud_noise",
+          "mustRetrieve": [
+            2
+          ],
+          "mustNotRetrieve": [
+            0,
+            1
+          ]
+        },
+        "note": "Paraphrase of loud_noise with no label. It should be retrieved by meaning; the two unrelated entries must not be. Drafted by Claude (Nov 16), pending human review."
+      },
+      "actual": null,
+      "status": "not_graded",
+      "reason": "feature_on: GET /api/features did not report semanticMatch: true (HTTP 200). Set FEATURE_SEMANTIC_MATCH=true on the server under test.",
+      "checks": [
+        {
+          "name": "feature_on",
+          "kind": "deterministic",
+          "status": "not_graded",
+          "reason": "GET /api/features did not report semanticMatch: true (HTTP 200). Set FEATURE_SEMANTIC_MATCH=true on the server under test."
+        }
+      ],
+      "fieldResults": [],
+      "notGradedClauses": [],
+      "warnings": [],
+      "latencyMs": 0,
+      "httpStatus": null,
+      "usage": null,
+      "serverSource": null,
+      "flaky": false,
+      "regression": false,
+      "sub": "paraphrase",
+      "reviewed": false
+    },
+    {
+      "id": "SM05",
+      "set": "benchmark",
+      "group": "semantic",
+      "route": "ask",
+      "mode": "autism",
+      "input": "after a bad night",
+      "expected": {
+        "expect": {
+          "concept": "poor_sleep",
+          "mustRetrieve": [
+            2
+          ],
+          "mustNotRetrieve": [
+            0,
+            1
+          ]
+        },
+        "note": "Paraphrase of poor_sleep with no label. It should be retrieved by meaning; the two unrelated entries must not be. Drafted by Claude (Nov 16), pending human review."
+      },
+      "actual": null,
+      "status": "not_graded",
+      "reason": "feature_on: GET /api/features did not report semanticMatch: true (HTTP 200). Set FEATURE_SEMANTIC_MATCH=true on the server under test.",
+      "checks": [
+        {
+          "name": "feature_on",
+          "kind": "deterministic",
+          "status": "not_graded",
+          "reason": "GET /api/features did not report semanticMatch: true (HTTP 200). Set FEATURE_SEMANTIC_MATCH=true on the server under test."
+        }
+      ],
+      "fieldResults": [],
+      "notGradedClauses": [],
+      "warnings": [],
+      "latencyMs": 0,
+      "httpStatus": null,
+      "usage": null,
+      "serverSource": null,
+      "flaky": false,
+      "regression": false,
+      "sub": "paraphrase",
+      "reviewed": false
+    },
+    {
+      "id": "SM06",
+      "set": "benchmark",
+      "group": "semantic",
+      "route": "ask",
+      "mode": "autism",
+      "input": "days when she barely ate",
+      "expected": {
+        "expect": {
+          "concept": "skipped_meal",
+          "mustRetrieve": [
+            2
+          ],
+          "mustNotRetrieve": [
+            0,
+            1
+          ]
+        },
+        "note": "Paraphrase of skipped_meal with no label. It should be retrieved by meaning; the two unrelated entries must not be. Drafted by Claude (Nov 16), pending human review."
+      },
+      "actual": null,
+      "status": "not_graded",
+      "reason": "feature_on: GET /api/features did not report semanticMatch: true (HTTP 200). Set FEATURE_SEMANTIC_MATCH=true on the server under test.",
+      "checks": [
+        {
+          "name": "feature_on",
+          "kind": "deterministic",
+          "status": "not_graded",
+          "reason": "GET /api/features did not report semanticMatch: true (HTTP 200). Set FEATURE_SEMANTIC_MATCH=true on the server under test."
+        }
+      ],
+      "fieldResults": [],
+      "notGradedClauses": [],
+      "warnings": [],
+      "latencyMs": 0,
+      "httpStatus": null,
+      "usage": null,
+      "serverSource": null,
+      "flaky": false,
+      "regression": false,
+      "sub": "paraphrase",
+      "reviewed": false
+    },
+    {
+      "id": "SM07",
+      "set": "benchmark",
+      "group": "semantic",
+      "route": "ask",
+      "mode": "autism",
+      "input": "times he had to wait a long time",
+      "expected": {
+        "expect": {
+          "concept": "waiting",
+          "mustRetrieve": [
+            2
+          ],
+          "mustNotRetrieve": [
+            0,
+            1
+          ]
+        },
+        "note": "Paraphrase of waiting with no label. It should be retrieved by meaning; the two unrelated entries must not be. Drafted by Claude (Nov 16), pending human review."
+      },
+      "actual": null,
+      "status": "not_graded",
+      "reason": "feature_on: GET /api/features did not report semanticMatch: true (HTTP 200). Set FEATURE_SEMANTIC_MATCH=true on the server under test.",
+      "checks": [
+        {
+          "name": "feature_on",
+          "kind": "deterministic",
+          "status": "not_graded",
+          "reason": "GET /api/features did not report semanticMatch: true (HTTP 200). Set FEATURE_SEMANTIC_MATCH=true on the server under test."
+        }
+      ],
+      "fieldResults": [],
+      "notGradedClauses": [],
+      "warnings": [],
+      "latencyMs": 0,
+      "httpStatus": null,
+      "usage": null,
+      "serverSource": null,
+      "flaky": false,
+      "regression": false,
+      "sub": "paraphrase",
+      "reviewed": false
+    },
+    {
+      "id": "SM08",
+      "set": "benchmark",
+      "group": "semantic",
+      "route": "ask",
+      "mode": "autism",
+      "input": "scratchy clothes",
+      "expected": {
+        "expect": {
+          "concept": "clothing_texture",
+          "mustRetrieve": [
+            2
+          ],
+          "mustNotRetrieve": [
+            0,
+            1
+          ]
+        },
+        "note": "Paraphrase of clothing_texture with no label. It should be retrieved by meaning; the two unrelated entries must not be. Drafted by Claude (Nov 16), pending human review."
+      },
+      "actual": null,
+      "status": "not_graded",
+      "reason": "feature_on: GET /api/features did not report semanticMatch: true (HTTP 200). Set FEATURE_SEMANTIC_MATCH=true on the server under test.",
+      "checks": [
+        {
+          "name": "feature_on",
+          "kind": "deterministic",
+          "status": "not_graded",
+          "reason": "GET /api/features did not report semanticMatch: true (HTTP 200). Set FEATURE_SEMANTIC_MATCH=true on the server under test."
+        }
+      ],
+      "fieldResults": [],
+      "notGradedClauses": [],
+      "warnings": [],
+      "latencyMs": 0,
+      "httpStatus": null,
+      "usage": null,
+      "serverSource": null,
+      "flaky": false,
+      "regression": false,
+      "sub": "paraphrase",
+      "reviewed": false
+    },
+    {
+      "id": "SM09",
+      "set": "benchmark",
+      "group": "semantic",
+      "route": "ask",
+      "mode": "autism",
+      "input": "busy places with lots of people",
+      "expected": {
+        "expect": {
+          "concept": "crowd",
+          "mustRetrieve": [
+            2
+          ],
+          "mustNotRetrieve": [
+            0,
+            1
+          ]
+        },
+        "note": "es note that means crowd, asked about in English. Not reviewed by a native speaker. Drafted by Claude (Nov 16), pending human review."
+      },
+      "actual": null,
+      "status": "not_graded",
+      "reason": "feature_on: GET /api/features did not report semanticMatch: true (HTTP 200). Set FEATURE_SEMANTIC_MATCH=true on the server under test.",
+      "checks": [
+        {
+          "name": "feature_on",
+          "kind": "deterministic",
+          "status": "not_graded",
+          "reason": "GET /api/features did not report semanticMatch: true (HTTP 200). Set FEATURE_SEMANTIC_MATCH=true on the server under test."
+        }
+      ],
+      "fieldResults": [],
+      "notGradedClauses": [],
+      "warnings": [],
+      "latencyMs": 0,
+      "httpStatus": null,
+      "usage": null,
+      "serverSource": null,
+      "flaky": false,
+      "regression": false,
+      "sub": "other_language",
+      "reviewed": false
+    },
+    {
+      "id": "SM10",
+      "set": "benchmark",
+      "group": "semantic",
+      "route": "ask",
+      "mode": "autism",
+      "input": "after a bad night",
+      "expected": {
+        "expect": {
+          "concept": "poor_sleep",
+          "mustRetrieve": [
+            2
+          ],
+          "mustNotRetrieve": [
+            0,
+            1
+          ]
+        },
+        "note": "es note that means poor_sleep, asked about in English. Not reviewed by a native speaker. Drafted by Claude (Nov 16), pending human review."
+      },
+      "actual": null,
+      "status": "not_graded",
+      "reason": "feature_on: GET /api/features did not report semanticMatch: true (HTTP 200). Set FEATURE_SEMANTIC_MATCH=true on the server under test.",
+      "checks": [
+        {
+          "name": "feature_on",
+          "kind": "deterministic",
+          "status": "not_graded",
+          "reason": "GET /api/features did not report semanticMatch: true (HTTP 200). Set FEATURE_SEMANTIC_MATCH=true on the server under test."
+        }
+      ],
+      "fieldResults": [],
+      "notGradedClauses": [],
+      "warnings": [],
+      "latencyMs": 0,
+      "httpStatus": null,
+      "usage": null,
+      "serverSource": null,
+      "flaky": false,
+      "regression": false,
+      "sub": "other_language",
+      "reviewed": false
+    },
+    {
+      "id": "SM11",
+      "set": "benchmark",
+      "group": "semantic",
+      "route": "ask",
+      "mode": "autism",
+      "input": "days when she barely ate",
+      "expected": {
+        "expect": {
+          "concept": "skipped_meal",
+          "mustRetrieve": [
+            2
+          ],
+          "mustNotRetrieve": [
+            0,
+            1
+          ]
+        },
+        "note": "hi note that means skipped_meal, asked about in English. Not reviewed by a native speaker. Drafted by Claude (Nov 16), pending human review."
+      },
+      "actual": null,
+      "status": "not_graded",
+      "reason": "feature_on: GET /api/features did not report semanticMatch: true (HTTP 200). Set FEATURE_SEMANTIC_MATCH=true on the server under test.",
+      "checks": [
+        {
+          "name": "feature_on",
+          "kind": "deterministic",
+          "status": "not_graded",
+          "reason": "GET /api/features did not report semanticMatch: true (HTTP 200). Set FEATURE_SEMANTIC_MATCH=true on the server under test."
+        }
+      ],
+      "fieldResults": [],
+      "notGradedClauses": [],
+      "warnings": [],
+      "latencyMs": 0,
+      "httpStatus": null,
+      "usage": null,
+      "serverSource": null,
+      "flaky": false,
+      "regression": false,
+      "sub": "other_language",
+      "reviewed": false
+    },
+    {
+      "id": "SM12",
+      "set": "benchmark",
+      "group": "semantic",
+      "route": "ask",
+      "mode": "autism",
+      "input": "when it was very noisy",
+      "expected": {
+        "expect": {
+          "concept": "loud_noise",
+          "mustRetrieve": [
+            2
+          ],
+          "mustNotRetrieve": [
+            0,
+            1
+          ]
+        },
+        "note": "hi note that means loud_noise, asked about in English. Not reviewed by a native speaker. Drafted by Claude (Nov 16), pending human review."
+      },
+      "actual": null,
+      "status": "not_graded",
+      "reason": "feature_on: GET /api/features did not report semanticMatch: true (HTTP 200). Set FEATURE_SEMANTIC_MATCH=true on the server under test.",
+      "checks": [
+        {
+          "name": "feature_on",
+          "kind": "deterministic",
+          "status": "not_graded",
+          "reason": "GET /api/features did not report semanticMatch: true (HTTP 200). Set FEATURE_SEMANTIC_MATCH=true on the server under test."
+        }
+      ],
+      "fieldResults": [],
+      "notGradedClauses": [],
+      "warnings": [],
+      "latencyMs": 0,
+      "httpStatus": null,
+      "usage": null,
+      "serverSource": null,
+      "flaky": false,
+      "regression": false,
+      "sub": "other_language",
+      "reviewed": false
+    },
+    {
+      "id": "SM13",
+      "set": "benchmark",
+      "group": "semantic",
+      "route": "ask",
+      "mode": "autism",
+      "input": "busy places with lots of people",
+      "expected": {
+        "expect": {
+          "concept": "crowd",
+          "mustNotRetrieve": [
+            0,
+            1,
+            2
+          ]
+        },
+        "note": "Near miss for crowd: the note says the opposite. It must not be retrieved. Drafted by Claude (Nov 16), pending human review."
+      },
+      "actual": null,
+      "status": "not_graded",
+      "reason": "feature_on: GET /api/features did not report semanticMatch: true (HTTP 200). Set FEATURE_SEMANTIC_MATCH=true on the server under test.",
+      "checks": [
+        {
+          "name": "feature_on",
+          "kind": "deterministic",
+          "status": "not_graded",
+          "reason": "GET /api/features did not report semanticMatch: true (HTTP 200). Set FEATURE_SEMANTIC_MATCH=true on the server under test."
+        }
+      ],
+      "fieldResults": [],
+      "notGradedClauses": [],
+      "warnings": [],
+      "latencyMs": 0,
+      "httpStatus": null,
+      "usage": null,
+      "serverSource": null,
+      "flaky": false,
+      "regression": false,
+      "sub": "near_miss",
+      "reviewed": false
+    },
+    {
+      "id": "SM14",
+      "set": "benchmark",
+      "group": "semantic",
+      "route": "ask",
+      "mode": "autism",
+      "input": "after a bad night",
+      "expected": {
+        "expect": {
+          "concept": "poor_sleep",
+          "mustNotRetrieve": [
+            0,
+            1,
+            2
+          ]
+        },
+        "note": "Near miss for poor_sleep: the note says the opposite. It must not be retrieved. Drafted by Claude (Nov 16), pending human review."
+      },
+      "actual": null,
+      "status": "not_graded",
+      "reason": "feature_on: GET /api/features did not report semanticMatch: true (HTTP 200). Set FEATURE_SEMANTIC_MATCH=true on the server under test.",
+      "checks": [
+        {
+          "name": "feature_on",
+          "kind": "deterministic",
+          "status": "not_graded",
+          "reason": "GET /api/features did not report semanticMatch: true (HTTP 200). Set FEATURE_SEMANTIC_MATCH=true on the server under test."
+        }
+      ],
+      "fieldResults": [],
+      "notGradedClauses": [],
+      "warnings": [],
+      "latencyMs": 0,
+      "httpStatus": null,
+      "usage": null,
+      "serverSource": null,
+      "flaky": false,
+      "regression": false,
+      "sub": "near_miss",
+      "reviewed": false
+    },
+    {
+      "id": "SM15",
+      "set": "benchmark",
+      "group": "semantic",
+      "route": "ask",
+      "mode": "autism",
+      "input": "days when she barely ate",
+      "expected": {
+        "expect": {
+          "concept": "skipped_meal",
+          "mustNotRetrieve": [
+            0,
+            1,
+            2
+          ]
+        },
+        "note": "Near miss for skipped_meal: the note says the opposite. It must not be retrieved. Drafted by Claude (Nov 16), pending human review."
+      },
+      "actual": null,
+      "status": "not_graded",
+      "reason": "feature_on: GET /api/features did not report semanticMatch: true (HTTP 200). Set FEATURE_SEMANTIC_MATCH=true on the server under test.",
+      "checks": [
+        {
+          "name": "feature_on",
+          "kind": "deterministic",
+          "status": "not_graded",
+          "reason": "GET /api/features did not report semanticMatch: true (HTTP 200). Set FEATURE_SEMANTIC_MATCH=true on the server under test."
+        }
+      ],
+      "fieldResults": [],
+      "notGradedClauses": [],
+      "warnings": [],
+      "latencyMs": 0,
+      "httpStatus": null,
+      "usage": null,
+      "serverSource": null,
+      "flaky": false,
+      "regression": false,
+      "sub": "near_miss",
+      "reviewed": false
+    },
+    {
+      "id": "SM16",
+      "set": "benchmark",
+      "group": "semantic",
+      "route": "ask",
+      "mode": "autism",
+      "input": "times he had to wait a long time",
+      "expected": {
+        "expect": {
+          "concept": "waiting",
+          "mustNotRetrieve": [
+            0,
+            1,
+            2
+          ]
+        },
+        "note": "Near miss for waiting: the note says the opposite. It must not be retrieved. Drafted by Claude (Nov 16), pending human review."
+      },
+      "actual": null,
+      "status": "not_graded",
+      "reason": "feature_on: GET /api/features did not report semanticMatch: true (HTTP 200). Set FEATURE_SEMANTIC_MATCH=true on the server under test.",
+      "checks": [
+        {
+          "name": "feature_on",
+          "kind": "deterministic",
+          "status": "not_graded",
+          "reason": "GET /api/features did not report semanticMatch: true (HTTP 200). Set FEATURE_SEMANTIC_MATCH=true on the server under test."
+        }
+      ],
+      "fieldResults": [],
+      "notGradedClauses": [],
+      "warnings": [],
+      "latencyMs": 0,
+      "httpStatus": null,
+      "usage": null,
+      "serverSource": null,
+      "flaky": false,
+      "regression": false,
+      "sub": "near_miss",
+      "reviewed": false
+    },
+    {
+      "id": "SM17",
+      "set": "benchmark",
+      "group": "semantic",
+      "route": "ask",
+      "mode": "autism",
+      "input": "when it was very noisy",
+      "expected": {
+        "expect": {
+          "concept": "loud_noise",
+          "mustNotRetrieve": [
+            0,
+            1,
+            2
+          ]
+        },
+        "note": "Near miss for loud_noise: the note says the opposite. It must not be retrieved. Drafted by Claude (Nov 16), pending human review."
+      },
+      "actual": null,
+      "status": "not_graded",
+      "reason": "feature_on: GET /api/features did not report semanticMatch: true (HTTP 200). Set FEATURE_SEMANTIC_MATCH=true on the server under test.",
+      "checks": [
+        {
+          "name": "feature_on",
+          "kind": "deterministic",
+          "status": "not_graded",
+          "reason": "GET /api/features did not report semanticMatch: true (HTTP 200). Set FEATURE_SEMANTIC_MATCH=true on the server under test."
+        }
+      ],
+      "fieldResults": [],
+      "notGradedClauses": [],
+      "warnings": [],
+      "latencyMs": 0,
+      "httpStatus": null,
+      "usage": null,
+      "serverSource": null,
+      "flaky": false,
+      "regression": false,
+      "sub": "near_miss",
+      "reviewed": false
+    },
+    {
+      "id": "SM18",
+      "set": "benchmark",
+      "group": "semantic",
+      "route": "ask",
+      "mode": "autism",
+      "input": "busy places with lots of people",
+      "expected": {
+        "expect": {
+          "concept": "crowd",
+          "mustNotRetrieve": [
+            0
+          ],
+          "nothingRetrieved": true
+        },
+        "note": "The matching entry belongs to another person. Asking about Noor must return nothing of Zara's. Drafted by Claude (Nov 16), pending human review."
+      },
+      "actual": null,
+      "status": "not_graded",
+      "reason": "feature_on: GET /api/features did not report semanticMatch: true (HTTP 200). Set FEATURE_SEMANTIC_MATCH=true on the server under test.",
+      "checks": [
+        {
+          "name": "feature_on",
+          "kind": "deterministic",
+          "status": "not_graded",
+          "reason": "GET /api/features did not report semanticMatch: true (HTTP 200). Set FEATURE_SEMANTIC_MATCH=true on the server under test."
+        }
+      ],
+      "fieldResults": [],
+      "notGradedClauses": [],
+      "warnings": [],
+      "latencyMs": 0,
+      "httpStatus": null,
+      "usage": null,
+      "serverSource": null,
+      "flaky": false,
+      "regression": false,
+      "sub": "cross_person",
+      "reviewed": false
+    },
+    {
+      "id": "SM19",
+      "set": "benchmark",
+      "group": "semantic",
+      "route": "ask",
+      "mode": "autism",
+      "input": "busy places with lots of people",
+      "expected": {
+        "expect": {
+          "concept": "crowd",
+          "mustNotRetrieve": [
+            0
+          ],
+          "nothingRetrieved": true
+        },
+        "note": "A new person with no entries. The only matching entry is a seeded person's and must not come back. Drafted by Claude (Nov 16), pending human review."
+      },
+      "actual": null,
+      "status": "not_graded",
+      "reason": "feature_on: GET /api/features did not report semanticMatch: true (HTTP 200). Set FEATURE_SEMANTIC_MATCH=true on the server under test.",
+      "checks": [
+        {
+          "name": "feature_on",
+          "kind": "deterministic",
+          "status": "not_graded",
+          "reason": "GET /api/features did not report semanticMatch: true (HTTP 200). Set FEATURE_SEMANTIC_MATCH=true on the server under test."
+        }
+      ],
+      "fieldResults": [],
+      "notGradedClauses": [],
+      "warnings": [],
+      "latencyMs": 0,
+      "httpStatus": null,
+      "usage": null,
+      "serverSource": null,
+      "flaky": false,
+      "regression": false,
+      "sub": "cross_person",
+      "reviewed": false
+    },
+    {
+      "id": "SM20",
+      "set": "benchmark",
+      "group": "semantic",
+      "route": "ask",
+      "mode": "dementia",
+      "input": "busy places with lots of people",
+      "expected": {
+        "expect": {
+          "mustNotRetrieve": [
+            0
+          ]
+        },
+        "note": "Asking in dementia mode about Helen must never return an autism-mode entry of Arjun's. Drafted by Claude (Nov 16), pending human review."
+      },
+      "actual": null,
+      "status": "not_graded",
+      "reason": "feature_on: GET /api/features did not report semanticMatch: true (HTTP 200). Set FEATURE_SEMANTIC_MATCH=true on the server under test.",
+      "checks": [
+        {
+          "name": "feature_on",
+          "kind": "deterministic",
+          "status": "not_graded",
+          "reason": "GET /api/features did not report semanticMatch: true (HTTP 200). Set FEATURE_SEMANTIC_MATCH=true on the server under test."
+        }
+      ],
+      "fieldResults": [],
+      "notGradedClauses": [],
+      "warnings": [],
+      "latencyMs": 0,
+      "httpStatus": null,
+      "usage": null,
+      "serverSource": null,
+      "flaky": false,
+      "regression": false,
+      "sub": "cross_person",
+      "reviewed": false
+    },
+    {
+      "id": "SM21",
+      "set": "benchmark",
+      "group": "semantic",
+      "route": "ask",
+      "mode": "autism",
+      "input": "busy places with lots of people",
+      "expected": {
+        "expect": {
+          "concept": "crowd",
+          "mustRetrieve": [
+            0
+          ],
+          "mustNotRetrieve": [
+            1
+          ]
+        },
+        "note": "The same words saved for two people. Each person gets only their own entry. Drafted by Claude (Nov 16), pending human review."
+      },
+      "actual": null,
+      "status": "not_graded",
+      "reason": "feature_on: GET /api/features did not report semanticMatch: true (HTTP 200). Set FEATURE_SEMANTIC_MATCH=true on the server under test.",
+      "checks": [
+        {
+          "name": "feature_on",
+          "kind": "deterministic",
+          "status": "not_graded",
+          "reason": "GET /api/features did not report semanticMatch: true (HTTP 200). Set FEATURE_SEMANTIC_MATCH=true on the server under test."
+        }
+      ],
+      "fieldResults": [],
+      "notGradedClauses": [],
+      "warnings": [],
+      "latencyMs": 0,
+      "httpStatus": null,
+      "usage": null,
+      "serverSource": null,
+      "flaky": false,
+      "regression": false,
+      "sub": "cross_person",
+      "reviewed": false
+    },
+    {
+      "id": "SM22",
+      "set": "benchmark",
+      "group": "semantic",
+      "route": "patterns",
+      "mode": "autism",
+      "input": [
+        {
+          "person": "noor"
+        },
+        {
+          "person": "noor",
+          "note": "Noor had a meltdown at the mall, it was crowded.",
+          "contextBefore": [
+            "crowd"
+          ],
+          "daysAgo": 1
+        },
+        {
+          "person": "noor",
+          "note": "Noor had a meltdown at the mall, it was crowded.",
+          "contextBefore": [
+            "crowd"
+          ],
+          "daysAgo": 2
+        },
+        {
+          "person": "noor",
+          "note": "Noor had a meltdown at the mall, it was crowded.",
+          "contextBefore": [
+            "crowd"
+          ],
+          "daysAgo": 3
+        },
+        {
+          "person": "noor",
+          "note": "There were too many people at the store and Noor had a meltdown.",
+          "daysAgo": 4
+        }
+      ],
+      "expected": {
+        "expect": {
+          "tag": "crowd",
+          "matchCount": 4,
+          "joined": [
+            3
+          ],
+          "removeIndex": 3
+        },
+        "note": "Three entries labeled crowd and one unlabeled paraphrase. With the join the pattern reaches four; the joined entry is listed, and the caregiver can remove it. Drafted by Claude (Nov 16), pending human review."
+      },
+      "actual": null,
+      "status": "not_graded",
+      "reason": "feature_on: GET /api/features did not report semanticMatch: true (HTTP 200). Set FEATURE_SEMANTIC_MATCH=true on the server under test.",
+      "checks": [
+        {
+          "name": "feature_on",
+          "kind": "deterministic",
+          "status": "not_graded",
+          "reason": "GET /api/features did not report semanticMatch: true (HTTP 200). Set FEATURE_SEMANTIC_MATCH=true on the server under test."
+        }
+      ],
+      "fieldResults": [],
+      "notGradedClauses": [],
+      "warnings": [],
+      "latencyMs": 0,
+      "httpStatus": null,
+      "usage": null,
+      "serverSource": null,
+      "flaky": false,
+      "regression": false,
+      "sub": "pattern",
+      "reviewed": false
+    },
+    {
+      "id": "SM23",
+      "set": "benchmark",
+      "group": "semantic",
+      "route": "patterns",
+      "mode": "autism",
+      "input": [
+        {
+          "person": "noor"
+        },
+        {
+          "person": "noor",
+          "note": "Noor had a meltdown at the mall, it was crowded.",
+          "contextBefore": [
+            "crowd"
+          ],
+          "daysAgo": 1
+        },
+        {
+          "person": "noor",
+          "note": "Noor had a meltdown at the mall, it was crowded.",
+          "contextBefore": [
+            "crowd"
+          ],
+          "daysAgo": 2
+        },
+        {
+          "person": "noor",
+          "note": "Noor had a meltdown at the mall, it was crowded.",
+          "contextBefore": [
+            "crowd"
+          ],
+          "daysAgo": 3
+        },
+        {
+          "person": "noor",
+          "note": "The store was empty and quiet when Noor had a meltdown.",
+          "daysAgo": 4
+        }
+      ],
+      "expected": {
+        "expect": {
+          "tag": "crowd",
+          "noPattern": true,
+          "notJoined": [
+            3
+          ]
+        },
+        "note": "Three labeled entries and one near miss. The near miss must not be joined, so no pattern is counted. Drafted by Claude (Nov 16), pending human review."
+      },
+      "actual": null,
+      "status": "not_graded",
+      "reason": "feature_on: GET /api/features did not report semanticMatch: true (HTTP 200). Set FEATURE_SEMANTIC_MATCH=true on the server under test.",
+      "checks": [
+        {
+          "name": "feature_on",
+          "kind": "deterministic",
+          "status": "not_graded",
+          "reason": "GET /api/features did not report semanticMatch: true (HTTP 200). Set FEATURE_SEMANTIC_MATCH=true on the server under test."
+        }
+      ],
+      "fieldResults": [],
+      "notGradedClauses": [],
+      "warnings": [],
+      "latencyMs": 0,
+      "httpStatus": null,
+      "usage": null,
+      "serverSource": null,
+      "flaky": false,
+      "regression": false,
+      "sub": "pattern",
       "reviewed": false
     }
   ]
