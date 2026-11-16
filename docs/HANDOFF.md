@@ -1,6 +1,14 @@
-# Handoff (updated Sun Nov 15, morning, after the merge)
+# Handoff (updated Sun Nov 15, night, after the event)
 
 Read this first, then CLAUDE.md, then the docs it lists. **Submit by Sunday Nov 15, 12:00 PM PST. Judging 2 to 5 PM PST.**
+
+## After the event (Sun Nov 15, night). Read this before anything below.
+- **Result:** the team (Team 4) won first prize. The submission deadline has passed; the lines above about submitting are history.
+- **Invite codes were replaced on Nov 15 at night** on both the live app and staging, to close access. `GTRANSFORMER-JUDGE`, `CARE-TRIAL` and `STAGING-EVAL` no longer work, wherever they still appear in this file, the README, the deck or the video. The new codes are held by the PM and are not in git. Never write an invite code into the repository. To run the eval against staging, pass the code the PM gives you through `EVAL_INVITE_CODE` in the environment only.
+- **Branches:** the build branch is one commit ahead of `main` (a deck backup slide). Otherwise they hold the same content.
+- **Next piece of work (PM, Nov 15):** semantic matching, with a vector index prepared but not run. Measure the baseline first, build Ask retrieval first, keep counting in code, keep it behind `FEATURE_SEMANTIC_MATCH`, and do not run any migration against the shared Railway Postgres without the PM's approval. This will revise the "no vector database for now" line in `docs/DECISIONS.md`.
+- **Wording to keep honest until that ships:** the deck's design slide shows "Match" as a step. There is no semantic matching in the code yet.
+- **The one real profile:** more people may look at the app now. Aisha's profile and her parent's entries stay in saved data only; see the section below.
 
 ## Where things stand now
 - **Everything is merged.** PR 5 (the build branch) and PR 6 (judge-ready README and eval script, submission folder) are on `main`. The live app and staging run the same code.
